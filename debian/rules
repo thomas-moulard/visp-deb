@@ -9,9 +9,9 @@
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
 
-export CC=/usr/lib/ccache/gcc
-export CXX=/usr/lib/ccache/g++
-export DEB_BUILD_OPTIONS="parallel=8"
+#export CC=/usr/lib/ccache/gcc
+#export CXX=/usr/lib/ccache/g++
+#export DEB_BUILD_OPTIONS="parallel=8"
 
 .PHONY: override_dh_auto_configure override_dh_strip override_dh_auto_test
 
