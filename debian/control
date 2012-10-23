@@ -1,0 +1,73 @@
+Source: visp
+Priority: extra
+Maintainer: Thomas Moulard <thomas.moulard@gmail.com>
+Build-Depends: debhelper (>= 7.0.50), cmake (>= 2.6),
+	       doxygen (>= 1.6.3),
+	       libopencv-dev (>= 2.1.0),
+	       libopencv-highgui-dev (>= 2.1.0),
+	       libgsl0-dev (>= 1.13),
+	       libcoin60-dev (>= 3.1.2),
+	       libsoqt4-dev (>= 1.4.2~svn20090224),
+	       libogre-dev (>= 1.7.4),
+	       libdc1394-22-dev (>= 2.1.2),
+	       libxml2-dev (>= 2.7.6),
+	       libjpeg-dev (>= 6b),
+	       libpng12-dev (>= 1.2.42),
+	       graphviz (>= 2.20.2),
+	       libavcodec-dev (>= 0.5.1)
+Standards-Version: 3.9.3
+Vcs-Svn: svn://scm.gforge.inria.fr/svn/visp
+Vcs-browser: https://gforge.inria.fr/scm/viewvc.php/?root=visp
+Section: libs
+Homepage: http://www.irisa.fr/lagadic/visp/visp.html
+
+Package: libvisp-dev
+Section: libdevel
+Architecture: any
+Depends: libopencv-dev (>= 2.1.0),
+         libopencv-highgui-dev (>= 2.1.0),
+	 libgsl0-dev (>= 1.13),
+	 libcoin60-dev (>= 3.1.2),
+	 libsoqt4-dev (>= 1.4.2~svn20090224),
+	 libogre-dev (>= 1.7.4),
+	 libdc1394-22-dev (>= 2.1.2),
+	 libxml2-dev (>= 2.7.6),
+	 libjpeg-dev (>= 6b),
+	 libpng12-dev (>= 1.2.42),
+	 libvisp-2-6 (= ${binary:Version}),
+	 ${misc:Depends}
+Description: Visual Servoing Platform development files
+ ViSP, standing for Visual Servoing Platform, is unique. This software
+ is a complete cross-platform solution that allows prototyping and
+ developing applications in visual tracking and visual servoing.
+ .
+ ViSP can be useful in robotics, computer vision, augmented reality and
+ computer animation.
+ .
+ This package contains development files (headers and shared library
+ symbolic link).
+
+Package: libvisp-2-6
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Visual Servoing Platform
+ ViSP, standing for Visual Servoing Platform, is unique. This software
+ is a complete cross-platform solution that allows prototyping and
+ developing applications in visual tracking and visual servoing.
+ .
+ ViSP can be useful in robotics, computer vision, augmented reality and
+ computer animation.
+
+Package: libvisp-2-6-dbg
+Architecture: any
+Section: debug
+Depends: libvisp-2-6 (= ${binary:Version}), ${misc:Depends}
+Description: Visual Servoing Platform debugging symbols
+ ViSP, standing for Visual Servoing Platform, is unique. This software
+ is a complete cross-platform solution that allows prototyping and
+ developing applications in visual tracking and visual servoing.
+ .
+ ViSP can be useful in robotics, computer vision, augmented reality and
+ computer animation.
+ .
+ This package contains the debugging symbols for the shared libraries.

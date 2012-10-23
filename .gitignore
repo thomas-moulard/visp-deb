@@ -1,0 +1,13 @@
+*~
+debian/libvisp-2-6-dbg.debhelper.log
+debian/libvisp-2-6-dbg.substvars
+debian/libvisp-2-6-dbg/
+debian/libvisp-2-6.debhelper.log
+debian/libvisp-2-6.substvars
+debian/libvisp-2-6/
+debian/libvisp-dev.debhelper.log
+debian/libvisp-dev.substvars
+debian/files
+debian/libvisp-dev/
+debian/tmp/
+obj-x86_64-linux-gnu/

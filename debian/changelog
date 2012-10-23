@@ -1,0 +1,30 @@
+visp (2.6.2-1) precise; urgency=low
+
+  * Import new upstream version 2.6.2.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Tue, 23 Oct 2012 13:18:24 +0200
+
+visp (2.6.0-1ubuntu3) lucid; urgency=low
+
+  * Add missing build-dependency and patch to add setPose method to
+    tracker.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Fri, 08 Oct 2010 20:34:03 +0200
+
+visp (2.6.0-1ubuntu2) lucid; urgency=low
+
+  * Add missing build-dependency.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Fri, 08 Oct 2010 20:10:43 +0200
+
+visp (2.6.0-1ubuntu1) lucid; urgency=low
+
+  * Update to visp-2.6.0.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Fri, 08 Oct 2010 18:05:24 +0200
+
+visp (2.4.4-1) lucid; urgency=low
+
+  * Initial work.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Mon, 4 Oct 2010 15:03:00 +0200

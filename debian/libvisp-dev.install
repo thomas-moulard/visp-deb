@@ -1,0 +1,3 @@
+usr/include/*
+usr/lib/libvisp-2.so
+usr/share/visp/*.cmake

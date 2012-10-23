@@ -1,0 +1,36 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+export CC=/usr/lib/ccache/gcc
+export CXX=/usr/lib/ccache/g++
+export DEB_BUILD_OPTIONS="parallel=8"
+
+.PHONY: override_dh_auto_configure override_dh_strip override_dh_auto_test
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		-DBUILD_DEMOS=ON -DBUILD_TESTING=ON -DBUILD_EXAMPLES=ON \
+		-DBUILD_SHARED_LIBS=ON -DBUILD_DEPRECATED=ON		\
+		-DUSE_DC1394_1=OFF -DUSE_FFMPEG=ON			\
+		-DUSE_DC1394_2=ON -DUSE_V4L2=ON -DUSE_OPENCV=ON 	\
+		-DUSE_COIN_SIMULATOR=ON -DUSE_GSL=ON			\
+		-DUSE_OGRE=ON						\
+		-DUSE_XML2=ON -DUSE_GTK2=ON -DUSE_LIBJPEG=ON		\
+		-DUSE_LIBPNG=ON -DUSE_LIBPLOTTER=ON			\
+		-DDESIRED_QT_VERSION=4
+
+override_dh_strip:
+	dh_strip -a --dbg-package=libvisp-2-6-dbg
+
+override_dh_auto_test:
+
+%:
+	dh  $@
