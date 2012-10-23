@@ -5,4 +5,4 @@
 
 version=3
 
-http://www.irisa.fr/lagadic/visp/download.html http://gforge.inria.fr/frs/download.php/25154/ViSP-(.*).tar.gz
+http://www.irisa.fr/lagadic/visp/download.html http://gforge.inria.fr/frs/download.php/.*/ViSP-(.*).tar.gz
