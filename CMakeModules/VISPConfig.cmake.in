@@ -1,0 +1,183 @@
+#############################################################################
+#
+# $Id: VISPConfig.cmake.in 3814 2012-06-26 16:26:16Z fspindle $
+#
+# This file is part of the ViSP software.
+# Copyright (C) 2005 - 2010 by INRIA. All rights reserved.
+# 
+# This software is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# ("GPL") version 2 as published by the Free Software Foundation.
+# See the file LICENSE.txt at the root directory of this source
+# distribution for additional information about the GNU GPL.
+#
+# For using ViSP with software that can not be combined with the GNU
+# GPL, please contact INRIA about acquiring a ViSP Professional 
+# Edition License.
+#
+# See http://www.irisa.fr/lagadic/visp/visp.html for more information.
+# 
+# This software was developed at:
+# INRIA Rennes - Bretagne Atlantique
+# Campus Universitaire de Beaulieu
+# 35042 Rennes Cedex
+# France
+# http://www.irisa.fr/lagadic
+#
+# If you have questions regarding the use of this file, please contact
+# INRIA at visp@inria.fr
+# 
+# This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
+# WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+#
+# Description:
+# CMake package config file for ViSP.
+#
+# This file will define the following CMake variables:
+# VISP_ROOT_DIR       : ViSP base directory location
+# VISP_INCLUDE_DIRS   : ViSP and third-party headers location
+# VISP_LIBRARY_DIRS   : ViSP and third-party libraries location
+# VISP_LIBRARY        : ViSP library name
+# VISP_LIBRARIES      : ViSP and third-party libraries name
+# VISP_DEFINITIONS    : Defines required to build ViSP
+#
+# VISP_SOURCE_DIR     : Location of ViSP source code 
+#
+# VISP_VERSION_STRING : Full ViSP version, eg 2.6.1
+# VISP_VERSION_MAJOR  : Major version part of VISP_VERSION, eg 2. 
+# VISP_VERSION_MINOR  : Minor version part of VISP_VERSION, eg 6. 
+# VISP_VERSION_PATCH  : Patch version part of VISP_VERSION, eg 1. 
+#
+# Typical usage in user project:
+#   FIND_PACKAGE(VISP)
+#   IF (VISP_FOUND)
+#     INCLUDE(${VISP_USE_FILE})
+#   ENDIF (VISP_FOUND)
+#
+# Authors:
+# Fabien Spindler
+#
+#############################################################################
+
+SET(VISP_LIBRARY "@VISP_INTERN_LIBRARY@")
+
+# Set VISP_ROOT_DIR
+SET(VISP_ROOT_DIR "@VISP_ROOT_DIR_CONFIGCMAKE@")
+#MESSAGE("VISP_ROOT_DIR: ${VISP_ROOT_DIR}")
+SET(VISP_ROOT_DIR_CMAKE "@VISP_ROOT_DIR_CMAKE_CONFIGCMAKE@")
+#MESSAGE("VISP_ROOT_DIR_CMAKE: ${VISP_ROOT_DIR_CMAKE}")
+
+# Set the version numbers
+SET(VISP_VERSION_STRING "@VISP_VERSION@")
+SET(VISP_VERSION_MAJOR  "@VISP_VERSION_MAJOR@")
+SET(VISP_VERSION_MINOR  "@VISP_VERSION_MINOR@")
+SET(VISP_VERSION_PATCH  "@VISP_VERSION_PATCH@")
+
+# Tells the user project where to find ViSP headers
+SET(VISP_INCLUDE_DIRS "${VISP_ROOT_DIR}/include" CACHE FILEPATH "Location of ViSP includes")
+#MESSAGE("VISP_INCLUDE_DIRS: ${VISP_INCLUDE_DIRS}")
+
+# Get ViSP specific definitions
+SET(VISP_DEFINITIONS "@VISP_DEFS@")
+#MESSAGE("VISP_DEFINITIONS: ${VISP_DEFINITIONS}")
+
+# Tells the user project where to find ViSP third party headers used
+# to compile ViSP. These locations are concatenate to VISP_INCLUDE_DIRS
+SET(VISP_EXTERN_INCLUDE_DIRS "@VISP_EXTERN_INCLUDE_DIRS@")
+#MESSAGE("VISP_EXTERN_INCLUDE_DIRS: ${VISP_EXTERN_INCLUDE_DIRS}")
+FOREACH(val ${VISP_EXTERN_INCLUDE_DIRS})
+  LIST(APPEND VISP_INCLUDE_DIRS "${val}")
+ENDFOREACH(val ${VISP_EXTERN_INCLUDE_DIRS})
+
+#MESSAGE("VISP_INCLUDE_DIRS: ${VISP_INCLUDE_DIRS}")
+
+# Tells the user project where to find ViSP library
+SET(VISP_LIBRARY_DIRS "${VISP_ROOT_DIR}/lib" CACHE FILEPATH "Location of ViSP library")
+
+# Tells the user project where to find third party libraries used to
+# compile ViSP
+SET(VISP_EXTERN_LINK_DIR "@VISP_EXTERN_LINK_DIR@")
+#MESSAGE("VISP_EXTERN_LINK_DIR: ${VISP_EXTERN_LINK_DIR}")
+FOREACH(val ${VISP_EXTERN_LINK_DIR})
+  LIST(APPEND VISP_LIBRARY_DIRS "${val}")
+ENDFOREACH(val ${VISP_EXTERN_LINK_DIR})
+#MESSAGE("VISP_LIBRARY_DIRS: ${VISP_LIBRARY_DIRS}")
+
+# Tell the user project where to find ViSP dependencies
+INCLUDE("${VISP_ROOT_DIR_CMAKE}/VISPLibraryDepends.cmake")
+
+# export source dir for doxygen eventually
+SET(VISP_SOURCE_DIR "@VISP_SOURCE_DIR@")
+
+# Tells the user project ViSP library name
+SET(VISP_LIBRARIES debug "@VISP_INTERN_LIBRARY@@CMAKE_DEBUG_POSTFIX@" optimized "@VISP_INTERN_LIBRARY@")
+
+# Tells the user project libraries name used to build ViSP library
+SET(VISP_EXTERN_LIBRARIES "@VISP_EXTERN_LIBRARIES@")
+FOREACH(val ${VISP_EXTERN_LIBRARIES})
+  LIST(APPEND VISP_LIBRARIES "${val}")
+ENDFOREACH(val ${VISP_EXTERN_LIBRARIES})
+#MESSAGE("VISP_LIBRARIES: ${VISP_LIBRARIES}")
+
+# where to find the USE file to be used by user project
+SET(VISP_USE_FILE "${VISP_ROOT_DIR_CMAKE}/VISPUse.cmake")
+
+IF(BUILD_TEST_COVERAGE)
+  # Add build options for test coverage. Currently coverage is only supported
+  # on gcc compiler 
+  # Because using -fprofile-arcs with shared lib can cause problems like:
+  # hidden symbol `__bb_init_func', we add this option only for static 
+  # library build
+  SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ftest-coverage -fprofile-arcs")
+ENDIF(BUILD_TEST_COVERAGE)
+
+
+#
+# Remember VISP' third party libs configuration: 
+#
+
+SET(VISP_HAVE_X11            "@VISP_HAVE_X11@")
+SET(VISP_HAVE_PTHREAD        "@VISP_HAVE_PTHREAD@")
+SET(VISP_HAVE_GTK            "@VISP_HAVE_GTK@")
+SET(VISP_HAVE_GDI            "@VISP_HAVE_GDI@")
+SET(VISP_HAVE_D3D9           "@VISP_HAVE_D3D9@")
+SET(VISP_HAVE_GSL            "@VISP_HAVE_GSL@")
+SET(VISP_HAVE_LAPACK         "@VISP_HAVE_LAPACK@")
+SET(VISP_HAVE_LIBFREENECT    "@VISP_HAVE_LIBFREENECT@")
+SET(VISP_HAVE_LIBFREENECT_AND_DEPENDENCIES "@VISP_HAVE_LIBFREENECT_AND_DEPENDENCIES@")
+SET(VISP_HAVE_LIBFREENECT_OLD "@VISP_HAVE_LIBFREENECT_OLD@")
+SET(VISP_HAVE_LIBUSB_1       "@VISP_HAVE_LIBUSB_1@")
+SET(VISP_HAVE_OPENCV         "@VISP_HAVE_OPENCV@")
+SET(VISP_HAVE_OPENCV_VERSION "@VISP_HAVE_OPENCV_VERSION@")
+SET(VISP_HAVE_OGRE           "@VISP_HAVE_OGRE@")
+SET(VISP_HAVE_OPENGL         "@VISP_HAVE_OPENGL@")
+SET(VISP_HAVE_OIS            "@VISP_HAVE_OIS@")
+SET(VISP_HAVE_COIN_AND_GUI   "@VISP_HAVE_COIN_AND_GUI@")
+SET(VISP_HAVE_COIN           "@VISP_HAVE_COIN@")
+SET(VISP_HAVE_QT             "@VISP_HAVE_QT@")
+SET(VISP_HAVE_SOQT           "@VISP_HAVE_SOQT@")
+SET(VISP_HAVE_SOWIN          "@VISP_HAVE_SOWIN@")
+SET(VISP_HAVE_SOXT           "@VISP_HAVE_SOXT@")
+SET(VISP_HAVE_DC1394_1       "@VISP_HAVE_DC1394_1@")
+SET(VISP_HAVE_DC1394_2       "@VISP_HAVE_DC1394_2@")
+SET(VISP_HAVE_CMU1394        "@VISP_HAVE_CMU1394@")
+SET(VISP_HAVE_V4L2           "@VISP_HAVE_V4L2@")
+SET(VISP_HAVE_DIRECTSHOW     "@VISP_HAVE_DIRECTSHOW@")
+SET(VISP_HAVE_AFMA4          "@VISP_HAVE_AFMA4@")
+SET(VISP_HAVE_AFMA6          "@VISP_HAVE_AFMA6@")
+SET(VISP_HAVE_BICLOPS        "@VISP_HAVE_BICLOPS@")
+SET(VISP_HAVE_PTU46          "@VISP_HAVE_PTU46@")
+SET(VISP_HAVE_VIPER850       "@VISP_HAVE_VIPER850@")
+SET(VISP_HAVE_CYCAB          "@VISP_HAVE_CYCAB@")
+SET(VISP_HAVE_CYCABTK        "@VISP_HAVE_CYCABTK@")
+SET(VISP_HAVE_CYCABTK_OLD    "@VISP_HAVE_CYCABTK_OLD@")
+SET(VISP_HAVE_PIONEER        "@VISP_HAVE_PIONEER@")
+SET(VISP_HAVE_PARPORT        "@VISP_HAVE_PARPORT@")
+SET(VISP_HAVE_XML2           "@VISP_HAVE_XML2@")
+SET(VISP_HAVE_LIBJPEG        "@VISP_HAVE_LIBJPEG@")
+SET(VISP_HAVE_LIBPNG         "@VISP_HAVE_LIBPNG@")
+SET(VISP_HAVE_FFMPEG         "@VISP_HAVE_FFMPEG@")
+SET(VISP_HAVE_YARP           "@VISP_HAVE_YARP@")
+SET(VISP_HAVE_OPENMP         "@VISP_HAVE_OPENMP@")
+SET(VISP_HAVE_ACCESS_TO_NAS  "@VISP_HAVE_ACCESS_TO_NAS@")
+SET(VISP_HAVE_CPP11_COMPATIBILITY "@VISP_HAVE_CPP11_COMPATIBILITY@")
