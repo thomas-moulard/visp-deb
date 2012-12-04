@@ -25,7 +25,8 @@ override_dh_auto_configure:
 		-DUSE_OGRE=ON						\
 		-DUSE_XML2=ON -DUSE_GTK2=ON -DUSE_LIBJPEG=ON		\
 		-DUSE_LIBPNG=ON -DUSE_LIBPLOTTER=ON			\
-		-DDESIRED_QT_VERSION=4
+		-DDESIRED_QT_VERSION=4					\
+		-DVISP_INTERN_LIBRARY:STRING="visp"
 
 override_dh_strip:
 	dh_strip -a --dbg-package=libvisp-2-6-dbg

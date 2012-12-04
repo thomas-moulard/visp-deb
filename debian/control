@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 7.0.50), cmake (>= 2.6),
 	       libogre-dev (>= 1.7.4),
 	       libdc1394-22-dev (>= 2.1.2),
 	       libxml2-dev (>= 2.7.6),
-	       libjpeg-dev (>= 6b),
+	       libjpeg-dev,
 	       libpng12-dev (>= 1.2.42),
 	       graphviz (>= 2.20.2),
 	       libavcodec-dev (>= 0.5.1)
@@ -32,9 +32,9 @@ Depends: libopencv-dev (>= 2.1.0),
 	 libogre-dev (>= 1.7.4),
 	 libdc1394-22-dev (>= 2.1.2),
 	 libxml2-dev (>= 2.7.6),
-	 libjpeg-dev (>= 6b),
+	 libjpeg-dev,
 	 libpng12-dev (>= 1.2.42),
-	 libvisp-2-6 (= ${binary:Version}),
+	 libvisp (= ${binary:Version}),
 	 ${misc:Depends}
 Description: Visual Servoing Platform development files
  ViSP, standing for Visual Servoing Platform, is unique. This software
@@ -47,7 +47,7 @@ Description: Visual Servoing Platform development files
  This package contains development files (headers and shared library
  symbolic link).
 
-Package: libvisp-2-6
+Package: libvisp
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Visual Servoing Platform
@@ -58,10 +58,10 @@ Description: Visual Servoing Platform
  ViSP can be useful in robotics, computer vision, augmented reality and
  computer animation.
 
-Package: libvisp-2-6-dbg
+Package: libvisp-dbg
 Architecture: any
 Section: debug
-Depends: libvisp-2-6 (= ${binary:Version}), ${misc:Depends}
+Depends: libvisp (= ${binary:Version}), ${misc:Depends}
 Description: Visual Servoing Platform debugging symbols
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
