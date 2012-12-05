@@ -21,7 +21,7 @@ Vcs-browser: https://gforge.inria.fr/scm/viewvc.php/?root=visp
 Section: libs
 Homepage: http://www.irisa.fr/lagadic/visp/visp.html
 
-Package: libvisp-dev
+Package: libvisp2-dev
 Section: libdevel
 Architecture: any
 Depends: libopencv-dev (>= 2.1.0),
@@ -34,7 +34,7 @@ Depends: libopencv-dev (>= 2.1.0),
 	 libxml2-dev (>= 2.7.6),
 	 libjpeg-dev,
 	 libpng12-dev (>= 1.2.42),
-	 libvisp (= ${binary:Version}),
+	 libvisp2 (= ${binary:Version}),
 	 ${misc:Depends}
 Description: Visual Servoing Platform development files
  ViSP, standing for Visual Servoing Platform, is unique. This software
@@ -47,7 +47,7 @@ Description: Visual Servoing Platform development files
  This package contains development files (headers and shared library
  symbolic link).
 
-Package: libvisp
+Package: libvisp2
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Visual Servoing Platform
@@ -58,10 +58,10 @@ Description: Visual Servoing Platform
  ViSP can be useful in robotics, computer vision, augmented reality and
  computer animation.
 
-Package: libvisp-dbg
+Package: libvisp2-dbg
 Architecture: any
 Section: debug
-Depends: libvisp (= ${binary:Version}), ${misc:Depends}
+Depends: libvisp2 (= ${binary:Version}), ${misc:Depends}
 Description: Visual Servoing Platform debugging symbols
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and

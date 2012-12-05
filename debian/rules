@@ -28,7 +28,7 @@ override_dh_auto_configure:
 		-DDESIRED_QT_VERSION=4
 
 override_dh_strip:
-	dh_strip -a --dbg-package=libvisp-dbg
+	dh_strip -a --dbg-package=libvisp2-dbg
 
 override_dh_auto_test:
 
