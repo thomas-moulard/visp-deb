@@ -1,6 +1,6 @@
 visp (2.6.2-1) unstable; urgency=low
 
-  * Import new upstream version 2.6.2.
+  * Import new upstream version 2.6.2 (Closes: #691252).
   * Add patch to rename libvisp-2.so into libvisp.so.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Tue, 04 Dec 2012 10:59:26 +0900
