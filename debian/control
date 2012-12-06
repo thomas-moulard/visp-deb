@@ -16,8 +16,8 @@ Build-Depends: debhelper (>= 7.0.50), cmake (>= 2.6),
 	       graphviz (>= 2.20.2),
 	       libavcodec-dev (>= 0.5.1)
 Standards-Version: 3.9.3
-Vcs-Svn: svn://scm.gforge.inria.fr/svn/visp
-Vcs-browser: https://gforge.inria.fr/scm/viewvc.php/?root=visp
+Vcs-Git: git://github.com/thomas-moulard/visp-deb.git
+Vcs-browser: https://github.com/thomas-moulard/visp-deb
 Section: libs
 Homepage: http://www.irisa.fr/lagadic/visp/visp.html
 
