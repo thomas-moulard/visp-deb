@@ -1,23 +1,26 @@
-This work was packaged for Debian by:
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: ViSP
+Upstream-Contact: visp@inria.fr
+Source: http://www.irisa.fr/lagadic/visp/download.html
 
-    Thomas Moulard <thomas.moulard@gmail.com> on Mon, 13 Sep 2010 14:14:42 +0200
+Files: *
+Copyright: 2005-2012, INRIA
+License: GPL-2
+ See `/usr/share/common-licenses/GPL-2'.
 
-It was downloaded from http://www.irisa.fr/lagadic/visp/download.html
+Files: CMakeModules/GNUInstallDirs.cmake
+Copyright: 2011, Nikita Krupen'ko <krnekit@gmail.com>
+License: BSD
+ See `/usr/share/common-licenses/BSD'.
 
-Upstream Authors:
+Files: src/tools/io/vpParseArgv.h
+Copyright: 1989-1992 Regents of the University of California
+License: BSD
 
-    Projet Lagadic / IRISA-INRIA Rennes
+Files: src/tools/io/vpParseArgv.cpp
+Copyright: 1990 Regents of the University of California
+License: BSD
 
-Copyright:
-
-    Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
-
-License:
-
-    See `/usr/share/common-licenses/GPL-2'.
-
-The Debian packaging is:
-
-    Copyright (C) 2010-2012 Thomas Moulard <thomas.moulard@gmail.com>
-    and is licensed under the GPL version 3,
-    see `/usr/share/common-licenses/GPL-3'.
+Files: debian/*
+Copyright: 2012, Thomas Moulard <thomas.moulard@gmail.com>
+License: GPL-2
