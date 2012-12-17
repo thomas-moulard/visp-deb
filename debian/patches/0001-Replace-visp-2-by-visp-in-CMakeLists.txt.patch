@@ -1,8 +1,12 @@
 From: Thomas Moulard <thomas.moulard@gmail.com>
 Date: Tue, 4 Dec 2012 13:20:27 +0900
-Subject: [PATCH] Replace visp-2 by visp in CMakeLists.txt
+Subject: Replace "visp-2" by "visp" in CMakeLists.txt
 
-The library is already versioned so this suffix is unwanted.
+Remove redundant information as ABI version is already provided
+by library suffix (libvisp-2.so.2).
+
+Forwarded: no
+Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
  CMakeLists.txt |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
