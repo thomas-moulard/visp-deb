@@ -1,0 +1,23 @@
+From: Thomas Moulard <thomas.moulard@gmail.com>
+Date: Tue, 4 Dec 2012 13:20:27 +0900
+Subject: [PATCH] Replace visp-2 by visp in CMakeLists.txt
+
+The library is already versioned so this suffix is unwanted.
+---
+ CMakeLists.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 92fd6d6..9c58784 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -64,7 +64,7 @@ SET(VISP_INTERN_INCLUDE_DIR ${VISP_BINARY_DIR}/include)
+ # the third party include directories we depend on
+ SET(VISP_EXTERN_INCLUDE_DIRS "")
+ # the internal visp libs we depend on
+-SET(VISP_INTERN_LIBRARY visp-2)
++SET(VISP_INTERN_LIBRARY visp)
+ # the third party libraries we depend on
+ SET(VISP_EXTERN_LIBRARIES "")
+ # the compiler definitions
+-- 
