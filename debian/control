@@ -1,7 +1,7 @@
 Source: visp
 Priority: extra
 Maintainer: Thomas Moulard <thomas.moulard@gmail.com>
-Build-Depends: debhelper (>= 7.0.50), cmake (>= 2.6),
+Build-Depends: debhelper (>= 9), cmake (>= 2.6),
 	       doxygen (>= 1.6.3),
 	       libopencv-dev (>= 2.1.0),
 	       libopencv-highgui-dev (>= 2.1.0),
