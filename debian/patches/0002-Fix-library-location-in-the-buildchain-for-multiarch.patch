@@ -1,0 +1,46 @@
+From: Thomas Moulard <thomas.moulard@gmail.com>
+Date: Thu, 20 Dec 2012 10:02:10 +0900
+Subject: Fix library location in the buildchain for multiarch support.
+
+visp-config makes the false assumption libs are installed
+in $prefix/lib. The VISPConfig.cmake.in file used to detect ViSP
+through CMake has the same issue. Fix both.
+
+Forwarded: no
+Author: thomas.moulard@gmail.com
+---
+ CMakeModules/GenerateConfigScript.cmake |    4 ++--
+ CMakeModules/VISPConfig.cmake.in        |    3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeModules/GenerateConfigScript.cmake b/CMakeModules/GenerateConfigScript.cmake
+index 2bd41a9..42894d8 100644
+--- a/CMakeModules/GenerateConfigScript.cmake
++++ b/CMakeModules/GenerateConfigScript.cmake
+@@ -144,10 +144,10 @@ IF (UNIX)
+   #MESSAGE("EXTERN LIBS : ${VISP_CONFIG_SCRIPT_EXTERN_LIBS}")
+  
+   # prepend with ViSP own lib dir
+-  SET(VISP_CONFIG_SCRIPT_EXTERN_LIBS  "-L$PREFIX/lib -l${VISP_INTERN_LIBRARY} ${VISP_CONFIG_SCRIPT_EXTERN_LIBS}")
++  SET(VISP_CONFIG_SCRIPT_EXTERN_LIBS  "-L${CMAKE_INSTALL_FULL_LIBDIR} -l${VISP_INTERN_LIBRARY} ${VISP_CONFIG_SCRIPT_EXTERN_LIBS}")
+   IF(UNIX)
+     IF(NOT APPLE)
+-      SET(VISP_CONFIG_SCRIPT_EXTERN_LIBS  "-Wl,-rpath,$PREFIX/lib ${VISP_CONFIG_SCRIPT_EXTERN_LIBS}")
++      SET(VISP_CONFIG_SCRIPT_EXTERN_LIBS  "-Wl,-rpath,${CMAKE_INSTALL_FULL_LIBDIR} ${VISP_CONFIG_SCRIPT_EXTERN_LIBS}")
+     ENDIF(NOT APPLE)
+   ENDIF(UNIX)
+ 
+diff --git a/CMakeModules/VISPConfig.cmake.in b/CMakeModules/VISPConfig.cmake.in
+index 4f84c1e..7865188 100644
+--- a/CMakeModules/VISPConfig.cmake.in
++++ b/CMakeModules/VISPConfig.cmake.in
+@@ -92,7 +92,8 @@ ENDFOREACH(val ${VISP_EXTERN_INCLUDE_DIRS})
+ #MESSAGE("VISP_INCLUDE_DIRS: ${VISP_INCLUDE_DIRS}")
+ 
+ # Tells the user project where to find ViSP library
+-SET(VISP_LIBRARY_DIRS "${VISP_ROOT_DIR}/lib" CACHE FILEPATH "Location of ViSP library")
++SET(VISP_LIBRARY_DIRS "${CMAKE_INSTALL_FULL_LIBDIR}"
++  CACHE FILEPATH "Location of ViSP library")
+ 
+ # Tells the user project where to find third party libraries used to
+ # compile ViSP

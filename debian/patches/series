@@ -1,1 +1,2 @@
 0001-Replace-visp-2-by-visp-in-CMakeLists.txt.patch
+0002-Fix-library-location-in-the-buildchain-for-multiarch.patch

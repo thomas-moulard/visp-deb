@@ -9,7 +9,7 @@ Forwarded: no
 Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
  CMakeLists.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 92fd6d6..9c58784 100644
@@ -24,4 +24,3 @@ index 92fd6d6..9c58784 100644
  # the third party libraries we depend on
  SET(VISP_EXTERN_LIBRARIES "")
  # the compiler definitions
--- 
