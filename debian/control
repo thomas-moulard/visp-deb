@@ -49,7 +49,9 @@ Description: Visual Servoing Platform development files
 
 Package: libvisp2
 Architecture: any
+Pre-depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Multi-Arch: same
 Description: Visual Servoing Platform
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and

@@ -1,5 +1,5 @@
 usr/bin/*
-usr/lib/libvisp.so.2
-usr/lib/libvisp.so.2.6.2
+usr/lib/*/libvisp.so.2
+usr/lib/*/libvisp.so.2.6.2
 usr/share/visp/ViSP-third-party.txt
 usr/share/visp/data/
