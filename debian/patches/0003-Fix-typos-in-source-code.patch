@@ -3,7 +3,7 @@ Date: Thu, 20 Dec 2012 11:22:34 +0900
 Subject: Fix typos in source code.
 
 Forwarded: no
-Author: thomas.moulard@gmail.com
+Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
  src/computer-vision/pose-estimation/vpPose.cpp     |    2 +-
  src/device/framegrabber/v4l2/vpV4l2Grabber.h       |    2 +-

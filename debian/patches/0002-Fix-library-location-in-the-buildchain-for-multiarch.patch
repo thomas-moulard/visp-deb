@@ -7,7 +7,7 @@ in $prefix/lib. The VISPConfig.cmake.in file used to detect ViSP
 through CMake has the same issue. Fix both.
 
 Forwarded: no
-Author: thomas.moulard@gmail.com
+Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
  CMakeModules/GenerateConfigScript.cmake |    4 ++--
  CMakeModules/VISPConfig.cmake.in        |    3 ++-
