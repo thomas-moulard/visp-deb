@@ -6,7 +6,7 @@ visp-config makes the false assumption libs are installed
 in $prefix/lib. The VISPConfig.cmake.in file used to detect ViSP
 through CMake has the same issue. Fix both.
 
-Forwarded: no
+Forwarded: https://gforge.inria.fr/tracker/index.php?func=detail&aid=15221&group_id=397&atid=1660
 Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
  CMakeModules/GenerateConfigScript.cmake |    4 ++--

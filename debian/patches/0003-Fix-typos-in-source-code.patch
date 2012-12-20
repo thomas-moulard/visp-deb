@@ -2,7 +2,7 @@ From: Thomas Moulard <thomas.moulard@gmail.com>
 Date: Thu, 20 Dec 2012 11:22:34 +0900
 Subject: Fix typos in source code.
 
-Forwarded: no
+Forwarded: https://gforge.inria.fr/tracker/index.php?func=detail&aid=15221&group_id=397&atid=1660
 Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
  src/computer-vision/pose-estimation/vpPose.cpp     |    2 +-

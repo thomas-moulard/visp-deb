@@ -5,7 +5,7 @@ Subject: Replace "visp-2" by "visp" in CMakeLists.txt
 Remove redundant information as ABI version is already provided
 by library suffix (libvisp-2.so.2).
 
-Forwarded: no
+Forwarded: https://gforge.inria.fr/tracker/index.php?func=detail&aid=15221&group_id=397&atid=1660
 Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
  CMakeLists.txt |    2 +-
