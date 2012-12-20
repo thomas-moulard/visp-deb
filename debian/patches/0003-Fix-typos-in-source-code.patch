@@ -1,0 +1,221 @@
+From: Thomas Moulard <thomas.moulard@gmail.com>
+Date: Thu, 20 Dec 2012 11:22:34 +0900
+Subject: Fix typos in source code.
+
+Forwarded: no
+Author: thomas.moulard@gmail.com
+---
+ src/computer-vision/pose-estimation/vpPose.cpp     |    2 +-
+ src/device/framegrabber/v4l2/vpV4l2Grabber.h       |    2 +-
+ src/servo/vpServo.cpp                              |    2 +-
+ .../wireframe-simulator/vpWireFrameSimulator.h     |    2 +-
+ src/tracking/mbt/vpMbTracker.h                     |    2 +-
+ src/tracking/mbt/vpMbtXmlParser.cpp                |   38 ++++++++++----------
+ 6 files changed, 24 insertions(+), 24 deletions(-)
+
+diff --git a/src/computer-vision/pose-estimation/vpPose.cpp b/src/computer-vision/pose-estimation/vpPose.cpp
+index 46342f2..cf3c5f5 100644
+--- a/src/computer-vision/pose-estimation/vpPose.cpp
++++ b/src/computer-vision/pose-estimation/vpPose.cpp
+@@ -141,7 +141,7 @@ vpPose::clearPoint()
+ \brief  Add a new point in the array of point.
+ \param  newP : New point to add  in the array of point.
+ \warning Considering a point from the class vpPoint, X, Y, and Z will
+-represent the 3D information and x and y its 2D informations.
++represent the 3D information and x and y its 2D information.
+ These 5 fields must be initialized to be used within this library
+ */
+ void
+diff --git a/src/device/framegrabber/v4l2/vpV4l2Grabber.h b/src/device/framegrabber/v4l2/vpV4l2Grabber.h
+index 29d524c..1e571c4 100644
+--- a/src/device/framegrabber/v4l2/vpV4l2Grabber.h
++++ b/src/device/framegrabber/v4l2/vpV4l2Grabber.h
+@@ -222,7 +222,7 @@ public:
+     return (this->pixelformat);
+   }
+   /*!
+-    Activates the verbose mode to print additionnal informations on stdout.
++    Activates the verbose mode to print additional information on stdout.
+     \param verbose : If true activates the verbose mode.
+   */
+   void setVerboseMode(bool verbose) {
+diff --git a/src/servo/vpServo.cpp b/src/servo/vpServo.cpp
+index c6d01c1..6a9d50a 100644
+--- a/src/servo/vpServo.cpp
++++ b/src/servo/vpServo.cpp
+@@ -239,7 +239,7 @@ void
+ 
+ /*!
+ 
+-  Prints on \e os stream informations about the task:
++  Prints on \e os stream information about the task:
+ 
+   \param displayLevel : If vpServo::ALL prints
+   - Type of control law (eye-in-hand, eye-to-hand)
+diff --git a/src/simulator/wireframe-simulator/vpWireFrameSimulator.h b/src/simulator/wireframe-simulator/vpWireFrameSimulator.h
+index d494d44..a8c05c6 100644
+--- a/src/simulator/wireframe-simulator/vpWireFrameSimulator.h
++++ b/src/simulator/wireframe-simulator/vpWireFrameSimulator.h
+@@ -132,7 +132,7 @@ void vp2jlc_matrix (const vpHomogeneousMatrix, Matrix&);
+   
+   - cextMf which is the displacement between one external camera frame and the world frame.
+   
+-  The following picture summarize all the previous informations.
++  The following picture summarize all the previous information.
+   
+   \image html vpWireFrameSimulator.jpeg
+   \image latex vpWireFrameSimulator.ps
+diff --git a/src/tracking/mbt/vpMbTracker.h b/src/tracking/mbt/vpMbTracker.h
+index 71539cf..759acd9 100755
+--- a/src/tracking/mbt/vpMbTracker.h
++++ b/src/tracking/mbt/vpMbTracker.h
+@@ -83,7 +83,7 @@
+   - track() : Tracking on the current image
+   - testTracking() : Test the tracking. This method throws exception if the 
+     tracking failed. 
+-  - display() : Display the model and eventually other informations.
++  - display() : Display the model and eventually other information.
+ 
+   In addition, two flags are declared in this class and may have to be 
+   initialised in the child class : 
+diff --git a/src/tracking/mbt/vpMbtXmlParser.cpp b/src/tracking/mbt/vpMbtXmlParser.cpp
+index 917716e..179e271 100644
+--- a/src/tracking/mbt/vpMbtXmlParser.cpp
++++ b/src/tracking/mbt/vpMbtXmlParser.cpp
+@@ -166,18 +166,18 @@ vpMbtXmlParser::readMainClass(xmlDocPtr doc, xmlNodePtr node)
+   if(nb != 3){
+ 		std::cout <<"ERROR in 'ECM' field:\n";
+ 		std::cout << "it must contain 3 parameters\n";
+-    throw vpException(vpException::fatalError, "Bad number of data to extract ECM informations.");
++    throw vpException(vpException::fatalError, "Bad number of data to extract ECM information.");
+ 	}
+ }
+ 
+ 
+ /*!
+-  Read ecm informations.
++  Read ecm information.
+   
+   \throw vpException::fatalError if there was an unexpected number of data. 
+   
+   \param doc : Pointer to the document.
+-  \param node : Pointer to the node of the ecm informations.
++  \param node : Pointer to the node of the ecm information.
+ */
+ void 
+ vpMbtXmlParser::lecture_ecm (xmlDocPtr doc, xmlNodePtr node)
+@@ -212,17 +212,17 @@ vpMbtXmlParser::lecture_ecm (xmlDocPtr doc, xmlNodePtr node)
+   if(nb != 3){
+ 		std::cout <<"ERROR in 'ECM' field:\n";
+ 		std::cout << "it must contain 3 parameters\n";
+-    throw vpException(vpException::fatalError, "Bad number of data to extract ECM informations.");
++    throw vpException(vpException::fatalError, "Bad number of data to extract ECM information.");
+ 	}
+ }
+ 
+ /*!
+-  Read sample informations.
++  Read sample information.
+   
+   \throw vpException::fatalError if there was an unexpected number of data. 
+   
+   \param doc : Pointer to the document.
+-  \param node : Pointer to the node of the sample informations.
++  \param node : Pointer to the node of the sample information.
+ */
+ void 
+ vpMbtXmlParser::lecture_sample (xmlDocPtr doc, xmlNodePtr node)
+@@ -264,17 +264,17 @@ vpMbtXmlParser::lecture_sample (xmlDocPtr doc, xmlNodePtr node)
+ 	else{
+ 		std::cout <<"ERROR in 'sample' field:\n";
+ 		std::cout << "it must contain 2 parameters\n";
+-    throw vpException(vpException::fatalError, "Bad number of data to extract sample informations.");
++    throw vpException(vpException::fatalError, "Bad number of data to extract sample information.");
+ 	}
+ }
+ 
+ /*!
+-  Read camera informations.
++  Read camera information.
+   
+   \throw vpException::fatalError if there was an unexpected number of data. 
+   
+   \param doc : Pointer to the document.
+-  \param node : Pointer to the node of the camera informations.
++  \param node : Pointer to the node of the camera information.
+ */
+ void 
+ vpMbtXmlParser::lecture_camera (xmlDocPtr doc, xmlNodePtr node)
+@@ -337,17 +337,17 @@ vpMbtXmlParser::lecture_camera (xmlDocPtr doc, xmlNodePtr node)
+ 	else{
+ 		std::cout <<"ERROR in 'camera' field:\n";
+ 		std::cout << "it must contain  6 parameters\n";
+-    throw vpException(vpException::fatalError, "Bad number of data to extract camera informations.");
++    throw vpException(vpException::fatalError, "Bad number of data to extract camera information.");
+ 	}
+ }
+ 
+ /*!
+-  Read mask informations for the vpMeSite.
++  Read mask information for the vpMeSite.
+   
+   \throw vpException::fatalError if there was an unexpected number of data. 
+   
+   \param doc : Pointer to the document.
+-  \param node : Pointer to the node of the mask informations.
++  \param node : Pointer to the node of the mask information.
+ */
+ void 
+ vpMbtXmlParser::lecture_mask (xmlDocPtr doc, xmlNodePtr node)
+@@ -389,17 +389,17 @@ vpMbtXmlParser::lecture_mask (xmlDocPtr doc, xmlNodePtr node)
+ 	else{
+ 		std::cout <<"ERROR in 'mask' field:\n";
+ 		std::cout << "it must contain  2 parameters\n";
+-    throw vpException(vpException::fatalError, "Bad number of data to extract mask informations.");
++    throw vpException(vpException::fatalError, "Bad number of data to extract mask information.");
+ 	}
+ }
+ 
+ /*!
+-  Read range informations for the vpMeSite.
++  Read range information for the vpMeSite.
+   
+   \throw vpException::fatalError if there was an unexpected number of data. 
+   
+   \param doc : Pointer to the document.
+-  \param node : Pointer to the node of the range informations.
++  \param node : Pointer to the node of the range information.
+ */
+ void 
+ vpMbtXmlParser::lecture_range (xmlDocPtr doc, xmlNodePtr node)
+@@ -433,18 +433,18 @@ vpMbtXmlParser::lecture_range (xmlDocPtr doc, xmlNodePtr node)
+ 	else{
+ 		std::cout <<"ERROR in 'range' field:\n";
+ 		std::cout << "it must contain  1 parameters\n";
+-    throw vpException(vpException::fatalError, "Bad number of data to extract range informations.");
++    throw vpException(vpException::fatalError, "Bad number of data to extract range information.");
+ 	}
+ }
+ 
+ 
+ /*!
+-  Read the contrast informations from the xml file.
++  Read the contrast information from the xml file.
+   
+   \throw vpException::fatalError if there was an unexpected number of data. 
+   
+   \param doc : Pointer to the document.
+-  \param node : Pointer to the node of the contrast informations.
++  \param node : Pointer to the node of the contrast information.
+ */
+ void
+ vpMbtXmlParser::lecture_contrast (xmlDocPtr doc, xmlNodePtr node)
+@@ -493,7 +493,7 @@ vpMbtXmlParser::lecture_contrast (xmlDocPtr doc, xmlNodePtr node)
+ 	else{
+ 		std::cout <<"ERROR in 'contrast' field:\n";
+ 		std::cout << "it must contain  3 parameters\n";
+-    throw vpException(vpException::fatalError, "Bad number of data to extract contrast informations.");
++    throw vpException(vpException::fatalError, "Bad number of data to extract contrast information.");
+ 	}
+ }
+ 
