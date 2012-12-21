@@ -15,6 +15,9 @@ export DH_VERBOSE=1
 
 .PHONY: override_dh_auto_configure override_dh_strip override_dh_auto_test
 
+%:
+	dh  $@
+
 override_dh_auto_clean:
 	dh_auto_clean
 	rm -f doc/mainpage.doc
@@ -37,6 +40,3 @@ override_dh_strip:
 	dh_strip -a --dbg-package=libvisp2-dbg
 
 override_dh_auto_test:
-
-%:
-	dh  $@
