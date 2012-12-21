@@ -5,7 +5,7 @@ Build-Depends: debhelper (>= 9), cmake (>= 2.6),
 	       doxygen (>= 1.6.3),
 	       libopencv-dev (>= 2.1.0),
 	       libopencv-highgui-dev (>= 2.1.0),
-	       libgsl0-dev (>= 1.13),
+	       liblapack-dev (>= 3.2),
 	       libcoin60-dev (>= 3.1.2),
 	       libsoqt4-dev (>= 1.4.2~svn20090224),
 	       libogre-dev (>= 1.7.4),
@@ -14,7 +14,15 @@ Build-Depends: debhelper (>= 9), cmake (>= 2.6),
 	       libjpeg-dev,
 	       libpng12-dev (>= 1.2.42),
 	       graphviz (>= 2.20.2),
-	       libavcodec-dev (>= 0.5.1)
+	       libswscale-dev (>= 4:0.5.1),
+	       libavutil-dev (>= 4:0.5.1),
+	       libavformat-dev (>= 4:0.5.1),
+	       libavcodec-dev (>= 4:0.5.1),
+	       libbz2-dev (>= 1.0.5-4),
+	       libx11-dev (>= 2:1.3.2),
+	       libv4l-dev (>=0.6.4),
+	       libusb-dev,
+	       libfreenect-dev (>= 1:0.0.1)
 Standards-Version: 3.9.3
 Vcs-Git: git://github.com/thomas-moulard/visp-deb.git
 Vcs-browser: https://github.com/thomas-moulard/visp-deb
@@ -25,8 +33,8 @@ Package: libvisp2-dev
 Section: libdevel
 Architecture: any
 Depends: libopencv-dev (>= 2.1.0),
-         libopencv-highgui-dev (>= 2.1.0),
-	 libgsl0-dev (>= 1.13),
+	 libopencv-highgui-dev (>= 2.1.0),
+	 liblapack-dev (>= 3.2),
 	 libcoin60-dev (>= 3.1.2),
 	 libsoqt4-dev (>= 1.4.2~svn20090224),
 	 libogre-dev (>= 1.7.4),
@@ -34,7 +42,15 @@ Depends: libopencv-dev (>= 2.1.0),
 	 libxml2-dev (>= 2.7.6),
 	 libjpeg-dev,
 	 libpng12-dev (>= 1.2.42),
-	 libvisp2 (= ${binary:Version}),
+	 libswscale-dev (>= 4:0.5.1),
+	 libavutil-dev (>= 4:0.5.1),
+	 libavformat-dev (>= 4:0.5.1),
+	 libavcodec-dev (>= 4:0.5.1),
+	 libbz2-dev (>= 1.0.5-4),
+	 libx11-dev (>= 2:1.3.2),
+	 libv4l-dev (>=0.6.4),
+	 libusb-dev,
+	 libfreenect-dev (>= 1:0.0.1),
 	 ${misc:Depends}
 Description: Visual Servoing Platform development files
  ViSP, standing for Visual Servoing Platform, is unique. This software
