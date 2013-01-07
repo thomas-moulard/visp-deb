@@ -40,7 +40,7 @@ License: BSD-3-clause
 
 Files: src/tools/io/vpParseArgv.h
 Copyright: 1989-1992 Regents of the University of California
-License: BSD-4-clause
+License: Tcl/Tk license
  Copyright 1989-1992 Regents of the University of California.
  Permission to use, copy, modify, and distribute this
  software and its documentation for any purpose and without
@@ -52,7 +52,7 @@ License: BSD-4-clause
 
 Files: src/tools/io/vpParseArgv.cpp
 Copyright: 1990 Regents of the University of California
-License: BSD-4-clause
+License: Tcl/Tk license
  Copyright 1990 Regents of the University of California
  Permission to use, copy, modify, and distribute this
  software and its documentation for any purpose and without
