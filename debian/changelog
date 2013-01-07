@@ -2,5 +2,9 @@ visp (2.6.2-1) unstable; urgency=low
 
   * Import new upstream version 2.6.2 (Closes: #691252).
   * Add patch to rename libvisp-2.so into libvisp.so.
+  * Add patch to support multiarch (avoid making the assumption that
+	$prefix/lib is the library directory but use $libdir instead).
+  * Add patch that fix typos in source code.
+  * Provide visp-config man page.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Tue, 04 Dec 2012 10:59:26 +0900
