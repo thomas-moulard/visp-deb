@@ -55,6 +55,7 @@ Depends: libopencv-dev,
 	 libfreenect-dev (>= 0.0.1),
 	 libois-dev,
 	 ${misc:Depends}
+Suggests: libvisp-doc
 Description: visual servoing library - development files
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
@@ -92,3 +93,17 @@ Description: visual servoing library - debugging symbols
  computer animation.
  .
  This package contains the debugging symbols for the shared libraries.
+
+Package: libvisp-doc
+Architecture: all
+Section: doc
+Depends: ${misc:Depends}
+Description: visual servoing library - documentation
+ ViSP, standing for Visual Servoing Platform, is unique. This software
+ is a complete cross-platform solution that allows prototyping and
+ developing applications in visual tracking and visual servoing.
+ .
+ ViSP can be useful in robotics, computer vision, augmented reality and
+ computer animation.
+ .
+ This package contains the Doxygen generated documentation.
