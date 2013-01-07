@@ -1,58 +1,61 @@
 Source: visp
 Priority: extra
-Maintainer: Thomas Moulard <thomas.moulard@gmail.com>
+Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
+Uploaders: Thomas Moulard <thomas.moulard@gmail.com>
 Build-Depends: debhelper (>= 9), cmake (>= 2.6),
-	       doxygen (>= 1.6.3),
-	       libopencv-dev (>= 2.1.0),
-	       libopencv-highgui-dev (>= 2.1.0),
+	       doxygen (>= 1.6.3), doxygen-latex,
+	       libopencv-dev,
+	       libopencv-highgui-dev,
 	       liblapack-dev (>= 3.2),
 	       libcoin60-dev (>= 3.1.2),
 	       libsoqt4-dev (>= 1.4.2~svn20090224),
 	       libogre-dev (>= 1.7.4),
-	       libdc1394-22-dev (>= 2.1.2),
+	       libdc1394-22-dev (>= 2.1.2) [linux-any],
 	       libxml2-dev (>= 2.7.6),
 	       libjpeg-dev,
-	       libpng12-dev (>= 1.2.42),
+	       libpng-dev (>= 1.2.42),
 	       graphviz (>= 2.20.2),
-	       libswscale-dev (>= 4:0.5.1),
-	       libavutil-dev (>= 4:0.5.1),
-	       libavformat-dev (>= 4:0.5.1),
-	       libavcodec-dev (>= 4:0.5.1),
-	       libbz2-dev (>= 1.0.5-4),
-	       libx11-dev (>= 2:1.3.2),
+	       libswscale-dev (>= 0.5.1),
+	       libavutil-dev (>= 0.5.1),
+	       libavformat-dev (>= 0.5.1),
+	       libavcodec-dev (>= 0.5.1),
+	       libbz2-dev (>= 1.0.5),
+	       libx11-dev (>= 1.3.2),
 	       libv4l-dev (>=0.6.4),
 	       libusb-dev,
-	       libfreenect-dev (>= 1:0.0.1)
+	       libfreenect-dev (>= 0.0.1),
+	       libois-dev
 Standards-Version: 3.9.3
 Vcs-Git: git://github.com/thomas-moulard/visp-deb.git
 Vcs-browser: https://github.com/thomas-moulard/visp-deb
 Section: libs
 Homepage: http://www.irisa.fr/lagadic/visp/visp.html
 
-Package: libvisp2-dev
+Package: libvisp-dev
 Section: libdevel
 Architecture: any
-Depends: libopencv-dev (>= 2.1.0),
-	 libopencv-highgui-dev (>= 2.1.0),
+Depends: libopencv-dev,
+	 libopencv-highgui-dev,
 	 liblapack-dev (>= 3.2),
 	 libcoin60-dev (>= 3.1.2),
 	 libsoqt4-dev (>= 1.4.2~svn20090224),
 	 libogre-dev (>= 1.7.4),
-	 libdc1394-22-dev (>= 2.1.2),
+	 libdc1394-22-dev (>= 2.1.2) [linux-any],
 	 libxml2-dev (>= 2.7.6),
 	 libjpeg-dev,
-	 libpng12-dev (>= 1.2.42),
-	 libswscale-dev (>= 4:0.5.1),
-	 libavutil-dev (>= 4:0.5.1),
-	 libavformat-dev (>= 4:0.5.1),
-	 libavcodec-dev (>= 4:0.5.1),
-	 libbz2-dev (>= 1.0.5-4),
-	 libx11-dev (>= 2:1.3.2),
+	 libpng-dev (>= 1.2.42),
+	 libswscale-dev (>= 0.5.1),
+	 libavutil-dev (>= 0.5.1),
+	 libavformat-dev (>= 0.5.1),
+	 libavcodec-dev (>= 0.5.1),
+	 libbz2-dev (>= 1.0.5),
+	 libx11-dev (>= 1.3.2),
 	 libv4l-dev (>=0.6.4),
 	 libusb-dev,
-	 libfreenect-dev (>= 1:0.0.1),
+	 libfreenect-dev (>= 0.0.1),
+	 libois-dev,
 	 ${misc:Depends}
-Description: Visual Servoing Platform development files
+Description: visual servoing library - development files
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
  developing applications in visual tracking and visual servoing.
@@ -63,12 +66,12 @@ Description: Visual Servoing Platform development files
  This package contains development files (headers and shared library
  symbolic link).
 
-Package: libvisp2
+Package: libvisp
 Architecture: any
 Pre-depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Multi-Arch: same
-Description: Visual Servoing Platform
+Description: visual servoing library
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
  developing applications in visual tracking and visual servoing.
@@ -76,11 +79,11 @@ Description: Visual Servoing Platform
  ViSP can be useful in robotics, computer vision, augmented reality and
  computer animation.
 
-Package: libvisp2-dbg
+Package: libvisp-dbg
 Architecture: any
 Section: debug
-Depends: libvisp2 (= ${binary:Version}), ${misc:Depends}
-Description: Visual Servoing Platform debugging symbols
+Depends: libvisp (= ${binary:Version}), ${misc:Depends}
+Description: visual servoing library - debugging symbols
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
  developing applications in visual tracking and visual servoing.
