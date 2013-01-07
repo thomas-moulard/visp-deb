@@ -9,10 +9,6 @@
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
 
-#export CC=/usr/lib/ccache/gcc
-#export CXX=/usr/lib/ccache/g++
-#export DEB_BUILD_OPTIONS="parallel=8"
-
 .PHONY: override_dh_auto_configure override_dh_strip override_dh_auto_test
 
 %:
@@ -38,6 +34,6 @@ override_dh_auto_configure:
 		-DCMAKE_INSTALL_LIBDIR:STRING="lib/$(DEB_HOST_MULTIARCH)"
 
 override_dh_strip:
-	dh_strip -a --dbg-package=libvisp2-dbg
+	dh_strip -a --dbg-package=libvisp-dbg
 
 override_dh_auto_test:
