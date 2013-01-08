@@ -1,3 +1,4 @@
+usr/bin/visp-config
 usr/include/*
 usr/lib/*/libvisp.so
 usr/share/visp/*.cmake
