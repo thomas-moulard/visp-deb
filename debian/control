@@ -1,59 +1,61 @@
 Source: visp
-Priority: extra
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Thomas Moulard <thomas.moulard@gmail.com>
-Build-Depends: debhelper (>= 9), cmake (>= 2.6),
-	       doxygen (>= 1.6.3), doxygen-latex,
-	       libopencv-dev,
-	       liblapack-dev (>= 3.2),
-	       libcoin60-dev (>= 3.1.2),
-	       libsoqt4-dev (>= 1.4.2~svn20090224),
-	       libogre-dev (>= 1.7.4),
-	       libdc1394-22-dev (>= 2.1.2) [linux-any],
-	       libxml2-dev (>= 2.7.6),
-	       libjpeg-dev,
-	       libpng-dev,
-	       graphviz (>= 2.20.2),
-	       libswscale-dev (>= 0.5.1),
-	       libavutil-dev (>= 0.5.1),
-	       libavformat-dev (>= 0.5.1),
-	       libavcodec-dev (>= 0.5.1),
-	       libbz2-dev (>= 1.0.5),
-	       libx11-dev (>= 1.3.2),
-	       libv4l-dev (>= 0.6.4),
-	       libusb-dev,
-	       libfreenect-dev (>= 0.0.1),
-	       libois-dev
-Standards-Version: 3.9.3
-Vcs-Git: git://github.com/thomas-moulard/visp-deb.git
-Vcs-browser: https://github.com/thomas-moulard/visp-deb
 Section: libs
+Priority: extra
+Build-Depends: debhelper (>= 9),
+               cmake,
+               doxygen,
+               doxygen-latex,
+               libopencv-dev,
+               liblapack-dev,
+               libcoin60-dev,
+               libsoqt4-dev,
+               libogre-dev (>= 1.7.4),
+               libdc1394-22-dev,
+               libxml2-dev,
+               libjpeg-dev,
+               libpng-dev,
+               graphviz,
+               libswscale-dev,
+               libavutil-dev,
+               libavformat-dev,
+               libavcodec-dev,
+               libbz2-dev,
+               libx11-dev,
+               libv4l-dev,
+               libusb-dev,
+               libfreenect-dev,
+               libois-dev
+Standards-Version: 3.9.4
+Vcs-Browser: https://github.com/thomas-moulard/visp-deb
+Vcs-Git: git://github.com/thomas-moulard/visp-deb.git
 Homepage: http://www.irisa.fr/lagadic/visp/visp.html
 
 Package: libvisp-dev
-Section: libdevel
 Architecture: any
+Section: libdevel
 Depends: libopencv-dev,
-	 liblapack-dev (>= 3.2),
-	 libcoin60-dev (>= 3.1.2),
-	 libsoqt4-dev (>= 1.4.2~svn20090224),
-	 libogre-dev (>= 1.7.4),
-	 libdc1394-22-dev (>= 2.1.2) [linux-any],
-	 libxml2-dev (>= 2.7.6),
-	 libjpeg-dev,
-	 libpng-dev,
-	 libswscale-dev (>= 0.5.1),
-	 libavutil-dev (>= 0.5.1),
-	 libavformat-dev (>= 0.5.1),
-	 libavcodec-dev (>= 0.5.1),
-	 libbz2-dev (>= 1.0.5),
-	 libx11-dev (>= 1.3.2),
-	 libv4l-dev (>= 0.6.4),
-	 libusb-dev,
-	 libfreenect-dev (>= 0.0.1),
-	 libois-dev,
-	 libvisp2 (= ${binary:Version}),
-	 ${misc:Depends}
+         liblapack-dev,
+         libcoin60-dev,
+         libsoqt4-dev,
+         libogre-dev (>= 1.7.4),
+         libdc1394-22-dev,
+         libxml2-dev,
+         libjpeg-dev,
+         libpng-dev,
+         libswscale-dev,
+         libavutil-dev,
+         libavformat-dev,
+         libavcodec-dev,
+         libbz2-dev,
+         libx11-dev,
+         libv4l-dev,
+         libusb-dev,
+         libfreenect-dev,
+         libois-dev,
+         libvisp2 (= ${binary:Version}),
+         ${misc:Depends}
 Suggests: libvisp-doc
 Description: visual servoing library - development files
  ViSP, standing for Visual Servoing Platform, is unique. This software
@@ -68,9 +70,10 @@ Description: visual servoing library - development files
 
 Package: libvisp2
 Architecture: any
-Pre-depends: ${misc:Pre-Depends}
-Depends: ${shlibs:Depends}, ${misc:Depends}
 Multi-Arch: same
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
 Description: visual servoing library
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
@@ -82,7 +85,8 @@ Description: visual servoing library
 Package: libvisp2-dbg
 Architecture: any
 Section: debug
-Depends: libvisp2 (= ${binary:Version}), ${misc:Depends}
+Depends: libvisp2 (= ${binary:Version}),
+         ${misc:Depends}
 Description: visual servoing library - debugging symbols
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
