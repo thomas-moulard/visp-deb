@@ -4,6 +4,7 @@ Uploaders: Thomas Moulard <thomas.moulard@gmail.com>
 Section: libs
 Priority: extra
 Build-Depends: debhelper (>= 9),
+	       hardening-wrapper,
                cmake,
                doxygen,
                doxygen-latex,

@@ -1,5 +1,8 @@
 #!/usr/bin/make -f
 
+export DEB_BUILD_HARDENING=1
+export DEB_BUILD_HARDENING_PIE=0
+
 .PHONY: override_dh_auto_configure	\
 	override_dh_auto_build		\
 	override_dh_strip		\
