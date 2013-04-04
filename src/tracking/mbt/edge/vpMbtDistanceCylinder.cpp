@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMbtDistanceCylinder.cpp 3672 2012-04-04 15:49:57Z ayol $
+ * $Id: vpMbtDistanceCylinder.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,8 +43,6 @@
  *****************************************************************************/
 
 #include <visp/vpConfig.h>
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 /*!
  \file vpMbtDistanceCylinder.cpp
@@ -121,7 +119,7 @@ vpMbtDistanceCylinder::project(const vpHomogeneousMatrix &cMo)
   
   \param _p1 : The first extremity on the axis.
   \param _p2 : The second extremity on the axis.
-  \param _p3 : A point of the cylinder to determine a radius.
+  \param r : Radius of the cylinder.
 */
 void
 vpMbtDistanceCylinder::buildFrom(const vpPoint &_p1, const vpPoint &_p2, const double r)
@@ -721,6 +719,4 @@ vpMbtDistanceCylinder::computeInteractionMatrixError(const vpHomogeneousMatrix &
       j++;
     }
 }
-
-#endif
 

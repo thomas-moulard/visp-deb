@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpQuaternionVector.cpp 3652 2012-03-27 12:57:23Z fspindle $
+ * $Id: vpQuaternionVector.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -166,5 +166,5 @@ void vpQuaternionVector::buildFrom(const vpRotationMatrix &R)
   theta *= 0.5;
 
   double sinTheta_2 = sin(theta);
-  set( cos(theta), u[0] * sinTheta_2, u[1] * sinTheta_2, u[2] * sinTheta_2);
+  set( u[0] * sinTheta_2, u[1] * sinTheta_2, u[2] * sinTheta_2, cos(theta) );
 }

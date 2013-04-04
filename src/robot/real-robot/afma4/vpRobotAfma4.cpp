@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpRobotAfma4.cpp 3808 2012-06-25 16:37:59Z fspindle $
+ * $Id: vpRobotAfma4.cpp 4107 2013-02-06 10:04:49Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,6 +45,8 @@
 
 #include <signal.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include <visp/vpRobotException.h>
 #include <visp/vpExponentialMap.h>
@@ -104,7 +106,7 @@ void emergencyStopAfma4(int signo)
   PrimitiveSTOP_Afma4();
   std::cout << "Robot was stopped\n";
 
-  // Free allocated ressources
+  // Free allocated resources
   // ShutDownConnection(); // Some times cannot exit here when Ctrl-C
 
   fprintf(stdout, "Application ");
@@ -129,7 +131,7 @@ void emergencyStopAfma4(int signo)
   It also set the robot state to vpRobot::STATE_STOP.
 
 */
-vpRobotAfma4::vpRobotAfma4 (void)
+vpRobotAfma4::vpRobotAfma4 (bool verbose)
   :
   vpAfma4 (),
   vpRobot ()
@@ -160,7 +162,9 @@ vpRobotAfma4::vpRobotAfma4 (void)
   signal(SIGKILL, emergencyStopAfma4);
   signal(SIGQUIT, emergencyStopAfma4);
 
-  std::cout << "Open communication with MotionBlox.\n";
+  setVerbose(verbose);
+  if (verbose_)
+    std::cout << "Open communication with MotionBlox.\n";
   try {
     this->init();
     this->setRobotState(vpRobot::STATE_STOP) ;
@@ -207,7 +211,7 @@ vpRobotAfma4::init (void)
   first_time_getdis = true;
 
   // Initialize the firewire connection
-  Try( stt = InitializeConnection() );
+  Try( stt = InitializeConnection(verbose_) );
 
   if (stt != SUCCESS) {
     vpERROR_TRACE ("Cannot open connexion with the motionblox.");
@@ -233,25 +237,26 @@ vpRobotAfma4::init (void)
   CAL_Wait(0.1);
 
   // Print the robot status
-  std::cout << "Robot status: ";
-  switch(EStopStatus) {
-  case ESTOP_AUTO: 
-  case ESTOP_MANUAL: 
-    if (HIPowerStatus == 0)
-      std::cout << "Power is OFF" << std::endl;
-    else
-      std::cout << "Power is ON" << std::endl;
-    break;
-  case ESTOP_ACTIVATED: 
-    std::cout << "Emergency stop is activated" << std::endl;
-    break;
-  default: 
-    std::cout << "Sorry there is an error on the emergency chain." << std::endl;
-    std::cout << "You have to call Adept for maintenance..." << std::endl;
-    // Free allocated ressources
+  if (verbose_) {
+    std::cout << "Robot status: ";
+    switch(EStopStatus) {
+    case ESTOP_AUTO:
+    case ESTOP_MANUAL:
+      if (HIPowerStatus == 0)
+        std::cout << "Power is OFF" << std::endl;
+      else
+        std::cout << "Power is ON" << std::endl;
+      break;
+    case ESTOP_ACTIVATED:
+      std::cout << "Emergency stop is activated" << std::endl;
+      break;
+    default:
+      std::cout << "Sorry there is an error on the emergency chain." << std::endl;
+      std::cout << "You have to call Adept for maintenance..." << std::endl;
+      // Free allocated resources
+    }
+    std::cout << std::endl;
   }
-  std::cout << std::endl;
-
   // get real joint min/max from the MotionBlox
   Try( PrimitiveJOINT_MINMAX_Afma4(_joint_min, _joint_max) );
 //   for (unsigned int i=0; i < njoint; i++) {
@@ -272,7 +277,7 @@ vpRobotAfma4::init (void)
   if (TryStt < 0) {
     // Power off the robot
     PrimitivePOWEROFF_Afma4();
-    // Free allocated ressources
+    // Free allocated resources
     ShutDownConnection();
 
     std::cout << "Cannot open connexion with the motionblox..." << std::endl;
@@ -291,7 +296,7 @@ vpRobotAfma4::init (void)
 
   Destructor.
 
-  Free allocated ressources.
+  Free allocated resources.
 */
 vpRobotAfma4::~vpRobotAfma4 (void)
 {
@@ -312,7 +317,7 @@ vpRobotAfma4::~vpRobotAfma4 (void)
 //     Try( PrimitivePOWEROFF_Afma4() );
 //   }
 
-  // Free allocated ressources
+  // Free allocated resources
   ShutDownConnection();
 
   vpRobotAfma4::robotAlreadyCreated = false;
@@ -415,34 +420,38 @@ vpRobotAfma4::powerOn(void)
   UInt32 HIPowerStatus;
   UInt32 EStopStatus;
   bool firsttime = true;
-  int nitermax = 10;
+  unsigned int nitermax = 10;
 
-  for (int i=0; i<nitermax; i++) {
-    Try( PrimitiveSTATUS_Afma4(NULL, NULL, &EStopStatus, NULL, NULL, NULL, 
-			       &HIPowerStatus));
-    switch(EStopStatus) {
-    case ESTOP_AUTO: break;
-    case ESTOP_MANUAL: break;
-    case ESTOP_ACTIVATED:
+  for (unsigned int i=0; i<nitermax; i++) {
+    Try( PrimitiveSTATUS_Afma4(NULL, NULL, &EStopStatus, NULL, NULL, NULL,
+                                  &HIPowerStatus));
+    if (EStopStatus == ESTOP_AUTO) {
+      break; // exit for loop
+    }
+    else if (EStopStatus == ESTOP_MANUAL) {
+      break; // exit for loop
+    }
+    else if (EStopStatus == ESTOP_ACTIVATED) {
       if (firsttime) {
-	std::cout << "Emergency stop is activated! \n"
-		  << "Check the emergency stop button and push the yellow button before continuing." << std::endl;
-	firsttime = false;
+        std::cout << "Emergency stop is activated! \n"
+            << "Check the emergency stop button and push the yellow button before continuing." << std::endl;
+        firsttime = false;
       }
       fprintf(stdout, "Remaining time %ds  \r", nitermax-i);
       fflush(stdout);
       CAL_Wait(1);
-      break;
-    default: 
+    }
+    else {
       std::cout << "Sorry there is an error on the emergency chain." << std::endl;
       std::cout << "You have to call Adept for maintenance..." << std::endl;
-      // Free allocated ressources
+      // Free allocated resources
       ShutDownConnection();
       exit(0);
     }
   }
 
-  std::cout << std::endl;
+  if (EStopStatus == ESTOP_ACTIVATED)
+    std::cout << std::endl;
 
   if (EStopStatus == ESTOP_ACTIVATED) {
     std::cout << "Sorry, cannot power on the robot." << std::endl;
@@ -566,9 +575,10 @@ void
 vpRobotAfma4::get_cVf(vpVelocityTwistMatrix &cVf)
 {
   double position[this->njoint];
+  double timestamp;
 
   InitTry;
-  Try( PrimitiveACQ_POS_Afma4(position) );
+  Try( PrimitiveACQ_POS_Afma4(position, &timestamp) );
   CatchPrint();
 
   vpColVector q(this->njoint);
@@ -616,9 +626,10 @@ vpRobotAfma4::get_eJe(vpMatrix &eJe)
 {
 
   double position[this->njoint];
+  double timestamp;
 
   InitTry;
-  Try( PrimitiveACQ_POS_Afma4(position) );
+  Try( PrimitiveACQ_POS_Afma4(position, &timestamp) );
   CatchPrint();
 
   vpColVector q(this->njoint);
@@ -648,14 +659,13 @@ vpRobotAfma4::get_eJe(vpMatrix &eJe)
   \sa vpAfma4::get_fJe()
 */
 
-  void
-  vpRobotAfma4::get_fJe(vpMatrix &fJe)
+void vpRobotAfma4::get_fJe(vpMatrix &fJe)
 {
-
   double position[6];
+  double timestamp;
 
   InitTry;
-  Try( PrimitiveACQ_POS_Afma4(position) );
+  Try( PrimitiveACQ_POS_Afma4(position, &timestamp) );
   CatchPrint();
 
   vpColVector q(6);
@@ -974,6 +984,16 @@ void vpRobotAfma4::setPosition(const char *filename)
 }
 
 /*!
+  Returns the robot controller current time (in second) since last robot power on.
+*/
+double vpRobotAfma4::getTime() const
+{
+  double timestamp;
+  PrimitiveACQ_TIME_Afma4(&timestamp);
+  return timestamp;
+}
+
+/*!
 
   Get the current position of the robot.
 
@@ -1001,6 +1021,8 @@ void vpRobotAfma4::setPosition(const char *filename)
   the translation tx, ty, tz in meters (like a vpTranslationVector), and the
   last 3 values to the rx, ry, rz rotation (like a vpRxyzVector). The code
   below show how to convert this position into a vpHomogenousMatrix:
+
+  \param timestamp : Time in second since last robot power on.
 
   \code
   vpRobotAfma4 robot;
@@ -1032,7 +1054,7 @@ void vpRobotAfma4::setPosition(const char *filename)
 */
 void
 vpRobotAfma4::getPosition (const vpRobot::vpControlFrameType frame,
-			   vpColVector & position)
+                           vpColVector & position, double &timestamp)
 {
 
   InitTry;
@@ -1046,7 +1068,7 @@ vpRobotAfma4::getPosition (const vpRobot::vpControlFrameType frame,
   }
   case vpRobot::ARTICULAR_FRAME : {
     double _q[njoint];
-    Try( PrimitiveACQ_POS_Afma4(_q) );
+    Try( PrimitiveACQ_POS_Afma4(_q, &timestamp) );
     for (unsigned int i=0; i < this->njoint; i ++) {
       position[i] = _q[i];
     }
@@ -1055,7 +1077,7 @@ vpRobotAfma4::getPosition (const vpRobot::vpControlFrameType frame,
   }
   case vpRobot::REFERENCE_FRAME : {
     double _q[njoint];
-    Try( PrimitiveACQ_POS_Afma4(_q) );
+    Try( PrimitiveACQ_POS_Afma4(_q, &timestamp) );
 
     vpColVector q(this->njoint);
     for (unsigned int i=0; i < this->njoint; i++)
@@ -1094,6 +1116,22 @@ vpRobotAfma4::getPosition (const vpRobot::vpControlFrameType frame,
   }
 
   return;
+}
+
+/*!
+
+  Get the current position of the robot.
+
+  Similar as getPosition(const vpRobot::vpControlFrameType frame, vpColVector &, double &).
+
+  The difference is here that the timestamp is not used.
+
+*/
+void vpRobotAfma4::getPosition(const vpRobot::vpControlFrameType frame,
+                               vpColVector &position)
+{
+  double timestamp;
+  getPosition(frame, position, timestamp);
 }
 
 /*!
@@ -1216,7 +1254,7 @@ vpRobotAfma4::setVelocity (const vpRobot::vpControlFrameType frame,
   if (frame == vpRobot::CAMERA_FRAME) {
     vpColVector vel_max(6);
 
-    for (int i=0; i<3; i++) {
+    for (unsigned int i=0; i<3; i++) {
       vel_max[i]   = getMaxTranslationVelocity();
       vel_max[i+3] = getMaxRotationVelocity();
     }
@@ -1312,6 +1350,8 @@ vpRobotAfma4::setVelocity (const vpRobot::vpControlFrameType frame,
   \param velocity : Measured velocities. Translations are expressed in m/s
   and rotations in rad/s.
 
+  \param timestamp : Time in second since last robot power on.
+
   \warning In camera frame, reference frame and mixt frame, the representation
   of the rotation is ThetaU. In that cases, \f$velocity = [\dot x, \dot y, \dot
   z, \dot {\theta U}_x, \dot {\theta U}_y, \dot {\theta U}_z]\f$.
@@ -1340,8 +1380,9 @@ vpRobotAfma4::setVelocity (const vpRobot::vpControlFrameType frame,
   robot.getVelocity(vpRobot::ARTICULAR_FRAME, q_dot_mes); // q_dot_mes =0
   // q_dot_mes is resized to 4, the number of joint
 
+  double timestamp;
   while (1) {
-     robot.getVelocity(vpRobot::ARTICULAR_FRAME, q_dot_mes);
+     robot.getVelocity(vpRobot::ARTICULAR_FRAME, q_dot_mes, timestamp);
      vpTime::wait(40); // wait 40 ms
      // here q_dot_mes is equal to [M_PI/8, 0.2, M_PI/4, M_PI/16]
   }
@@ -1349,7 +1390,7 @@ vpRobotAfma4::setVelocity (const vpRobot::vpControlFrameType frame,
 */
 void
 vpRobotAfma4::getVelocity (const vpRobot::vpControlFrameType frame,
-			   vpColVector & velocity)
+                           vpColVector & velocity, double &timestamp)
 {
 
   switch (frame) {
@@ -1361,20 +1402,18 @@ vpRobotAfma4::getVelocity (const vpRobot::vpControlFrameType frame,
 
   velocity = 0;
 
-
   double q[4];
   vpColVector q_cur(4);
   vpHomogeneousMatrix fMc_cur;
   vpHomogeneousMatrix cMc; // camera displacement
-
+  double time_cur;
 
   InitTry;
 
-  // Get the actual time
-  double time_cur = vpTime::measureTimeSecond();
-
   // Get the current joint position
-  Try( PrimitiveACQ_POS_Afma4(q) );
+  Try( PrimitiveACQ_POS_Afma4(q, &timestamp) );
+  time_cur = timestamp;
+
   for (unsigned int i=0; i < this->njoint; i ++) {
     q_cur[i] = q[i];
   }
@@ -1396,8 +1435,7 @@ vpRobotAfma4::getVelocity (const vpRobot::vpControlFrameType frame,
     }
 
     case vpRobot::ARTICULAR_FRAME: {
-      velocity = (q_cur - q_prev_getvel)
-	/ (time_cur - time_prev_getvel);
+      velocity = (q_cur - q_prev_getvel) / (time_cur - time_prev_getvel);
       break ;
     }
 
@@ -1449,6 +1487,20 @@ vpRobotAfma4::getVelocity (const vpRobot::vpControlFrameType frame,
   }
 }
 
+/*!
+
+  Get robot velocities.
+
+  The behavior is the same than getVelocity(const vpRobot::vpControlFrameType, vpColVector &, double &)
+  except that the timestamp is not returned.
+
+  */
+void vpRobotAfma4::getVelocity(const vpRobot::vpControlFrameType frame,
+                               vpColVector & velocity)
+{
+  double timestamp;
+  getVelocity(frame, velocity, timestamp);
+}
 
 
 
@@ -1457,6 +1509,8 @@ vpRobotAfma4::getVelocity (const vpRobot::vpControlFrameType frame,
   Get the robot velocities.
 
   \param frame : Frame in wich velocities are mesured.
+
+  \param timestamp : Time in second since last robot power on.
 
   \return Measured velocities. Translations are expressed in m/s
   and rotations in rad/s.
@@ -1481,18 +1535,36 @@ vpRobotAfma4::getVelocity (const vpRobot::vpControlFrameType frame,
   // q_dot_mes is resized to 4, the number of joint
 
   vpColVector q_dot_mes; // Measured velocities
+  double timestamp;
   while (1) {
-     q_dot_mes = robot.getVelocity(vpRobot::ARTICULAR_FRAME);
+     q_dot_mes = robot.getVelocity(vpRobot::ARTICULAR_FRAME, timestamp);
      vpTime::wait(40); // wait 40 ms
      // here q_dot_mes is equal to [M_PI/8, 0.2, M_PI/4, M_PI/16]
   }
   \endcode
 */
 vpColVector
-vpRobotAfma4::getVelocity (vpRobot::vpControlFrameType frame)
+vpRobotAfma4::getVelocity (vpRobot::vpControlFrameType frame, double &timestamp)
 {
   vpColVector velocity;
-  getVelocity (frame, velocity);
+  getVelocity (frame, velocity, timestamp);
+
+  return velocity;
+}
+
+/*!
+
+  Get robot velocities.
+
+  The behavior is the same than getVelocity(const vpRobot::vpControlFrameType, double &)
+  except that the timestamp is not returned.
+
+  */
+vpColVector vpRobotAfma4::getVelocity (vpRobot::vpControlFrameType frame)
+{
+  vpColVector velocity;
+  double timestamp;
+  getVelocity (frame, velocity, timestamp);
 
   return velocity;
 }
@@ -1734,11 +1806,12 @@ vpRobotAfma4::getDisplacement(vpRobot::vpControlFrameType frame,
 
   double q[6];
   vpColVector q_cur(6);
+  double timestamp;
 
   InitTry;
 
   // Get the current joint position
-  Try( PrimitiveACQ_POS_Afma4(q) );
+  Try( PrimitiveACQ_POS_Afma4(q, &timestamp) );
   for (unsigned int i=0; i < njoint; i ++) {
     q_cur[i] = q[i];
   }

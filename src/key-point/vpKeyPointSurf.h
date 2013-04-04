@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpKeyPointSurf.h 3730 2012-05-14 17:09:58Z fspindle $
+ * $Id: vpKeyPointSurf.h 4137 2013-02-14 06:56:53Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -58,7 +58,7 @@
 #include <list>
 #include <vector>
 
-#if defined (VISP_HAVE_OPENCV) 
+#if defined (VISP_HAVE_OPENCV_NONFREE)
 
 
 #if (VISP_HAVE_OPENCV_VERSION >= 0x020400) // Require opencv >= 2.4.0
@@ -310,9 +310,4 @@ class VISP_EXPORT vpKeyPointSurf : public vpBasicKeyPoint
 
 #endif
 
-/*
- * Local variables:
- * c-basic-offset: 4
- * End:
- */
 

@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpIoTools.h 3547 2012-02-01 14:34:43Z fspindle $
+ * $Id: vpIoTools.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -160,6 +160,7 @@ public:
   static std::string getUserName();
   static std::string getenv(const char *env);
   static std::string getenv(std::string &env);
+  static void getVersion(const std::string &version, unsigned int &major, unsigned int &minor, unsigned int &patch);  
   static bool checkDirectory(const char *dirname);
   static bool checkDirectory(const std::string &dirname);
   static bool checkFilename(const char *filename);

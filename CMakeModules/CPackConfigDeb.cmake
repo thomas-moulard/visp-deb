@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: CPackConfigDeb.cmake 3845 2012-07-15 10:31:20Z fspindle $
+# $Id: CPackConfigDeb.cmake 4133 2013-02-13 09:27:05Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -158,6 +158,9 @@ ENDIF()
 IF(USE_LIBFREENECT)
   set(CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS}, freenect (>=1:0.0.1)")
 ENDIF()
+if(USE_LIBUSB_1)
+  set(CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS}, libusb-1.0-0-dev (>=2:1.0)")
+endif()
 
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS}, libc6 (>=2.4)")
 

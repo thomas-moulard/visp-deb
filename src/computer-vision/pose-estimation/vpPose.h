@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpPose.h 3809 2012-06-25 20:26:56Z fspindle $
+ * $Id: vpPose.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -110,13 +110,13 @@ private:
   //! Covariance matrix
   vpMatrix covarianceMatrix;
   
-  int ransacNbInlierConsensus;
+  unsigned int ransacNbInlierConsensus;
   int ransacMaxTrials;
   std::vector<vpPoint> ransacInliers;
   double ransacThreshold;
 
 protected:
-  double computeResidualDementhon(vpHomogeneousMatrix &cMo) ;
+  double computeResidualDementhon(const vpHomogeneousMatrix &cMo) ;
 
   // method used in poseDementhonPlan()
   int calculArbreDementhon(vpMatrix &b, vpColVector &U, vpHomogeneousMatrix &cMo) ;
@@ -135,11 +135,9 @@ public:
   void computePose(vpPoseMethodType methode, vpHomogeneousMatrix &cMo) ;
   //! compute the residual (i.e., the quality of the result)
   //! compute the residual (in meter for pose M)
-  double computeResidual(vpHomogeneousMatrix &cMo) ;
-  //! compute the residual (in meter)
-  double computeResidual() ;
+  double computeResidual(const vpHomogeneousMatrix &cMo) const ;
   //! test the coplanarity of the points
-  bool coplanar() ;
+  bool coplanar(int &coplanar_plane_type) ;
   void displayModel(vpImage<unsigned char> &I,
                     vpCameraParameters &cam,
                     vpColor col=vpColor::none) ;
@@ -153,7 +151,7 @@ public:
   //! compute the pose using Dementhon approach (non planar object)
   void poseDementhonNonPlan(vpHomogeneousMatrix &cMo) ;
   //! compute the pose using Lagrange approach (planar object)
-  void poseLagrangePlan(vpHomogeneousMatrix &cMo) ;
+  void poseLagrangePlan(vpHomogeneousMatrix &cMo, const int coplanar_plane_type=0) ;
   //! compute the pose using Lagrange approach (non planar object)
   void poseLagrangeNonPlan(vpHomogeneousMatrix &cMo) ;
   //! compute the pose using the Lowe approach (i.e., using the
@@ -170,10 +168,10 @@ public:
   void setLambda(double a) { lambda = a ; }
   void setVvsIterMax(int nb) { vvsIterMax = nb ; }
   
-  void setRansacNbInliersToReachConsensus(const int &nbC){ ransacNbInlierConsensus = nbC; }
+  void setRansacNbInliersToReachConsensus(const unsigned int &nbC){ ransacNbInlierConsensus = nbC; }
   void setRansacThreshold(const double &t){ ransacThreshold = t; }
   void setRansacMaxTrials(const int &rM){ ransacMaxTrials = rM; }
-  int  getRansacNbInliers(){ return ransacInliers.size(); }
+  unsigned int getRansacNbInliers(){ return ransacInliers.size(); }
   std::vector<vpPoint> getRansacInliers(){ return ransacInliers; }
   
   /*!
@@ -210,7 +208,7 @@ public:
                      
   static void findMatch(std::vector<vpPoint> &p2D, 
                      std::vector<vpPoint> &p3D, 
-                     const int &numberOfInlierToReachAConsensus, 
+                     const unsigned int &numberOfInlierToReachAConsensus,
                      const double &threshold,
                      unsigned int &ninliers,
                      std::vector<vpPoint> &listInliers,
@@ -231,7 +229,7 @@ private:
 public:
   static void computeTransformation(vpColVector &x, unsigned int *ind, vpColVector &M) ;
   
-  static double computeResidual(vpColVector &x,  vpColVector &M, vpColVector &d) ;
+  static double computeResidual(const vpColVector &x,  const vpColVector &M, vpColVector &d) ;
   
   static bool degenerateConfiguration(vpColVector &x, unsigned int *ind) ;
   

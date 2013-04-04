@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: mbtTracking.cpp 3834 2012-07-03 10:36:30Z fspindle $
+ * $Id: mbtEdgeTracking.cpp 4121 2013-02-08 10:32:20Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,30 +42,29 @@
  *****************************************************************************/
 
 /*!
-  \example mbtTracking.cpp
+  \example mbtEdgeTracking.cpp
 
   \brief Example of model based tracking on an image sequence containing a cube.
 */
 
 #include <visp/vpConfig.h>
 #include <visp/vpDebug.h>
-
+#include <visp/vpDisplayD3D.h>
+#include <visp/vpDisplayGTK.h>
+#include <visp/vpDisplayGDI.h>
+#include <visp/vpDisplayOpenCV.h>
+#include <visp/vpDisplayX.h>
+#include <visp/vpHomogeneousMatrix.h>
 #include <visp/vpImageIo.h>
 #include <visp/vpIoTools.h>
 #include <visp/vpMath.h>
-#include <visp/vpHomogeneousMatrix.h>
-#include <visp/vpDisplayGTK.h>
-#include <visp/vpDisplayX.h>
-#include <visp/vpDisplayGDI.h>
-
 #include <visp/vpMbEdgeTracker.h>
-
 #include <visp/vpVideoReader.h>
 #include <visp/vpParseArgv.h>
 
-#if (defined VISP_HAVE_XML2)
+#if defined (VISP_HAVE_DISPLAY)
 
-#define GETOPTARGS  "x:m:i:n:dchtfC"
+#define GETOPTARGS  "x:m:i:n:dchtfCo"
 
 
 void usage(const char *name, const char *badparam)
@@ -125,6 +124,9 @@ OPTIONS:                                               \n\
      Disable the mouse click. Useful to automaze the \n\
      execution of this program without humain intervention.\n\
 \n\
+  -o\n\
+     Use Ogre3D for visibility tests\n\
+\n\
   -h \n\
      Print the help.\n\n");
 
@@ -133,7 +135,7 @@ OPTIONS:                                               \n\
 }
 
 
-bool getOptions(int argc, const char **argv, std::string &ipath, std::string &configFile, std::string &modelFile, std::string &initFile, bool &displayMovingEdge, bool &click_allowed, bool &display, bool& cao3DModel, bool& trackCylinder)
+bool getOptions(int argc, const char **argv, std::string &ipath, std::string &configFile, std::string &modelFile, std::string &initFile, bool &displayMovingEdge, bool &click_allowed, bool &display, bool& cao3DModel, bool& trackCylinder, bool &useOgre)
 {
   const char *optarg;
   int   c;
@@ -149,6 +151,7 @@ bool getOptions(int argc, const char **argv, std::string &ipath, std::string &co
     case 'c': click_allowed = false; break;
     case 'd': display = false; break;
     case 'C': trackCylinder = false; break;
+    case 'o' : useOgre = true; break;
     case 'h': usage(argv[0], NULL); return false; break;
 
     default:
@@ -185,6 +188,7 @@ main(int argc, const char ** argv)
   bool opt_display = true;
   bool cao3DModel = false;
   bool trackCylinder = true;
+  bool useOgre = false;
   
   // Get the VISP_IMAGE_PATH environment variable value
   char *ptenv = getenv("VISP_INPUT_IMAGE_PATH");
@@ -197,7 +201,7 @@ main(int argc, const char ** argv)
 
 
   // Read the command line options
-  if (!getOptions(argc, argv, opt_ipath, opt_configFile, opt_modelFile, opt_initFile, displayMovingEdge, opt_click_allowed, opt_display, cao3DModel, trackCylinder)) {
+  if (!getOptions(argc, argv, opt_ipath, opt_configFile, opt_modelFile, opt_initFile, displayMovingEdge, opt_click_allowed, opt_display, cao3DModel, trackCylinder, useOgre)) {
     return (-1);
   }
 
@@ -249,7 +253,7 @@ main(int argc, const char ** argv)
 #ifdef VISP_HAVE_COIN
         modelFile = opt_ipath + vpIoTools::path(modelFileWrl);
 #else
-        std::cerr << "Coin is not detected in ViSP. USe the .cao model instead." << std::endl;
+        std::cerr << "Coin is not detected in ViSP. Use the .cao model instead." << std::endl;
         modelFile = opt_ipath + vpIoTools::path(modelFileCao);
 #endif
       }
@@ -262,7 +266,7 @@ main(int argc, const char ** argv)
 #ifdef VISP_HAVE_COIN
         modelFile = env_ipath + vpIoTools::path(modelFileWrl);
 #else
-        std::cerr << "Coin is not detected in ViSP. USe the .cao model instead." << std::endl;
+        std::cerr << "Coin is not detected in ViSP. Use the .cao model instead." << std::endl;
         modelFile = env_ipath + vpIoTools::path(modelFileCao);
 #endif
       }
@@ -294,14 +298,18 @@ main(int argc, const char ** argv)
   vpDisplayX display;
 #elif defined VISP_HAVE_GDI
   vpDisplayGDI display;
-#elif defined VISP_HAVE_D3D
+#elif defined VISP_HAVE_OPENCV
+  vpDisplayOpenCV display;
+#elif defined VISP_HAVE_D3D9
   vpDisplayD3D display;
+#elif defined VISP_HAVE_GTK
+  vpDisplayGTK display;
 #else
   opt_display = false;
 #endif
   if (opt_display)
   {
-#if (defined VISP_HAVE_X11) || (defined VISP_HAVE_GDI) || (defined VISP_HAVE_D3D)
+#if (defined VISP_HAVE_DISPLAY)
     display.init(I, 100, 100, "Test tracking") ;
 #endif
     vpDisplay::display(I) ;
@@ -310,18 +318,39 @@ main(int argc, const char ** argv)
 
   vpMbEdgeTracker tracker;
   vpHomogeneousMatrix cMo;
-  
-  // Load tracker config file (camera parameters and moving edge settings)
+    
+  // Initialise the tracker: camera parameters, moving edge and KLT settings
+  vpCameraParameters cam;
+#if defined (VISP_HAVE_XML2)
+  // From the xml file
   tracker.loadConfigFile(configFile.c_str());
+#else
+  // By setting the parameters:
+  cam.initPersProjWithoutDistortion(547, 542, 338, 234);
+
+  vpMe me;
+  me.setMaskSize(5);
+  me.setMaskNumber(180);
+  me.setRange(7);
+  me.setThreshold(5000);
+  me.setMu1(0.5);
+  me.setMu2(0.5);
+  me.setMinSampleStep(4);
+  me.setNbTotalSample(250);
+
+  tracker.setCameraParameters(cam);
+  tracker.setMovingEdge(me);
+#endif
 
   // Display the moving edges, see documentation for the significations of the colour
   tracker.setDisplayMovingEdges(displayMovingEdge);
+  
+  // Tells if the tracker has to use Ogre3D for visibility tests
+  tracker.setOgreVisibilityTest(useOgre);
 
-  // initialise an instance of vpCameraParameters with the parameters from the tracker
-  vpCameraParameters cam;
+  // Retrieve the camera parameters from the tracker
   tracker.getCameraParameters(cam);
 
-  
   // Loop to position the cube
   if (opt_display && opt_click_allowed)
   {
@@ -385,7 +414,7 @@ main(int argc, const char ** argv)
       // display the 3D model  
       if (opt_display)
       {
-        tracker.display(I, cMo, cam, vpColor::darkRed, 1);
+        tracker.display(I, cMo, cam, vpColor::darkRed);
         // display the frame
         vpDisplay::displayFrame (I, cMo, cam, 0.05, vpColor::blue);
       }
@@ -406,8 +435,10 @@ main(int argc, const char ** argv)
   reader.close();
 
   // Cleanup memory allocated by xml library used to parse the xml config file in vpMbEdgeTracker::loadConfigFile()
+#if defined (VISP_HAVE_XML2)
   vpXmlParser::cleanup();
-
+#endif
+  
   return 0;
 }
 
@@ -415,7 +446,7 @@ main(int argc, const char ** argv)
 
 int main()
 {
-  std::cout << "Libxml2 is required to read the configuration of the tracker." << std::endl;
+  std::cout << "Display is required to run this example." << std::endl;
   return 0;
 }
 

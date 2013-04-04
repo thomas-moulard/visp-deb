@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: CMakeHeaderFileList.cmake 3806 2012-06-25 15:31:08Z ayol $
+# $Id: CMakeHeaderFileList.cmake 4056 2013-01-05 13:04:42Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -174,12 +174,18 @@ SET (HEADER_ROBOT
   robot/real-robot/ptu46/vpPtu46.h
   robot/real-robot/ptu46/vpRobotPtu46.h
   robot/real-robot/viper/vpViper.h
+  robot/real-robot/viper/vpViper650.h
   robot/real-robot/viper/vpViper850.h
+  robot/real-robot/viper/vpRobotViper650.h
   robot/real-robot/viper/vpRobotViper850.h
   robot/simulator-robot/vpRobotCamera.h
   robot/simulator-robot/vpRobotSimulator.h
-  robot/simulator-robot/vpSimulatorViper850.h
+  robot/simulator-robot/vpRobotWireFrameSimulator.h
   robot/simulator-robot/vpSimulatorAfma6.h
+  robot/simulator-robot/vpSimulatorCamera.h
+  robot/simulator-robot/vpSimulatorPioneer.h
+  robot/simulator-robot/vpSimulatorPioneerPan.h
+  robot/simulator-robot/vpSimulatorViper850.h
   )
 
 SET (HEADER_SERVO
@@ -257,13 +263,20 @@ SET (HEADER_TRACKING
   tracking/moving-edges/vpMeSite.h
   tracking/moving-edges/vpMeTracker.h
   tracking/moving-edges/vpMeNurbs.h
+
   tracking/mbt/vpMbTracker.h
-  tracking/mbt/vpMbtDistanceLine.h
-  tracking/mbt/vpMbtHiddenFace.h
-  tracking/mbt/vpMbtMeLine.h
-  tracking/mbt/vpMbEdgeTracker.h
-  tracking/mbt/vpMbtXmlParser.h
-  tracking/mbt/vpMbtDistanceCylinder.h
+  tracking/mbt/vpMbHiddenFaces.h 
+  tracking/mbt/edge/vpMbtDistanceLine.h
+  tracking/mbt/edge/vpMbtPolygon.h
+  tracking/mbt/edge/vpMbtMeLine.h
+  tracking/mbt/edge/vpMbEdgeTracker.h
+  tracking/mbt/edge/vpMbtXmlParser.h
+  tracking/mbt/edge/vpMbtDistanceCylinder.h
+  tracking/mbt/hybrid/vpMbEdgeKltTracker.h
+  tracking/mbt/klt/vpMbtKltPolygon.h
+  tracking/mbt/klt/vpMbKltTracker.h
+  tracking/mbt/klt/vpMbtKltXmlParser.h
+
   tracking/moments/vpMomentObject.h
   tracking/moments/vpMomentAlpha.h
   tracking/moments/vpMomentBasic.h

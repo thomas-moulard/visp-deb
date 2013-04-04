@@ -1,9 +1,9 @@
 @rem #############################################################################
 @rem #
-@rem # $Id: visp-config.bat.in 3583 2012-03-01 17:36:28Z fspindle $
+@rem # $Id: visp-config.bat.in 4057 2013-01-05 13:10:29Z fspindle $
 @rem #
 @rem # This file is part of the ViSP software.
-@rem # Copyright (C) 2005 - 2010 by INRIA. All rights reserved.
+@rem # Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 @rem # 
 @rem # This software is free software; you can redistribute it and/or
 @rem # modify it under the terms of the GNU General Public License
@@ -106,7 +106,7 @@ for %%a in (%*) do (
   if "%%a" == "--version" (
 	echo ViSP %VERSION% Visual Servoing Platform
 	echo.
-	echo Copyright 1998-2010 Inria. All rights reserved.
+	echo Copyright 2005 - 2013 Inria. All rights reserved.
 	goto END
   )
   if "%%a" == "--dumpversion" (
@@ -118,7 +118,7 @@ for %%a in (%*) do (
 
 :USAGE
 echo ViSP %VERSION% (Visual Servoing Platform)
-echo Copyright (C) 1998-2010 Inria. All rights reserved.
+echo Copyright (C) 2005 - 2013 Inria. All rights reserved.
 echo.
 echo Usage: %0 [--prefix] [--def] [--include] [--openmp] [--libpath] 
 echo [--libs-debug] [--libs-optimized] [--version] [--dumpversion] [--help]

@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMbEdgeTracker.cpp 2807 2010-09-14 10:14:54Z fspindle $
+ * $Id: vpMbEdgeTracker.cpp 4108 2013-02-06 15:15:34Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -64,6 +64,7 @@
 #include <visp/vpMbEdgeTracker.h>
 #include <visp/vpMbtDistanceLine.h>
 #include <visp/vpMbtXmlParser.h>
+#include <visp/vpMbtPolygon.h>
 
 #include <limits>
 #include <string>
@@ -82,7 +83,6 @@ vpMbEdgeTracker::vpMbEdgeTracker()
   lambda = 1;
   nbvisiblepolygone = 0;
   percentageGdPt = 0.4;
-  displayMe = false;
   computeCovariance = false;
 
   lines.resize(1);
@@ -92,6 +92,14 @@ vpMbEdgeTracker::vpMbEdgeTracker()
   lines[0].clear();
   cylinders[0].clear();
   Ipyramid.resize(0);
+  
+#ifdef VISP_HAVE_OGRE
+  faces.getOgreContext()->setWindowName("MBT Edge");
+#endif
+  useOgre = false;
+  
+  angleAppears = vpMath::rad(95);
+  angleDisappears = vpMath::rad(95);
 }
 
 /*!
@@ -130,28 +138,46 @@ vpMbEdgeTracker::~vpMbEdgeTracker()
 /*! 
   Set the moving edge parameters.
   
-  \param _me : an instance of vpMe containing all the desired parameters
+  \param me : an instance of vpMe containing all the desired parameters
 */
 void
-vpMbEdgeTracker::setMovingEdge(const vpMe &_me)
+vpMbEdgeTracker::setMovingEdge(const vpMe &me)
 {
-  this->me = _me;
+  this->me = me;
 
   for (unsigned int i = 0; i < scales.size(); i += 1){
     if(scales[i]){
       for(std::list<vpMbtDistanceLine*>::const_iterator it=lines[i].begin(); it!=lines[i].end(); ++it){
-        (*it)->setMovingEdge(&me) ;
+        (*it)->setMovingEdge(&(this->me)) ;
       }
 
       vpMbtDistanceCylinder *cy;
       for(std::list<vpMbtDistanceCylinder*>::const_iterator it=cylinders[i].begin(); it!=cylinders[i].end(); ++it){
         cy = *it;
-        cy->setMovingEdge(&me) ;
+        cy->setMovingEdge(&(this->me)) ;
       }
     }
   }
 }
 
+/*!
+  Use Ogre3D for visibility tests
+  
+  \warning This function has to be called before the initialisation of the tracker.
+  
+  \param v : True to use it, False otherwise
+*/
+void    
+vpMbEdgeTracker::setOgreVisibilityTest(const bool &v) 
+{
+  useOgre = v; 
+  if(useOgre){
+#ifndef VISP_HAVE_OGRE     
+    useOgre = false;
+    std::cout << "WARNING: ViSP dosen't have Ogre3D, basic visibility test will be used. setOgreVisibilityTest() set to false." << std::endl;
+#endif
+  }
+}
 
 /*!
   Compute the visual servoing loop to get the pose of the feature set.
@@ -219,7 +245,6 @@ vpMbEdgeTracker::computeVVS(const vpImage<unsigned char>& _I)
   double count = 0;
   
   /*** First phase ***/
-
   while ( reloop == true && iter<10)
   {
     if(iter==0)
@@ -244,7 +269,7 @@ vpMbEdgeTracker::computeVVS(const vpImage<unsigned char>& _I)
       {
         for(std::list<int>::const_iterator it = l->Lindex_polygon.begin(); it!=l->Lindex_polygon.end(); ++it){
           int index = *it;
-          if (l->hiddenface->isAppearing(index))
+          if (l->hiddenface->isAppearing((unsigned int)index))
           {
             fac = 0.2;
             break;
@@ -330,7 +355,7 @@ vpMbEdgeTracker::computeVVS(const vpImage<unsigned char>& _I)
     for(std::list<vpMbtDistanceCylinder*>::const_iterator it=cylinders[scaleLevel].begin(); it!=cylinders[scaleLevel].end(); ++it){
       cy = *it;
       cy->computeInteractionMatrixError(cMo, _I);
-      double fac = 0.2;
+      double fac = 1.0;
 
       std::list<vpMeSite>::const_iterator itCyl1;
       std::list<vpMeSite>::const_iterator itCyl2;
@@ -593,10 +618,9 @@ vpMbEdgeTracker::computeVVS(const vpImage<unsigned char>& _I)
     iter++;
   }
   
-  vpMatrix D; //Should be the M.diag(wi) * M.diag(wi).transpose() =  (M.diag(wi^2))  which is more efficient
-  D.diag(W_true);
-  
   if(computeCovariance){
+    vpMatrix D; //Should be the M.diag(wi) * M.diag(wi).transpose() =  (M.diag(wi^2))  which is more efficient
+    D.diag(W_true);
     covarianceMatrix = vpMatrix::computeCovarianceMatrix(L_true,v,-lambda*error,D);
   }
   
@@ -744,13 +768,12 @@ vpMbEdgeTracker::testTracking()
     }
   }
 
-  if (nbGoodPoint < percentageGdPt *(nbGoodPoint+nbBadPoint) || nbExpectedPoint < 2)
+  //if (nbGoodPoint < percentageGdPt *(nbGoodPoint+nbBadPoint) || nbExpectedPoint < 2)
+  // Compare the number of good points with the min between the number of expected points and number of points that are tracked
+  if ( ( (nbGoodPoint < percentageGdPt *nbExpectedPoint) && (nbGoodPoint < percentageGdPt *(nbGoodPoint+nbBadPoint)) ) // Modif FS
+       || nbExpectedPoint < 2)
   {
-    std::cout << "nbGoodPoint :" << nbGoodPoint << std::endl;
-    std::cout << "nbBadPoint :" << nbBadPoint << std::endl;
-    std::cout << "nbExpectedPoint :" << nbExpectedPoint << std::endl;
-    std::cout << "percentageGdPt: " << percentageGdPt << std::endl;
-    throw vpTrackingException(vpTrackingException::fatalError, "test Tracking fail");
+    throw vpTrackingException(vpTrackingException::fatalError, "Not enough points to track the object");
   }      
 }
 
@@ -764,7 +787,7 @@ vpMbEdgeTracker::testTracking()
  */
 void
 vpMbEdgeTracker::track(const vpImage<unsigned char> &I)
-{
+{ 
   initPyramid(I, Ipyramid);
   
 //  for (int lvl = ((int)scales.size()-1); lvl >= 0; lvl -= 1)
@@ -822,7 +845,7 @@ vpMbEdgeTracker::track(const vpImage<unsigned char> &I)
           throw vpTrackingException(vpTrackingException::fatalError, "test Tracking fail");
         }
         
-        if (displayMe)
+        if (displayFeatures)
         {
           if(lvl == 0){
             for(std::list<vpMbtDistanceLine*>::const_iterator it=lines[lvl].begin(); it!=lines[lvl].end(); ++it){
@@ -851,7 +874,7 @@ vpMbEdgeTracker::track(const vpImage<unsigned char> &I)
         
         // Looking for new visible face
         bool newvisibleface = false ;
-        visibleFace(cMo, newvisibleface) ;
+        visibleFace(I, cMo, newvisibleface) ;
         initMovingEdge(I,cMo) ;
 
         // Reinit the moving edge for the lines which need it.
@@ -872,7 +895,7 @@ vpMbEdgeTracker::track(const vpImage<unsigned char> &I)
       }
     }
   } while(lvl != 0);
-
+  
   cleanPyramid(Ipyramid);
 }
 
@@ -884,10 +907,19 @@ vpMbEdgeTracker::track(const vpImage<unsigned char> &I)
 void vpMbEdgeTracker::init(const vpImage<unsigned char>& I)
 {
 	bool a = false;
+
+#ifdef VISP_HAVE_OGRE 
+  if(useOgre){
+    if(!faces.isOgreInitialised())
+      faces.initOgre(cam);
+  }
+#endif
+  
   
   initPyramid(I, Ipyramid);
-  visibleFace(cMo, a);
+  visibleFace(I, cMo, a);
   unsigned int i=scales.size();
+  
   do {
     i--;
     if(scales[i]){
@@ -901,23 +933,52 @@ void vpMbEdgeTracker::init(const vpImage<unsigned char>& I)
 }
 
 /*!
-  Load the xml configuration file.
-  From the configuration file parameters write initialize the corresponding objects (Ecm, camera).
+  Set the pose to be used in entry of the next call to the track() function.
+  This pose will be just used once.
+  
+  \warning This function has to be called after the initialisation of the tracker.
+  
+  \param I : image corresponding to the desired pose.
+  \param cdMo : Pose to affect.
+*/
+void           
+vpMbEdgeTracker::setPose( const vpImage<unsigned char> &I, const vpHomogeneousMatrix& cdMo)
+{
+  cMo = cdMo;
+  
+  vpMbtDistanceLine *l;
+  lines[scaleLevel].front() ;
+  for(std::list<vpMbtDistanceLine*>::const_iterator it=lines[scaleLevel].begin(); it!=lines[scaleLevel].end(); ++it){
+    l = *it;
+    if(l->meline != NULL){
+      delete l->meline;
+      l->meline = NULL;
+    }
+  }
+  
+  init(I);
+}
+
+/*!
+  Load the xml configuration file. An example of such a file is provided in loadConfigFile(const char*) documentation.
+  From the configuration file initialize the parameters corresponding to the objects: moving-edges, camera and visibility angles.
 
   \warning To clean up memory allocated by the xml library, the user has to call
   vpXmlParser::cleanup() before the exit().
 
-  \param _filename : full name of the xml file.
+  \param configFile : full name of the xml file.
+
+  \sa loadConfigFile(const char*), vpXmlParser::cleanup()
 */
 void 
-vpMbEdgeTracker::loadConfigFile(const std::string& _filename)
+vpMbEdgeTracker::loadConfigFile(const std::string& configFile)
 {
-  loadConfigFile(_filename.c_str());
+  vpMbEdgeTracker::loadConfigFile(configFile.c_str());
 }
 
 /*!
   Load the xml configuration file.
-  From the configuration file parameters initialize the corresponding objects (Ecm, camera).
+  From the configuration file initialize the parameters corresponding to the objects: moving-edges, camera and visibility angles.
 
   \warning To clean up memory allocated by the xml library, the user has to call
   vpXmlParser::cleanup() before the exit().
@@ -925,32 +986,74 @@ vpMbEdgeTracker::loadConfigFile(const std::string& _filename)
   \throw vpException::ioError if the file has not been properly parsed (file not
   found or wrong format for the data). 
 
-  \param filename : full name of the xml file.
+  \param configFile : full name of the xml file.
 
-  \sa vpXmlParser::cleanup()
+  The XML configuration file has the following form:
+  \code
+<?xml version="1.0"?>
+<conf>
+  <ecm>
+    <mask>
+      <size>5</size>
+      <nb_mask>180</nb_mask>
+    </mask>
+    <range>
+      <tracking>7</tracking>
+    </range>
+    <contrast>
+      <edge_threshold>5000</edge_threshold>
+      <mu1>0.5</mu1>
+      <mu2>0.5</mu2>
+    </contrast>
+  </ecm>
+  <sample>
+    <step>4</step>
+    <nb_sample>250</nb_sample>
+  </sample>
+  <camera>
+    <width>640</width>
+    <height>480</height>
+    <u0>320</u0>
+    <v0>240</v0>
+    <px>686.24</px>
+    <py>686.24</py>
+  </camera>
+</conf>
+  \endcode
+
+  \sa loadConfigFile(const std::string&), vpXmlParser::cleanup()
 */
 void
-vpMbEdgeTracker::loadConfigFile(const char* filename)
+vpMbEdgeTracker::loadConfigFile(const char* configFile)
 {
 #ifdef VISP_HAVE_XML2
   vpMbtXmlParser xmlp;
   
+  xmlp.setCameraParameters(cam);
+  xmlp.setMovingEdge(me);
+  xmlp.setAngleAppear(vpMath::deg(angleAppears));
+  xmlp.setAngleDisappear(vpMath::deg(angleDisappears));
+  
   try{
-    xmlp.parse(filename);
+    std::cout << " *********** Parsing XML for MbEdge Tracker ************ " << std::endl;
+    xmlp.parse(configFile);
   }
   catch(...){
-    vpERROR_TRACE("Can't open XML file \"%s\"\n ",filename);
+    vpERROR_TRACE("Can't open XML file \"%s\"\n ", configFile);
     throw vpException(vpException::ioError, "problem to parse configuration file.");
   }
-
+  
   vpCameraParameters camera;
   vpMe meParser;
   xmlp.getCameraParameters(camera);
   xmlp.getMe(meParser);
+  
   setCameraParameters(camera);
   setMovingEdge(meParser);
+  angleAppears = vpMath::rad(xmlp.getAngleAppear());
+  angleDisappears = vpMath::rad(xmlp.getAngleDisappear());
 #else
-	vpTRACE("You need the libXML2 to read the config file %s", filename);
+  vpTRACE("You need the libXML2 to read the config file %s", configFile);
 #endif
 }
 
@@ -959,14 +1062,14 @@ vpMbEdgeTracker::loadConfigFile(const char* filename)
   Display the 3D model from a given position of the camera.
 
   \param I : The image.
-  \param _cMo : Pose used to project the 3D model into the image.
+  \param cMo : Pose used to project the 3D model into the image.
   \param cam : The camera parameters.
   \param col : The desired color.
   \param thickness : The thickness of the lines.
   \param displayFullModel : If true, the full model is displayed (even the non visible surfaces).
 */
 void
-vpMbEdgeTracker::display(const vpImage<unsigned char>& I, const vpHomogeneousMatrix &_cMo, const vpCameraParameters &cam,
+vpMbEdgeTracker::display(const vpImage<unsigned char>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters &cam,
 											const vpColor& col,
 											const unsigned int thickness, const bool displayFullModel)
 {
@@ -976,30 +1079,35 @@ vpMbEdgeTracker::display(const vpImage<unsigned char>& I, const vpHomogeneousMat
     if(scales[i]){
       for(std::list<vpMbtDistanceLine*>::const_iterator it=lines[scaleLevel].begin(); it!=lines[scaleLevel].end(); ++it){
         l = *it;
-        l->display(I,_cMo, cam, col, thickness, displayFullModel);
+        l->display(I,cMo, cam, col, thickness, displayFullModel);
       }
 
       for(std::list<vpMbtDistanceCylinder*>::const_iterator it=cylinders[scaleLevel].begin(); it!=cylinders[scaleLevel].end(); ++it){
-        (*it)->display(I, _cMo, cam, col, thickness);
+        (*it)->display(I, cMo, cam, col, thickness);
       }
 
       break ; //displaying model on one scale only
     }
   }
+  
+#ifdef VISP_HAVE_OGRE
+  if(useOgre)
+    faces.displayOgre(cMo);
+#endif
 }
 
 /*!
   Display the 3D model from a given position of the camera.
 
   \param I : The image.
-  \param _cMo : Pose used to project the 3D model into the image.
+  \param cMo : Pose used to project the 3D model into the image.
   \param cam : The camera parameters.
   \param col : The desired color.
   \param thickness : The thickness of the lines.
   \param displayFullModel : If true, the full model is displayed (even the non visible surfaces).
 */
 void
-vpMbEdgeTracker::display(const vpImage<vpRGBa>& I, const vpHomogeneousMatrix &_cMo, const vpCameraParameters &cam,
+vpMbEdgeTracker::display(const vpImage<vpRGBa>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters &cam,
 											const vpColor& col,
 											const unsigned int thickness, const bool displayFullModel)
 {
@@ -1009,16 +1117,21 @@ vpMbEdgeTracker::display(const vpImage<vpRGBa>& I, const vpHomogeneousMatrix &_c
     if(scales[i]){
       for(std::list<vpMbtDistanceLine*>::const_iterator it=lines[scaleLevel].begin(); it!=lines[scaleLevel].end(); ++it){
         l = *it;
-        l->display(I,_cMo, cam, col, thickness, displayFullModel) ;
+        l->display(I, cMo, cam, col, thickness, displayFullModel) ;
       }
 
       for(std::list<vpMbtDistanceCylinder*>::const_iterator it=cylinders[scaleLevel].begin(); it!=cylinders[scaleLevel].end(); ++it){
-        (*it)->display(I, _cMo, cam, col, thickness) ;
+        (*it)->display(I, cMo, cam, col, thickness) ;
       }
 
       break ; //displaying model on one scale only
     }
   }
+  
+#ifdef VISP_HAVE_OGRE
+  if(useOgre)
+    faces.displayOgre(cMo);
+#endif
 }
 
 
@@ -1044,7 +1157,7 @@ vpMbEdgeTracker::initMovingEdge(const vpImage<unsigned char> &I, const vpHomogen
       if (index ==-1) isvisible =true ;
       else
       {
-        if (l->hiddenface->isVisible(index)) isvisible = true ;
+        if (l->hiddenface->isVisible((unsigned int)index)) isvisible = true ;
       }
     }
 
@@ -1056,7 +1169,7 @@ vpMbEdgeTracker::initMovingEdge(const vpImage<unsigned char> &I, const vpHomogen
       l->setVisible(true) ;
       if (l->meline==NULL)
       {
-        //cout << "init me line "<< l->getIndex() <<endl ;
+//         std::cout << "init me line "<< l->getIndex() << std::endl ;
         l->initMovingEdge(I, _cMo) ;
       }
     }
@@ -1354,15 +1467,67 @@ vpMbEdgeTracker::addPolygon(vpMbtPolygon &p)
   \warning If in one iteration one face appears and one disappears, then the 
   function will not detect the new face. 
   
-  \param cMo : The pose of the camera used to project the 3D model into the image.
+  \param _cMo : The pose of the camera used to project the 3D model into the image.
   \param newvisibleline : This parameter is set to true if a new face appeared.
 */
 void
-vpMbEdgeTracker::visibleFace(const vpHomogeneousMatrix &cMo, bool &newvisibleline)
+vpMbEdgeTracker::visibleFace(const vpHomogeneousMatrix &_cMo, bool &newvisibleline)
 {
   unsigned int n ;
 
-  n = faces.setVisible(cMo) ;
+  if(!useOgre)
+    n = faces.setVisible(_cMo) ;
+  else{
+#ifdef VISP_HAVE_OGRE   
+    bool changed = false;
+    n = faces.setVisibleOgre(_cMo, vpMath::rad(70), vpMath::rad(70), changed);
+#else
+    n = faces.setVisible(_cMo) ;
+#endif
+  } 
+  
+//  cout << "visible face " << n << endl ;
+  if (n > nbvisiblepolygone)
+  {
+    //cout << "une nouvelle face est visible " << endl ;
+    newvisibleline = true ;
+  }
+  else
+    newvisibleline = false ;
+
+  nbvisiblepolygone= n ;
+}
+
+/*!
+  Detect the visible faces in the image and says if a new one appeared.
+  
+  \warning If in one iteration one face appears and one disappears, then the 
+  function will not detect the new face. 
+  
+  \param _I : Image to test if a face is entirely in the image.
+  \param _cMo : The pose of the camera used to project the 3D model into the image.
+  \param newvisibleline : This parameter is set to true if a new face appeared.
+*/
+void
+vpMbEdgeTracker::visibleFace(const vpImage<unsigned char> &
+                             #ifdef VISP_HAVE_OGRE
+                             _I
+                             #endif
+                             , const vpHomogeneousMatrix &_cMo, bool &newvisibleline)
+{
+  unsigned int n ;
+
+  if(!useOgre)
+    n = faces.setVisible(_cMo) ;
+  else{
+#ifdef VISP_HAVE_OGRE   
+    bool changed = false;
+    n = faces.setVisibleOgre(_I, cam, _cMo, vpMath::rad(70), vpMath::rad(70), changed);
+#else
+    n = faces.setVisible(_cMo) ;
+#endif
+  } 
+  
 //  cout << "visible face " << n << endl ;
   if (n > nbvisiblepolygone)
   {
@@ -1496,16 +1661,16 @@ vpMbEdgeTracker::resetTracker()
 /*!
   Re-initialise the model used by the tracker.  
   
-  \param _I : The image containing the object to initialize.
-  \param _cad_name : Path to the file containing the 3D model description.
-  \param _cMo : The new vpHomogeneousMatrix between the camera and the new model
+  \param I : The image containing the object to initialize.
+  \param cad_name : Path to the file containing the 3D model description.
+  \param cMo : The new vpHomogeneousMatrix between the camera and the new model
 */
 void
-vpMbEdgeTracker::reInitModel(const vpImage<unsigned char>& _I, const char* _cad_name, const vpHomogeneousMatrix& _cMo)
+vpMbEdgeTracker::reInitModel(const vpImage<unsigned char>& I, const char* cad_name, const vpHomogeneousMatrix& cMo)
 {
   resetTracker();
-  loadModel(_cad_name);
-  initFromPose(_I, _cMo);
+  loadModel(cad_name);
+  initFromPose(I, cMo);
 }
 
 /*!
@@ -1513,21 +1678,21 @@ vpMbEdgeTracker::reInitModel(const vpImage<unsigned char>& _I, const char* _cad_
   vpMeSite with its flag "suppress" equal to 0. Only these points are used 
   during the virtual visual servoing stage. 
   
-  \exception vpException::dimensionError if _level does not represent a used 
+  \exception vpException::dimensionError if level does not represent a used
   level.
   
   \return the number of good points. 
 */
 unsigned int 
-vpMbEdgeTracker::getNbPoints(const unsigned int _level)
+vpMbEdgeTracker::getNbPoints(const unsigned int level)
 {
-  if((_level > scales.size()) || !scales[_level]){
+  if((level > scales.size()) || !scales[level]){
     throw vpException(vpException::dimensionError, "Level is not used");
   }
   
   unsigned int nbGoodPoints = 0;
   vpMbtDistanceLine *l ;
-  for(std::list<vpMbtDistanceLine*>::const_iterator it=lines[_level].begin(); it!=lines[_level].end(); ++it){
+  for(std::list<vpMbtDistanceLine*>::const_iterator it=lines[level].begin(); it!=lines[level].end(); ++it){
     l = *it;
     if (l->isVisible() && l->meline != NULL)
     {
@@ -1538,7 +1703,7 @@ vpMbEdgeTracker::getNbPoints(const unsigned int _level)
   }
 
   vpMbtDistanceCylinder *cy ;
-  for(std::list<vpMbtDistanceCylinder*>::const_iterator it=cylinders[_level].begin(); it!=cylinders[_level].end(); ++it){
+  for(std::list<vpMbtDistanceCylinder*>::const_iterator it=cylinders[level].begin(); it!=cylinders[level].end(); ++it){
     cy = *it;
     if (cy->meline1 != NULL || cy->meline2 != NULL)
     {
@@ -1561,18 +1726,17 @@ vpMbEdgeTracker::getNbPoints(const unsigned int _level)
   \exception vpException::dimensionError if index does not represent a good 
   polygon.
   
-  \param _index : Index of the polygon to return.
+  \param index : Index of the polygon to return.
   \return Pointer to the polygon index.
 */
 vpMbtPolygon* 
-vpMbEdgeTracker::getPolygon(const unsigned int _index)
+vpMbEdgeTracker::getPolygon(const unsigned int index)
 {
-  if(_index >= static_cast<unsigned int>(faces.getPolygon().size()) ){
+  if(index >= static_cast<unsigned int>(faces.size()) ){
     throw vpException(vpException::dimensionError, "index out of range");
   }
-  std::list<vpMbtPolygon*>::const_iterator it = faces.getPolygon().begin();
-  std::advance(it, _index);
-  return *it;
+  
+  return faces[index];
 }
 
 /*!
@@ -1583,7 +1747,7 @@ vpMbEdgeTracker::getPolygon(const unsigned int _index)
 unsigned int 
 vpMbEdgeTracker::getNbPolygon() 
 {
-  return static_cast<unsigned int>(faces.getPolygon().size());
+  return static_cast<unsigned int>(faces.size());
 }
 
 /*!
@@ -1604,30 +1768,30 @@ vpMbEdgeTracker::getNbPolygon()
   
   \warning At least one level must be activated. 
   
-  \param _scales : The vector describing the levels to use. 
+  \param scales : The vector describing the levels to use.
 */
 void 
-vpMbEdgeTracker::setScales(const std::vector<bool>& _scales)
+vpMbEdgeTracker::setScales(const std::vector<bool>& scales)
 {
   unsigned int nbActivatedLevels = 0;
-  for (unsigned int i = 0; i < _scales.size(); i += 1){
-    if(_scales[i]){
+  for (unsigned int i = 0; i < scales.size(); i += 1){
+    if(scales[i]){
       nbActivatedLevels++;
     }
   }
-  if((_scales.size() < 1) || (nbActivatedLevels == 0)){
+  if((scales.size() < 1) || (nbActivatedLevels == 0)){
     vpERROR_TRACE(" !! WARNING : must use at least one level for the tracking. Use the global one");
-    scales.resize(0);
-    scales.push_back(true);
+    this->scales.resize(0);
+    this->scales.push_back(true);
     lines.resize(1);
     lines[0].clear();
     cylinders.resize(1);
     cylinders[0].clear();
   }
   else{
-    scales = _scales;
-    lines.resize(_scales.size());
-    cylinders.resize(_scales.size());
+    this->scales = scales;
+    lines.resize(scales.size());
+    cylinders.resize(scales.size());
     for (unsigned int i = 0; i < lines.size(); i += 1){
       lines[i].clear();
       cylinders[i].clear();
@@ -1710,82 +1874,6 @@ vpMbEdgeTracker::cleanPyramid(std::vector< const vpImage<unsigned char>* >& _pyr
   }
 }
 
-#ifdef VISP_BUILD_DEPRECATED_FUNCTIONS
-/*!
-  Get the list of the lines tracked for the specified level. Each line contains 
-  the list of the vpMeSite. 
-  
-  \throw vpException::dimensionError if the parameter does not correspond to an 
-  used level. 
-
-  \warning The returned list is dynamically allocated and must be freed.
-  
-  \param _level : Level corresponding to the list to return. 
-  \return Pointer to the list of the lines tracked. 
-*/
-vp_deprecated vpList<vpMbtDistanceLine *>*
-vpMbEdgeTracker::getLline(const unsigned int _level)
-{
-  if(_level > scales.size() || !scales[_level]){
-    std::ostringstream oss;
-    oss << _level;
-    std::string errorMsg = "level " + oss.str() + " is not used, cannot get its distance lines.";    
-    throw vpException(vpException::dimensionError, errorMsg);
-  }
-  
-  vpList<vpMbtDistanceLine *>* l = new vpList<vpMbtDistanceLine*>;
-  for(std::list<vpMbtDistanceLine*>::const_iterator it=lines[_level].begin(); it!=lines[_level].end(); ++it){
-    l->addRight(*it);
-  }
-
-  return l;
-}
-
-
-/*!
-  Get the list of the cylinders tracked for the specified level. Each cylinder
-  contains the list of the vpMeSite.
-
-  \throw vpException::dimensionError if the parameter does not correspond to an
-  used level.
-
-  \warning The returned list is dynamically allocated and must be freed.
-
-  \param _level : Level corresponding to the list to return.
-  \return Pointer to the list of the cylinders tracked.
-*/
-vp_deprecated vpList<vpMbtDistanceCylinder *>*
-vpMbEdgeTracker::getLcylinder(const unsigned int _level)
-{
-  if(_level > scales.size() || !scales[_level]){
-    std::ostringstream oss;
-    oss << _level;
-    std::string errorMsg = "level " + oss.str() + " is not used, cannot get its distance lines.";
-    throw vpException(vpException::dimensionError, errorMsg);
-  }
-
-  vpList<vpMbtDistanceCylinder*>* c = new vpList<vpMbtDistanceCylinder*>;
-  for(std::list<vpMbtDistanceCylinder*>::const_iterator it=cylinders[_level].begin(); it!=cylinders[_level].end(); ++it){
-    c->addRight(*it);
-  }
-
-  return c;
-}
-
-/*!
- Initialize the tracking thanks to the initial pose of the camera.
- 
- \param I : The image.
- \param _cMo : The initial pose used to initialize the tracking.
-*/
-vp_deprecated void
-vpMbEdgeTracker::init(const vpImage<unsigned char>& I, const vpHomogeneousMatrix &_cMo)
-{
-  this->cMo = _cMo;
-  init(I);
-}
-#endif
-
 /*!
   Get the list of the lines tracked for the specified level. Each line contains
   the list of the vpMeSite.
@@ -1793,20 +1881,20 @@ vpMbEdgeTracker::init(const vpImage<unsigned char>& I, const vpHomogeneousMatrix
   \throw vpException::dimensionError if the second parameter does not correspond
   to an used level.
 
-  \param _level : Level corresponding to the list to return.
+  \param level : Level corresponding to the list to return.
   \param linesList : The list of the lines of the model.
 */
 void
-vpMbEdgeTracker::getLline(std::list<vpMbtDistanceLine *>& linesList, const unsigned int _level)
+vpMbEdgeTracker::getLline(std::list<vpMbtDistanceLine *>& linesList, const unsigned int level)
 {
-  if(_level > scales.size() || !scales[_level]){
+  if(level > scales.size() || !scales[level]){
     std::ostringstream oss;
-    oss << _level;
+    oss << level;
     std::string errorMsg = "level " + oss.str() + " is not used, cannot get its distance lines.";
     throw vpException(vpException::dimensionError, errorMsg);
   }
 
-  linesList = lines[_level];
+  linesList = lines[level];
 }
 
 
@@ -1817,20 +1905,20 @@ vpMbEdgeTracker::getLline(std::list<vpMbtDistanceLine *>& linesList, const unsig
   \throw vpException::dimensionError if the second parameter does not correspond
   to an used level.
 
-  \param _level : Level corresponding to the list to return.
+  \param level : Level corresponding to the list to return.
   \param cylindersList : The list of the cylinders of the model.
 */
 void
-vpMbEdgeTracker::getLcylinder(std::list<vpMbtDistanceCylinder *>& cylindersList, const unsigned int _level)
+vpMbEdgeTracker::getLcylinder(std::list<vpMbtDistanceCylinder *>& cylindersList, const unsigned int level)
 {
-  if(_level > scales.size() || !scales[_level]){
+  if(level > scales.size() || !scales[level]){
     std::ostringstream oss;
-    oss << _level;
+    oss << level;
     std::string errorMsg = "level " + oss.str() + " is not used, cannot get its distance lines.";
     throw vpException(vpException::dimensionError, errorMsg);
   }
 
-  cylindersList = cylinders[_level];
+  cylindersList = cylinders[level];
 }
 
 

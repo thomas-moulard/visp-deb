@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: have_visp.m4 2807 2010-09-14 10:14:54Z fspindle $
+# $Id: have_visp.m4 4057 2013-01-05 13:10:29Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2010 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License

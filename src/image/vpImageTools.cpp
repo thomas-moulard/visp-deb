@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpImageTools.cpp 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpImageTools.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -140,8 +140,8 @@ void vpImageTools::changeLUT(vpImage<unsigned char>& I,
   \param I2 : The second image.
   \param Idiff : The result of the difference.
 */
-void vpImageTools::imageDifference(vpImage<unsigned char> &I1, 
-				   vpImage<unsigned char> &I2,
+void vpImageTools::imageDifference(const vpImage<unsigned char> &I1,
+				   const vpImage<unsigned char> &I2,
 				   vpImage<unsigned char> &Idiff)
 {
   if ((I1.getHeight() != I2.getHeight()) || (I1.getWidth() != I2.getWidth()))
@@ -159,6 +159,39 @@ void vpImageTools::imageDifference(vpImage<unsigned char> &I1,
       diff = I1.bitmap[b] - I2.bitmap[b] + 128;
       Idiff.bitmap[b] = (unsigned char)
 	(vpMath::maximum(vpMath::minimum(diff, 255), 0));
+    }
+}
+
+/*!
+  Compute the difference between the two images I1 and I2
+  \warning : This is NOT for visualization
+  If you want to visualize difference images during servo, please use
+  vpImageTools::imageDifference(..,..,..) function.
+
+  \param I1 : The first image.
+  \param I2 : The second image.
+  \param Idiff : The result of the difference.
+*/
+
+void
+vpImageTools::imageDifferenceAbsolute(const vpImage<unsigned char> &I1,
+				   const vpImage<unsigned char> &I2,
+				   vpImage<unsigned char> &Idiff)
+{
+  if ((I1.getHeight() != I2.getHeight()) || (I1.getWidth() != I2.getWidth()))
+  {
+    throw (vpException(vpException::dimensionError, "The two images do not have the same size"));
+  }
+
+  if ((I1.getHeight() != Idiff.getHeight()) || (I1.getWidth() != Idiff.getWidth()))
+    Idiff.resize(I1.getHeight(), I1.getWidth());
+
+  unsigned int n = I1.getHeight() * I1.getWidth() ;
+  int diff ;
+  for (unsigned int b = 0; b < n ; b++)
+    {
+      diff = I1.bitmap[b] - I2.bitmap[b];
+      Idiff.bitmap[b] = diff;
     }
 }
 

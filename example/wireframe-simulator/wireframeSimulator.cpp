@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: wireframeSimulator.cpp 3676 2012-04-06 12:43:18Z ayol $
+ * $Id: wireframeSimulator.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,36 +40,30 @@
  *****************************************************************************/
 
 /*!
-  \file wireframeSimulator.cpp
-
-  \brief Demonstration of the wireframe simulator.
-*/
-
-/*!
   \example wireframeSimulator.cpp
 
   Demonstration of the wireframe simulator.
 */
 
-#include <visp/vpImage.h>
-#include <visp/vpImageIo.h>
+#include <stdlib.h>
+
+#include <visp/vpCameraParameters.h>
 #include <visp/vpDisplayOpenCV.h>
 #include <visp/vpDisplayX.h>
 #include <visp/vpDisplayGTK.h>
 #include <visp/vpDisplayGDI.h>
 #include <visp/vpDisplayD3D.h>
-#include <visp/vpCameraParameters.h>
-
-#include <visp/vpMath.h>
 #include <visp/vpHomogeneousMatrix.h>
-#include <visp/vpParseArgv.h>
+#include <visp/vpImage.h>
+#include <visp/vpImageIo.h>
 #include <visp/vpIoTools.h>
+#include <visp/vpMath.h>
+#include <visp/vpParseArgv.h>
 #include <visp/vpWireFrameSimulator.h>
-#include <stdlib.h>
 
 #define GETOPTARGS	"cdh"
 
-#if (defined (VISP_HAVE_X11) || defined(VISP_HAVE_OPENCV) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_D3D9) || defined(VISP_HAVE_GTK))
+#ifdef VISP_HAVE_DISPLAY
 
 /*!
 

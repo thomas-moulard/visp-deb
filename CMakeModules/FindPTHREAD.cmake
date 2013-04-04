@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: FindPTHREAD.cmake 3530 2012-01-03 10:52:12Z fspindle $
+# $Id: FindPTHREAD.cmake 4056 2013-01-05 13:04:42Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -43,26 +43,25 @@
 #
 #############################################################################
 
-#IF(NOT UNIX AND NOT WIN32)
-#  SET(PTHREAD_FOUND FALSE)
-#ELSE(NOT UNIX AND NOT WIN32)
   
   FIND_PATH(PTHREAD_INCLUDE_DIR pthread.h
-    /usr/include
-    "$ENV{PTHREAD_INCLUDE_DIR}"
     "$ENV{PTHREAD_HOME}/include"
-	)
-  #MESSAGE("DBG PTHREAD_INCLUDE_DIR=${PTHREAD_INCLUDE_DIR}")  
+    "$ENV{PTHREAD_DIR}/include"
+    /usr/include
+    "C:/MinGW/include"
+  )
+  #MESSAGE("DBG PTHREAD_INCLUDE_DIR=${PTHREAD_INCLUDE_DIR}")
   
   # pthreadVSE pthreadGCE pthreadGC pthreadVC1 pthreadVC2 are comming from web
   FIND_LIBRARY(PTHREAD_LIBRARY
     NAMES pthread pthreadGC2 pthreadVSE pthreadGCE pthreadGC pthreadVC1 pthreadVC2
     PATHS
+    "$ENV{PTHREAD_HOME}/lib"
+    "$ENV{PTHREAD_DIR}/lib"
     /usr/lib
     /usr/local/lib
     /lib    
-    "$ENV{PTHREAD_LIBRARY_DIR}"
-    "$ENV{PTHREAD_HOME}/lib"
+    "C:/MinGW/lib"
     )
 
   #MESSAGE(STATUS "DBG PTHREAD_LIBRARY=${PTHREAD_LIBRARY}")
@@ -91,5 +90,3 @@
     PTHREAD_LIBRARY
   )
   #MESSAGE(STATUS "PTHREAD_FOUND : ${PTHREAD_FOUND}")
-
-#ENDIF(NOT UNIX AND NOT WIN32)

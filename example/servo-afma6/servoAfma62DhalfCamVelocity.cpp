@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: servoAfma62DhalfCamVelocity.cpp 3668 2012-04-04 09:07:10Z fspindle $
+ * $Id: servoAfma62DhalfCamVelocity.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -73,6 +73,8 @@
 #include <visp/vpImageIo.h>
 #include <visp/vpDisplay.h>
 #include <visp/vpDisplayX.h>
+#include <visp/vpDisplayOpenCV.h>
+#include <visp/vpDisplayGTK.h>
 
 #include <visp/vpMath.h>
 #include <visp/vpHomogeneousMatrix.h>
@@ -111,9 +113,13 @@ main()
 
     g.acquire(I) ;
 
-
-    vpDisplayX display(I,100,100,"testDisplayX.cpp ") ;
-    vpTRACE(" ") ;
+#ifdef VISP_HAVE_X11
+    vpDisplayX display(I,100,100,"Current image") ;
+#elif defined(VISP_HAVE_OPENCV)
+    vpDisplayOpenCV display(I,100,100,"Current image") ;
+#elif defined(VISP_HAVE_GTK)
+    vpDisplayGTK display(I,100,100,"Current image") ;
+#endif
 
     vpDisplay::display(I) ;
     vpDisplay::flush(I);

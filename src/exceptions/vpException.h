@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpException.h 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpException.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -63,13 +63,14 @@
 /* --------------------------------------------------------------------- */
 
 
-/* \class vpException
-   \brief error that can be emited by the vp class and its derivates
+/*!
+   \class vpException
+   \brief error that can be emited by ViSP classes.
 
-    This class inherites from the standard std::exception contained in the C++
-    STL.
-    It is therefore possible to catch vpException with any other derivative of
-    std::exception in the same catch.
+   This class inherites from the standard std::exception contained in the C++
+   STL.
+   It is therefore possible to catch vpException with any other derivative of
+   std::exception in the same catch.
  */
 class VISP_EXPORT vpException : public std::exception
 {

@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: keyPointSurf.cpp 3730 2012-05-14 17:09:58Z fspindle $
+ * $Id: keyPointSurf.cpp 4137 2013-02-14 06:56:53Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -59,7 +59,7 @@
 #include <stdio.h>
 #include <sstream>
 #include <iomanip>
-#if ((defined (VISP_HAVE_X11) || defined(VISP_HAVE_GTK) || defined(VISP_HAVE_GDI)) && (VISP_HAVE_OPENCV_VERSION >= 0x010100))
+#if ((defined (VISP_HAVE_X11) || defined(VISP_HAVE_GTK) || defined(VISP_HAVE_GDI)) && defined(VISP_HAVE_OPENCV_NONFREE) && (VISP_HAVE_OPENCV_VERSION >= 0x010100))
 
 #include <visp/vpKeyPointSurf.h>
 
@@ -326,7 +326,7 @@ main(int argc, const char ** argv)
   if (opt_display) {
     try{
       // Display size is automatically defined by the image (I) size
-      display[1].init(Icur, 100+Iref.getWidth(), 100,"Display current image") ;
+      display[1].init(Icur, (int)(100+Iref.getWidth()), 100,"Display current image") ;
       vpDisplay::display(Icur) ;
       vpDisplay::flush(Icur) ;
     }
@@ -373,7 +373,7 @@ main()
 #if ( ! (defined (VISP_HAVE_X11) || defined(VISP_HAVE_GTK) || defined(VISP_HAVE_GDI)) ) 
   vpERROR_TRACE("You do not have X11, GTK or GDI display functionalities...");
 #else
-  vpERROR_TRACE("You do not have OpenCV-1.1.0 or a more recent release...");
+  vpERROR_TRACE("You do not have OpenCV-1.1.0 or a more recent release that contains opencv_nonfree component...");
 #endif
 }
 

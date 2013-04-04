@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpPlot.cpp 3821 2012-06-27 13:50:37Z fspindle $
+ * $Id: vpPlot.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,11 +43,13 @@
 
 #include <visp/vpConfig.h>
 
-#if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV) 
+#if defined(VISP_HAVE_DISPLAY)
 #include <visp/vpPlot.h>
 #include <visp/vpDisplayOpenCV.h>
 #include <visp/vpDisplayX.h>
 #include <visp/vpDisplayGDI.h>
+#include <visp/vpDisplayGTK.h>
+#include <visp/vpDisplayD3D.h>
 #include <visp/vpMath.h>
 #include <visp/vpMeterPixelConversion.h>
 #include <visp/vpPixelMeterConversion.h>
@@ -123,6 +125,10 @@ void vpPlot::init(const unsigned int graphNbr,
   display = new vpDisplayGDI;
 #elif defined VISP_HAVE_OPENCV
   display = new vpDisplayOpenCV;
+#elif defined VISP_HAVE_GTK
+  display = new vpDisplayGTK;
+#elif defined VISP_HAVE_D3D9
+  display = new vpDisplayD3D;
 #endif
 
   display->init(I, x, y, title);
@@ -314,6 +320,7 @@ void vpPlot::plot(const unsigned int graphNum,
 	else
 		vpTRACE("error in plot vector : not the right dimension");
 }
+
 
 /*!
   This function enables you to add a new point in the curve. This point is drawn with the parameters of the curve.

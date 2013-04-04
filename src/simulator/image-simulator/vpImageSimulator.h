@@ -3,7 +3,7 @@
  * $Id: vpPose.h 2453 2010-01-07 10:01:10Z nmelchio $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -196,6 +196,7 @@ class VISP_EXPORT vpImageSimulator
 
     vpRect rect;
     bool cleanPrevImage;
+    bool setBackgroundTexture;	// flag set when the background is to a texture using setBackGroundTexture()
     vpColor bgColor;
     
     vpColVector focal;
@@ -252,6 +253,17 @@ class VISP_EXPORT vpImageSimulator
     void setCleanPreviousImage(const bool &clean, const vpColor &color = vpColor::white) {
       cleanPrevImage = clean;
       bgColor = color;
+    }
+
+    /*!
+     This function is to set the background to a texture instead of default black
+     The corresponding flag is set
+     \param Iback: Image/Texture for the background
+     */
+    inline void
+    setBackGroundTexture(const vpImage<unsigned char>& Iback) {
+    	setBackgroundTexture = true;
+    	Ig = Iback;
     }
 
 #ifdef VISP_BUILD_DEPRECATED_FUNCTIONS

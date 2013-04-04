@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: AddExtraCompilationFlags.cmake 3814 2012-06-26 16:26:16Z fspindle $
+# $Id: AddExtraCompilationFlags.cmake 4056 2013-01-05 13:04:42Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -40,7 +40,7 @@
 
 MACRO(ADD_EXTRA_COMPILATION_FLAGS)
   include(CheckCXXCompilerFlag)
-  if(UNIX)
+  if(CMAKE_COMPILER_IS_GNUCXX OR MINGW) #Not only UNIX but also WIN32 for MinGW
 
     set(WARNING_ALL "-Wall")
     CHECK_CXX_COMPILER_FLAG(${WARNING_ALL} WARNING_ALL_ALLOWED)
@@ -115,9 +115,9 @@ MACRO(ADD_EXTRA_COMPILATION_FLAGS)
       string(REPLACE ${WARNING_SIGN_CONVERSION} "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     endif()
 
-  else(UNIX) 
+  elseif(MSVC)
     # Add specific compilation flags for Windows Visual
-	
+  
     set(WARNING_ALL "/Wall")
     CHECK_CXX_COMPILER_FLAG(${WARNING_ALL} WARNING_ALL_ALLOWED)
     if(WARNING_ALL_ALLOWED)
@@ -126,7 +126,7 @@ MACRO(ADD_EXTRA_COMPILATION_FLAGS)
     else()
       #MESSAGE("Compiler flag ${WARNING_ALL} not allowed")
     endif()
-	
+  
     if(ACTIVATE_WARNING_ALL)
       list(APPEND CMAKE_CXX_FLAGS ${WARNING_ALL})
     else()
@@ -134,12 +134,12 @@ MACRO(ADD_EXTRA_COMPILATION_FLAGS)
     endif()
     if(MSVC80 OR MSVC90 OR MSVC10)
       # To avoid compiler warning (level 4) C4571, compile with /EHa if you still want 
-	# your catch(...) blocks to catch structured exceptions.
+  # your catch(...) blocks to catch structured exceptions.
       list(APPEND CMAKE_CXX_FLAGS "/EHa") 
     endif()
 
 
-  endif(UNIX)
+  endif()
 
   # Remove duplicates compilation flags
   separate_arguments(CMAKE_CXX_FLAGS)

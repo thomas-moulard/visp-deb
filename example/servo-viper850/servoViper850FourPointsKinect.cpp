@@ -4,7 +4,7 @@
  * $Id: servoViper850FourPoints2DCamVelocityKinect.cpp 3530 2012-01-03 10:52:12Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -69,6 +69,8 @@
 #include <visp/vpImageConvert.h>
 #include <visp/vpDisplay.h>
 #include <visp/vpDisplayX.h>
+#include <visp/vpDisplayOpenCV.h>
+#include <visp/vpDisplayGTK.h>
 #include <visp/vpMath.h>
 #include <visp/vpHomogeneousMatrix.h>
 #include <visp/vpFeaturePoint.h>
@@ -222,8 +224,13 @@ int main()
     kinect.getRGB(Irgb);
     vpImageConvert::convert(Irgb, I);
 
-    vpDisplayX display(I, 100, 100, "Camera view ") ;
-    vpTRACE(" ") ;
+#ifdef VISP_HAVE_X11
+    vpDisplayX display(I,100,100,"Current image") ;
+#elif defined(VISP_HAVE_OPENCV)
+    vpDisplayOpenCV display(I,100,100,"Current image") ;
+#elif defined(VISP_HAVE_GTK)
+    vpDisplayGTK display(I,100,100,"Current image") ;
+#endif
 
     vpDisplay::display(I) ;
     vpDisplay::flush(I) ;
@@ -400,11 +407,11 @@ int main()
       // Flush the display
       vpDisplay::flush(I) ;
 
-      //	vpTRACE("\t\t || s - s* || = %f ", ( task.getError() ).sumSquare()) ;
+      // std::cout << "|| s - s* || = "  << ( task.getError() ).sumSquare() << std::endl;
     }
 
-    vpTRACE("Display task information " ) ;
     kinect.stop();
+    std::cout << "Display task information: " << std::endl;
     task.print() ;
     task.kill();
     flog.close() ; // Close the log file
@@ -422,7 +429,6 @@ int main()
 int main()
 {
   vpERROR_TRACE("You do not have a Viper robot or a kinect connected to your computer...");
-
 }
 
 #endif

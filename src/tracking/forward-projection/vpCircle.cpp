@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpCircle.cpp 3840 2012-07-06 13:25:21Z ayol $
+ * $Id: vpCircle.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMbtDistanceLine.cpp 3672 2012-04-04 15:49:57Z ayol $
+ * $Id: vpMbtDistanceLine.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +41,6 @@
  *
  *****************************************************************************/
 #include <visp/vpConfig.h>
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 /*!
  \file vpMbtDistanceLine.cpp
@@ -426,11 +425,9 @@ vpMbtDistanceLine::display(const vpImage<unsigned char>&I, const vpHomogeneousMa
   {
     p1->changeFrame(cMo) ;
     p2->changeFrame(cMo) ;
-    line->changeFrame(cMo) ;
 
     p1->projection() ;
     p2->projection() ;
-    line->projection() ;
 
     vpImagePoint ip1, ip2;
 
@@ -459,11 +456,9 @@ vpMbtDistanceLine::display(const vpImage<vpRGBa>&I, const vpHomogeneousMatrix &c
   {
     p1->changeFrame(cMo) ;
     p2->changeFrame(cMo) ;
-    line->changeFrame(cMo) ;
 
     p1->projection() ;
     p2->projection() ;
-    line->projection() ;
 
     vpImagePoint ip1, ip2;
 
@@ -596,5 +591,3 @@ vpMbtDistanceLine::closeToImageBorder(const vpImage<unsigned char>& I, const uns
   }
   return false;
 }
-
-#endif

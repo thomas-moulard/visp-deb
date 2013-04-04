@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: displayGDI.cpp 3619 2012-03-09 17:28:57Z fspindle $
+ * $Id: displayGDI.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -124,6 +124,9 @@ OPTIONS:                                               Default\n\
   -h\n\
      Print the help.\n\n",
 	  ipath.c_str(), opath.c_str(), user.c_str());
+
+  if (badparam)
+    fprintf(stdout, "\nERROR: Bad parameter [%s]\n", badparam);
 
 }
 

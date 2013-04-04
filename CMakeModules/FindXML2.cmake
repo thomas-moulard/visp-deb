@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: FindXML2.cmake 3530 2012-01-03 10:52:12Z fspindle $
+# $Id: FindXML2.cmake 4069 2013-01-21 14:28:56Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -49,7 +49,9 @@ IF(WIN32)
   IF(ICONV_FOUND)
     FIND_PATH(XML2_INCLUDE_DIR libxml/xmlmemory.h
       $ENV{XML2_DIR}/include
+      $ENV{XML2_DIR}/include/libxml2
       $ENV{XML2_HOME}/include
+      $ENV{XML2_HOME}/include/libxml2
       )
     FIND_LIBRARY(XML2_LIBRARY libxml2
       $ENV{XML2_DIR}/lib

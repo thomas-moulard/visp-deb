@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: HelloWorldOgreAdvanced.cpp 3619 2012-03-09 17:28:57Z fspindle $
+ * $Id: HelloWorldOgreAdvanced.cpp 4111 2013-02-06 17:27:14Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,6 +43,8 @@
   \brief Example that shows how to exploit the vpAROgre class.
 
 */
+
+#include <iostream>
 
 #include <visp/vpOpenCVGrabber.h>
 #include <visp/vpV4l2Grabber.h>
@@ -107,6 +109,7 @@ protected:
 int main()
 {
 #if defined(VISP_HAVE_OGRE) 
+#if defined(VISP_HAVE_V4L2) || defined(VISP_HAVE_DC1394_2) || defined(VISP_HAVE_DIRECTSHOW) || defined(VISP_HAVE_OPENCV)
 
   // Now we try to find an available framegrabber
 #if defined(VISP_HAVE_V4L2)
@@ -121,8 +124,6 @@ int main()
 #elif defined(VISP_HAVE_OPENCV)
   // OpenCV to gather images
   vpOpenCVGrabber grabber;
-#else
-#  error "You need an available framegrabber to run this example"
 #endif
 
   // Image to store gathered data
@@ -160,5 +161,10 @@ int main()
   }
   // Release video device
   grabber.close();
+#else
+  std::cout << "You need an available framegrabber to run this example" << std::endl;
+#endif
+#else
+  std::cout << "You Ogre3D to run this example" << std::endl;
 #endif
 }

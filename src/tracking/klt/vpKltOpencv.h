@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpKltOpencv.h 3797 2012-06-21 07:44:05Z fspindle $
+ * $Id: vpKltOpencv.h 4101 2013-02-05 16:26:17Z ayol $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -144,11 +144,9 @@ class VISP_EXPORT vpKltOpencv
   int initialized; //Is the tracker ready ?
 
   int maxFeatures; //Maximum number of features to track (Default 50)
-  int countFeatures; //Currently tracked features
-  int countPrevFeatures; //Previously tracked features
   int globalcountFeatures; //Keep over time for ID
 
-  int flags; //Flags for tracking (internal)
+  
 
   int win_size; //Size of search window for tracker (default 10)
   double quality; //Multiplier for the maxmin eigenvalue; specifies minimal accepted quality of image corners (default 0.01)
@@ -165,11 +163,19 @@ class VISP_EXPORT vpKltOpencv
   IplImage *prev_pyramid; //Gaussian pyramid data for the previous iteration
   IplImage *swap_temp; //Internal
 
+  int countFeatures; //Currently tracked features
+  int countPrevFeatures; //Previously tracked features
+  
   CvPoint2D32f *features; //List of features
   CvPoint2D32f *prev_features; //List of features for previous iteration
   
   long *featuresid; //Array of ids for features
   long *prev_featuresid; //Array of ids for previous features
+  
+  int flags; //Flags for tracking (internal)
+  
+  bool initial_guess; //Bool to precise if the next call to track() uses an initial guess
+  
   bool *lostDuringTrack; // Result of the tracker for every feature : 1 = lost, 0 = still present
   char *status; //Result of the tracker for every features : 0 = lost, 1 = found
 
@@ -205,6 +211,7 @@ class VISP_EXPORT vpKltOpencv
 	       vpColor color = vpColor::red);
 
   //Seters
+  void setInitialGuess(CvPoint2D32f **guess_pts);
   
   /* Should be used only before initTracking */
   void setMaxFeatures(const int input);
@@ -272,22 +279,34 @@ class VISP_EXPORT vpKltOpencv
   //Is a feature valid (e.g. : test if not too close to borders) -> event(id_tracker, x, y)
   void setIsFeatureValid(funccheck input) {IsFeatureValid = input;}
 
-  //! Get the list of lost feature
-  bool *getListOfLostFeature() const { return lostDuringTrack; }
+  //! Get the block size
+  int getBlockSize() const {return block_size;}
   //! Get the list of features
   CvPoint2D32f* getFeatures() const {return features;}
   //! Get the list of features id
   long* getFeaturesId() const {return featuresid;}
-  //! Get the list of features
-  CvPoint2D32f* getPrevFeatures() const {return prev_features;}
-  //! Get the list of features id
-  long* getPrevFeaturesId() const {return prev_featuresid;}
+  //! Get Harris free parameter
+  double getHarrisFreeParameter() const {return harris_free_parameter;}
+  //! Get the list of lost feature
+  bool *getListOfLostFeature() const { return lostDuringTrack; }
+  //! Get Max number of features
+  int getMaxFeatures() const {return maxFeatures;}
+  //! Get Min Distance
+  double getMinDistance() const {return min_distance;}
   //! Get the current number of features
   int getNbFeatures() const { return countFeatures; }
   //! Get the previous number of features
   int getNbPrevFeatures() const { return countPrevFeatures; }
+  //! Get the list of features
+  CvPoint2D32f* getPrevFeatures() const {return prev_features;}
+  //! Get the list of features id
+  long* getPrevFeaturesId() const {return prev_featuresid;}
+  //! Get the number of pyramid levels
+  int getPyramidLevels() const {return pyramid_level;}
+  //! Get the quality of the tracker
+  double getQuality() const {return quality;}
   //! Get Max number of features
-  int getMaxFeatures() const {return maxFeatures;}
+  int getWindowSize() const {return win_size;}
 
   void getFeature(int index, int &id, float &x, float &y) const;
   void getPrevFeature(int index, int &id, float &x, float &y) const;
@@ -296,14 +315,20 @@ class VISP_EXPORT vpKltOpencv
   
 //Static Functions
 public: 
-  static void display(const vpImage<unsigned char>& I,const CvPoint2D32f* features_list, 
-		      const int &nbFeatures, vpColor color = vpColor::green, 
-		      unsigned int thickness=1);
-  
-  static void display(const vpImage<unsigned char>& I,const CvPoint2D32f* features_list, 
-		      const long *featuresid_list, const int &nbFeatures, 
-		      vpColor color = vpColor::green, unsigned int thickness=1);
-  
+  static void display(const vpImage<unsigned char>& I, const CvPoint2D32f* features_list,
+                      const int &nbFeatures, vpColor color = vpColor::green,
+                      unsigned int thickness=1);
+  static void display(const vpImage<vpRGBa>& I, const CvPoint2D32f* features_list,
+                      const int &nbFeatures, vpColor color = vpColor::green,
+                      unsigned int thickness=1);
+
+  static void display(const vpImage<unsigned char>& I, const CvPoint2D32f* features_list,
+                      const long *featuresid_list, const int &nbFeatures,
+                      vpColor color = vpColor::green, unsigned int thickness=1);
+  static void display(const vpImage<vpRGBa>& I, const CvPoint2D32f* features_list,
+                      const long *featuresid_list, const int &nbFeatures,
+                      vpColor color = vpColor::green, unsigned int thickness=1);
+
 };
 
 #endif

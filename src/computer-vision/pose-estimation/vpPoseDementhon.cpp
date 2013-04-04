@@ -1,9 +1,9 @@
 /****************************************************************************
 *
-* $Id: vpPoseDementhon.cpp 3530 2012-01-03 10:52:12Z fspindle $
+* $Id: vpPoseDementhon.cpp 4056 2013-01-05 13:04:42Z fspindle $
 *
 * This file is part of the ViSP software.
-* Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+* Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 * 
 * This software is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -736,7 +736,7 @@ vpPose::poseDementhonPlan(vpHomogeneousMatrix &cMo)
 
 \return the value of he residual in meter
 */
-double vpPose::computeResidualDementhon(vpHomogeneousMatrix &cMo)
+double vpPose::computeResidualDementhon(const vpHomogeneousMatrix &cMo)
 {
   unsigned int i ;
   double residual = 0 ;

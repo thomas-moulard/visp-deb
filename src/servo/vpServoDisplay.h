@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpServoDisplay.h 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpServoDisplay.h 4062 2013-01-09 10:30:06Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -66,26 +66,18 @@ class VISP_EXPORT vpServoDisplay
 {
 public:
   static void display(vpServo &s,
-		      const vpCameraParameters &cam,
-		      vpImage<unsigned char> &I,
-		      vpColor currentColor = vpColor::green,
-		      vpColor desiredColor = vpColor::red,
-		      unsigned int thickness=1) ;
+                      const vpCameraParameters &cam,
+                      vpImage<unsigned char> &I,
+                      vpColor currentColor = vpColor::green,
+                      vpColor desiredColor = vpColor::red,
+                      unsigned int thickness=1) ;
   static void display(vpServo &s,
                       const vpCameraParameters &cam,
                       vpImage<vpRGBa> &I,
                       vpColor currentColor = vpColor::green,
                       vpColor desiredColor = vpColor::red,
-		      unsigned int thickness=1) ;
-
+                      unsigned int thickness=1) ;
 } ;
-
-
 
 #endif
 
-/*
- * Local variables:
- * c-basic-offset: 2
- * End:
- */

@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: CMakeLists.txt 3680 2012-04-11 11:34:45Z fspindle $
+# $Id: CMakeLists.txt 4056 2013-01-05 13:04:42Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -67,6 +67,7 @@ SET (SRC_SUBDIRS
   servo-cycab
   servo-pioneer
   servo-ptu46
+  servo-viper650
   servo-viper850
   tools
   tracking

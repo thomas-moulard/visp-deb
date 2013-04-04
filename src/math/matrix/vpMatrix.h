@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMatrix.h 3842 2012-07-13 22:21:42Z fspindle $
+ * $Id: vpMatrix.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -177,6 +177,7 @@ protected:
 
   int print(std::ostream& s, unsigned int length, char const* intro=0);
   std::ostream & matlabPrint(std::ostream & os);
+  std::ostream & maplePrint(std::ostream & os);
   std::ostream & cppPrint(std::ostream & os, const char * matrixName = NULL, bool octet = false);
 
   void printSize() { std::cout << getRows() <<" x " << getCols() <<"  " ; }
@@ -379,19 +380,50 @@ protected:
 
 
   //-------------------------------------------------
-  // LU decomposition
+  // Matrix inversion
   //-------------------------------------------------
-  /** @name LU decomposition  */
+  /** @name Matrix inversion  */
   //@{
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
   //! LU Decomposition
   void LUDcmp(unsigned int* perm, int& d);
   //! solve AX = B using the LU Decomposition
   void LUBksb(unsigned int* perm, vpColVector& b);
-#endif // doxygen should skip this
 
+#endif // doxygen should skip this
   // inverse matrix A using the LU decomposition 
   vpMatrix inverseByLU() const;
+#if defined(VISP_HAVE_LAPACK)
+  // inverse matrix A using the Cholesky decomposition (only for real symmetric matrices)
+  vpMatrix inverseByCholesky() const;
+  //lapack implementation of inverse by Cholesky
+  vpMatrix inverseByCholeskyLapack() const;
+  // inverse matrix A using the QR decomposition
+  vpMatrix inverseByQR() const;
+  //lapack implementation of inverse by QR
+  vpMatrix inverseByQRLapack() const;
+#endif
+  //! Compute the pseudo inverse of the matrix using the SVD.
+  vpMatrix pseudoInverse(double svThreshold=1e-6)  const;
+  //! Compute the pseudo inverse of the matrix using the SVD.
+  //! return the rank
+  unsigned int pseudoInverse(vpMatrix &Ap, double svThreshold=1e-6)  const;
+  //! Compute the pseudo inverse of the matrix using the SVD.
+  //! return the rank and the singular value
+  unsigned int pseudoInverse(vpMatrix &Ap, vpColVector &sv, double svThreshold=1e-6) const ;
+  //! Compute the pseudo inverse of the matrix using the SVD.
+  //! return the rank and the singular value, image
+  unsigned int pseudoInverse(vpMatrix &Ap,
+                             vpColVector &sv, double svThreshold,
+                             vpMatrix &ImA,
+                             vpMatrix &ImAt) const ;
+  //! Compute the pseudo inverse of the matrix using the SVD.
+  //! return the rank and the singular value, image, kernel.
+  unsigned int pseudoInverse(vpMatrix &Ap,
+                             vpColVector &sv, double svThreshold,
+                             vpMatrix &ImA,
+                             vpMatrix &ImAt,
+                             vpMatrix &kerA) const ;
   //@}
 
   //-------------------------------------------------
@@ -404,7 +436,7 @@ protected:
 #ifdef VISP_HAVE_GSL
   void svdGsl(vpColVector& w, vpMatrix& v);
 #endif
-#if (VISP_HAVE_OPENCV_VERSION >= 0x020100) // Require opencv >= 2.1.0
+#if (VISP_HAVE_OPENCV_VERSION >= 0x020101) // Require opencv >= 2.1.1
   void svdOpenCV(vpColVector& w, vpMatrix& v);
 #endif
 #ifdef VISP_HAVE_LAPACK
@@ -426,28 +458,6 @@ protected:
   void solveBySVD(const vpColVector &B, vpColVector &x) const ;
   // solve Ax=B using the SVD decomposition (usage  x=A.solveBySVD(B))
   vpColVector solveBySVD(const vpColVector &B) const ;
-
-  //! Compute the pseudo inverse of the matrix using the SVD.
-  vpMatrix pseudoInverse(double svThreshold=1e-6)  const;
-  //! Compute the pseudo inverse of the matrix using the SVD.
-  //! return the rank
-  unsigned int pseudoInverse(vpMatrix &Ap, double svThreshold=1e-6)  const;
-  //! Compute the pseudo inverse of the matrix using the SVD.
-  //! return the rank and the singular value
-  unsigned int pseudoInverse(vpMatrix &Ap, vpColVector &sv, double svThreshold=1e-6) const ;
-  //! Compute the pseudo inverse of the matrix using the SVD.
-  //! return the rank and the singular value, image
-  unsigned int pseudoInverse(vpMatrix &Ap,
-			     vpColVector &sv, double svThreshold,
-			     vpMatrix &ImA,
-			     vpMatrix &ImAt) const ;
-  //! Compute the pseudo inverse of the matrix using the SVD.
-  //! return the rank and the singular value, image, kernel.
-  unsigned int pseudoInverse(vpMatrix &Ap,
-			     vpColVector &sv, double svThreshold,
-			     vpMatrix &ImA,
-			     vpMatrix &ImAt,
-			     vpMatrix &kerA) const ;
 
   unsigned int kernel(vpMatrix &KerA, double svThreshold=1e-6);
   //@}

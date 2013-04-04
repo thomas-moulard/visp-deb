@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpNurbs.h 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpNurbs.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -157,8 +157,7 @@ public:
       @name Deprecated functions
     */
   /*!
-      \deprecated This method is deprecated. You should use get_weights(std::list<double> &) const instead.
-
+      \deprecated This method is deprecated. You should use get_weights(std::list<double> &) const instead. \n \n
       Gets all the weights relative to the control points.
 
       \return list : A list containing weights relative to the control points.
@@ -169,8 +168,7 @@ public:
     return list; }
 
   /*!
-      \deprecated This method is deprecated. You should use set_weights(const std::list<double>&) instead.
-
+      \deprecated This method is deprecated. You should use set_weights(const std::list<double>&) instead.\n \n
       Sets all the knots.
 
       \param list : A list containing the value of the knots.

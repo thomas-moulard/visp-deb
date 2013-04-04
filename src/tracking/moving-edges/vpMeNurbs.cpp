@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMeNurbs.cpp 3672 2012-04-04 15:49:57Z ayol $
+ * $Id: vpMeNurbs.cpp 4137 2013-02-14 06:56:53Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,9 +44,6 @@
   \file vpMeNurbs.cpp
   \brief Moving edges
 */
-
-
-
 
 #include <visp/vpMeTracker.h>
 #include <visp/vpMe.h>
@@ -1150,7 +1147,7 @@ vpMeNurbs::computeFreemanChainElement(const vpImage<unsigned char> &I,
         iPtemp = iP + diP;
 
 	if ( hasGoodLevel( I, iPtemp )) {
-	  element = element;      // keep same dir
+	  //element = element;      // keep same dir
 	}
 	else {
 	  computeFreemanParameters((element + 7) %8, diP);
@@ -1339,15 +1336,37 @@ vpMeNurbs::farFromImageEdge(const vpImage<unsigned char>& I, const vpImagePoint&
 
 /*!
 
-  Display of of a moving nurbs
-  
+  Display of a moving nurbs.
+
   \param I : The image used as background.
 
   \param n : Nurbs to display
-  
+
   \param color : Color used to display the nurbs.
 */
 void vpMeNurbs::display(const vpImage<unsigned char>& I, vpNurbs &n, vpColor color)
+{
+  double u = 0.0;
+  vpImagePoint pt;
+  while (u <= 1)
+  {
+    pt = n.computeCurvePoint(u);
+    vpDisplay::displayCross(I,pt,4,color);
+    u+=0.01;
+  }
+}
+
+/*!
+
+  Display of a moving nurbs.
+
+  \param I : The image used as background.
+
+  \param n : Nurbs to display
+
+  \param color : Color used to display the nurbs.
+*/
+void vpMeNurbs::display(const vpImage<vpRGBa>& I, vpNurbs &n, vpColor color)
 {
   double u = 0.0;
   vpImagePoint pt;

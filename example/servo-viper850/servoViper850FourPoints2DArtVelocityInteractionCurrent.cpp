@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: servoViper850FourPoints2DArtVelocityInteractionCurrent.cpp 3616 2012-03-09 14:31:52Z fspindle $
+ * $Id: servoViper850FourPoints2DArtVelocityInteractionCurrent.cpp 4065 2013-01-11 13:32:47Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,9 +44,10 @@
   \example servoViper850FourPoints2DArtVelocityInteractionCurrent.cpp
 
   \brief Example of eye-in-hand control law. We control here a real robot, the
-  Afma6 robot (cartesian robot, with 6 degrees of freedom). The velocity is
-  computed in articular.  Visual features are the image coordinates of 4 vdot
-  points.
+  Viper S850 robot (arm with 6 degrees of freedom). The velocities resulting
+  from visual servo are here joint velocities. Visual features are the image
+  coordinates of 4 points. The target is made of 4 dots arranged as a 10cm by 10cm
+  square.
 
 */
 
@@ -62,25 +63,23 @@
 #if (defined (VISP_HAVE_VIPER850) && defined (VISP_HAVE_DC1394_2))
 
 #include <visp/vp1394TwoGrabber.h>
-#include <visp/vpImage.h>
 #include <visp/vpDisplay.h>
+#include <visp/vpDisplayGTK.h>
 #include <visp/vpDisplayX.h>
-#include <visp/vpMath.h>
-#include <visp/vpHomogeneousMatrix.h>
-#include <visp/vpFeaturePoint.h>
-#include <visp/vpPoint.h>
-#include <visp/vpServo.h>
+#include <visp/vpDisplayOpenCV.h>
+#include <visp/vpDot2.h>
 #include <visp/vpFeatureBuilder.h>
+#include <visp/vpFeaturePoint.h>
+#include <visp/vpHomogeneousMatrix.h>
+#include <visp/vpImage.h>
 #include <visp/vpIoTools.h>
-#include <visp/vpRobotViper850.h>
+#include <visp/vpMath.h>
+#include <visp/vpPoint.h>
 #include <visp/vpPose.h>
-
-// Exception
-#include <visp/vpException.h>
-#include <visp/vpMatrixException.h>
+#include <visp/vpRobotViper850.h>
+#include <visp/vpServo.h>
 #include <visp/vpServoDisplay.h>
 
-#include <visp/vpDot2.h>
 #define L 0.05 // to deal with a 10cm by 10cm square
 
 
@@ -214,8 +213,13 @@ main()
 
     g.acquire(I) ;
 
-    vpDisplayX display(I, 100, 100, "Camera view ") ;
-    vpTRACE(" ") ;
+#ifdef VISP_HAVE_X11
+    vpDisplayX display(I,100,100,"Current image") ;
+#elif defined(VISP_HAVE_OPENCV)
+    vpDisplayOpenCV display(I,100,100,"Current image") ;
+#elif defined(VISP_HAVE_GTK)
+    vpDisplayGTK display(I,100,100,"Current image") ;
+#endif
 
     vpDisplay::display(I) ;
     vpDisplay::flush(I) ;
@@ -237,6 +241,7 @@ main()
               << std::endl;
 
     for (i=0 ; i < 4 ; i++) {
+      dot[i].setGraphics(true) ;
       dot[i].initTracking(I) ;
       cog = dot[i].getCog();
       vpDisplay::displayCross(I, cog, 10, vpColor::blue) ;
@@ -266,7 +271,7 @@ main()
 
     // Initialise a desired pose to compute s*, the desired 2D point features
     vpHomogeneousMatrix cMo;
-    vpTranslationVector cto(0, 0, 0.5); // tz = 0.7 meter
+    vpTranslationVector cto(0, 0, 0.5); // tz = 0.5 meter
     vpRxyzVector cro(vpMath::rad(0), vpMath::rad(10), vpMath::rad(20));
     vpRotationMatrix cRo(cro); // Build the rotation matrix
     cMo.buildFrom(cto, cRo); // Build the homogeneous matrix
@@ -409,10 +414,10 @@ main()
       // Flush the display
       vpDisplay::flush(I) ;
 
-      //	vpTRACE("\t\t || s - s* || = %f ", ( task.getError() ).sumSquare()) ;
+      // std::cout << "|| s - s* || = "  << ( task.getError() ).sumSquare() << std::endl;
     }
 
-    vpTRACE("Display task information " ) ;
+    std::cout << "Display task information: " << std::endl;
     task.print() ;
     task.kill();
     flog.close() ; // Close the log file
@@ -431,7 +436,6 @@ int
 main()
 {
   vpERROR_TRACE("You do not have an afma6 robot or a firewire framegrabber connected to your computer...");
-
 }
 
 #endif

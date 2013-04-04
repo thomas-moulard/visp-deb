@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpClient.h 3820 2012-06-27 13:13:29Z fspindle $
+ * $Id: vpClient.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,6 +48,7 @@
 #include <visp/vpRequest.h>
 #include <visp/vpNetwork.h>
 #include <visp/vpTime.h>
+
 
 /*!
   \class vpClient
@@ -181,10 +182,10 @@ public:
                 vpClient();
   virtual       ~vpClient();
   
-  bool          connectToHostname(const std::string &hostname, const int &port_serv);
-  bool          connectToIP(const std::string &ip, const int &port_serv);
+  bool          connectToHostname(const std::string &hostname, const unsigned int &port_serv);
+  bool          connectToIP(const std::string &ip, const unsigned int &port_serv);
   
-  void          deconnect(const int &index = 0);
+  void          deconnect(const unsigned int &index = 0);
   /*!
     Get the actual number of attempts to connect to the server.
     
@@ -201,7 +202,7 @@ public:
   */
   unsigned int  getNumberOfServers(){ return receptor_list.size(); }
   
-  virtual void  print();
+  void          print();
   
   /*!
     Set the number of attempts to connect to the server.

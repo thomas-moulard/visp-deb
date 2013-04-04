@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpRotationMatrix.cpp 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpRotationMatrix.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -692,10 +692,10 @@ vpRotationMatrix::buildFrom(const double tux,
 //! Construction from  rotation (as quaternion)
 vpRotationMatrix
 vpRotationMatrix::buildFrom(const vpQuaternionVector& q){
-  double a = q.x();
-  double b = q.y();
-  double c = q.z();
-  double d = q.w();
+  double a = q.w();
+  double b = q.x();
+  double c = q.y();
+  double d = q.z();
   (*this)[0][0] = a*a+b*b-c*c-d*d;
   (*this)[0][1] = 2*b*c-2*a*d;
   (*this)[0][2] = 2*a*c+2*b*d;

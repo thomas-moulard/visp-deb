@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMbtHiddenFace.cpp 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpMbtPolygon.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,16 +38,19 @@
  * Nicolas Melchior
  * Romain Tallonneau
  * Eric Marchand
+ * Aurelien Yol
  *
  *****************************************************************************/
+
+#include <limits.h>
+
 #include <visp/vpConfig.h>
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /*!
- \file vpMbtHiddenFace.cpp
- \brief Make the complete tracking of an object by using its CAD model.
+ \file vpMbtPolygon.cpp
+ \brief Implements a polygon of the model used by the model-based tracker.
 */
 
-#include <visp/vpMbtHiddenFace.h>
+#include <visp/vpMbtPolygon.h>
 
 /*!
   Basic constructor.
@@ -57,8 +60,7 @@ vpMbtPolygon::vpMbtPolygon()
   nbpt = 0 ;
   p = NULL ;
   isappearing = false;
-  negative = 0;
-  angle_1 = -1e6;
+  isvisible = false;
 }
 
 /*!
@@ -66,12 +68,27 @@ vpMbtPolygon::vpMbtPolygon()
 */
 vpMbtPolygon::~vpMbtPolygon()
 {
-//  cout << "Deleting Polygon "  << index  <<  endl ;
-  if (p!=NULL)
+  if (p !=NULL)
   {
     delete[] p;
     p = NULL;
   }
+}
+
+/*!
+  Get a reference to a corner.
+
+  \throw vpException::dimensionError if the _index is out of range.
+
+  \param _index : the index of the corner
+*/
+vpPoint &
+vpMbtPolygon::getPoint(const unsigned int _index)
+{
+  if(_index >= nbpt){
+    throw vpException(vpException::dimensionError, "index out of range");
+  }
+  return p[_index];
 }
 
 /*!
@@ -120,13 +137,23 @@ vpMbtPolygon::changeFrame(const vpHomogeneousMatrix &cMo)
   Check if the polygon is visible in the image. To do that, the polygon is projected into the image thanks to the camera pose.
   
   \param cMo : The pose of the camera.
+  \param depthTest : True if a face has to be entirely visible (in front of the camera). False if it can be partially visible.
   
   \return Return true if the polygon is visible.
 */
 bool
-vpMbtPolygon::isVisible(const vpHomogeneousMatrix &cMo)
+vpMbtPolygon::isVisible(const vpHomogeneousMatrix &cMo, const bool &depthTest)
 {
   changeFrame(cMo) ;
+  
+  if(depthTest)
+    for (unsigned int i = 0 ; i < nbpt ; i++){
+      if(p[i].get_Z() < 0){
+        isappearing = false;
+        isvisible = false ;
+        return false ;
+      }
+    }
   
   if(nbpt <= 2){
     /* a line is allways visible */
@@ -151,28 +178,25 @@ vpMbtPolygon::isVisible(const vpHomogeneousMatrix &cMo)
 
   double angle = p[0].get_X()*facenormal[0] +  p[0].get_Y()*facenormal[1]  +  p[0].get_Z()*facenormal[2]  ;
   
-  double diff = angle - angle_1;
-  if (diff < 0) negative++;
-  else negative =0;
-
-  if(angle < -0.00001 )
+  if(angle < -0.0001 )
   {
     isvisible = true;
     isappearing = false;
+    
     return  true ;
   }
   else
   {
-    if (angle < 0.0000001 )//&& negative >=1)
+    if (angle < 0.0000001 ){
       isappearing = true;
-    else
+    }
+    else {
       isappearing = false;
+    }
     isvisible = false ;
     return false ;
   }
 }
-
-
 
 /*!
   Check if the polygon is visible in the image and if the angle between the normal 
@@ -187,12 +211,15 @@ vpMbtPolygon::isVisible(const vpHomogeneousMatrix &cMo)
 bool 
 vpMbtPolygon::isVisible(const vpHomogeneousMatrix &cMo, const double alpha)
 {
-  changeFrame(cMo) ;
-  
+  //   std::cout << "Computing angle from MBT Face (cMo, alpha)" << std::endl;
   if(nbpt <= 2){
     /* a line is allways visible */
+    isvisible = true;
+    isappearing = false;
     return  true ;
   }
+
+  changeFrame(cMo);
 
   vpColVector e1(3) ;
   vpColVector e2(3) ;
@@ -205,150 +232,106 @@ vpMbtPolygon::isVisible(const vpHomogeneousMatrix &cMo, const double alpha)
   e2[0] = p[2].get_X() - p[1].get_X() ;
   e2[1] = p[2].get_Y() - p[1].get_Y() ;
   e2[2] = p[2].get_Z() - p[1].get_Z() ;
-
+ 
+  e1.normalize();
+  e2.normalize();
+  
   facenormal = vpColVector::crossProd(e1,e2) ;
-
-  vpColVector n_plan(3);
-  n_plan[0] = 0;
-  n_plan[1] = 0;
-  n_plan[2] = 1;
+  facenormal.normalize();
+ 
+  vpColVector e4(3) ;
+  vpPoint pt;
+  for (unsigned int i = 0; i < nbpt; i += 1){
+    pt.set_X(pt.get_X() + p[i].get_X());
+    pt.set_Y(pt.get_Y() + p[i].get_Y());
+    pt.set_Z(pt.get_Z() + p[i].get_Z());
+  }
+  e4[0] = -pt.get_X()/(double)nbpt; e4[1] = -pt.get_Y()/(double)nbpt; e4[2] = -pt.get_Z()/(double)nbpt; 
+  e4.normalize();
   
-  vpColVector n_cam(3);
-  n_cam = facenormal;
+  double angle2 = vpColVector::dotProd (e4, facenormal);
+  double my_angle = acos(angle2);
   
-  double angle = p[0].get_X()*facenormal[0] +  p[0].get_Y()*facenormal[1]  +  p[0].get_Z()*facenormal[2]  ;
+//   std::cout << angle2 << "/" << vpMath::deg(my_angle) << std::endl;
   
-  double n_cam_dot_n_plan = vpColVector::dotProd (n_cam, n_plan);
-  double cos_angle = n_cam_dot_n_plan * (1 / ( n_cam.euclideanNorm() * n_plan.euclideanNorm() ));
-  double my_angle = acos(cos_angle);
-  
-  if(angle < 0 && ( my_angle > static_cast<double>(M_PI - alpha) || my_angle < static_cast<double>(-M_PI + alpha) ) ){
+  if( my_angle < alpha ){
+    isvisible = true;
+    isappearing = false;
     return true;
-  }  
+  }
+  
+  isvisible = false;
+  isappearing = false;
   return false;
 }
 
-
-/*!
-  Basic constructor.
-*/
-vpMbtHiddenFaces::vpMbtHiddenFaces()
+std::vector<vpImagePoint> 
+vpMbtPolygon::getRoi(const vpCameraParameters &_cam)
 {
-}
-
-
-/*!
-  Basic destructor.
-*/
-vpMbtHiddenFaces::~vpMbtHiddenFaces()
-{
-//  cout << "Deleting Hidden Face struxture "<<endl  ;
-  vpMbtPolygon *p ;
-
-  for(std::list<vpMbtPolygon*>::const_iterator it=Lpol.begin(); it!=Lpol.end(); ++it){
-    p = *it;
-    if (p!=NULL){
-      delete p ;
-    }
-    p = NULL ;
+  std::vector<vpImagePoint> roi;
+  for (unsigned int i = 0; i < nbpt; i ++){
+    vpImagePoint ip;
+    vpMeterPixelConversion::convertPoint(_cam, p[i].get_x(), p[i].get_y(), ip);
+    roi.push_back(ip);
   }
-
-  Lpol.clear() ;
+  return roi;
 }
 
-/*!
-  Add a polygon to the list of polygons.
-  
-  \param p : The polygon to add.
-*/
-void
-vpMbtHiddenFaces::addPolygon(vpMbtPolygon *p)
+//###################################
+//      Static functions
+//###################################
+
+void                
+vpMbtPolygon::getMinMaxRoi(const std::vector<vpImagePoint> &roi, int & i_min, int &i_max, int &j_min, int &j_max)
 {
-  vpMbtPolygon *p_new = new vpMbtPolygon;
-  p_new->index = p->index;
-  p_new->setNbPoint(p->nbpt);
-  p_new->isvisible = p->isvisible;
-  for(unsigned int i = 0; i < p->nbpt; i++)
-    p_new->p[i]= p->p[i];
-  Lpol.push_back(p_new);
-}
+  // i_min_d = std::numeric_limits<double>::max(); // create an error under Windows. To fix it we have to add #undef max
+  double i_min_d = (double) INT_MAX;
+  double i_max_d = 0;
+  double j_min_d = (double) INT_MAX;
+  double j_max_d = 0;
 
-
-/*!
-  Compute the number of visible polygons.
-  
-  \param cMo : The pose of the camera
-  
-  \return Return the number of visible polygons
-*/
-unsigned int
-vpMbtHiddenFaces::setVisible(const vpHomogeneousMatrix &cMo)
-{
-  unsigned int nbvisiblepolygone = 0 ;
-  vpMbtPolygon *p ;
-
-  for(std::list<vpMbtPolygon*>::const_iterator it=Lpol.begin(); it!=Lpol.end(); ++it){
-    p = *it;
-    if (p->isVisible(cMo))
-      nbvisiblepolygone++;
+  for (unsigned int i = 0; i < roi.size(); i += 1){
+    if(i_min_d > roi[i].get_i())
+      i_min_d = roi[i].get_i();
+    
+    if(roi[i].get_i() < 0)
+      i_min_d = 1;
+    
+    if((roi[i].get_i() > 0) && (i_max_d < roi[i].get_i()))
+      i_max_d = roi[i].get_i();
+    
+    if(j_min_d > roi[i].get_j())
+      j_min_d = roi[i].get_j();
+    
+    if(roi[i].get_j() < 0)
+      j_min_d = 1;//border
+      
+    if((roi[i].get_j() > 0) && j_max_d < roi[i].get_j())
+      j_max_d = roi[i].get_j();
   }
-  return nbvisiblepolygone ;
+  i_min = static_cast<int> (i_min_d);
+  i_max = static_cast<int> (i_max_d);
+  j_min = static_cast<int> (j_min_d);
+  j_max = static_cast<int> (j_max_d);
 }
 
 /*!
-  Check if the polygon with the index \f$ index \f$ is visible or not.
-  
-  \param index : The index of one polygon in the list of polygons.
-  
-  \return Return true if the polygon is visible.
+  Static method to check whether the region defined by the vector of image point
+  is contained entirely in the image.
+
+  \param I : The image used for its size.
+  \param corners : The vector of points defining a region
 */
 bool
-vpMbtHiddenFaces::isVisible(const int index)
+vpMbtPolygon::roiInsideImage(const vpImage<unsigned char>& I, const std::vector<vpImagePoint>& corners)
 {
-  vpMbtPolygon *p ;
-  for(std::list<vpMbtPolygon*>::const_iterator it=Lpol.begin(); it!=Lpol.end(); ++it){
-    p = *it;
-    if (p->getIndex() == index) return p->isVisible() ;
-  }
-  return false ;
-}
-
-/*!
-  Check if the polygon with the index \f$ index \f$ will appear soon.
-  
-  \param index : The index of one polygon in the list of polygons.
-  
-  \return Return true if the polygon will appear soon.
-*/
-bool
-vpMbtHiddenFaces::isAppearing(const int index)
-{
-  vpMbtPolygon *p ;
-  for(std::list<vpMbtPolygon*>::const_iterator it=Lpol.begin(); it!=Lpol.end(); ++it){
-    p = *it;
-    if (p->getIndex() == index) return p->isAppearing() ;
-  }
-  return false ;
-}
-
-/*!
-  Reset the Hidden faces (remove the list of vpMbtPolygon)
-*/
-void
-vpMbtHiddenFaces::reset()
-{
-  vpMbtPolygon *p ;
-
-  for(std::list<vpMbtPolygon*>::const_iterator it=Lpol.begin(); it!=Lpol.end(); ++it){
-    p = *it;
-    if (p!=NULL){
-      delete p ;
+  for(unsigned int i=0; i<corners.size(); ++i){
+    if((corners[i].get_i() < 0) || (corners[i].get_j() < 0) ||
+       (corners[i].get_i() > I.getHeight()) || (corners[i].get_j() > I.getWidth())){
+      return false;
     }
-    p = NULL ;
   }
-
-  Lpol.clear();
+  return true;
 }
 
-#endif
 

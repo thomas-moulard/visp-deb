@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: moveAfma4.cpp 3619 2012-03-09 17:28:57Z fspindle $
+ * $Id: moveAfma4.cpp 4086 2013-02-02 07:26:19Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -55,11 +55,13 @@
 
 */
 
-
 #include <visp/vpConfig.h>
 #include <visp/vpDebug.h>
-#include <stdlib.h>
+
 #ifdef VISP_HAVE_AFMA4
+
+#include <unistd.h>
+#include <stdlib.h>
 
 #include <visp/vpParseArgv.h>
 #include <visp/vpRobotAfma4.h>

@@ -3,7 +3,7 @@
 # $Id: CTestConfig.cmake,v 1.9 2008-12-11 13:19:44 fspindle Exp $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -127,6 +127,11 @@ IF(VISP_HAVE_BICLOPS)
   SET(BUILDNAME "${BUILDNAME}-Biclops")
 ENDIF(VISP_HAVE_BICLOPS)
 
+# Add specific Pioneer robots
+if(VISP_HAVE_PIONEER)
+  set(BUILDNAME "${BUILDNAME}-aria")
+endif()
+
 #---- Framegrabers ----
 # Firewire dc1394-2.x 
 IF(VISP_HAVE_DC1394_2)
@@ -191,6 +196,9 @@ ENDIF(VISP_HAVE_GSL)
 # Ogre
 IF(VISP_HAVE_OGRE)
   SET(BUILDNAME "${BUILDNAME}-Ogre")
+ENDIF()
+IF(VISP_HAVE_OIS)
+  SET(BUILDNAME "${BUILDNAME}-OIS")
 ENDIF()
 # Coin
 IF(VISP_HAVE_COIN)

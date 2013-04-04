@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpKeyPointSurf.cpp 3730 2012-05-14 17:09:58Z fspindle $
+ * $Id: vpKeyPointSurf.cpp 4137 2013-02-14 06:56:53Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,6 +42,7 @@
 
 #include <visp/vpKeyPointSurf.h>
 
+#if defined (VISP_HAVE_OPENCV_NONFREE)
 #if VISP_HAVE_OPENCV_VERSION >= 0x010100 // Require opencv >= 1.1.0
 
 #include <visp/vpImageConvert.h>
@@ -772,11 +773,5 @@ void vpKeyPointSurf::getDescriptorParamReferencePoint (const int index, int& siz
 
 
 #endif
-
-
-/*
- * Local variables:
- * c-basic-offset: 4
- * End:
- */
+#endif
 

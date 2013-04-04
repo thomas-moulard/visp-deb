@@ -2,10 +2,63 @@
                      Visual Servoing Platform
                      Resume of the change log
 
-     Copyright Projet Lagadic / IRISA-INRIA Rennes, 2005-2012
+     Copyright Projet Lagadic / IRISA-INRIA Rennes, 2005-2013
                     http://www.irisa.fr/lagadic
 
 
+ViSP 2.7.0 (released February 11th, 2013)
+  - New features
+    - New vpViper650 and vpRobotViper650 classes to interface Inria's new
+      Adept Viper s650 robot.
+    - New robot simulators; vpSimulatorCamera, vpSimulatorPioneer,
+      vpSimulatorPioneerPan
+    - New model-based tracker using KLT points: vpMbKltTracker.
+    - New hybrid model-based tracker using moving edges and KLT points:
+      vpMbEdgeKltTracker
+  - Improvements
+    - Add visp-config.1 man page.
+    - To respect Debian guidelines, remove duplicate ABI version.
+      Library name was set to libvisp.a or libvisp.so.2.7.0 rather than
+      libvisp-2.a or libvisp-2.so.2.7.0
+    - Fix typos detected by lintian
+    - Add support for multiarch. Multiarch is the ability for a library
+      to be installed concurrently for differents architectures (such as
+      i386 and amd64 for instance). In practice, the changes removes the
+      assumption made that libraries are installed in $INSTALL_PREFIX/lib and
+      binaries in $INSTALL_PREFIX/bin.
+    - In vp1394TwoGrabber that allows to grab images from firewire cameras,
+      cameras are powered off when the grabber is closed.
+    - MinGW is now supported but since MinGW currently doesn't support tls
+      __declspec(thread) with vpDisplayGDI it is possible to open only
+      one display.
+    - To better organise the code, robot simulators inherit from
+      vpRobotSimulator class. Introduction of a new vpRobotWireFrameSimulator
+      class as a base class of robot simulated using the wireframe display
+      capabilities.
+    - VRML loader (based on Coin3D) now reads transform nodes and hierarchical
+      scenes.
+    - If Ogre3D is used, model-based trackers use now RayCasting to improve
+      faces visibility test.
+    - Compatibility with iOS 6 and Fedora 18
+  - Examples
+    - New model-based tracker examples to show how to use the KLT and hybrid
+      tracker. See in example/tracking mbtEdgeKltTracking.cpp and
+      mbtKltTracking.cpp
+  - Bug fixed
+    - [14646] ViSP doesn't build on Windows with MinGW
+    - [14651] Build error arround vpMatrix::pseudoInverse() with OpenCV 2.1.0
+    - [14661] Build error when GDI is not detected or turned off
+    - [14818] Build error when only GTK display device is available
+    - [14862] Lagrange pose estimation cannot handle planar objects with
+              points in plane oX=d or oY=d
+    - [14863] vpPose::poseRansac() can fail during Lagrange pose estimation
+    - [14993] Segfault in mbtTracker example when only the cube is tracked
+    - [15049] In vpFeatureSegment, bad interaction matrix associated to
+              alpha angle
+    - [15110] Segfault in ffmpeg video reader
+    - [15291] Under Windows, the end of an image is not displayed
+
+----------------------------------------------
 ViSP 2.6.2 (released July 15, 2012)
   - New features
      - New vp1394CMUGrabber class that allows firewire frame acquisition
@@ -16,7 +69,8 @@ ViSP 2.6.2 (released July 15, 2012)
        mobile robots using Aria 3rd party library.
      - New vpFeatureSegment class to consider a segment as a visual
        servoing feature. Normalized and non normalized features are considered.
-     - New vpFeatureMomentArea class to consider moment area as a visual feature.
+     - New vpFeatureMomentArea class to consider moment area as a visual
+       feature.
      - Introduction of new functionalities in vpIoTools to parse text
        config files
      - Introduction of YARP to ViSP image converters in vpImageConvert
@@ -44,12 +98,14 @@ ViSP 2.6.2 (released July 15, 2012)
      - Most of the classes that had a display() method now have the equivalent
        display in static function (display's externalisation).
      - Ransac is now improved for either pose computation or point matching.
-  - Examples:
+  - Examples
      - New example plot3d.cpp to show how to plot 3D curves
      - New example movePioneer.cpp to illustrate Pioneer velocity control.
-     - New example sonarPioneerReader.cpp to illustrate Pioneer sonar device usage.
+     - New example sonarPioneerReader.cpp to illustrate Pioneer sonar device
+       usage.
      - New examples servoPioneerPoint2DDepth.cpp,
-       servoPioneerPoint2DDepthWithoutVpServo.cpp and servoPioneerPanSegment3D.cpp
+       servoPioneerPoint2DDepthWithoutVpServo.cpp and
+       servoPioneerPanSegment3D.cpp
        to show how to control the pioneer mobile robot by IBVS.
      - New example grab1394CMU.cpp to show how to acquire images with
        the CMU 1394 library.

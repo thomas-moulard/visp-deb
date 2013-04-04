@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: servoAfma4Point2DCamVelocityKalman.cpp 3619 2012-03-09 17:28:57Z fspindle $
+ * $Id: servoAfma4Point2DCamVelocityKalman.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -69,6 +69,8 @@
 #include <visp/vpImage.h>
 #include <visp/vpDisplay.h>
 #include <visp/vpDisplayX.h>
+#include <visp/vpDisplayOpenCV.h>
+#include <visp/vpDisplayGTK.h>
 
 #include <visp/vpMath.h>
 #include <visp/vpHomogeneousMatrix.h>
@@ -252,7 +254,13 @@ main(int argc, const char ** argv)
     for (int i=0; i < 10; i++) //  10 acquisition to warm up the camera
       g.acquire(I) ;
 
+#ifdef VISP_HAVE_X11
     vpDisplayX display(I,100,100,"Current image") ;
+#elif defined(VISP_HAVE_OPENCV)
+    vpDisplayOpenCV display(I,100,100,"Current image") ;
+#elif defined(VISP_HAVE_GTK)
+    vpDisplayGTK display(I,100,100,"Current image") ;
+#endif
 
     vpDisplay::display(I) ;
     vpDisplay::flush(I) ;

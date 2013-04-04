@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: SickLDMRS-Process.cpp 3619 2012-03-09 17:28:57Z fspindle $
+ * $Id: SickLDMRS-Process.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -73,8 +73,8 @@
 #include <visp/vpParseArgv.h>
 #include <visp/vp1394TwoGrabber.h>
 #include <visp/vpIoTools.h>
-
-#if defined(UNIX) && (defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_GTK)) 
+ 
+#if ( defined(UNIX) && ( ! defined(WIN32) ) ) && (defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_GTK)) 
 
 static int save = 0;
 static int layerToDisplay = 0xF; // 0xF = 1111 => all the layers are selected

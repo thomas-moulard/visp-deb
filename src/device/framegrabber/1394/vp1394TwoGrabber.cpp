@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vp1394TwoGrabber.cpp 3841 2012-07-13 22:21:03Z fspindle $
+ * $Id: vp1394TwoGrabber.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -214,7 +214,6 @@ vp1394TwoGrabber::~vp1394TwoGrabber()
   }*/
   close();
 }
-
 
 /*!
 
@@ -1679,6 +1678,8 @@ vp1394TwoGrabber::close()
                                             "Unable to reset the initial mode"));
             }
           }
+          if (dc1394_camera_set_power(camera, DC1394_OFF) != DC1394_SUCCESS)
+            std::cout << "Unable to turn camera off" << std::endl;
         }
 #ifdef VISP_HAVE_DC1394_2_CAMERA_ENUMERATE // new API > libdc1394-2.0.0-rc7
         dc1394_camera_free(cameras[i]);
