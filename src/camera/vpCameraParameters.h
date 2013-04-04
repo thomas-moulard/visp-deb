@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpCameraParameters.h 3686 2012-04-23 14:23:58Z mbakthav $
+ * $Id: vpCameraParameters.h 4114 2013-02-07 13:26:03Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -240,6 +240,7 @@ public :
   } 
   
   vpMatrix get_K() const;
+  vpMatrix get_K_inverse() const;
 
   void printParameters() ;
   friend VISP_EXPORT std::ostream & operator << (std::ostream & os,

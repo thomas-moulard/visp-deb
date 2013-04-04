@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: grab1394CMU.cpp 3719 2012-05-10 05:50:23Z fspindle $
+ * $Id: grab1394CMU.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -121,7 +121,7 @@ OPTIONS:                                               Default\n\
 
 */
 bool getOptions(int argc, const char **argv, bool &display,
-                unsigned &nframes, bool &save, std::string &opath)
+                unsigned int &nframes, bool &save, std::string &opath)
 {
   const char *optarg;
   int	c;
@@ -130,7 +130,7 @@ bool getOptions(int argc, const char **argv, bool &display,
     switch (c) {
     case 'd': display = false; break;
     case 'n':
-      nframes = atoi(optarg); break;
+      nframes = (unsigned int)atoi(optarg); break;
     case 'o':
       save = true;
       opath = optarg; break;

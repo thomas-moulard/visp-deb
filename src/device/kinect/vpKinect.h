@@ -1,10 +1,10 @@
 /****************************************************************************
  *
- * $Id: vpKinect.h 3746 2012-05-29 16:24:29Z cteulier $
+ * $Id: vpKinect.h 4134 2013-02-13 09:27:36Z fspindle $
  *
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -76,7 +76,7 @@
 #include <visp/vpKinect.h>
 
 int main() {
-#ifdef VISP_HAVE_LIBFREENECT
+#ifdef VISP_HAVE_LIBFREENECT_AND_DEPENDENCIES
   // Init Kinect device
 #ifdef VISP_HAVE_LIBFREENECT_OLD
   // This is the way to initialize Freenect with an old version of libfreenect

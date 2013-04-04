@@ -3,7 +3,7 @@
 # $Id: CMakeSourceFileList.cmake,v 1.29 2008-12-17 14:45:01 fspindle Exp $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -117,8 +117,10 @@ SET (SRC_KEY_POINT
   key-point/vpBasicKeyPoint.cpp
   )
 
-IF(VISP_HAVE_OPENCV)
+IF(VISP_HAVE_OPENCV_NONFREE)
   LIST(APPEND SRC_KEY_POINT key-point/vpKeyPointSurf.cpp)
+ENDIF()
+IF(VISP_HAVE_OPENCV)
   LIST(APPEND SRC_KEY_POINT key-point/vpPlanarObjectDetector.cpp)
   LIST(APPEND SRC_KEY_POINT key-point/vpFernClassifier.cpp)
 ENDIF()
@@ -145,6 +147,7 @@ SET (SRC_MATH
   math/matrix/vpColVector.cpp
   math/matrix/vpMatrix.cpp
   math/matrix/vpMatrix_lu.cpp
+  math/matrix/vpMatrix_qr.cpp
   math/matrix/vpMatrix_svd.cpp
   math/matrix/vpMatrix_covariance.cpp
   math/matrix/vpRowVector.cpp
@@ -173,6 +176,10 @@ SET (SRC_MATH
   math/transformation/vpVelocityTwistMatrix.cpp
   )
 
+IF(VISP_HAVE_LAPACK)
+  LIST(APPEND SRC_MATH math/matrix/vpMatrix_cholesky.cpp)
+ENDIF()
+
 SET (SRC_ROBOT
   robot/robot/vpRobot.cpp
   robot/robot/vpRobotTemplate.cpp
@@ -181,14 +188,19 @@ SET (SRC_ROBOT
   robot/real-robot/biclops/vpBiclops.cpp
   robot/real-robot/ptu46/vpPtu46.cpp
   robot/real-robot/viper/vpViper.cpp
+  robot/real-robot/viper/vpViper650.cpp
   robot/real-robot/viper/vpViper850.cpp
   robot/simulator-robot/vpRobotCamera.cpp
+  robot/simulator-robot/vpRobotSimulator.cpp
+  robot/simulator-robot/vpSimulatorCamera.cpp
+  robot/simulator-robot/vpSimulatorPioneer.cpp
+  robot/simulator-robot/vpSimulatorPioneerPan.cpp
   )
 
 IF(WIN32 OR VISP_HAVE_PTHREAD)
-  list(APPEND SRC_ROBOT robot/simulator-robot/vpRobotSimulator.cpp)
-  list(APPEND SRC_ROBOT robot/simulator-robot/vpSimulatorViper850.cpp)
+  list(APPEND SRC_ROBOT robot/simulator-robot/vpRobotWireFrameSimulator.cpp)
   list(APPEND SRC_ROBOT robot/simulator-robot/vpSimulatorAfma6.cpp)
+  list(APPEND SRC_ROBOT robot/simulator-robot/vpSimulatorViper850.cpp)
 ENDIF()
 
 IF(VISP_HAVE_AFMA4)
@@ -212,6 +224,9 @@ IF(VISP_HAVE_PTU46)
 ENDIF()
 IF(VISP_HAVE_PIONEER)
   LIST(APPEND SRC_ROBOT robot/real-robot/pioneer/vpRobotPioneer.cpp)
+ENDIF()
+IF(VISP_HAVE_VIPER650)
+  LIST(APPEND SRC_ROBOT robot/real-robot/viper/vpRobotViper650.cpp)
 ENDIF()
 IF(VISP_HAVE_VIPER850)
   LIST(APPEND SRC_ROBOT robot/real-robot/viper/vpRobotViper850.cpp)
@@ -272,7 +287,7 @@ SET (SRC_TOOLS
   tools/time/vpTime.cpp
   )
 
-IF(VISP_HAVE_X11 OR VISP_HAVE_GDI OR VISP_HAVE_OPENCV) 
+IF(VISP_HAVE_X11 OR VISP_HAVE_GDI OR VISP_HAVE_OPENCV OR VISP_HAVE_D3D9 OR VISP_HAVE_GTK)
   list(APPEND SRC_TOOLS tools/plot/vpPlot.cpp)
   list(APPEND SRC_TOOLS tools/plot/vpPlotCurve.cpp)
   list(APPEND SRC_TOOLS tools/plot/vpPlotGraph.cpp)
@@ -308,33 +323,38 @@ SET (SRC_TRACKING
   tracking/moving-edges/vpMeSite.cpp
   tracking/moving-edges/vpMeTracker.cpp
   tracking/moving-edges/vpMeNurbs.cpp
+
   tracking/mbt/vpMbTracker.cpp
-  tracking/mbt/vpMbtDistanceLine.cpp
-  tracking/mbt/vpMbtHiddenFace.cpp
-  tracking/mbt/vpMbtMeLine.cpp
-  tracking/mbt/vpMbEdgeTracker.cpp
-  tracking/mbt/vpMbtDistanceCylinder.cpp
-  tracking/moments/vpMomentObject.cpp
+  tracking/mbt/edge/vpMbEdgeTracker.cpp
+  tracking/mbt/edge/vpMbtDistanceCylinder.cpp
+  tracking/mbt/edge/vpMbtDistanceLine.cpp
+  tracking/mbt/edge/vpMbtPolygon.cpp
+  tracking/mbt/edge/vpMbtMeLine.cpp
+
+  tracking/moments/vpMoment.cpp
   tracking/moments/vpMomentAlpha.cpp
+  tracking/moments/vpMomentArea.cpp
+  tracking/moments/vpMomentAreaNormalized.cpp
   tracking/moments/vpMomentBasic.cpp
   tracking/moments/vpMomentCentered.cpp
   tracking/moments/vpMomentCInvariant.cpp
   tracking/moments/vpMomentCommon.cpp
-  tracking/moments/vpMoment.cpp
   tracking/moments/vpMomentDatabase.cpp
   tracking/moments/vpMomentGravityCenter.cpp
   tracking/moments/vpMomentGravityCenterNormalized.cpp
   tracking/moments/vpMomentObject.cpp
-  tracking/moments/vpMomentAreaNormalized.cpp
-  tracking/moments/vpMomentArea.cpp
   )
 
 IF(VISP_HAVE_XML2)
-  LIST(APPEND SRC_TRACKING tracking/mbt/vpMbtXmlParser.cpp)
+  LIST(APPEND SRC_TRACKING tracking/mbt/edge/vpMbtXmlParser.cpp)
+  LIST(APPEND SRC_TRACKING tracking/mbt/klt/vpMbtKltXmlParser.cpp)
 ENDIF()
 
 IF(VISP_HAVE_OPENCV)
   LIST(APPEND SRC_TRACKING tracking/klt/vpKltOpencv.cpp)
+  LIST(APPEND SRC_TRACKING tracking/mbt/hybrid/vpMbEdgeKltTracker.cpp)
+  LIST(APPEND SRC_TRACKING tracking/mbt/klt/vpMbtKltPolygon.cpp)
+  LIST(APPEND SRC_TRACKING tracking/mbt/klt/vpMbKltTracker.cpp)
 ENDIF()
 
 SET (SRC_VIDEO
@@ -380,27 +400,26 @@ SET (SRC_VISUAL_FEATURE
   visual-feature/vpFeatureDisplay.cpp
   visual-feature/vpFeatureEllipse.cpp
   visual-feature/vpFeatureLine.cpp
+  visual-feature/vpFeatureLuminance.cpp
+  visual-feature/vpFeatureMoment.cpp
+  visual-feature/vpFeatureMomentAlpha.cpp
+  visual-feature/vpFeatureMomentArea.cpp
+  visual-feature/vpFeatureMomentAreaNormalized.cpp
+  visual-feature/vpFeatureMomentBasic.cpp
+  visual-feature/vpFeatureMomentCentered.cpp
+  visual-feature/vpFeatureMomentCInvariant.cpp
+  visual-feature/vpFeatureMomentCommon.cpp
+  visual-feature/vpFeatureMomentDatabase.cpp
+  visual-feature/vpFeatureMomentGravityCenter.cpp
+  visual-feature/vpFeatureMomentGravityCenterNormalized.cpp
   visual-feature/vpFeaturePoint3D.cpp
   visual-feature/vpFeaturePoint.cpp
   visual-feature/vpFeaturePointPolar.cpp
   visual-feature/vpFeatureThetaU.cpp
   visual-feature/vpFeatureTranslation.cpp
   visual-feature/vpFeatureVanishingPoint.cpp
-  visual-feature/vpFeatureLuminance.cpp
-  visual-feature/vpGenericFeature.cpp
-  visual-feature/vpFeatureMoment.cpp
-  visual-feature/vpFeatureMomentDatabase.cpp
-  visual-feature/vpFeatureMomentCommon.cpp
-  visual-feature/vpFeatureMomentAlpha.cpp
-  visual-feature/vpFeatureMomentGravityCenter.cpp
-  visual-feature/vpFeatureMomentBasic.cpp
-  visual-feature/vpFeatureMomentGravityCenterNormalized.cpp
-  visual-feature/vpFeatureMomentCentered.cpp
-  visual-feature/vpFeatureMomentCInvariant.cpp
-  visual-feature/vpFeatureMomentCommon.cpp
-  visual-feature/vpFeatureMomentAreaNormalized.cpp
-  visual-feature/vpFeatureMomentArea.cpp
   visual-feature/vpFeatureSegment.cpp
+  visual-feature/vpGenericFeature.cpp
   )
 
 SET (SRC_NETWORK

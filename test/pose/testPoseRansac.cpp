@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: testPoseRansac.cpp 3780 2012-06-07 08:56:03Z fspindle $
+ * $Id: testPoseRansac.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -71,15 +71,15 @@ main()
     P[2].setWorldCoordinates(L,L, 0 ) ;
     P[3].setWorldCoordinates(-L,L, 0 ) ;
     
-    double L2 = L*2.0;
-    P[4].setWorldCoordinates(-L2,-L2, 0 ) ;
-    P[5].setWorldCoordinates(L2,-L2, 0 ) ;
-    P[6].setWorldCoordinates(L2,L2, 0 ) ;
-    P[7].setWorldCoordinates(-L2,L2, 0 ) ;
+    double L2 = L*3.0;
+    P[4].setWorldCoordinates(0,-L2, 0 ) ;
+    P[5].setWorldCoordinates(L2,0, 0 ) ;
+    P[6].setWorldCoordinates(0,L2, 0 ) ;
+    P[7].setWorldCoordinates(-L2,0, 0 ) ;
     
-    //P[4].setWorldCoordinates(-0,0, L ) ; //ERREUR DANS LAGRANGE ET DEMENTHON
+    // P[4].setWorldCoordinates(-0,0, L ) ;
 
-    vpHomogeneousMatrix cMo_ref(0,0.2,1,0,0,0) ;
+    vpHomogeneousMatrix cMo_ref(0, 0.2, 1, 0, 0, 0) ;
     for(int i=0 ; i < size ; i++)
     {      
       P[i].project(cMo_ref) ;
@@ -97,7 +97,7 @@ main()
       pose.addPoint(P[i]);
     
     unsigned int nbInlierToReachConsensus = (unsigned int)(75.0 * (double)size / 100.0);
-    double threshold = 0.01;
+    double threshold = 0.001;
     
     pose.setRansacNbInliersToReachConsensus(nbInlierToReachConsensus);
     pose.setRansacThreshold(threshold);
@@ -115,7 +115,20 @@ main()
       std::cout << std::endl;
     }
 
-    std::cout << "cMo :\n" << vpPoseVector(cMo).t() << std::endl << std::endl;
+    vpPoseVector pose_ref = vpPoseVector(cMo_ref);
+    vpPoseVector pose_est = vpPoseVector(cMo);
 
+    std::cout << std::endl;
+    std::cout << "reference cMo :\n" << pose_ref.t() << std::endl << std::endl;
+    std::cout << "estimated cMo :\n" << pose_est.t() << std::endl << std::endl;
+
+    int test_fail = 0;
+    for(unsigned int i=0; i<6; i++) {
+      if (std::fabs(pose_ref[i]-pose_est[i]) > 0.001)
+        test_fail = 1;
+    }
+
+    std::cout << "Pose is " << (test_fail ? "badly" : "well") << " estimated" << std::endl;
     delete [] P;
+    return test_fail;
 }

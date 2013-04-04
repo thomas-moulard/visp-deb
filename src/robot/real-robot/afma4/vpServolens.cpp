@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpServolens.cpp 3723 2012-05-10 13:28:16Z fspindle $
+ * $Id: vpServolens.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,7 +49,7 @@
 
 */
 
-#ifdef UNIX
+#if defined(UNIX)
 
 #include <unistd.h>
 #include <termios.h>

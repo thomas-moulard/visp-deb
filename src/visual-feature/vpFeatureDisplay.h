@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpFeatureDisplay.h 3653 2012-03-28 12:43:23Z fspindle $
+ * $Id: vpFeatureDisplay.h 4062 2013-01-09 10:30:06Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -67,22 +67,19 @@ class VISP_EXPORT vpFeatureDisplay
 {
 
 public:
-  static void displayPoint(double x,double y,
-                           const vpCameraParameters &cam,
-                           const vpImage<unsigned char> &I,
-                           const vpColor &color = vpColor::green,
-                           unsigned int thickness=1) ;
-  static void displayLine(double rho,double theta,
-                          const vpCameraParameters &cam,
-                          const vpImage<unsigned char> &I,
-                          const vpColor &color = vpColor::green,
-                          unsigned int thickness=1) ;
   static void displayCylinder(double rho1,double theta1,
                               double rho2,double theta2,
                               const vpCameraParameters &cam,
                               const vpImage<unsigned char> &I,
                               const vpColor &color = vpColor::green,
                               unsigned int thickness=1) ;
+  static void displayCylinder(double rho1,double theta1,
+                              double rho2,double theta2,
+                              const vpCameraParameters &cam,
+                              const vpImage<vpRGBa> &I,
+                              const vpColor &color = vpColor::green,
+                              unsigned int thickness=1) ;
+
   static void displayEllipse(double x,double y,
                              double mu20, double mu11, double m02,
                              const vpCameraParameters &cam,
@@ -90,22 +87,6 @@ public:
                              const vpColor &color = vpColor::green,
                              unsigned int thickness=1) ;
 
-  static void displayPoint(double x,double y,
-                           const vpCameraParameters &cam,
-                           const vpImage<vpRGBa> &I,
-                           const vpColor &color = vpColor::green,
-                           unsigned int thickness=1) ;
-  static void displayLine(double rho,double theta,
-                          const vpCameraParameters &cam,
-                          const vpImage<vpRGBa> &I,
-                          const vpColor &color = vpColor::green,
-                          unsigned int thickness=1) ;
-  static void displayCylinder(double rho1,double theta1,
-                              double rho2,double theta2,
-                              const vpCameraParameters &cam,
-                              const vpImage<vpRGBa> &I,
-                              const vpColor &color = vpColor::green,
-                              unsigned int thickness=1) ;
   static void displayEllipse(double x,double y,
                              double mu20, double mu11, double m02,
                              const vpCameraParameters &cam,
@@ -113,13 +94,27 @@ public:
                              const vpColor &color = vpColor::green,
                              unsigned int thickness=1) ;
 
+  static void displayLine(double rho,double theta,
+                          const vpCameraParameters &cam,
+                          const vpImage<unsigned char> &I,
+                          const vpColor &color = vpColor::green,
+                          unsigned int thickness=1) ;
+  static void displayLine(double rho,double theta,
+                          const vpCameraParameters &cam,
+                          const vpImage<vpRGBa> &I,
+                          const vpColor &color = vpColor::green,
+                          unsigned int thickness=1) ;
 
+  static void displayPoint(double x,double y,
+                           const vpCameraParameters &cam,
+                           const vpImage<unsigned char> &I,
+                           const vpColor &color = vpColor::green,
+                           unsigned int thickness=1) ;
+  static void displayPoint(double x,double y,
+                           const vpCameraParameters &cam,
+                           const vpImage<vpRGBa> &I,
+                           const vpColor &color = vpColor::green,
+                           unsigned int thickness=1) ;
 };
 
 #endif
-
-/*
- * Local variables:
- * c-basic-offset: 2
- * End:
- */

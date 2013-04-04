@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpPlotGraph.cpp 3682 2012-04-11 14:28:29Z fnovotny $
+ * $Id: vpPlotGraph.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,9 +43,6 @@
 #include <visp/vpConfig.h>
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-
-
-
 #include <visp/vpPlotGraph.h>
 #include <visp/vpMath.h>
 #include <visp/vpMeterPixelConversion.h>
@@ -55,10 +52,14 @@
 #include <visp/vpDisplayOpenCV.h>
 #include <visp/vpDisplayX.h>
 #include <visp/vpDisplayGDI.h>
+#include <visp/vpDisplayGTK.h>
+#include <visp/vpDisplayD3D.h>
+
 #include <cmath>    // std::fabs
 #include <visp/vpMath.h>
 #include <limits>   // numeric_limits
-#if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV) 
+
+#if defined(VISP_HAVE_DISPLAY)
 
 vpPlotGraph::vpPlotGraph()
 {
@@ -334,7 +335,7 @@ vpPlotGraph::displayGrid (vpImage<unsigned char> &I)
       sprintf(valeur, "%.2f", ttemp);
 #if defined VISP_HAVE_X11
       vpDisplay::displayCharString(I,vpImagePoint(yorg + 3*epsi,x),valeur, vpColor::black);
-#elif defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV)
+#elif defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV) || defined(VISP_HAVE_D3D9) || defined(VISP_HAVE_GTK)
       vpDisplay::displayCharString(I,vpImagePoint(yorg + epsi,x),valeur, vpColor::black);
 #endif
     }
@@ -344,7 +345,7 @@ vpPlotGraph::displayGrid (vpImage<unsigned char> &I)
     sprintf(valeur, "x10e%d", -power);
 #if defined VISP_HAVE_X11
     vpDisplay::displayCharString(I,vpImagePoint(yorg+4*epsi,dTopLeft.get_j()+dWidth-6*epsj),valeur, vpColor::black);
-#elif defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV)
+#elif defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV) || defined(VISP_HAVE_D3D9) || defined(VISP_HAVE_GTK)
     vpDisplay::displayCharString(I,vpImagePoint(yorg+4*epsi,dTopLeft.get_j()+dWidth-10*epsj),valeur, vpColor::black);
 #endif
   }
@@ -366,7 +367,7 @@ vpPlotGraph::displayGrid (vpImage<unsigned char> &I)
     sprintf(valeur, "%.2f", ttemp);
 #if defined VISP_HAVE_X11    
     vpDisplay::displayCharString(I,vpImagePoint(y+epsi,topLeft.get_j()+epsj),valeur, vpColor::black);
-#elif defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV)
+#elif defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV) || defined(VISP_HAVE_D3D9) || defined(VISP_HAVE_GTK)
     vpDisplay::displayCharString(I,vpImagePoint(y-epsi,topLeft.get_j()+epsj),valeur, vpColor::black);
 #endif
   }
@@ -375,7 +376,7 @@ vpPlotGraph::displayGrid (vpImage<unsigned char> &I)
     sprintf(valeur, "x10e%d", -power);
 #if defined VISP_HAVE_X11   
     vpDisplay::displayCharString(I,vpImagePoint(dTopLeft.get_i()-3*epsi,dTopLeft.get_j()-6*epsj),valeur, vpColor::black);
-#elif defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV)
+#elif defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV) || defined(VISP_HAVE_D3D9) || defined(VISP_HAVE_GTK)
     vpDisplay::displayCharString(I,vpImagePoint(dTopLeft.get_i()-3*epsi,dTopLeft.get_j()-6*epsj),valeur, vpColor::black);
 #endif
   }
@@ -397,7 +398,7 @@ vpPlotGraph::displayGrid (vpImage<unsigned char> &I)
 
 void
 vpPlotGraph::displayUnit (vpImage<unsigned char> &
-#if defined(VISP_HAVE_X11) || defined (VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV)
+#if defined(VISP_HAVE_X11) || defined (VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV) || defined(VISP_HAVE_D3D9) || defined(VISP_HAVE_GTK)
                           I
 #endif
                           )
@@ -407,7 +408,7 @@ vpPlotGraph::displayUnit (vpImage<unsigned char> &
 #if defined VISP_HAVE_X11   
   vpDisplay::displayCharString(I,vpImagePoint(yorg-2*epsi,dTopLeft.get_j()+dWidth-offsetx*epsj),unitx, vpColor::black);
   vpDisplay::displayCharString(I,vpImagePoint(dTopLeft.get_i(),dTopLeft.get_j()+epsj),unity, vpColor::black);
-#elif defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV)
+#elif defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV) || defined(VISP_HAVE_D3D9) || defined(VISP_HAVE_GTK)
   vpDisplay::displayCharString(I,vpImagePoint(yorg-5*epsi,dTopLeft.get_j()+dWidth-offsetx*epsj),unitx, vpColor::black);
   vpDisplay::displayCharString(I,vpImagePoint(dTopLeft.get_i(),dTopLeft.get_j()+epsj),unity, vpColor::black);
 #endif

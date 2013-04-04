@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpPlotCurve.cpp 3635 2012-03-15 10:18:50Z fspindle $
+ * $Id: vpPlotCurve.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,15 +39,17 @@
  *
  *****************************************************************************/
 #include <visp/vpConfig.h>
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include <visp/vpPlotCurve.h>
 #include <visp/vpDisplayOpenCV.h>
 #include <visp/vpDisplayX.h>
 #include <visp/vpDisplayGDI.h>
+#include <visp/vpDisplayGTK.h>
+#include <visp/vpDisplayD3D.h>
 
-#if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV) 
+#if defined(VISP_HAVE_DISPLAY)
 vpPlotCurve::vpPlotCurve()
 {
   color = vpColor::red;
@@ -74,7 +76,7 @@ vpPlotCurve::plotPoint(const vpImage<unsigned char> &I, const vpImagePoint &iP, 
   {
     vpDisplay::displayLine(I,lastPoint, iP, color, thickness);
   }
-#if( defined (VISP_HAVE_X11) || defined (VISP_HAVE_GDI) || defined (VISP_HAVE_OPENCV) )
+#if defined (VISP_HAVE_DISPLAY)
   double top;
   double left;
   double width;

@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpIoTools.cpp 3723 2012-05-10 13:28:16Z fspindle $
+ * $Id: vpIoTools.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,6 +61,9 @@
 #  include <windows.h>
 #  include <direct.h>
 #endif
+#ifndef WIN32
+#  include <wordexp.h>
+#endif
 
 std::string vpIoTools::baseName = "";
 std::string vpIoTools::baseDir = "";
@@ -89,6 +92,7 @@ std::vector<std::string> vpIoTools::configValues = std::vector<std::string>();
 void
 vpIoTools::getUserName(std::string &username)
 {
+  // With MinGW, UNIX and WIN32 are defined 
 #if defined UNIX
   // Get the user name.
   char *_username = NULL;
@@ -272,6 +276,48 @@ vpIoTools::getenv(std::string &env)
 }
 
 /*!
+  Extract major, minor and patch from a version given as "x.x.x".
+  Ex: If version is "1.2.1", major will be 1, minor 2 and patch 1.
+
+  \param version : String to extract the values.
+  \param major : Extracted major.
+  \param minor : Extracted minor.
+  \param patch : Extracted patch.
+*/
+void 
+vpIoTools::getVersion(const std::string &version, unsigned int &major, unsigned int &minor, unsigned int &patch)
+{
+  if(version.size() == 0){
+    major = 0;
+    minor = 0;
+    patch = 0;
+  }
+  else{  
+    size_t major_pos = version.find('.');
+    std::string major_str = version.substr(0, major_pos);
+    major = (unsigned)atoi(major_str.c_str());
+    
+    if(major_pos != std::string::npos){
+      size_t minor_pos = version.find('.', major_pos+1);
+      std::string minor_str = version.substr(major_pos+1, (minor_pos - (major_pos+1)));
+      minor = (unsigned)atoi(minor_str.c_str());
+      
+      if(minor_pos != std::string::npos){
+        std::string patch_str = version.substr(minor_pos+1);
+        patch = (unsigned)atoi(patch_str.c_str());
+      }
+      else{
+        patch = 0;
+      }
+    }
+    else{
+      minor = 0;
+      patch = 0;
+    }
+  }
+}
+
+/*!
 
   Check if a directory exists.
 
@@ -377,7 +423,7 @@ vpIoTools::makeDirectory(const  char *dirname )
   if ( _stat( _dirname.c_str(), &stbuf ) != 0 )
 #endif
   {
-#if defined UNIX
+#if ( defined(UNIX) && !defined(WIN32) )
     if ( mkdir( _dirname.c_str(), (mode_t)0755 ) != 0 )
 #elif defined WIN32
     if ( _mkdir( _dirname.c_str()) != 0 )
@@ -676,6 +722,10 @@ vpIoTools::path(const char *pathname)
 #else
   for(unsigned int i=0 ; i<path.length() ; i++)
     if( path[i] == '\\')	path[i] = '/';
+  wordexp_t exp_result;
+  wordexp(path.c_str(), &exp_result, 0);
+  path = std::string(exp_result.we_wordv[0]);
+  wordfree(&exp_result);
 #endif
 
   return path;
@@ -707,9 +757,9 @@ vpIoTools::path(const std::string &pathname)
  */
 void vpIoTools::loadConfigFile(const std::string &confFile)
 {
-  configFile = confFile;
+  configFile = path(confFile);
   configVars.clear();configValues.clear();
-  std::ifstream confContent(confFile.c_str(), std::ios::in);
+  std::ifstream confContent(configFile.c_str(), std::ios::in);
 
   if(confContent)
     {
@@ -758,10 +808,17 @@ bool vpIoTools::readConfigVar(const std::string &var, double &value)
   for(unsigned int k=0;k<configVars.size() && found==false;++k)
     {
       if(configVars[k] == var)
-	{
-	  value = atof(configValues[k].c_str());
-	  found = true;
-	}
+        {
+          if(configValues[k].compare("PI") == 0)
+              value = M_PI;
+          else if(configValues[k].compare("PI/2") == 0)
+              value = M_PI/2;
+          else if(configValues[k].compare("-PI/2") == 0)
+              value = -M_PI/2;
+          else
+              value = atof(configValues[k].c_str());
+          found = true;
+        }
     }
   if(found == false)
     std::cout << var << " not found in config file" << std::endl;
@@ -879,22 +936,31 @@ bool vpIoTools::readConfigVar(const std::string &var, std::string &value)
 bool vpIoTools::readConfigVar(const std::string &var, vpMatrix &value, const unsigned int &nCols, const unsigned int &nRows)
 {
   bool found = false;
+  std::string nb;
   for(unsigned int k=0;k<configVars.size() && found==false;++k)
     {
       if(configVars[k] == var)
 	{
-	  found = true;
+      found = true;
 	  // resize or not
 	  if(nCols != 0 && nRows != 0)
 	    value.resize(nRows, nCols);
 	  long unsigned int ind=0,ind2;
 	  for(unsigned int i=0;i<value.getRows();++i)
-	    for(unsigned int j=0;j<value.getCols();++j)
-	      {
-		ind2 = configValues[k].find(",",ind);
-		value[i][j] = atof(configValues[k].substr(ind,ind2-ind).c_str());
-		ind = ind2+1;
-	      }
+        for(unsigned int j=0;j<value.getCols();++j)
+          {
+            ind2 = configValues[k].find(",",ind);
+            nb = configValues[k].substr(ind,ind2-ind);
+            if(nb.compare("PI") == 0)
+                value[i][j] = M_PI;
+            else if(nb.compare("PI/2") == 0)
+                value[i][j] = M_PI/2;
+            else if(nb.compare("-PI/2") == 0)
+                value[i][j] = -M_PI/2;
+            else
+                value[i][j] = atof(nb.c_str());
+            ind = ind2+1;
+          }
 	}
     }
   if(found == false)

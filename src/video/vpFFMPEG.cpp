@@ -3,7 +3,7 @@
  * $Id: vpImagePoint.h 2359 2009-11-24 15:09:25Z nmelchio $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -78,6 +78,8 @@ vpFFMPEG::vpFFMPEG()
   f = NULL;
   encoderWasOpened = false;
   packet = new AVPacket;
+
+  pFormatCtx = NULL;
 }
 
 /*!
@@ -188,7 +190,7 @@ bool vpFFMPEG::openStream(const char *filename, vpFFMPEGColorType color_type)
      */
     width = pCodecCtx->width ;
     height = pCodecCtx->height ;
-    buffer = (uint8_t *) malloc (sizeof (uint8_t) * (size_t)numBytes);
+    buffer = (uint8_t *) malloc ((unsigned int)(sizeof (uint8_t)) * (unsigned int)numBytes);
   }
   else
   {

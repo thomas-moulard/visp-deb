@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: testSvd.cpp 3619 2012-03-09 17:28:57Z fspindle $
+ * $Id: testSvd.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -152,7 +152,7 @@ bool testRandom(double epsilon)
 #endif
 
 bool testSvdOpenCvGSLCoherence(double epsilon){
-#if (VISP_HAVE_OPENCV_VERSION >= 0x020100) && defined (VISP_HAVE_GSL) // Require opencv >= 2.1.0
+#if (VISP_HAVE_OPENCV_VERSION >= 0x020101) && defined (VISP_HAVE_GSL) // Require opencv >= 2.1.1
   vpMatrix A;
   vpMatrix vA;
   vpColVector wA;

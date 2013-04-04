@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpColVector.h 3694 2012-05-03 07:18:31Z fspindle $
+ * $Id: vpColVector.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -133,6 +133,7 @@ public:
 	       const unsigned int &nrows, const unsigned int &ncols);
   vpMatrix reshape(const unsigned int &nrows, const unsigned int &ncols);
 
+  void stack(const double &b);
   void stack(const vpColVector &B);
   static vpColVector stack(const vpColVector &A, const vpColVector &B);
   static void stack(const vpColVector &A, const vpColVector &B, vpColVector &C);

@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMomentCentered.h 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpMomentCentered.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -83,42 +83,47 @@ public:
 
 	void compute();
   double get(unsigned int i,unsigned int j);
+
+  inline std::vector<double>& get();
   /*!
-     Returns all centered moment values \f$\mu_{ij}\f$ with \f$i+j \leq order\f$ where order is the object's order.
-
-     \return Vector of moment values. To access \f$\mu_{ij}\f$, you have to read vpMomentObject::get()[j*order+i].
-
-     For example, if the maximal order is 3, the following values are provided:
-     \code
-u00 u10 u20 u01 u11 u21 u02 u12 u12 u30 u03
-     \endcode
-      To have a better reading of the moments you can picture them as a triangular matrix:
-      \code
-        u00 u10 u20 u30
-        u01 u11 u21 x
-        u02 u12  x  x
-        u30 x    x  x
-      \endcode
-      The moments of the same order are on each of the matrix reverse diagonals.
-     To access for example to the centered moment \f$\mu_{12}\f$, you should use this kind of code:
-     \code
-  vpMomentCentered mc;
-  //[...]
-  mc.compute();
-  double mu12;
-  mu12 = mc.get()[2*(obj.getOrder()+1)+1]; // i=1 and j=2
-  mu12 = mc.get(1,2); // the same
-
-
-\endcode
-          */
-  std::vector<double>& get(){return vpMoment::get();}
-  /*!
-          Moment name.
-          */
-	const char* name(){return "vpMomentCentered";}
+     Moment name.
+  */
+  inline const char* name(){return "vpMomentCentered";}
 
   friend VISP_EXPORT std::ostream & operator<<(std::ostream & os, vpMomentCentered& v);
 };
+
+/*!
+  Returns all centered moment values \f$\mu_{ij}\f$ with \f$i+j \leq order\f$ where order is the object's order.
+
+  \return Vector of moment values. To access \f$\mu_{ij}\f$, you have to read vpMomentObject::get()[j*order+i].
+
+  For example, if the maximal order is 3, the following values are provided:
+  \code
+u00 u10 u20 u01 u11 u21 u02 u12 u12 u30 u03
+  \endcode
+  To have a better reading of the moments you can picture them as a triangular matrix:
+  \code
+u00 u10 u20 u30
+u01 u11 u21 x
+u02 u12  x  x
+u30 x    x  x
+  \endcode
+  The moments of the same order are on each of the matrix reverse diagonals.
+  To access for example to the centered moment \f$\mu_{12}\f$, you should use this kind of code:
+  \code
+vpMomentCentered mc;
+//[...]
+mc.compute();
+double mu12;
+mu12 = mc.get()[2*(obj.getOrder()+1)+1]; // i=1 and j=2
+mu12 = mc.get(1,2); // the same
+  \endcode
+*/
+inline std::vector<double>& vpMomentCentered::get()
+{
+  return vpMoment::get();
+}
+
 
 #endif

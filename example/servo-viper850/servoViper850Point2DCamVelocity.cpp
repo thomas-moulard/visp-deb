@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: servoViper850Point2DCamVelocity.cpp 3616 2012-03-09 14:31:52Z fspindle $
+ * $Id: servoViper850Point2DCamVelocity.cpp 4065 2013-01-11 13:32:47Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -81,6 +81,9 @@
 #include <visp/vpDot2.h>
 #include <visp/vpDisplay.h>
 #include <visp/vpDisplayX.h>
+#include <visp/vpDisplayOpenCV.h>
+#include <visp/vpDisplayGTK.h>
+
 
 int
 main()
@@ -137,8 +140,13 @@ main()
 #endif
     g.open(I) ;
 
-
+#ifdef VISP_HAVE_X11
     vpDisplayX display(I, (int)(100+I.getWidth()+30), 200, "Current image") ;
+#elif defined(VISP_HAVE_OPENCV)
+    vpDisplayOpenCV display(I, (int)(100+I.getWidth()+30), 200, "Current image") ;
+#elif defined(VISP_HAVE_GTK)
+    vpDisplayGTK display(I, (int)(100+I.getWidth()+30), 200, "Current image") ;
+#endif
 
     vpDisplay::display(I) ;
     vpDisplay::flush(I) ;
@@ -262,7 +270,6 @@ main()
 
       // Flush the display
       vpDisplay::flush(I) ;
-
     }
 
     flog.close() ; // Close the log file

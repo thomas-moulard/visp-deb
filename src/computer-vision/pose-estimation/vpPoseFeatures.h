@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpPoseFeatures.h 3839 2012-07-06 13:02:08Z ayol $
+ * $Id: vpPoseFeatures.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -415,6 +415,7 @@ public:
 
 /*!
   \class vpPoseFeatures
+  \brief Tools for pose computation from any feature.
   \ingroup Pose
 
   This class allows to estimate a pose by virtual visual servoing from visual features. The features that are considered are points, segments, lines, ellipses.
@@ -539,7 +540,7 @@ public:
 
     \return Maximum number of iterations used during VVS minimization.
   */
-  double getVVSIterMax(){ return vvsIterMax; }
+  unsigned int getVVSIterMax(){ return vvsIterMax; }
   
   /*!
     Enable or disable covariance computation of the pose parameters.
@@ -560,7 +561,7 @@ public:
 
     \param val : Maximum number of iteration used in the VVS scheme.
   */
-  void setVVSIterMax(const int &val){ vvsIterMax = val; }
+  void setVVSIterMax(const unsigned int &val){ vvsIterMax = val; }
   
   /*!
    Turn the verbose mode ON / OFF.

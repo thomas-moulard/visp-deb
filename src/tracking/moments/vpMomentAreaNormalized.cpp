@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMomentAreaNormalized.cpp 3761 2012-06-04 08:05:25Z mbakthav $
+ * $Id: vpMomentAreaNormalized.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,6 +43,7 @@
 #include <visp/vpMomentCentered.h>
 #include <visp/vpMomentDatabase.h>
 #include <cmath>
+
 
 /*!
   Computes the normalized area \f$ a_n=Z^* \sqrt{\frac{a^*}{a}} \f$.

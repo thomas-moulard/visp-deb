@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpConfig.h.cmake 3814 2012-06-26 16:26:16Z fspindle $
+ * $Id: vpConfig.h.cmake 4137 2013-02-14 06:56:53Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -104,6 +104,9 @@
 // Defined if OpenCV available.
 #cmakedefine VISP_HAVE_OPENCV
 
+// Defined if OpenCV_nonfree available.
+#cmakedefine VISP_HAVE_OPENCV_NONFREE
+
 // OpenCV version in hexadecimal (for example 2.1.0 gives 0x020100).
 #ifdef VISP_HAVE_OPENCV
 #  define VISP_HAVE_OPENCV_VERSION ${VISP_HAVE_OPENCV_VERSION}
@@ -117,6 +120,11 @@
 
 // Defined if Direct3D9 library available
 #cmakedefine VISP_HAVE_D3D9
+
+// Defined if one of the display device is available
+#if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV) || defined(VISP_HAVE_D3D9) || defined(VISP_HAVE_GTK)
+#  define VISP_HAVE_DISPLAY
+#endif
 
 // Defined if GSL library available (-lgsl -lgslcblas).
 #cmakedefine VISP_HAVE_GSL
@@ -233,6 +241,9 @@
 // Defined if Irisa's Ptu-46 pan-tilt head available.
 #cmakedefine VISP_HAVE_PTU46
 
+// Defined if Irisa's Viper S650 robot available.
+#cmakedefine VISP_HAVE_VIPER650
+
 // Defined if Irisa's Viper S850 robot available.
 #cmakedefine VISP_HAVE_VIPER850
 
@@ -282,7 +293,7 @@
 // We exploit here the fact that cmake auto set xxx_EXPORTS (with S) on 
 // compilation.
 #if defined (WIN32) && defined(VISP_BUILD_SHARED_LIBS) 
-#  ifdef visp_2_EXPORTS 
+#  ifdef visp_EXPORTS 
 #    define VISP_EXPORT __declspec(dllexport)
 #  else  
 #    define VISP_EXPORT __declspec(dllimport)

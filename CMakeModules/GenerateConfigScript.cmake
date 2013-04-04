@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: GenerateConfigScript.cmake 3583 2012-03-01 17:36:28Z fspindle $
+# $Id: GenerateConfigScript.cmake 4060 2013-01-09 09:28:50Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -31,8 +31,8 @@
 # WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 #
 # Description:
-# This file generates the ViSP-2 library config shell script: "visp2-config"
-# from visp2-config.in (in VISP_SOURCE_DIR).
+# This file generates the ViSP library config shell script: "visp-config"
+# from visp-config.in (in VISP_SOURCE_DIR).
 #
 # Authors:
 # Fabien Spindler
@@ -46,7 +46,6 @@ IF (UNIX)
   # for Unix platforms: Linux, OSX
   #
   ####################################################################### 
-
   SET(FILE_VISP_CONFIG_SCRIPT_IN "${VISP_SOURCE_DIR}/CMakeModules/visp-config.in")
   SET(FILE_VISP_CONFIG_SCRIPT    "${BINARY_OUTPUT_PATH}/visp-config")
   
@@ -60,7 +59,7 @@ IF (UNIX)
   #----------------------------------------------------------------------
   SET(VISP_CONFIG_SCRIPT_CFLAGS ${VISP_OPENMP_FLAGS})
   LIST(APPEND VISP_CONFIG_SCRIPT_CFLAGS "${VISP_DEFS}")
-  LIST(APPEND VISP_CONFIG_SCRIPT_CFLAGS "-I$PREFIX/include")
+  LIST(APPEND VISP_CONFIG_SCRIPT_CFLAGS "-I$PREFIX/${CMAKE_INSTALL_INCLUDEDIR}")
 
   FOREACH(INCDIR ${VISP_EXTERN_INCLUDE_DIRS})
     LIST(APPEND VISP_CONFIG_SCRIPT_CFLAGS "-I${INCDIR}")
@@ -144,10 +143,10 @@ IF (UNIX)
   #MESSAGE("EXTERN LIBS : ${VISP_CONFIG_SCRIPT_EXTERN_LIBS}")
  
   # prepend with ViSP own lib dir
-  SET(VISP_CONFIG_SCRIPT_EXTERN_LIBS  "-L$PREFIX/lib -l${VISP_INTERN_LIBRARY} ${VISP_CONFIG_SCRIPT_EXTERN_LIBS}")
+  SET(VISP_CONFIG_SCRIPT_EXTERN_LIBS  "-L$PREFIX/${CMAKE_INSTALL_LIBDIR} -l${VISP_INTERN_LIBRARY} ${VISP_CONFIG_SCRIPT_EXTERN_LIBS}")
   IF(UNIX)
     IF(NOT APPLE)
-      SET(VISP_CONFIG_SCRIPT_EXTERN_LIBS  "-Wl,-rpath,$PREFIX/lib ${VISP_CONFIG_SCRIPT_EXTERN_LIBS}")
+      SET(VISP_CONFIG_SCRIPT_EXTERN_LIBS  "-Wl,-rpath,$PREFIX/${CMAKE_INSTALL_LIBDIR} ${VISP_CONFIG_SCRIPT_EXTERN_LIBS}")
     ENDIF(NOT APPLE)
   ENDIF(UNIX)
 
@@ -196,7 +195,7 @@ ELSE(UNIX)
   #---------------------------------------------------------------------
   # Updates VISP_CONFIG_SCRIPT_INCLUDE
   #----------------------------------------------------------------------
-  LIST(APPEND VISP_EXTERN_INCLUDE_DIRS "%PREFIX%/include")
+  LIST(APPEND VISP_EXTERN_INCLUDE_DIRS "%PREFIX%/${CMAKE_INSTALL_INCLUDEDIR}")
   LIST(REMOVE_DUPLICATES VISP_EXTERN_INCLUDE_DIRS)
 
   # Format the string

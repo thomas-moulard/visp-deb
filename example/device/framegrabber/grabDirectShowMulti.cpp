@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: grabDirectShowMulti.cpp 3619 2012-03-09 17:28:57Z fspindle $
+ * $Id: grabDirectShowMulti.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -130,7 +130,7 @@ OPTIONS                                                    Default\n\
      Number of frames to acquire.\n\
 \n\
   -i      \n\
-     Flag to print camera informations.\n\
+     Flag to print camera information.\n\
 \n\
   -s      \n\
      Print camera settings capabilities such as MediaType \n\
@@ -163,7 +163,7 @@ Set the program options.
 \param camera : Active camera identifier.
 \param nframes : Number of frames to acquire.
 
-\param verbose_info : Camera informations printing.
+\param verbose_info : Camera information printing.
 \param verbose_settings : Camera settings printing.
 
 \param mediatype_is_set : New mediatype setting.

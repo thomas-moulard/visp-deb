@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: CMakeLists.txt 3530 2012-01-03 10:52:12Z fspindle $
+# $Id: CMakeLists.txt 4082 2013-01-30 10:56:55Z ayol $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -44,7 +44,9 @@
 #
 # If you want to add/remove a source, modify here
 SET (SOURCE
-  mbtTracking.cpp
+  mbtEdgeTracking.cpp
+  mbtEdgeKltTracking.cpp
+  mbtKltTracking.cpp
   trackDot2WithAutoDetection.cpp
   trackMeCircle.cpp
   trackMeEllipse.cpp
@@ -68,7 +70,9 @@ FOREACH(source ${SOURCE})
 ENDFOREACH(source)
 
 # Add test
-ADD_TEST(mbtTracking      mbtTracking -c ${OPTION_TO_DESACTIVE_DISPLAY})
+ADD_TEST(mbtEdgeTracking    mbtEdgeTracking -c ${OPTION_TO_DESACTIVE_DISPLAY})
+ADD_TEST(mbtEdgeKltTracking mbtEdgeKltTracking -c ${OPTION_TO_DESACTIVE_DISPLAY})
+ADD_TEST(mbtKltTracking     mbtKltTracking -c ${OPTION_TO_DESACTIVE_DISPLAY})
 ADD_TEST(trackDot2WithAutoDetection trackDot2WithAutoDetection -c ${OPTION_TO_DESACTIVE_DISPLAY})
 ADD_TEST(trackMeCircle    trackMeCircle -c ${OPTION_TO_DESACTIVE_DISPLAY})
 ADD_TEST(trackMeEllipse   trackMeEllipse -c ${OPTION_TO_DESACTIVE_DISPLAY})

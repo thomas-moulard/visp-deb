@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpV4l2Grabber.h 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpV4l2Grabber.h 4107 2013-02-06 10:04:49Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -222,7 +222,7 @@ public:
     return (this->pixelformat);
   }
   /*!
-    Activates the verbose mode to print additionnal informations on stdout.
+    Activates the verbose mode to print additional information on stdout.
     \param verbose : If true activates the verbose mode.
   */
   void setVerboseMode(bool verbose) {
@@ -341,7 +341,7 @@ private:
 
   bool		verbose;
   unsigned	nbuffers;
-  int           field;
+  unsigned int field;
   bool		streaming;
 
   unsigned      input;

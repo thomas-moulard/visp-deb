@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpScale.cpp 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpScale.cpp 4137 2013-02-14 06:56:53Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -83,8 +83,8 @@ vpScale::vpScale(double kernel_bandwidth,
 #endif
 
   bandwidth = kernel_bandwidth;
-  dimension = dimension;
-  kernel_type = kernel_type;
+  this->dimension = dimension;
+  this->kernel_type = kernel_type;
 
 #if (DEBUG_LEVEL2)
   std::cout << "vpScale constructor finished" << std::endl;

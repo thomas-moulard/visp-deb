@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: simulateCircle2DCamVelocity.cpp 3668 2012-04-04 09:07:10Z fspindle $
+ * $Id: simulateCircle2DCamVelocity.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -261,7 +261,7 @@ void *mainLoop (void *_simu)
 
     unsigned int iter=0 ;
     vpTRACE("\t loop") ;
-    int itermax ;
+    unsigned int itermax ;
     if (pos==2) itermax = 75 ; else itermax = 100 ;
     char name[FILENAME_MAX] ;
     while(iter++<itermax)

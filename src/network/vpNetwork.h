@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpNetwork.h 3820 2012-06-27 13:13:29Z fspindle $
+ * $Id: vpNetwork.h 4137 2013-02-14 06:56:53Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -51,7 +51,7 @@
 #include <iostream>
 
 #ifdef UNIX
-#  include <unistd.h>
+#  include <unistd.h> 
 #  include <sys/socket.h>
 #  include <netinet/in.h>
 #  include <arpa/inet.h>
@@ -60,11 +60,11 @@
 #  include<io.h>
 //#  include<winsock.h>
 #  include<winsock2.h>
-#  pragma comment(lib, "ws2_32.lib")
+//#  pragma comment(lib, "ws2_32.lib") // Done by CMake in main CMakeLists.txt
 #endif
 
 
-/*!
+/*! 
   \class vpNetwork
   
   \ingroup Network
@@ -85,10 +85,11 @@ class VISP_EXPORT vpNetwork
 protected:
 
   struct vpReceptor{
-    int                   socketFileDescriptorReceptor;
 #ifdef UNIX
+    int                   socketFileDescriptorReceptor;
     socklen_t             receptorAddressSize;
 #else
+    SOCKET                socketFileDescriptorReceptor;
     int                   receptorAddressSize;
 #endif
     struct sockaddr_in    receptorAddress;
@@ -97,7 +98,11 @@ protected:
   
   struct vpEmitter{
     struct sockaddr_in    emitterAdress;
+#ifdef UNIX
     int                   socketFileDescriptorEmitter;
+#else
+    SOCKET                socketFileDescriptorEmitter;
+#endif
   };
   
   //######## PARAMETERS ########
@@ -107,9 +112,13 @@ protected:
   vpEmitter               emitter;
   std::vector<vpReceptor> receptor_list;
   fd_set                  readFileDescriptor;
+#ifdef UNIX
   int                     socketMax;
+#else
+  SOCKET                  socketMax;
+#endif
   
-  //Message Handling
+  //Message Handling 
   std::vector<vpRequest*> request_list;
   
   unsigned int            max_size_message;
@@ -132,9 +141,9 @@ private:
   int               _handleFirstRequest();
   
   void              _receiveRequest();
-  void              _receiveRequestFrom(const int &receptorEmitting);
+  void              _receiveRequestFrom(const unsigned int &receptorEmitting);
   int               _receiveRequestOnce();
-  int               _receiveRequestOnceFrom(const int &receptorEmitting);
+  int               _receiveRequestOnceFrom(const unsigned int &receptorEmitting);
   
 public:
 
@@ -155,7 +164,7 @@ public:
   std::string       getRequestIdFromIndex(const int &ind){ 
                         if(ind >= (int)request_list.size() || ind < 0)
                           return "";
-                        return request_list[ind]->getId(); 
+                        return request_list[(unsigned)ind]->getId(); 
                     }
   
   /*!
@@ -167,35 +176,35 @@ public:
   */
   unsigned int      getMaxSizeReceivedMessage(){ return max_size_message; }
   
-  virtual void      print(const char *id = "");
+  void      print(const char *id = "");
   
   template<typename T>
-  int               receive(T* object, const int &sizeOfObject = sizeof(T));
+  int               receive(T* object, const unsigned int &sizeOfObject = sizeof(T));
   template<typename T>
-  int               receiveFrom(T* object, const int &receptorEmitting, const int &sizeOfObject = sizeof(T));
+  int               receiveFrom(T* object, const unsigned int &receptorEmitting, const unsigned int &sizeOfObject = sizeof(T));
   
   std::vector<int>  receiveRequest();
-  std::vector<int>  receiveRequestFrom(const int &receptorEmitting);
+  std::vector<int>  receiveRequestFrom(const unsigned int &receptorEmitting);
   int               receiveRequestOnce();
-  int               receiveRequestOnceFrom(const int &receptorEmitting);
+  int               receiveRequestOnceFrom(const unsigned int &receptorEmitting);
   
   std::vector<int>  receiveAndDecodeRequest();
-  std::vector<int>  receiveAndDecodeRequestFrom(const int &receptorEmitting);
+  std::vector<int>  receiveAndDecodeRequestFrom(const unsigned int &receptorEmitting);
   int               receiveAndDecodeRequestOnce();
-  int               receiveAndDecodeRequestOnceFrom(const int &receptorEmitting);
+  int               receiveAndDecodeRequestOnceFrom(const unsigned int &receptorEmitting);
   
   void              removeDecodingRequest(const char *);
   
   template<typename T>
-  int               send(T* object, const int &sizeOfObject = sizeof(T));
+  int               send(T* object, const int unsigned &sizeOfObject = sizeof(T));
   template<typename T>
-  int               sendTo(T* object, const int &dest, const int &sizeOfObject = sizeof(T));
+  int               sendTo(T* object, const unsigned int &dest, const unsigned int &sizeOfObject = sizeof(T));
   
   int               sendRequest(vpRequest &req);
-  int               sendRequestTo(vpRequest &req, const int &dest);
+  int               sendRequestTo(vpRequest &req, const unsigned int &dest);
   
   int               sendAndEncodeRequest(vpRequest &req);
-  int               sendAndEncodeRequestTo(vpRequest &req, const int &dest);
+  int               sendAndEncodeRequestTo(vpRequest &req, const unsigned int &dest);
   
   /*!
     Change the maximum size that the emitter can receive (in request mode).
@@ -258,7 +267,7 @@ public:
   \return the number of bytes received, or -1 if an error occured.
 */
 template<typename T>
-int vpNetwork::receive(T* object, const int &sizeOfObject)
+int vpNetwork::receive(T* object, const unsigned int &sizeOfObject)
 {
   if(receptor_list.size() == 0)
   {
@@ -273,7 +282,7 @@ int vpNetwork::receive(T* object, const int &sizeOfObject)
   FD_ZERO(&readFileDescriptor);        
   
   for(unsigned int i=0; i<receptor_list.size(); i++){
-    FD_SET(receptor_list[i].socketFileDescriptorReceptor,&readFileDescriptor);
+    FD_SET((unsigned int)receptor_list[i].socketFileDescriptorReceptor,&readFileDescriptor);
 
     if(i == 0)
       socketMax = receptor_list[i].socketFileDescriptorReceptor;
@@ -281,7 +290,7 @@ int vpNetwork::receive(T* object, const int &sizeOfObject)
     if(socketMax < receptor_list[i].socketFileDescriptorReceptor) socketMax = receptor_list[i].socketFileDescriptorReceptor; 
   }
 
-  int value = select(socketMax+1,&readFileDescriptor,NULL,NULL,&tv);
+  int value = select((int)socketMax+1,&readFileDescriptor,NULL,NULL,&tv);
   int numbytes = 0;
   
   if(value == -1){
@@ -295,12 +304,16 @@ int vpNetwork::receive(T* object, const int &sizeOfObject)
   }
   else{
     for(unsigned int i=0; i<receptor_list.size(); i++){
-      if(FD_ISSET(receptor_list[i].socketFileDescriptorReceptor,&readFileDescriptor)){
+      if(FD_ISSET((unsigned int)receptor_list[i].socketFileDescriptorReceptor,&readFileDescriptor)){
+#ifdef UNIX
         numbytes = recv(receptor_list[i].socketFileDescriptorReceptor, (char*)(void*)object, sizeOfObject, 0);
+#else
+        numbytes = recv((unsigned int)receptor_list[i].socketFileDescriptorReceptor, (char*)(void*)object, (int)sizeOfObject, 0);
+#endif
         if(numbytes <= 0)
         {
           std::cout << "Disconnected : " << inet_ntoa(receptor_list[i].receptorAddress.sin_addr) << std::endl;
-          receptor_list.erase(receptor_list.begin()+i);
+          receptor_list.erase(receptor_list.begin()+(int)i);
           return numbytes;
         }
         
@@ -334,7 +347,7 @@ int vpNetwork::receive(T* object, const int &sizeOfObject)
   \return the number of bytes received, or -1 if an error occured.
 */
 template<typename T>
-int vpNetwork::receiveFrom(T* object, const int &receptorEmitting, const int &sizeOfObject)
+int vpNetwork::receiveFrom(T* object, const unsigned int &receptorEmitting, const unsigned int &sizeOfObject)
 {
   if(receptor_list.size() == 0 || receptorEmitting > (int)receptor_list.size()-1 )
   {
@@ -349,9 +362,9 @@ int vpNetwork::receiveFrom(T* object, const int &receptorEmitting, const int &si
   FD_ZERO(&readFileDescriptor);
   
   socketMax = receptor_list[receptorEmitting].socketFileDescriptorReceptor;
-  FD_SET(receptor_list[receptorEmitting].socketFileDescriptorReceptor,&readFileDescriptor);
+  FD_SET((unsigned int)receptor_list[receptorEmitting].socketFileDescriptorReceptor,&readFileDescriptor);
     
-  int value = select(socketMax+1,&readFileDescriptor,NULL,NULL,&tv);
+  int value = select((int)socketMax+1,&readFileDescriptor,NULL,NULL,&tv);
   int numbytes = 0;
   
   if(value == -1){
@@ -364,13 +377,16 @@ int vpNetwork::receiveFrom(T* object, const int &receptorEmitting, const int &si
     return 0;
   }
   else{
-    if(FD_ISSET(receptor_list[receptorEmitting].socketFileDescriptorReceptor,&readFileDescriptor)){
+    if(FD_ISSET((unsigned int)receptor_list[receptorEmitting].socketFileDescriptorReceptor,&readFileDescriptor)){
+#ifdef UNIX
       numbytes = recv(receptor_list[receptorEmitting].socketFileDescriptorReceptor, (char*)(void*)object, sizeOfObject, 0);
-      
+#else
+      numbytes = recv((unsigned int)receptor_list[receptorEmitting].socketFileDescriptorReceptor, (char*)(void*)object, (int)sizeOfObject, 0);
+#endif
       if(numbytes <= 0)
       {
         std::cout << "Disconnected : " << inet_ntoa(receptor_list[receptorEmitting].receptorAddress.sin_addr) << std::endl;
-        receptor_list.erase(receptor_list.begin()+receptorEmitting);
+        receptor_list.erase(receptor_list.begin()+(int)receptorEmitting);
         return numbytes;
       }
     }
@@ -400,7 +416,7 @@ int vpNetwork::receiveFrom(T* object, const int &receptorEmitting, const int &si
   \return The number of bytes sent, or -1 if an error happened.
 */
 template<typename T>
-int vpNetwork::send(T* object, const int &sizeOfObject)
+int vpNetwork::send(T* object, const unsigned int &sizeOfObject)
 {
   if(receptor_list.size() == 0)
   {
@@ -413,8 +429,15 @@ int vpNetwork::send(T* object, const int &sizeOfObject)
 #if ! defined(APPLE) && ! defined(WIN32)
   flags = MSG_NOSIGNAL; // Only for Linux
 #endif
+
+#ifdef UNIX
   return sendto(receptor_list[0].socketFileDescriptorReceptor, (const char*)(void*)object, sizeOfObject, 
                 flags, (sockaddr*) &receptor_list[0].receptorAddress,receptor_list[0].receptorAddressSize);
+#else
+  return sendto(receptor_list[0].socketFileDescriptorReceptor, (const char*)(void*)object, (int)sizeOfObject, 
+                flags, (sockaddr*) &receptor_list[0].receptorAddress,receptor_list[0].receptorAddressSize);
+#endif
+  
 }
 
 /*!
@@ -439,7 +462,7 @@ int vpNetwork::send(T* object, const int &sizeOfObject)
   \return The number of bytes sent, or -1 if an error happened.
 */
 template<typename T>
-int vpNetwork::sendTo(T* object, const int &dest, const int &sizeOfObject)
+int vpNetwork::sendTo(T* object, const unsigned int &dest, const unsigned int &sizeOfObject)
 {
   if(receptor_list.size() == 0 || dest > (int)receptor_list.size()-1 )
   {
@@ -453,8 +476,13 @@ int vpNetwork::sendTo(T* object, const int &dest, const int &sizeOfObject)
   flags = MSG_NOSIGNAL; // Only for Linux
 #endif
 
+#ifdef UNIX
   return sendto(receptor_list[dest].socketFileDescriptorReceptor, (const char*)(void*)object, sizeOfObject, 
                 flags, (sockaddr*) &receptor_list[dest].receptorAddress,receptor_list[dest].receptorAddressSize);
+#else
+  return sendto(receptor_list[dest].socketFileDescriptorReceptor, (const char*)(void*)object, (int)sizeOfObject, 
+                flags, (sockaddr*) &receptor_list[dest].receptorAddress,receptor_list[dest].receptorAddressSize);
+#endif
 }
 
 #endif

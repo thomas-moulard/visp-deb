@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpPoseRansac.cpp 3765 2012-06-05 14:41:33Z ayol $
+ * $Id: vpPoseRansac.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -77,7 +77,10 @@ void vpPose::poseRansac(vpHomogeneousMatrix & cMo)
   int nbTrials = 0;
   unsigned int nbMinRandom = 4 ;
   unsigned int nbInliers = 0;
-  
+
+  vpHomogeneousMatrix cMo_lagrange, cMo_dementhon;
+  double r, r_lagrange, r_dementhon;
+
   bool foundSolution = false;
   
   while (nbTrials < ransacMaxTrials && nbInliers < (unsigned)ransacNbInlierConsensus)
@@ -90,8 +93,8 @@ void vpPose::poseRansac(vpHomogeneousMatrix & cMo)
     vpPose poseMin ;
     for(unsigned int i = 0; i < nbMinRandom; i++)
     {
-      int r = rand()%size;
-      while(usedPt[r] ) r = rand()%size;
+      unsigned int r = (unsigned int)rand()%size;
+      while(usedPt[r] ) r = (unsigned int)rand()%size;
       usedPt[r] = true;        
       
       std::list<vpPoint>::const_iterator iter = listP.begin();
@@ -100,14 +103,13 @@ void vpPose::poseRansac(vpHomogeneousMatrix & cMo)
       
       bool degenerate = false;
       for(std::list<vpPoint>::const_iterator it = poseMin.listP.begin(); it != poseMin.listP.end(); ++it){
-          vpPoint ptdeg = *it;
-          if( ((fabs(pt.get_x() - ptdeg.get_x()) < 1e-6) && (fabs(pt.get_y() - ptdeg.get_y()) < 1e-6))  ||
-              ((fabs(pt.get_oX() - ptdeg.get_oX()) < 1e-6) && (fabs(pt.get_oY() - ptdeg.get_oY()) < 1e-6) && (fabs(pt.get_oZ() - ptdeg.get_oZ()) < 1e-6))){
-            degenerate = true;
-            break;
-          }
+        vpPoint ptdeg = *it;
+        if( ((fabs(pt.get_x() - ptdeg.get_x()) < 1e-6) && (fabs(pt.get_y() - ptdeg.get_y()) < 1e-6))  ||
+            ((fabs(pt.get_oX() - ptdeg.get_oX()) < 1e-6) && (fabs(pt.get_oY() - ptdeg.get_oY()) < 1e-6) && (fabs(pt.get_oZ() - ptdeg.get_oZ()) < 1e-6))){
+          degenerate = true;
+          break;
+        }
       }
-      
       if(!degenerate){
         poseMin.addPoint(pt) ;
         cur_randoms.push_back(r);
@@ -115,16 +117,26 @@ void vpPose::poseRansac(vpHomogeneousMatrix & cMo)
       else
         i--;
     }
-    
-    poseMin.computePose(vpPose::DEMENTHON,cMo) ;
-    double r = poseMin.computeResidual(cMo) ;
+
+    poseMin.computePose(vpPose::LAGRANGE, cMo_lagrange) ;
+    r_lagrange = poseMin.computeResidual(cMo_lagrange) ;
+    poseMin.computePose(vpPose::DEMENTHON, cMo_dementhon) ;
+    r_dementhon = poseMin.computeResidual(cMo_dementhon) ;
+
+    if (r_lagrange < r_dementhon) {
+      r = r_lagrange;
+      cMo = cMo_lagrange;
+    }
+    else {
+      r = r_dementhon;
+      cMo = cMo_dementhon;
+    }
     r = sqrt(r)/(double)nbMinRandom;
-    
+
     if (r < ransacThreshold)
     {
       unsigned int nbInliersCur = 0;
-      //std::cout << "Résultat : " << r << " / " << vpPoseVector(cMo).sumSquare()<< std::endl ;
-      int iter = 0;
+      unsigned int iter = 0;
       for (std::list<vpPoint>::const_iterator it = listP.begin(); it != listP.end(); ++it)
       { 
         vpPoint pt = *it;
@@ -133,17 +145,38 @@ void vpPose::poseRansac(vpHomogeneousMatrix & cMo)
 
         double d = vpMath::sqr(p.get_x() - pt.get_x()) + vpMath::sqr(p.get_y() - pt.get_y()) ;
         double error = sqrt(d) ;
-        if(error < ransacThreshold){ // the point is considered an inlier if the error is below the threshold
-          nbInliersCur++;
-          cur_consensus.push_back(iter);
+        if(error < ransacThreshold){
+          // the point is considered as inlier if the error is below the threshold
+          // But, we need also to check if it is not a degenerate point
+          bool degenerate = false;
+
+          for(unsigned int it_inlier_index = 0; it_inlier_index< cur_consensus.size(); it_inlier_index++){
+            std::list<vpPoint>::const_iterator it_point = listP.begin();
+            std::advance(it_point, cur_consensus[it_inlier_index]);
+            vpPoint pt = *it_point;
+
+            vpPoint ptdeg = *it;
+            if( ((fabs(pt.get_x() - ptdeg.get_x()) < 1e-6) && (fabs(pt.get_y() - ptdeg.get_y()) < 1e-6))  ||
+                ((fabs(pt.get_oX() - ptdeg.get_oX()) < 1e-6) && (fabs(pt.get_oY() - ptdeg.get_oY()) < 1e-6) && (fabs(pt.get_oZ() - ptdeg.get_oZ()) < 1e-6))){
+              degenerate = true;
+              break;
+            }
+          }
+
+          if(!degenerate){
+            nbInliersCur++;
+            cur_consensus.push_back(iter);
+          }
+          else {
+            cur_outliers.push_back(iter);
+          }
         }    
         else
           cur_outliers.push_back(iter);
         
         iter++;
       }
-      //std::cout << "Nombre d'inliers " << nbInliersCur << "/" << nbInliers << std::endl ;
-      
+
       if(nbInliersCur > nbInliers)
       {
         foundSolution = true;
@@ -193,8 +226,19 @@ void vpPose::poseRansac(vpHomogeneousMatrix & cMo)
         ransacInliers.push_back(pt);
       }
         
-      pose.computePose(vpPose::LAGRANGE_VIRTUAL_VS,cMo) ;
-      //std::cout << "Residue finale "<< pose.computeResidual(cMo)  << std::endl ;
+      pose.computePose(vpPose::LAGRANGE, cMo_lagrange) ;
+      r_lagrange = pose.computeResidual(cMo_lagrange) ;
+      pose.computePose(vpPose::DEMENTHON, cMo_dementhon) ;
+      r_dementhon = pose.computeResidual(cMo_dementhon) ;
+
+      if (r_lagrange < r_dementhon) {
+        cMo = cMo_lagrange;
+      }
+      else {
+        cMo = cMo_dementhon;
+      }
+
+      pose.computePose(vpPose::VIRTUAL_VS, cMo) ;
     }
   }
 }
@@ -225,7 +269,7 @@ void vpPose::poseRansac(vpHomogeneousMatrix & cMo)
 */
 void vpPose::findMatch(std::vector<vpPoint> &p2D, 
             std::vector<vpPoint> &p3D, 
-            const int &numberOfInlierToReachAConsensus, 
+            const unsigned int &numberOfInlierToReachAConsensus,
             const double &threshold,
             unsigned int &ninliers,
             std::vector<vpPoint> &listInliers,
@@ -301,9 +345,8 @@ vpPose::degenerateConfiguration(vpColVector &x, unsigned int *ind)
   return false ;
 }
 /*!
-  Fit model to this random selection of data points.
-
-  We chose the Dementhon algorithm to compute the pose
+  \deprecated Fit model to this random selection of data points. \n \n
+  We chose the Dementhon algorithm to compute the pose.
 */
 void
 vpPose::computeTransformation(vpColVector &x, unsigned int *ind, vpColVector &M)
@@ -348,13 +391,12 @@ vpPose::computeTransformation(vpColVector &x, unsigned int *ind, vpColVector &M)
 
 
 /*!
-  Evaluate distances between points and model.
-
-  this function can certainly be optimized...
+  \deprecated Evaluate distances between points and model. \n \n
+  This function can certainly be optimized...
 */
 
 double
-vpPose::computeResidual(vpColVector &x, vpColVector &M, vpColVector &d)
+vpPose::computeResidual(const vpColVector &x, const vpColVector &M, vpColVector &d)
 {
 
   unsigned int i ;
@@ -418,16 +460,14 @@ vpPose::initRansac(const unsigned int n,
 
 
 /*!
+  \deprecated
   Compute the pose from a set of n 2D point (x,y) and m 3D points
   (X,Y,Z) using the Ransac algorithm. It is not assumed that
-  the 2D and 3D points are registred (there is nm posibilities)
-
+  the 2D and 3D points are registred (there is nm posibilities). \n \n
   At least numberOfInlierToReachAConsensus of true correspondance are required
-  to validate the pose
-
-  The inliers are given in xi, yi, Xi, Yi, Zi
-
-  The pose is returned in cMo.
+  to validate the pose. \n \n
+  The inliers are given in xi, yi, Xi, Yi, Zi. \n
+  The pose is returned in cMo. 
 
   \param n : Number of 2d points.
   \param x : Array (of size \e n) of the x coordinates of the 2d points.
@@ -520,16 +560,14 @@ vpPose::ransac(const unsigned int n,
 }
 
 /*!
+  \deprecated
   Compute the pose from a set of n 2D point (x,y) in p and m 3D points
   (X,Y,Z) in P using the Ransac algorithm. It is not assumed that
-  the 2D and 3D points are registred (there is nm posibilities)
-
+  the 2D and 3D points are registred (there is nm posibilities). \n \n
   At least numberOfInlierToReachAConsensus of true correspondance are required
-  to validate the pose
-
-  The inliers are given in a list of vpPoint
-
-  The pose is returned in cMo.
+  to validate the pose. \n \n
+  The inliers are given in a list of vpPoint. \n
+  The pose is returned in cMo. 
 
   \param n : Number of 2d points.
   \param p : Array (of size n) of 2d points (x and y attributes are used).
@@ -603,16 +641,14 @@ vpPose::ransac(const unsigned int n,
 }
 
 /*!
+  \deprecated
   Compute the pose from a list lp of  2D point (x,y)  and  a list lP 3D points
   (X,Y,Z) in P using the Ransac algorithm. It is not assumed that
-  the 2D and 3D points are registred
-
+  the 2D and 3D points are registred. \n \n
   At least numberOfInlierToReachAConsensus of true correspondance are required
-  to validate the pose
-
-  The inliers are given in a list of vpPoint lPi.
-
-  The pose is returned in cMo.
+  to validate the pose. \n \n
+  The inliers are given in a list of vpPoint lPi. \n
+  The pose is returned in cMo. 
 
   \param lp : List of 2d points (x and y attributes are used).
   \param lP : List of 3d points (oX, oY and oZ attributes are used).

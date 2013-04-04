@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpPlot.h 3821 2012-06-27 13:50:37Z fspindle $
+ * $Id: vpPlot.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -47,9 +47,9 @@
 #ifndef vpPlot_H
 #define vpPlot_H
 
-#include <visp/vpPlotGraph.h>
-
+#include <visp/vpConfig.h>
 #include <visp/vpDisplay.h>
+#include <visp/vpPlotGraph.h>
 
 /*!
   \class vpPlot
@@ -59,9 +59,8 @@
   instance of the class open a window which contains between 1 and 4
   graphics. Each one contains a desired number of curves.
 
-  \warning This class is only available if display functionalities (X11, GDI or OpenCV)
-  are present. In visp/vpConfig.h header file, you should have one of the macros defines:
-  VISP_HAVE_X11, or VISP_HAVE_GDI, or VISP_HAVE_OPENCV. 
+  \warning This class is only available if one of the display functionalities (X11, GDI, GTK, OpenCV or Direct3D)
+  is available. In visp/vpConfig.h header file, you should have VISP_HAVE_DISPLAY define.
 
   The example below shows how to use the vpPlot class.
 
@@ -69,10 +68,9 @@
 #include <visp/vpConfig.h>
 #include <visp/vpPlot.h>
 
-#if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV) 
-
 int main ()
 {
+#if defined(VISP_HAVE_DISPLAY)
   //Create a window (700 by 700) at position (100, 200) with two graphics
   vpPlot A(2, 700, 700, 100, 200, "Curves...");
 
@@ -109,12 +107,12 @@ int main ()
     }
 
   return 0;
-}
 #endif
+}
   \endcode
 */
 
-#if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV) 
+#if defined(VISP_HAVE_DISPLAY)
 
 class VISP_EXPORT vpPlot
 {

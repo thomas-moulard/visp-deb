@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpSimulator.h 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpSimulator.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -89,7 +89,7 @@
 /*!
   \class vpSimulator
 
-  \ingroup VisuRobotSimu
+  \ingroup RobotSimuWithViz
   
   \brief Implementation of a simulator based on Coin3d (www.coin3d.org).
 

@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpRobotTemplate.cpp 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpRobotTemplate.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -157,18 +157,6 @@ vpRobotTemplate::getPosition( const vpRobot::vpControlFrameType/*frame*/,
 void
 vpRobotTemplate::setPosition( const vpRobot::vpControlFrameType/*frame*/,
                               const vpColVector &/* q */)
-{
-  std::cout << "Not implemented ! " << std::endl;
-}
-//! get a displacement expressed in the camera frame
-void
-vpRobotTemplate::getCameraDisplacement(vpColVector &/* v */)
-{
-  std::cout << "Not implemented ! " << std::endl;
-}
-//! get a displacement expressed  in the articular frame
-void
-vpRobotTemplate::getArticularDisplacement(vpColVector &/* qdot */)
 {
   std::cout << "Not implemented ! " << std::endl;
 }

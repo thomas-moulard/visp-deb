@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: VISPConfig.cmake.in 3814 2012-06-26 16:26:16Z fspindle $
+# $Id: VISPConfig.cmake.in 4137 2013-02-14 06:56:53Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2010 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -74,7 +74,7 @@ SET(VISP_VERSION_MINOR  "@VISP_VERSION_MINOR@")
 SET(VISP_VERSION_PATCH  "@VISP_VERSION_PATCH@")
 
 # Tells the user project where to find ViSP headers
-SET(VISP_INCLUDE_DIRS "${VISP_ROOT_DIR}/include" CACHE FILEPATH "Location of ViSP includes")
+SET(VISP_INCLUDE_DIRS "${VISP_ROOT_DIR}/@CMAKE_INSTALL_INCLUDEDIR@" CACHE FILEPATH "Location of ViSP includes")
 #MESSAGE("VISP_INCLUDE_DIRS: ${VISP_INCLUDE_DIRS}")
 
 # Get ViSP specific definitions
@@ -92,7 +92,7 @@ ENDFOREACH(val ${VISP_EXTERN_INCLUDE_DIRS})
 #MESSAGE("VISP_INCLUDE_DIRS: ${VISP_INCLUDE_DIRS}")
 
 # Tells the user project where to find ViSP library
-SET(VISP_LIBRARY_DIRS "${VISP_ROOT_DIR}/lib" CACHE FILEPATH "Location of ViSP library")
+SET(VISP_LIBRARY_DIRS "${VISP_ROOT_DIR}/@CMAKE_INSTALL_LIBDIR@" CACHE FILEPATH "Location of ViSP library")
 
 # Tells the user project where to find third party libraries used to
 # compile ViSP
@@ -141,6 +141,7 @@ SET(VISP_HAVE_PTHREAD        "@VISP_HAVE_PTHREAD@")
 SET(VISP_HAVE_GTK            "@VISP_HAVE_GTK@")
 SET(VISP_HAVE_GDI            "@VISP_HAVE_GDI@")
 SET(VISP_HAVE_D3D9           "@VISP_HAVE_D3D9@")
+SET(VISP_HAVE_DISPLAY        "@VISP_HAVE_DISPLAY@")
 SET(VISP_HAVE_GSL            "@VISP_HAVE_GSL@")
 SET(VISP_HAVE_LAPACK         "@VISP_HAVE_LAPACK@")
 SET(VISP_HAVE_LIBFREENECT    "@VISP_HAVE_LIBFREENECT@")
@@ -148,6 +149,7 @@ SET(VISP_HAVE_LIBFREENECT_AND_DEPENDENCIES "@VISP_HAVE_LIBFREENECT_AND_DEPENDENC
 SET(VISP_HAVE_LIBFREENECT_OLD "@VISP_HAVE_LIBFREENECT_OLD@")
 SET(VISP_HAVE_LIBUSB_1       "@VISP_HAVE_LIBUSB_1@")
 SET(VISP_HAVE_OPENCV         "@VISP_HAVE_OPENCV@")
+SET(VISP_HAVE_OPENCV_NONFREE "@VISP_HAVE_OPENCV_NONFREE@")
 SET(VISP_HAVE_OPENCV_VERSION "@VISP_HAVE_OPENCV_VERSION@")
 SET(VISP_HAVE_OGRE           "@VISP_HAVE_OGRE@")
 SET(VISP_HAVE_OPENGL         "@VISP_HAVE_OPENGL@")
@@ -167,6 +169,7 @@ SET(VISP_HAVE_AFMA4          "@VISP_HAVE_AFMA4@")
 SET(VISP_HAVE_AFMA6          "@VISP_HAVE_AFMA6@")
 SET(VISP_HAVE_BICLOPS        "@VISP_HAVE_BICLOPS@")
 SET(VISP_HAVE_PTU46          "@VISP_HAVE_PTU46@")
+SET(VISP_HAVE_VIPER650       "@VISP_HAVE_VIPER650@")
 SET(VISP_HAVE_VIPER850       "@VISP_HAVE_VIPER850@")
 SET(VISP_HAVE_CYCAB          "@VISP_HAVE_CYCAB@")
 SET(VISP_HAVE_CYCABTK        "@VISP_HAVE_CYCABTK@")

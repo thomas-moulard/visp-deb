@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpKltOpencv.cpp 3585 2012-03-01 21:38:35Z fspindle $
+ * $Id: vpKltOpencv.cpp 4097 2013-02-05 09:32:17Z ayol $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -133,6 +133,7 @@ vpKltOpencv::vpKltOpencv()
   OnNewFeature = 0;
   OnMeasureFeature = 0;
   IsFeatureValid = 0;
+  initial_guess = false;
 
   features = (CvPoint2D32f*)cvAlloc((unsigned int)maxFeatures*sizeof(features[0]));
   prev_features = (CvPoint2D32f*)cvAlloc((unsigned int)maxFeatures*sizeof(prev_features[0]));
@@ -380,20 +381,24 @@ void vpKltOpencv::track(const IplImage *I)
 		      "Bad Image format")) ;
   }
 
-  // Save current features as previous features
-  countPrevFeatures = countFeatures;
-  for (int boucle=0; boucle<countFeatures;boucle++)  {
-    prev_featuresid[boucle] = featuresid[boucle];
-  }
-
-  CvPoint2D32f *swap_features = 0;
+  
 
   CV_SWAP(prev_image, image, swap_temp);
   CV_SWAP(prev_pyramid, pyramid, swap_temp);
-  CV_SWAP(prev_features, features, swap_features);
-
+  
   cvCopy(I, image, 0);
-
+  
+  if(!initial_guess){
+    // Save current features as previous features
+    countPrevFeatures = countFeatures;
+    for (int boucle=0; boucle<countFeatures;boucle++)  {
+      prev_featuresid[boucle] = featuresid[boucle];
+    }
+    
+    CvPoint2D32f *swap_features = 0;
+    CV_SWAP(prev_features, features, swap_features);
+  }
+  
   if (countFeatures <= 0) return;
 
   cvCalcOpticalFlowPyrLK( prev_image, image, prev_pyramid, pyramid,
@@ -402,7 +407,13 @@ void vpKltOpencv::track(const IplImage *I)
 			  status, 0, cvTermCriteria(CV_TERMCRIT_ITER
 						    |CV_TERMCRIT_EPS,20,0.03),
 			  flags );
-  flags |= CV_LKFLOW_PYR_A_READY;
+  
+  if(!initial_guess)
+    flags |= CV_LKFLOW_PYR_A_READY;
+  else{
+    flags = CV_LKFLOW_PYR_A_READY;
+    initial_guess = false;
+  }
 
   int i,k;
   for (i = k = 0; i < countFeatures ; i++)  {
@@ -451,6 +462,11 @@ void vpKltOpencv::display(const vpImage<unsigned char> &I,
   getFeature(i,...) may not represent the same feature before and
   after a tracking iteration (if a feature is lost, features are
   shifted in the array).
+  
+  \param index : index of feature
+  \param id : id of the feature
+  \param x : x coordinate
+  \param y : y coordinate
 
 */
 void vpKltOpencv::getFeature(int index, int &id, float &x, float &y) const
@@ -464,6 +480,33 @@ void vpKltOpencv::getFeature(int index, int &id, float &x, float &y) const
   x = features[index].x;
   y = features[index].y;
   id = featuresid[index];
+}
+
+
+/*!
+  Set the points that will be used as initial guess during the next call to track().
+  
+  \warning Those points will be used just one time (next track()).
+  
+  \param guess_pts : Reference on an array of CvPoint2D32f allocated with cvAlloc().
+*/
+void 
+vpKltOpencv::setInitialGuess(CvPoint2D32f **guess_pts)
+{
+  // Save current features as previous features
+  countPrevFeatures = countFeatures;
+  for (int boucle=0; boucle<countFeatures;boucle++)  {
+    prev_featuresid[boucle] = featuresid[boucle];
+  }
+  
+  CvPoint2D32f *swap_features = NULL;
+  CV_SWAP(prev_features, *guess_pts, swap_features);
+  
+  CV_SWAP(features, prev_features, swap_features);
+  
+  flags |= CV_LKFLOW_INITIAL_GUESSES;
+  
+  initial_guess = true;
 }
 
 /*!
@@ -528,20 +571,45 @@ void vpKltOpencv::suppressFeature(int index)
 
 /*!
 
-  Display of vpKLTOpenCV features list
-  
+  Display features list.
+
   \param I : The image used as background.
 
   \param features_list : List of features
-  
+
   \param nbFeatures : Number of features
-  
+
   \param color : Color used to display the points.
-  
+
   \param thickness : Thickness of the points.
 */
-void vpKltOpencv::display(const vpImage<unsigned char>& I,const CvPoint2D32f* features_list, 
-		    const int &nbFeatures, vpColor color, unsigned int thickness)
+void vpKltOpencv::display(const vpImage<unsigned char>& I,const CvPoint2D32f* features_list,
+                          const int &nbFeatures, vpColor color, unsigned int thickness)
+{
+  vpImagePoint ip;
+  for (int i = 0 ; i < nbFeatures ; i++)
+  {
+    ip.set_u( vpMath::round(features_list[i].x ) );
+    ip.set_v( vpMath::round(features_list[i].y ) );
+    vpDisplay::displayCross(I, ip, 10, color, thickness) ;
+  }
+}
+/*!
+
+  Display features list.
+
+  \param I : The image used as background.
+
+  \param features_list : List of features
+
+  \param nbFeatures : Number of features
+
+  \param color : Color used to display the points.
+
+  \param thickness : Thickness of the points.
+*/
+void vpKltOpencv::display(const vpImage<vpRGBa>& I,const CvPoint2D32f* features_list,
+                          const int &nbFeatures, vpColor color, unsigned int thickness)
 {
   vpImagePoint ip;
   for (int i = 0 ; i < nbFeatures ; i++)
@@ -554,23 +622,23 @@ void vpKltOpencv::display(const vpImage<unsigned char>& I,const CvPoint2D32f* fe
 
 /*!
 
-  Display of vpKLTOpenCV features list with ids
-  
+  Display features list with ids.
+
   \param I : The image used as background.
 
   \param features_list : List of features
-  
+
   \param featuresid_list : List of ids corresponding to the features list
-  
+
   \param nbFeatures : Number of features
-  
+
   \param color : Color used to display the points.
-  
+
   \param thickness : Thickness of the points
 */
-void vpKltOpencv::display(const vpImage<unsigned char>& I,const CvPoint2D32f* features_list, 
-		    const long *featuresid_list, const int &nbFeatures, 
-		    vpColor color, unsigned int thickness)
+void vpKltOpencv::display(const vpImage<unsigned char>& I,const CvPoint2D32f* features_list,
+                          const long *featuresid_list, const int &nbFeatures,
+                          vpColor color, unsigned int thickness)
 {
   vpImagePoint ip;
   for (int i = 0 ; i < nbFeatures ; i++)
@@ -578,11 +646,46 @@ void vpKltOpencv::display(const vpImage<unsigned char>& I,const CvPoint2D32f* fe
     ip.set_u( vpMath::round(features_list[i].x ) );
     ip.set_v( vpMath::round(features_list[i].y ) );
     vpDisplay::displayCross(I, ip, 10, color, thickness) ;
-    
+
     char id[10];
     sprintf(id, "%ld", featuresid_list[i]);
     ip.set_u( vpMath::round( features_list[i].x + 5 ) );
     vpDisplay::displayCharString(I, ip, id, color);
   }
 }
+
+/*!
+
+  Display features list with ids.
+
+  \param I : The image used as background.
+
+  \param features_list : List of features
+
+  \param featuresid_list : List of ids corresponding to the features list
+
+  \param nbFeatures : Number of features
+
+  \param color : Color used to display the points.
+
+  \param thickness : Thickness of the points
+*/
+void vpKltOpencv::display(const vpImage<vpRGBa>& I,const CvPoint2D32f* features_list,
+                          const long *featuresid_list, const int &nbFeatures,
+                          vpColor color, unsigned int thickness)
+{
+  vpImagePoint ip;
+  for (int i = 0 ; i < nbFeatures ; i++)
+  {
+    ip.set_u( vpMath::round(features_list[i].x ) );
+    ip.set_v( vpMath::round(features_list[i].y ) );
+    vpDisplay::displayCross(I, ip, 10, color, thickness) ;
+
+    char id[10];
+    sprintf(id, "%ld", featuresid_list[i]);
+    ip.set_u( vpMath::round( features_list[i].x + 5 ) );
+    vpDisplay::displayCharString(I, ip, id, color);
+  }
+}
+
 #endif

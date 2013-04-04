@@ -1,9 +1,9 @@
 /****************************************************************************
 *
-* $Id: vpPose.cpp 3764 2012-06-05 14:34:06Z ayol $
+* $Id: vpPose.cpp 4056 2013-01-05 13:04:42Z fspindle $
 *
 * This file is part of the ViSP software.
-* Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+* Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 * 
 * This software is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -83,6 +83,8 @@ vpPose::init()
   computeCovariance = false;
   
   ransacMaxTrials = 1000;
+  ransacThreshold = 0.0001;
+  ransacNbInlierConsensus = 4;
 
 #if (DEBUG_LEVEL1)
   std::cout << "end vpPose::Init() " << std::endl ;
@@ -141,7 +143,7 @@ vpPose::clearPoint()
 \brief  Add a new point in the array of point.
 \param  newP : New point to add  in the array of point.
 \warning Considering a point from the class vpPoint, X, Y, and Z will
-represent the 3D information and x and y its 2D informations.
+represent the 3D information and x and y its 2D information.
 These 5 fields must be initialized to be used within this library
 */
 void
@@ -169,13 +171,20 @@ vpPose::setDistanceToPlaneForCoplanarityTest(double d)
 
 /*!
 \brief test the coplanarity of the set of points
+
+\param coplanar_plane_type:
+   1: if plane x=cst
+   2: if plane y=cst
+   3: if plane z=cst
+   4: if the points are collinear.
+   0: any other plane
 \return true if points are coplanar
 false if not
 */
 bool
-vpPose::coplanar()
+vpPose::coplanar(int &coplanar_plane_type)
 {
-
+  coplanar_plane_type = 0;
   if (npt <2)
   {
     vpERROR_TRACE("Not enough point (%d) to compute the pose  ",npt) ;
@@ -185,39 +194,113 @@ vpPose::coplanar()
 
   if (npt ==3) return true ;
 
-  double x1,x2,x3,y1,y2,y3,z1,z2,z3 ;
+  double x1=0,x2=0,x3=0,y1=0,y2=0,y3=0,z1=0,z2=0,z3=0 ;
 
   std::list<vpPoint>::const_iterator it = listP.begin();
 
-  vpPoint P1,P2, P3 ;
-  P1 = *it;  ++it;
-  //if ((P1.get_oX() ==0) && (P1.get_oY() ==0) && (P1.get_oZ() ==0)) 
-  if ((std::fabs(P1.get_oX()) <= std::numeric_limits<double>::epsilon()) 
-    && (std::fabs(P1.get_oY()) <= std::numeric_limits<double>::epsilon()) 
-    && (std::fabs(P1.get_oZ()) <= std::numeric_limits<double>::epsilon())) 
-  { 
-    P1 = *it; ++it;
+  vpPoint P1, P2, P3 ;
+
+  // Get three 3D points that are not collinear and that is not at origin
+  bool degenerate = true;
+  bool not_on_origin = true;
+  std::list<vpPoint>::const_iterator it_tmp;
+
+  std::list<vpPoint>::const_iterator it_i, it_j, it_k;
+  for (it_i=listP.begin(); it_i != listP.end(); ++it_i) {
+    if (degenerate == false) {
+      //std::cout << "Found a non degenerate configuration" << std::endl;
+      break;
+    }
+    P1 = *it_i;
+    // Test if point is on origin
+    if ((std::fabs(P1.get_oX()) <= std::numeric_limits<double>::epsilon())
+        && (std::fabs(P1.get_oY()) <= std::numeric_limits<double>::epsilon())
+        && (std::fabs(P1.get_oZ()) <= std::numeric_limits<double>::epsilon())) {
+       not_on_origin = false;
+    }
+    else {
+      not_on_origin = true;
+    }
+    if (not_on_origin) {
+      it_tmp = it_i; it_tmp ++; // j = i+1
+      for (it_j=it_tmp; it_j != listP.end(); ++it_j) {
+        if (degenerate == false) {
+          //std::cout << "Found a non degenerate configuration" << std::endl;
+          break;
+        }
+        P2 = *it_j;
+        if ((std::fabs(P2.get_oX()) <= std::numeric_limits<double>::epsilon())
+            && (std::fabs(P2.get_oY()) <= std::numeric_limits<double>::epsilon())
+            && (std::fabs(P2.get_oZ()) <= std::numeric_limits<double>::epsilon())) {
+          not_on_origin = false;
+        }
+        else {
+          not_on_origin = true;
+        }
+        if (not_on_origin) {
+          it_tmp = it_j; it_tmp ++; // k = j+1
+          for (it_k=it_tmp; it_k != listP.end(); ++it_k) {
+            P3 = *it_k;
+            if ((std::fabs(P3.get_oX()) <= std::numeric_limits<double>::epsilon())
+                && (std::fabs(P3.get_oY()) <= std::numeric_limits<double>::epsilon())
+                && (std::fabs(P3.get_oZ()) <= std::numeric_limits<double>::epsilon())) {
+              not_on_origin = false;
+            }
+            else {
+              not_on_origin = true;
+            }
+            if (not_on_origin) {
+              x1 = P1.get_oX() ;
+              x2 = P2.get_oX() ;
+              x3 = P3.get_oX() ;
+
+              y1 = P1.get_oY() ;
+              y2 = P2.get_oY() ;
+              y3 = P3.get_oY() ;
+
+              z1 = P1.get_oZ() ;
+              z2 = P2.get_oZ() ;
+              z3 = P3.get_oZ() ;
+
+              vpColVector a_b(3), b_c(3), cross_prod;
+              a_b[0] = x1-x2; a_b[1] = y1-y2; a_b[2] = z1-z2;
+              b_c[0] = x2-x3; b_c[1] = y2-y3; b_c[2] = z2-z3;
+
+              cross_prod = vpColVector::crossProd(a_b, b_c);
+              if (cross_prod.sumSquare() <= std::numeric_limits<double>::epsilon())
+                degenerate = true; // points are collinear
+              else
+                degenerate = false;
+            }
+            if (degenerate == false)
+              break;
+          }
+        }
+      }
+    }
   }
-  P2 = *it; ++it;
-  P3 = *it;
 
-  x1 = P1.get_oX() ;
-  x2 = P2.get_oX() ;
-  x3 = P3.get_oX() ;
-
-  y1 = P1.get_oY() ;
-  y2 = P2.get_oY() ;
-  y3 = P3.get_oY() ;
-
-  z1 = P1.get_oZ() ;
-  z2 = P2.get_oZ() ;
-  z3 = P3.get_oZ() ;
+  if (degenerate) {
+    coplanar_plane_type = 4; // points are collinear
+    return true;
+  }
 
   double a =  y1*z2 - y1*z3 - y2*z1 + y2*z3 + y3*z1 - y3*z2 ;
   double b = -x1*z2 + x1*z3 + x2*z1 - x2*z3 - x3*z1 + x3*z2 ;
   double c =  x1*y2 - x1*y3 - x2*y1 + x2*y3 + x3*y1 - x3*y2 ;
   double d = -x1*y2*z3 + x1*y3*z2 +x2*y1*z3 - x2*y3*z1 - x3*y1*z2 + x3*y2*z1 ;
 
+  //std::cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << std::endl;
+  if (std::fabs(b) <= std::numeric_limits<double>::epsilon()
+      && std::fabs(c) <= std::numeric_limits<double>::epsilon() ) {
+    coplanar_plane_type = 1; // ax=d
+  } else if (std::fabs(a) <= std::numeric_limits<double>::epsilon()
+             && std::fabs(c) <= std::numeric_limits<double>::epsilon() ) {
+    coplanar_plane_type = 2; // by=d
+  } else if (std::fabs(a) <= std::numeric_limits<double>::epsilon()
+             && std::fabs(b) <= std::numeric_limits<double>::epsilon() ) {
+    coplanar_plane_type = 3; // cz=d
+  }
 
   double  D = sqrt(vpMath::sqr(a)+vpMath::sqr(b)+vpMath::sqr(c)) ;
 
@@ -227,6 +310,7 @@ vpPose::coplanar()
   {
     P1 = *it ;
     dist = (a*P1.get_oX() + b*P1.get_oY()+c*P1.get_oZ()+d)/D ;
+    //std::cout << "dist= " << dist << std::endl;
 
     if (fabs(dist) > distanceToPlaneForCoplanarityTest)
     {
@@ -252,7 +336,7 @@ the pose matrix 'cMo'.
 
 */
 double
-vpPose::computeResidual(vpHomogeneousMatrix &cMo)
+vpPose::computeResidual(const vpHomogeneousMatrix &cMo) const
 {
 
   double residual = 0 ;
@@ -325,8 +409,9 @@ vpPose::computePose(vpPoseMethodType methode, vpHomogeneousMatrix& cMo)
       }
 
       // test si les point 3D sont coplanaires
-      int  plan = coplanar() ;
-      if (plan == 1)
+      int coplanar_plane_type = 0;
+      bool plan = coplanar(coplanar_plane_type) ;
+      if (plan == true)
       {
         //std::cout << "Plan" << std::endl;
         try{
@@ -359,12 +444,19 @@ vpPose::computePose(vpPoseMethodType methode, vpHomogeneousMatrix& cMo)
   case LAGRANGE_LOWE :
     {
       // test si les point 3D sont coplanaires
+      int coplanar_plane_type;
+      bool plan = coplanar(coplanar_plane_type) ;
 
-      int  plan = coplanar() ;
-
-      if (plan == 1)
+      if (plan == true && coplanar_plane_type > 0) // only plane oX=d, oY=d or oZ=d
       {
 
+        if (coplanar_plane_type == 4)
+        {
+          vpERROR_TRACE("Lagrange method cannot be used in that case ") ;
+          vpERROR_TRACE("(points are collinear)") ;
+          throw(vpPoseException(vpPoseException::notEnoughPointError,
+            "Points are collinear ")) ;
+        }
         if (npt <4)
         {
           vpERROR_TRACE("Lagrange method cannot be used in that case ") ;
@@ -374,7 +466,7 @@ vpPose::computePose(vpPoseMethodType methode, vpHomogeneousMatrix& cMo)
             "Not enough points ")) ;
         }
         try {
-          poseLagrangePlan(cMo);
+          poseLagrangePlan(cMo, coplanar_plane_type);
         }
         catch(...)
         {

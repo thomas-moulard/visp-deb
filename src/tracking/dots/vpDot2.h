@@ -3,7 +3,7 @@
   * $Id: vpDot2.h 2135 2009-04-29 13:51:31Z fspindle $
   *
   * This file is part of the ViSP software.
-  * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
   * 
   * This software is free software; you can redistribute it and/or
   * modify it under the terms of the GNU General Public License
@@ -109,6 +109,42 @@
     is used when there was a problem performing basic tracking of the dot, but
     can also be used to find a certain type of dots in the full image.
 
+  The following sample code shows how to grab images from a firewire camera,
+  track a blob and display the tracking results.
+
+  \code
+#include <visp/vpConfig.h>
+#include <visp/vp1394TwoGrabber.h>
+#include <visp/vpDisplayX.h>
+#include <visp/vpDot2.h>
+#include <visp/vpImage.h>
+
+int main()
+{
+#if defined(VISP_HAVE_DC1394_2) && defined(VISP_HAVE_X11)
+  vpImage<unsigned char> I; // Create a gray level image container
+  vp1394TwoGrabber g(false); // Create a grabber based on libdc1394-2.x third party lib
+  g.acquire(I); // Acquire an image
+
+  vpDisplayX d(I, 0, 0, "Camera view");
+  vpDisplay::display(I);
+  vpDisplay::flush(I);
+
+  vpDot2 blob;
+  blob.initTracking(I);
+  blob.setGraphics(true);
+
+  while(1) {
+    g.acquire(I); // Acquire an image
+    vpDisplay::display(I);
+    blob.track(I);
+
+    vpDisplay::flush(I);
+  }
+#endif
+}
+  \endcode
+
   \sa vpDot
 */
 class VISP_EXPORT vpDot2 : public vpTracker
@@ -118,114 +154,9 @@ public:
   vpDot2(const vpImagePoint &ip) ;
   vpDot2(const vpDot2& twinDot );
   virtual ~vpDot2();
-  void operator=(const vpDot2& twinDot );
-  
-  /*!
-    Initialize the dot coordinates with \e cog. 
-  */
-  inline void setCog(const vpImagePoint &cog) {
-    this->cog = cog; 
-  }
-  /*!
 
-    Activates the dot's moments computation.
+  static vpMatrix defineDots(vpDot2 dot[], const unsigned int &n, const std::string &dotFile, vpImage<unsigned char> &I, vpColor col = vpColor::blue, bool trackDot = true);
 
-    \param activate true, if you want to compute the moments. If false, moments
-    are not computed.
-
-    Computed moment are vpDot::m00, vpDot::m10, vpDot::m01, vpDot::m11,
-    vpDot::m20, vpDot::m02.
-
-    The coordinates of the region's centroid (u, v) can be computed from the
-    moments by \f$u=\frac{m10}{m00}\f$ and  \f$v=\frac{m01}{m00}\f$.
-
-  */
-  void setComputeMoments(const bool activate) { compute_moment = activate; }
-
-  /*!
-    Set the percentage of sampled points that are considered non conform
-    in terms of the gray level on the inner and the ouside ellipses.
-    Points located on the inner ellipse should have the same gray level
-    than the blob, while points located on the outside ellipse should
-    have a different gray level.
-
-    \param percentage : Percentage of points sampled with bad gray level
-    on the inner and outside ellipses that are admissible. 0 means
-    that all the points should have a right level, while a value of 1
-    means that all the points can have a bad gray level.
-    */
-  void setEllipsoidBadPointsPercentage(const double &percentage=0.0)
-  {
-    if (percentage < 0.)
-      allowedBadPointsPercentage_ = 0.;
-    else if (percentage > 1.)
-      allowedBadPointsPercentage_ = 1.;
-    else
-      allowedBadPointsPercentage_ = percentage;
-  }
-
-  void setEllipsoidShapePrecision(const double & ellipsoidShapePrecision);
-  /*!
-    Activates the display of the border of the dot during the tracking.
-
-    \warning To effectively display the dot graphics a call to
-    vpDisplay::flush() is needed.
-
-    \param activate If true, the border of the dot will be painted. false to
-    turn off border painting.
-
-  */
-  void setGraphics(const bool activate) { graphics = activate ; }
-  /*!
-
-  Set the color level of the dot to search a dot in an area. This level will be
-  used to know if a pixel in the image belongs to the dot or not. Only pixels
-  with higher level can belong to the dot.  If the level is lower than the
-  minimum level for a dot, set the level to MIN_IN_LEVEL.
-
-  \param min : Color level of a dot to search in an area.
-
-  \sa setGrayLevelMax(), setGrayLevelPrecision()
-
-  */
-  inline void setGrayLevelMin( const unsigned int & min ) {
-    if (min > 255)
-      this->gray_level_min = 255;
-    else
-      this->gray_level_min = min;
-  };
-
-  /*!
-
-  Set the color level of pixels surrounding the dot. This is meant to be used
-  to search a dot in an area.
-
-  \param max : Intensity level of a dot to search in an area.
-
-  \sa  setGrayLevelMin(), setGrayLevelPrecision()
-  */
-  inline void setGrayLevelMax( const unsigned int & max ) {
-    if (max > 255)
-      this->gray_level_max = 255;
-    else
-      this->gray_level_max = max;
-  };
-  void setGrayLevelPrecision( const double & grayLevelPrecision );
-  void setHeight( const double & height );
-  void setMaxSizeSearchDistancePrecision(const double & maxSizeSearchDistancePrecision);
-  void setSizePrecision( const double & sizePrecision );
-  void setSurface( const double & surface );
-  void setWidth( const double & width );
-
-  void initTracking(const vpImage<unsigned char>& I, unsigned int size = 0);
-  void initTracking(const vpImage<unsigned char>& I, const vpImagePoint &ip,
-		    unsigned int size = 0);
-  void initTracking(const vpImage<unsigned char>& I, const vpImagePoint &ip,
-		    unsigned int gray_level_min, unsigned int gray_level_max,
-		    unsigned int size = 0 );
-
-  void track(const vpImage<unsigned char> &I);
-  void track(const vpImage<unsigned char> &I, vpImagePoint &cog);
   void display(const vpImage<unsigned char>& I, vpColor color = vpColor::red,
                unsigned int thickness=1);
 
@@ -304,9 +235,7 @@ public:
   double getHeight() const;
   double getMaxSizeSearchDistancePrecision() const;
   /*!
-
   \return The mean gray level value of the dot.
-
   */
   double getMeanGrayLevel() {
     return (this->mean_gray_level);
@@ -315,17 +244,14 @@ public:
   double getSurface() const;
   double getWidth() const;
 
-  void print(std::ostream& os) { os << *this << std::endl ; }
-  void searchDotsInArea(const vpImage<unsigned char>& I,
-                         int area_u, int area_v,
-                         unsigned int area_w, unsigned int area_h, std::list<vpDot2> &niceDots );
+  void initTracking(const vpImage<unsigned char>& I, unsigned int size = 0);
+  void initTracking(const vpImage<unsigned char>& I, const vpImagePoint &ip,
+        unsigned int size = 0);
+  void initTracking(const vpImage<unsigned char>& I, const vpImagePoint &ip,
+        unsigned int gray_level_min, unsigned int gray_level_max,
+        unsigned int size = 0 );
 
-  void searchDotsInArea(const vpImage<unsigned char>& I, std::list<vpDot2> &niceDots );
-
-  static vpMatrix defineDots(vpDot2 dot[], const unsigned int &n, const std::string &dotFile, vpImage<unsigned char> &I, vpColor col = vpColor::blue, bool trackDot = true);
-
-  static void trackAndDisplay(vpDot2 dot[], const unsigned int &n, vpImage<unsigned char> &I, std::vector<vpImagePoint> &cogs, vpImagePoint* cogStar = NULL);
-
+  void operator=(const vpDot2& twinDot );
   /*!
     Writes the dot center of gravity coordinates in the frame (i,j) (For more details
     about the orientation of the frame see the vpImagePoint documentation) to the stream \e os,
@@ -334,6 +260,125 @@ public:
   friend VISP_EXPORT std::ostream& operator<< (std::ostream& os, vpDot2& d) {
     return (os << "(" << d.getCog() << ")" ) ;
   } ;
+
+  void print(std::ostream& os) { os << *this << std::endl ; }
+  void searchDotsInArea(const vpImage<unsigned char>& I,
+                         int area_u, int area_v,
+                         unsigned int area_w, unsigned int area_h, std::list<vpDot2> &niceDots );
+
+  void searchDotsInArea(const vpImage<unsigned char>& I, std::list<vpDot2> &niceDots );
+
+  /*!
+    Initialize the dot coordinates with \e cog. 
+  */
+  inline void setCog(const vpImagePoint &cog) {
+    this->cog = cog; 
+  }
+  /*!
+
+    Activates the dot's moments computation.
+
+    \param activate true, if you want to compute the moments. If false, moments
+    are not computed.
+
+    Computed moment are vpDot::m00, vpDot::m10, vpDot::m01, vpDot::m11,
+    vpDot::m20, vpDot::m02.
+
+    The coordinates of the region's centroid (u, v) can be computed from the
+    moments by \f$u=\frac{m10}{m00}\f$ and  \f$v=\frac{m01}{m00}\f$.
+
+  */
+  void setComputeMoments(const bool activate) { compute_moment = activate; }
+
+  /*!
+    Set the percentage of sampled points that are considered non conform
+    in terms of the gray level on the inner and the ouside ellipses.
+    Points located on the inner ellipse should have the same gray level
+    than the blob, while points located on the outside ellipse should
+    have a different gray level.
+
+    \param percentage : Percentage of points sampled with bad gray level
+    on the inner and outside ellipses that are admissible. 0 means
+    that all the points should have a right level, while a value of 1
+    means that all the points can have a bad gray level.
+    */
+  void setEllipsoidBadPointsPercentage(const double &percentage=0.0)
+  {
+    if (percentage < 0.)
+      allowedBadPointsPercentage_ = 0.;
+    else if (percentage > 1.)
+      allowedBadPointsPercentage_ = 1.;
+    else
+      allowedBadPointsPercentage_ = percentage;
+  }
+
+  void setEllipsoidShapePrecision(const double & ellipsoidShapePrecision);
+  /*!
+    Activates the display of the border of the dot during the tracking.
+    The default thickness of the overlayed drawings can be modified using
+    setGraphicsThickness().
+
+    \warning To effectively display the dot graphics a call to
+    vpDisplay::flush() is needed.
+
+    \param activate If true, the border of the dot will be painted. false to
+    turn off border painting.
+
+    \sa setGraphicsThickness()
+  */
+  void setGraphics(const bool activate) { graphics = activate ; }
+  /*!
+    Modify the default thickness that is set to 1 of the drawings in overlay when setGraphics() is enabled.
+
+    \sa setGraphics()
+    */
+  void setGraphicsThickness(unsigned int thickness) {this->thickness = thickness;};
+  /*!
+
+  Set the color level of the dot to search a dot in an area. This level will be
+  used to know if a pixel in the image belongs to the dot or not. Only pixels
+  with higher level can belong to the dot.  If the level is lower than the
+  minimum level for a dot, set the level to MIN_IN_LEVEL.
+
+  \param min : Color level of a dot to search in an area.
+
+  \sa setGrayLevelMax(), setGrayLevelPrecision()
+
+  */
+  inline void setGrayLevelMin( const unsigned int & min ) {
+    if (min > 255)
+      this->gray_level_min = 255;
+    else
+      this->gray_level_min = min;
+  };
+
+  /*!
+
+  Set the color level of pixels surrounding the dot. This is meant to be used
+  to search a dot in an area.
+
+  \param max : Intensity level of a dot to search in an area.
+
+  \sa  setGrayLevelMin(), setGrayLevelPrecision()
+  */
+  inline void setGrayLevelMax( const unsigned int & max ) {
+    if (max > 255)
+      this->gray_level_max = 255;
+    else
+      this->gray_level_max = max;
+  };
+  void setGrayLevelPrecision( const double & grayLevelPrecision );
+  void setHeight( const double & height );
+  void setMaxSizeSearchDistancePrecision(const double & maxSizeSearchDistancePrecision);
+  void setSizePrecision( const double & sizePrecision );
+  void setSurface( const double & surface );
+  void setWidth( const double & width );
+
+  void track(const vpImage<unsigned char> &I);
+  void track(const vpImage<unsigned char> &I, vpImagePoint &cog);
+
+  static void trackAndDisplay(vpDot2 dot[], const unsigned int &n, vpImage<unsigned char> &I,
+                              std::vector<vpImagePoint> &cogs, vpImagePoint* cogStar = NULL);
 
 public:
   double m00; /*!< Considering the general distribution moments for \f$ N \f$
@@ -408,8 +453,7 @@ public:
   /*!
 
     \deprecated This method is deprecated. You shoud use
-    getEdges(std::list<vpImagePoint> &) instead.
-
+    getEdges(std::list<vpImagePoint> &) instead.\n \n
     Return the list of all the image points on the dot
     border.
 
@@ -538,6 +582,8 @@ private:
   bool compute_moment ; // true moment are computed
   bool graphics ; // true for graphic overlay display
 
+  unsigned int thickness; // Graphics thickness
+
   // Bounding box
   int bbox_u_min, bbox_u_max, bbox_v_min, bbox_v_max;
 
@@ -547,17 +593,15 @@ private:
   
 //Static funtions
 public:
-  static void display(const vpImage<unsigned char>& I,const vpImagePoint &cog, 
-		      const std::list<vpImagePoint> &edges_list, vpColor color = vpColor::red, 
-		      unsigned int thickness=1);
+  static void display(const vpImage<unsigned char>& I,const vpImagePoint &cog,
+                      const std::list<vpImagePoint> &edges_list, vpColor color = vpColor::red,
+                      unsigned int thickness=1);
+  static void display(const vpImage<vpRGBa>& I,const vpImagePoint &cog,
+                      const std::list<vpImagePoint> &edges_list, vpColor color = vpColor::red,
+                      unsigned int thickness=1);
 
 };
 
 #endif
 
-/*
- * Local variables:
- * c-basic-offset: 2
- * End:
- */
 

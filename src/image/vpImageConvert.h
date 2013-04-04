@@ -1,9 +1,9 @@
 /****************************************************************************
 *
-* $Id: vpImageConvert.h 3797 2012-06-21 07:44:05Z fspindle $
+* $Id: vpImageConvert.h 4056 2013-01-05 13:04:42Z fspindle $
 *
 * This file is part of the ViSP software.
-* Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+* Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 *
 * This software is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -153,7 +153,7 @@ public:
 #ifdef VISP_HAVE_LIBJPEG
 #if JPEG_LIB_VERSION > 70
   static void convertToJPEGBuffer(const vpImage<unsigned char> &src, 
-                                  unsigned char **dest, long unsigned int &destSize, unsigned int quality = 100);  
+                                  unsigned char **dest, long unsigned int &destSize, int quality = 100);
   
   static void convertToJPEGBuffer(unsigned char *src, long unsigned int srcSize, 
                                   vpImage<unsigned char> &dest); 

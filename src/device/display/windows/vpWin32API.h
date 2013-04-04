@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpWin32API.h 3719 2012-05-10 05:50:23Z fspindle $
+ * $Id: vpWin32API.h 4058 2013-01-06 14:59:58Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,14 +39,17 @@
  *
  *****************************************************************************/
 
-#include <visp/vpConfig.h>
-#include <windows.h>
-
-#if ( defined(VISP_HAVE_GDI) )
 #ifndef vpWin32API_HH
 #define vpWin32API_HH
 
-DWORD vpProcessErrors(BOOL err);
+#include <visp/vpConfig.h>
+
+#if ( defined(VISP_HAVE_GDI) || defined(VISP_HAVE_D3D9) )
+
+#include <windows.h>
+#include <string>
+
+DWORD vpProcessErrors(const std::string &api_name);
 void vpSelectObject(HWND hWnd, HDC hDC, HDC hDCMem, HGDIOBJ h);
 void vpPrepareImageWithPen(CRITICAL_SECTION* CriticalSection, HWND hWnd,HBITMAP bmp,COLORREF color,unsigned int thickness, int style, HDC& hDCScreen,HDC& hDCMem,HPEN& hPen);
 void vpEnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection);

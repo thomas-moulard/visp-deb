@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpDisplayOpenCV.cpp 3795 2012-06-18 12:22:23Z fspindle $
+ * $Id: vpDisplayOpenCV.cpp 4137 2013-02-14 06:56:53Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -512,7 +512,6 @@ void vpDisplayOpenCV::displayImageROI ( const vpImage<unsigned char> &I,const vp
     
     unsigned int iwidth = Ic.getWidth();
 
-    input = input;
     output = output + (int)(iP.get_i()*3*this->width+ iP.get_j()*3);
     
     unsigned int i = 0;
@@ -618,7 +617,6 @@ void vpDisplayOpenCV::displayImageROI ( const vpImage<vpRGBa> &I,const vpImagePo
     
     unsigned int iwidth = Ic.getWidth();
 
-    input = input;
     output = output + (int)(iP.get_i()*3*this->width+ iP.get_j()*3);
     
     unsigned int i = 0;

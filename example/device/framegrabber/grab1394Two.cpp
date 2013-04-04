@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: grab1394Two.cpp 3619 2012-03-09 17:28:57Z fspindle $
+ * $Id: grab1394Two.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -185,7 +185,7 @@ OPTIONS                                                    Default\n\
           \n\
   -n [%%u] : Number of frames to acquire.                   %u\n\
           \n\
-  -i      : Flag to print camera informations.\n\
+  -i      : Flag to print camera information.\n\
           \n\
   -s      : Print camera settings capabilities such as \n\
      video mode and framerates available and exit.\n\
@@ -225,7 +225,7 @@ OPTIONS                                                    Default\n\
   \param camera : Active camera identifier.
   \param nframes : Number of frames to acquire.
 
-  \param verbose_info : Camera informations printing.
+  \param verbose_info : Camera information printing.
   \param verbose_settings : Camera settings printing.
 
   \param videomode_is_set : New video mode setting.

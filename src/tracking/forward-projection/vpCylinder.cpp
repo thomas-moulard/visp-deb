@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpCylinder.cpp 3665 2012-04-03 06:05:03Z fspindle $
+ * $Id: vpCylinder.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

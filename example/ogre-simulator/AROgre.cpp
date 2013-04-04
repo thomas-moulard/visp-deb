@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: AROgre.cpp 3619 2012-03-09 17:28:57Z fspindle $
+ * $Id: AROgre.cpp 4111 2013-02-06 17:27:14Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,7 +50,7 @@
 #include <visp/vpConfig.h>
 #include <iostream>
 
-#ifdef VISP_HAVE_OGRE
+#if defined(VISP_HAVE_OGRE) && defined(VISP_HAVE_DISPLAY)
 
 #if defined(VISP_HAVE_X11) && ! defined(APPLE)
 // produce an error on OSX: ‘typedef int Cursor’
@@ -62,6 +62,7 @@
 #include <visp/vpDisplayGTK.h>
 #include <visp/vpDisplayGDI.h>
 #include <visp/vpDisplayOpenCV.h>
+#include <visp/vpDisplayD3D.h>
 #include <visp/vpPose.h>
 #include <visp/vpPoint.h>
 #include <visp/vpImagePoint.h>
@@ -330,6 +331,8 @@ void computeInitialPose(vpCameraParameters *mcam, vpImage<unsigned char> &I,
   vpDisplayGDI display;
 #elif defined VISP_HAVE_OPENCV
   vpDisplayOpenCV display;
+#elif defined VISP_HAVE_D3D9
+  vpDisplayD3D display;
 #endif
 
   for (unsigned int i=0 ; i < 4 ; i++)
@@ -710,7 +713,7 @@ int main(int argc, const char **argv)
 
   return EXIT_SUCCESS; 
 }
-#else // VISP_HAVE_OGRE
+#else // VISP_HAVE_OGRE && VISP_HAVE_DISPLAY
 int
 main()
 {  

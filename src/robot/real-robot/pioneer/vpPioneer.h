@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpPioneer.h 3778 2012-06-06 14:12:07Z fspindle $
+ * $Id: vpPioneer.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,6 +62,33 @@
   The end effector frame is here located at the middle point between the two wheels.
 
   \image html pioneer.png
+
+  The robot jacobian at the end effector frame, the point located at the
+  middle between the two wheels is given by:
+
+  \f[
+  {^e}{\bf J}_e = \left(\begin{array}{cc}
+  1  &   0   \\
+  0  &   0   \\
+  0  &   0   \\
+  0  &   0   \\
+  0  &   0   \\
+  0  &   1   \\
+  \end{array}
+  \right)
+  \f]
+
+  Considering \f$(v_x, w_z)\f$, it is possible to compute \f$\bf v\f$ the six
+  dimention velocity skew expressed at the end effector frame by:
+
+  \f[
+  {\bf v} = {^e}{\bf J}_e \;
+  \left(\begin{array}{c}
+  v_x \\
+  w_z \\
+  \end{array}
+  \right)
+  \f].
 
 */
 class VISP_EXPORT vpPioneer: public vpUnicycle

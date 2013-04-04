@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpTime.cpp 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpTime.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -85,7 +85,7 @@ double vpTime::minTimeForUsleepCall = 4; /*! This time is in
 double
 vpTime::measureTimeMs()
 {
-#if defined WIN32
+#if defined(WIN32)
   LARGE_INTEGER time, frequency;
   QueryPerformanceFrequency(&frequency);
   if(frequency.QuadPart == 0){
@@ -111,7 +111,7 @@ vpTime::measureTimeMs()
 double
 vpTime::measureTimeMicros()
 {
-#ifdef WIN32
+#if defined(WIN32)
   LARGE_INTEGER time, frequency;
   QueryPerformanceFrequency(&frequency);
   if(frequency.QuadPart == 0){
@@ -227,5 +227,19 @@ double  vpTime::measureTimeSecond()
   return vpTime::measureTimeMs()/1000.0 ;
 }
 
+/*!
+  Sleep t miliseconds from now.
+
+  \param t : Time to sleep in ms.
+
+*/
+void vpTime::sleepMs(double t)
+{
+#if defined UNIX
+   usleep((unsigned long )(t*1000));
+#elif defined WIN32
+   Sleep((DWORD)(t));
+#endif
+}
 
 

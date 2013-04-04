@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: servoAfma6FourPoints2DCamVelocityInteractionDesired.cpp 3616 2012-03-09 14:31:52Z fspindle $
+ * $Id: servoAfma6FourPoints2DCamVelocityInteractionDesired.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -77,6 +77,8 @@
 #include <visp/vpImagePoint.h>
 #include <visp/vpDisplay.h>
 #include <visp/vpDisplayX.h>
+#include <visp/vpDisplayOpenCV.h>
+#include <visp/vpDisplayGTK.h>
 
 #include <visp/vpMath.h>
 #include <visp/vpTranslationVector.h>
@@ -146,7 +148,13 @@ main()
     g.setFramerate(vp1394TwoGrabber::vpFRAMERATE_60);
     g.open(I) ;
 
+#ifdef VISP_HAVE_X11
     vpDisplayX display(I,100,100,"Current image") ;
+#elif defined(VISP_HAVE_OPENCV)
+    vpDisplayOpenCV display(I,100,100,"Current image") ;
+#elif defined(VISP_HAVE_GTK)
+    vpDisplayGTK display(I,100,100,"Current image") ;
+#endif
 
     g.acquire(I) ;
 

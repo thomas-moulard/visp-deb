@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpDot.h 3853 2012-07-17 16:59:39Z fspindle $
+ * $Id: vpDot.h 4092 2013-02-04 10:36:30Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -74,6 +74,42 @@
   The underground algorithm is based on a binarisation of the image
   and a connex component segmentation to determine the dot
   characteristics (location, moments, size...).
+
+  The following sample code shows how to grab images from a firewire camera,
+  track a blob and display the tracking results.
+
+  \code
+#include <visp/vpConfig.h>
+#include <visp/vp1394TwoGrabber.h>
+#include <visp/vpDisplayX.h>
+#include <visp/vpDot.h>
+#include <visp/vpImage.h>
+
+int main()
+{
+#if defined(VISP_HAVE_DC1394_2) && defined(VISP_HAVE_X11)
+  vpImage<unsigned char> I; // Create a gray level image container
+  vp1394TwoGrabber g(false); // Create a grabber based on libdc1394-2.x third party lib
+  g.acquire(I); // Acquire an image
+
+  vpDisplayX d(I, 0, 0, "Camera view");
+  vpDisplay::display(I);
+  vpDisplay::flush(I);
+
+  vpDot blob;
+  blob.initTracking(I);
+  blob.setGraphics(true);
+
+  while(1) {
+    g.acquire(I); // Acquire an image
+    vpDisplay::display(I);
+    blob.track(I);
+
+    vpDisplay::flush(I);
+  }
+#endif
+}
+  \endcode
 
   \sa vpDot2
 */
@@ -161,68 +197,8 @@ public :
   vpDot(const vpDot& d) ;
   virtual ~vpDot() ;
 
-  vpDot& operator =(const vpDot& d) ;
-  bool operator ==(const vpDot& d);
-  bool operator !=(const vpDot& d);
-  
-  void initTracking(const vpImage<unsigned char> &I) ;
-  void initTracking(const vpImage<unsigned char> &I, const vpImagePoint &ip);
-  void initTracking(const vpImage<unsigned char> &I, const vpImagePoint &ip,
-		    unsigned int gray_level_min, unsigned int gray_level_max);
-
-  void track(const vpImage<unsigned char> & I) ;
-  void track(const vpImage<unsigned char> & I, vpImagePoint &ip) ;
-  
   void display(const vpImage<unsigned char>& I, vpColor color = vpColor::red,
                unsigned int thickness=1);
-  
-  /*!
-    Initialize the dot coordinates with \e cog.
-  */
-  inline void setCog(const vpImagePoint &cog) {
-    this->cog = cog;
-  }
-
-  /*!
-
-    Activates the dot's moments computation.
-
-    \param activate true, if you want to compute the moments. If false, moments
-    are not computed.
-
-    Computed moment are vpDot::m00, vpDot::m10, vpDot::m01, vpDot::m11,
-    vpDot::m20, vpDot::m02.
-
-    The coordinates of the region's centroid (u, v) can be computed from the
-    moments by \f$u=\frac{m10}{m00}\f$ and  \f$v=\frac{m01}{m00}\f$.
-
-  */
-  void setComputeMoments(const bool activate) { compute_moment = activate; }
-  
-  /*!
-    Set the type of connexity: 4 or 8.
-  */
-  void setConnexity(vpConnexityType connexityType) {this->connexityType = connexityType; };
-  void setMaxDotSize(double percentage) ;
-  void setGrayLevelMin( const unsigned int &gray_level_min ) {
-    this->gray_level_min = gray_level_min;
-  };
-  void setGrayLevelMax( const unsigned int &gray_level_max ) {
-    this->gray_level_max = gray_level_max;
-  };
-  void setGrayLevelPrecision( const double & grayLevelPrecision );
-
-
-  /*!
-    Activates the display of all the pixels of the dot during the tracking.
-
-    \warning To effectively display the dot graphics a call to
-    vpDisplay::flush() is needed.
-
-    \param activate true to activate the display of dot pixels, false to turn
-    off the display
-  */
-  void setGraphics(const bool activate) { graphics = activate ; }
 
   /*!
 
@@ -235,9 +211,9 @@ public :
     vpRect bbox;
 
     bbox.setRect(this->u_min,
-		 this->v_min,
-		 this->u_max - this->u_min + 1,
-		 this->v_max - this->v_min + 1);
+     this->v_min,
+     this->u_max - this->u_min + 1,
+     this->v_max - this->v_min + 1);
 
     return (bbox);
   };
@@ -249,10 +225,10 @@ public :
   inline vpImagePoint getCog() const {
     return cog;
   }
-  
+
   /*!
       Return the list of all the image points on the border of the dot.
-      
+
       \warning Doesn't return the image points inside the dot anymore. To get those points see getConnexities().
   */
   inline std::list<vpImagePoint> getEdges() {
@@ -270,26 +246,6 @@ public :
   inline std::list<vpImagePoint> getConnexities() {
     return this->ip_connexities_list;
   };
-
-#ifdef VISP_BUILD_DEPRECATED_FUNCTIONS
-  /*!
-    @name Deprecated functions
-  */
-  /*!
-
-    \deprecated This method is deprecated since the naming is not representative regarding to its funtionnality.
-    Previously it returned all the points inside the dot. To get the equivalent, use getConnexities().
-    
-    If you rather want to get the points on the dot border use getEdges(). 
-
-    \param edges_list : The list of all the images points on the dot
-    border. This list is update after a call to track().
-
-  */
-  vp_deprecated void getEdges(std::list<vpImagePoint> &edges_list) {
-    edges_list = this->ip_edges_list;
-  };
-#endif
 
   inline double getGamma() {return this->gamma;};
   /*!
@@ -331,11 +287,19 @@ public :
   inline unsigned int getHeight() const {
     return (this->v_max - this->v_min + 1);
   };
-  
+
+  void initTracking(const vpImage<unsigned char> &I) ;
+  void initTracking(const vpImage<unsigned char> &I, const vpImagePoint &ip);
+  void initTracking(const vpImage<unsigned char> &I, const vpImagePoint &ip,
+		    unsigned int gray_level_min, unsigned int gray_level_max);
+
+  vpDot& operator =(const vpDot& d) ;
+  bool operator ==(const vpDot& d);
+  bool operator !=(const vpDot& d);
   /*!
-    Writes the dot center of gravity coordinates in the frame (i,j) (For more details 
+    Writes the dot center of gravity coordinates in the frame (i,j) (For more details
     about the orientation of the frame see the vpImagePoint documentation) to the stream \e os,
-    and returns a reference to the stream. 
+    and returns a reference to the stream.
   */
   friend VISP_EXPORT std::ostream& operator<< (std::ostream& os, vpDot& d) {
     return (os << "(" << d.getCog() << ")" ) ;
@@ -343,31 +307,65 @@ public :
 
   void print(std::ostream& os) { os << *this << std::endl ; }
 
-#ifdef VISP_BUILD_DEPRECATED_FUNCTIONS
   /*!
-    @name Deprecated functions
+    Initialize the dot coordinates with \e cog.
   */
+  inline void setCog(const vpImagePoint &cog) {
+    this->cog = cog;
+  }
+
   /*!
 
-    \deprecated This method is deprecated. You shoud use
-    getEdges(std::list<vpImagePoint> &) instead.
+    Activates the dot's moments computation.
 
-    Return the list of all the image points on the dot
-    border.
+    \param activate true, if you want to compute the moments. If false, moments
+    are not computed.
 
-    \param connexities_list : The list of all the images points on the dot
-    border. This list is update after a call to track().
+    Computed moment are vpDot::m00, vpDot::m10, vpDot::m01, vpDot::m11,
+    vpDot::m20, vpDot::m02.
+
+    The coordinates of the region's centroid (u, v) can be computed from the
+    moments by \f$u=\frac{m10}{m00}\f$ and  \f$v=\frac{m01}{m00}\f$.
 
   */
-  vp_deprecated void getConnexities(vpList<vpImagePoint> &connexities_list) {
-    // convert a vpList in a std::list
-    connexities_list.kill();
-    std::list<vpImagePoint>::const_iterator it;
-    for (it = ip_connexities_list.begin(); it != ip_connexities_list.end(); ++it) {
-      connexities_list += *it;
-    }
+  void setComputeMoments(const bool activate) { compute_moment = activate; }
+  
+  /*!
+    Set the type of connexity: 4 or 8.
+  */
+  void setConnexity(vpConnexityType connexityType) {this->connexityType = connexityType; };
+  void setMaxDotSize(double percentage) ;
+  void setGrayLevelMin( const unsigned int &gray_level_min ) {
+    this->gray_level_min = gray_level_min;
   };
-#endif
+  void setGrayLevelMax( const unsigned int &gray_level_max ) {
+    this->gray_level_max = gray_level_max;
+  };
+  void setGrayLevelPrecision( const double & grayLevelPrecision );
+
+  /*!
+    Activates the display of all the pixels of the dot during the tracking.
+    The default thickness of the overlayed drawings can be modified using
+    setGraphicsThickness().
+
+    \warning To effectively display the dot graphics a call to
+    vpDisplay::flush() is needed.
+
+    \param activate true to activate the display of dot pixels, false to turn
+    off the display.
+
+    \sa setGraphicsThickness()
+  */
+  void setGraphics(const bool activate) { graphics = activate ; }
+  /*!
+    Modify the default thickness that is set to 1 of the drawings in overlay when setGraphics() is enabled.
+
+    \sa setGraphics()
+    */
+  void setGraphicsThickness(unsigned int thickness) {this->thickness = thickness;};
+
+  void track(const vpImage<unsigned char> & I) ;
+  void track(const vpImage<unsigned char> & I, vpImagePoint &ip) ;
 
 private:
   //! internal use only
@@ -390,6 +388,8 @@ private:
 
   // Flag used to allow display
   bool graphics ;
+
+  unsigned int thickness; // Graphics thickness
 
   double maxDotSizePercentage;
   unsigned char gray_level_out;
@@ -415,17 +415,54 @@ private:
   
 //Static Functions
 public:
-  static void display(const vpImage<unsigned char>& I,const vpImagePoint &cog, 
-		      const std::list<vpImagePoint> &edges_list, vpColor color = vpColor::red, 
-		      unsigned int thickness=1);
+  static void display(const vpImage<unsigned char>& I,const vpImagePoint &cog,
+                      const std::list<vpImagePoint> &edges_list, vpColor color = vpColor::red,
+                      unsigned int thickness=1);
+  static void display(const vpImage<vpRGBa>& I,const vpImagePoint &cog,
+                      const std::list<vpImagePoint> &edges_list, vpColor color = vpColor::red,
+                      unsigned int thickness=1);
+
+#ifdef VISP_BUILD_DEPRECATED_FUNCTIONS
+  /*!
+    @name Deprecated functions
+  */
+  /*!
+
+    \deprecated This method is deprecated since the naming is not representative regarding to its funtionnality. \n
+    Previously it returned all the points inside the dot. To get the equivalent, use getConnexities(). \n \n
+    If you rather want to get the points on the dot border use getEdges(). 
+
+    \param edges_list : The list of all the images points on the dot
+    border. This list is update after a call to track().
+
+  */
+  vp_deprecated void getEdges(std::list<vpImagePoint> &edges_list) {
+    edges_list = this->ip_edges_list;
+  };
+  
+  /*!
+
+    \deprecated This method is deprecated. You shoud use
+    getEdges(std::list<vpImagePoint> &) instead.\n \n
+    Return the list of all the image points on the dot
+    border.
+
+    \param connexities_list : The list of all the images points on the dot
+    border. This list is update after a call to track().
+
+  */
+  vp_deprecated void getConnexities(vpList<vpImagePoint> &connexities_list) {
+    // convert a vpList in a std::list
+    connexities_list.kill();
+    std::list<vpImagePoint>::const_iterator it;
+    for (it = ip_connexities_list.begin(); it != ip_connexities_list.end(); ++it) {
+      connexities_list += *it;
+    }
+  };
+#endif
 } ;
 
 #endif
 
-/*
- * Local variables:
- * c-basic-offset: 2
- * End:
- */
 
 

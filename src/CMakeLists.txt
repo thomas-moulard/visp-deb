@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: CMakeLists.txt 3738 2012-05-29 08:28:29Z ayol $
+# $Id: CMakeLists.txt 4059 2013-01-07 17:04:01Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -55,11 +55,11 @@ SET(HEADER_IN_INCLUDE_DIR "")
 FOREACH(header ${HEADER_ALL})
   GET_FILENAME_COMPONENT(headerName ${header} NAME) 
   ADD_CUSTOM_COMMAND(
-    OUTPUT ${VISP_BINARY_DIR}/include/visp/${headerName}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/${header} ${VISP_BINARY_DIR}/include/visp/${headerName}
+    OUTPUT ${VISP_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/visp/${headerName}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/${header} ${VISP_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/visp/${headerName}
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${header}
     )
-  SET(HEADER_IN_INCLUDE_DIR ${HEADER_IN_INCLUDE_DIR} ${VISP_BINARY_DIR}/include/visp/${headerName}
+  SET(HEADER_IN_INCLUDE_DIR ${HEADER_IN_INCLUDE_DIR} ${VISP_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/visp/${headerName}
     )
 ENDFOREACH(header)
 
@@ -85,11 +85,11 @@ ADD_DEPENDENCIES(${VISP_INTERN_LIBRARY} header)
 # properties. 
 SET_TARGET_PROPERTIES(${VISP_INTERN_LIBRARY} PROPERTIES
   VERSION ${VISP_VERSION}
-  SOVERSION ${VISP_VERSION_MAJOR}
+  SOVERSION ${VISP_VERSION_MAJOR}.${VISP_VERSION_MINOR}
   )
 
 # Link with external libs especially under windows for winmm.lib
-# needed to create visp-2.dll. Why ? Because for binaries, winmm.lib
+# needed to create visp.dll. Why ? Because for binaries, winmm.lib
 # is considered in the link stage. Probably a CMake bug ! 
 #IF(WIN32 AND BUILD_SHARED_LIBS AND HAVE_LIBWINMM)
 #  TARGET_LINK_LIBRARIES(${VISP_INTERN_LIBRARY} "winmm")
@@ -122,7 +122,7 @@ else()
 endif()
 # install rule for all the headers
 INSTALL(FILES ${HEADER_ALL}
-  DESTINATION include/visp
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/visp
   PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
   COMPONENT headers
   )

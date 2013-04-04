@@ -3,7 +3,7 @@
  * $Id: vpImagePoint.h 2359 2009-11-24 15:09:25Z nmelchio $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -110,6 +110,19 @@ void vpVideoReader::setFileName(const char *filename)
   initFileName = true;
 }
 
+/*!
+  It enables to set the path and the name of the file(s) which as/have to be read.
+
+  If you want to read a video file, \f$ filename \f$ corresponds to the path to the file (example : /local/video.mpeg).
+
+  If you want to read a sequence of images, \f$ filename \f$ corresponds to the path followed by the image name template. For exemple, if you want to read different images named image0001.jpeg, image0002.jpg, ... and located in the folder /local/image, \f$ filename \f$ will be "/local/image/image%04d.jpg".
+
+  \param filename : Path to a video file or file name template of a image sequence.
+*/
+void vpVideoReader::setFileName(const std::string &filename)
+{
+  setFileName(filename.c_str());
+}
 
 /*!
   Sets all the parameters needed to read the video or the image sequence.

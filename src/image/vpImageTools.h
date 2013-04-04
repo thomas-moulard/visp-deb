@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpImageTools.h 3578 2012-03-01 09:59:24Z fspindle $
+ * $Id: vpImageTools.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -112,9 +112,13 @@ public:
   static void flip(vpImage<Type> &I);
 
 
-  static void imageDifference(vpImage<unsigned char> &I1, 
-			      vpImage<unsigned char> &I2,
+  static void imageDifference(const vpImage<unsigned char> &I1,
+			      const vpImage<unsigned char> &I2,
 			      vpImage<unsigned char> &Idiff) ;
+
+  static void imageDifferenceAbsolute(const vpImage<unsigned char> &I1,
+  				   const vpImage<unsigned char> &I2,
+  				   vpImage<unsigned char> &Idiff);
 } ;
 
 /*!

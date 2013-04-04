@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpUnicycle.h 3767 2012-06-06 08:49:44Z fspindle $
+ * $Id: vpUnicycle.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -109,8 +109,8 @@ public:
   /*!
     Return the robot jacobian \f${^e}{\bf J}_e\f$ expressed in the end effector frame.
 
-    \return The robot jacobian such as \f${\bf v} = {^e}{\bf J}_e \; \dot{q}\f$ with
-    \f${\bf q}\f$ the robot control velocities and \f$\bf v\f$ the six dimention velocity skew.
+    \return The robot jacobian such as \f${\bf v} = {^e}{\bf J}_e \; \dot{\bf q}\f$ with
+    \f$\dot{\bf q} = (v_x, w_z)\f$ the robot control velocities and \f$\bf v\f$ the six dimention velocity skew.
   */
   vpMatrix get_eJe() const
   {
@@ -128,8 +128,8 @@ public:
   /*!
     Set the robot jacobian \f${^e}{\bf J}_e\f$ expressed in the end effector frame.
 
-    \param eJe : The robot jacobian to set such as \f${\bf v} = {^e}{\bf J}_e \; \dot{q}\f$ with
-    \f${\bf q}\f$ the robot control velocities and \f$\bf v\f$ the six dimention velocity skew.
+    \param eJe : The robot jacobian to set such as \f${\bf v} = {^e}{\bf J}_e \; \dot{\bf q}\f$ with
+    \f$\dot{\bf q} = (v_x, w_z)\f$ the robot control velocities and \f$\bf v\f$ the six dimention velocity skew.
   */
   void set_eJe(const vpMatrix &eJe)
   {

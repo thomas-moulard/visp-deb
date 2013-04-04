@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpServo.cpp 3631 2012-03-14 11:15:32Z fspindle $
+ * $Id: vpServo.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -239,7 +239,7 @@ void
 
 /*!
 
-  Prints on \e os stream informations about the task:
+  Prints on \e os stream information about the task:
 
   \param displayLevel : If vpServo::ALL prints
   - Type of control law (eye-in-hand, eye-to-hand)
@@ -961,7 +961,6 @@ vpColVector
 
     if (inversionType==PSEUDO_INVERSE)
     {
-      vpColVector sv ;
       rankJ1 = J1.pseudoInverse(J1p, sv, 1e-6, imJ1, imJ1t) ;
 
       imageComputed = true ;
@@ -984,10 +983,9 @@ vpColVector
       if (imageComputed!=true)
 	    {
 	      vpMatrix Jtmp ;
-	      vpColVector sv ;
 	      // image of J1 is computed to allows the computation
 	      // of the projection operator
-	      rankJ1 = J1.pseudoInverse(Jtmp,sv, 1e-6, imJ1, imJ1t) ;
+        rankJ1 = J1.pseudoInverse(Jtmp, sv, 1e-6, imJ1, imJ1t) ;
 	      imageComputed = true ;
 	    }
       WpW = imJ1t*imJ1t.t() ;

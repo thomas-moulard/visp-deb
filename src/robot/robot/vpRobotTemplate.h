@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpRobotTemplate.h 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpRobotTemplate.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -93,10 +93,6 @@ public:
   void setPosition(const vpRobot::vpControlFrameType frame,
                    const vpColVector &q) ;
 
-  //! get a displacement expressed in the camera frame
-  void getCameraDisplacement(vpColVector &v) ;
-  //! get a displacement expressed  in the articular frame
-  void getArticularDisplacement(vpColVector &qdot) ;
   //! get a displacement (frame as to be specified)
   void getDisplacement(const vpRobot::vpControlFrameType frame,
                        vpColVector &q) ;

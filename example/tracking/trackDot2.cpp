@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: trackDot2.cpp 3619 2012-03-09 17:28:57Z fspindle $
+ * $Id: trackDot2.cpp 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -119,7 +119,7 @@ OPTIONS:                                               Default\n\
      The following image file formats PNM (PGM P5, PPM P6)\n\
      are supported. The format is selected by analysing \n\
      the filename extension.\n\
-     Example : \"/Temp/ViSP-images/cube/image.%%04d.pgm\"\n\
+     Example : \"C:/Temp/ViSP-images/cube/image.%%04d.pgm\"\n\
      %%04d is for the image numbering.\n\
  \n\
   -f <first image>                                     %u\n\

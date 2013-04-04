@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpPlotCurve.h 3610 2012-03-09 11:18:17Z fspindle $
+ * $Id: vpPlotCurve.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -55,9 +55,9 @@
 
 #include <list>
 
-#if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV) 
+#if defined(VISP_HAVE_DISPLAY)
 
-    //! Different styles to plot the curve.
+//! Different styles to plot the curve.
 typedef enum 
 {
   point,

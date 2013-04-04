@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpRobotPtu46.h 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpRobotPtu46.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -106,59 +106,40 @@ private:
   char	      *device;
 
 public:
-
   static const double       defaultPositioningVelocity;
 
   vpRobotPtu46 (const char *device="/dev/ttyS0");
   vpRobotPtu46 (vpRobotPtu46 * pub);
   virtual ~vpRobotPtu46 (void);
 
-  void init (void);
-
-
-  /* --- STATE ------------------------------------------------------------- */
-
-  vpRobot::vpRobotStateType   setRobotState (vpRobot::vpRobotStateType newState);
-
-  /* --- POSITION --------------------------------------------------- */
-
-  void setPosition(const vpRobot::vpControlFrameType frame,
-		   const vpColVector &q) ;
-  void setPosition (const vpRobot::vpControlFrameType frame,
-		    const double &q1, const double &q2) ;
-  void setPosition(const char *filename) ;
-  void getPosition (const vpRobot::vpControlFrameType frame,
-		    vpColVector &q);
-
-
-  void   setPositioningVelocity (const double velocity);
-  double getPositioningVelocity (void);
-
-
-  /* --- SPEED ---------------------------------------------------------- */
-
-  void setVelocity (const vpRobot::vpControlFrameType frame,
-		    const vpColVector & q_dot);
-
-
-  void getVelocity (const vpRobot::vpControlFrameType frame,
-		    vpColVector & q_dot);
-
-  vpColVector getVelocity (const vpRobot::vpControlFrameType frame);
-
-public:
   void get_cMe(vpHomogeneousMatrix &_cMe) ;
   void get_cVe(vpVelocityTwistMatrix &_cVe) ;
-  void get_eJe(vpMatrix &_eJe)  ;
-  void get_fJe(vpMatrix &_fJe)  ;
+  void get_eJe(vpMatrix &_eJe);
+  void get_fJe(vpMatrix &_fJe);
+
+  void getDisplacement(vpRobot::vpControlFrameType  frame, vpColVector &q);
+  void getPosition (const vpRobot::vpControlFrameType frame, vpColVector &q);
+  double getPositioningVelocity (void);
+  void getVelocity (const vpRobot::vpControlFrameType frame, vpColVector & q_dot);
+  vpColVector getVelocity (const vpRobot::vpControlFrameType frame);
+
+  void init (void);
+
+  bool readPositionFile(const char *filename, vpColVector &q);
+
+  void setPosition(const vpRobot::vpControlFrameType frame, const vpColVector &q) ;
+  void setPosition (const vpRobot::vpControlFrameType frame, const double &q1, const double &q2) ;
+  void setPosition(const char *filename) ;
+  void setPositioningVelocity (const double velocity);
+  vpRobot::vpRobotStateType setRobotState (vpRobot::vpRobotStateType newState);
+
+  void setVelocity (const vpRobot::vpControlFrameType frame, const vpColVector & q_dot);
 
   void stopMotion() ;
 
+private:
   void getCameraDisplacement(vpColVector &d);
-  void getArticularDisplacement(vpColVector  &d);
-  void getDisplacement(vpRobot::vpControlFrameType  frame, vpColVector &q);
-
-  bool readPositionFile(const char *filename, vpColVector &q);
+  void getArticularDisplacement(vpColVector &d);
 };
 
 

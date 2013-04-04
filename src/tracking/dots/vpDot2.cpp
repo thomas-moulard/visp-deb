@@ -3,7 +3,7 @@
  * $Id: vpDot2.cpp 2135 2009-04-29 13:51:31Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -71,8 +71,7 @@
   Initialize the tracker with default parameters.
 
 */
-void 
-    vpDot2::init()
+void vpDot2::init()
 {
   cog.set_u(0);
   cog.set_v(0);
@@ -99,6 +98,7 @@ void
 
   compute_moment = false ;
   graphics = false;
+  thickness = 1;
 }
 
 /*!
@@ -170,6 +170,7 @@ void vpDot2::operator=(const vpDot2& twinDot )
 
   compute_moment = twinDot.compute_moment;
   graphics = twinDot.graphics;
+  thickness = twinDot.thickness;
 
   direction_list = twinDot.direction_list;
   ip_edges_list =  twinDot.ip_edges_list;
@@ -581,7 +582,7 @@ void vpDot2::track(const vpImage<unsigned char> &I)
   if (graphics) {
     // display a red cross at the center of gravity's location in the image.
 
-    vpDisplay::displayCross(I, this->cog, 15, vpColor::red);
+    vpDisplay::displayCross(I, this->cog, 3*thickness+8, vpColor::red, thickness);
     //vpDisplay::flush(I);
   }
 }
@@ -946,8 +947,7 @@ void
 /*!
 
   \deprecated This method is deprecated. You should use
-  searchDotsInArea(vpImage<unsigned char>&,  std::list<vpDot2> &) instead.
-
+  searchDotsInArea(vpImage<unsigned char>&,  std::list<vpDot2> &) instead.\n \n
   Look for a list of dot matching this dot parameters within the entire
   image.
 
@@ -1023,7 +1023,7 @@ vpList<vpDot2>* vpDot2::searchDotsInArea(const vpImage<unsigned char>& I)
 
     if (graphics) {
       // Display the area were the dot is search
-      vpDisplay::displayRectangle(I, area, vpColor::blue);
+      vpDisplay::displayRectangle(I, area, vpColor::blue, false, thickness);
       //vpDisplay::flush(I);
     }
 
@@ -1145,6 +1145,7 @@ vpList<vpDot2>* vpDot2::searchDotsInArea(const vpImage<unsigned char>& I)
         dotToTest->setGrayLevelPrecision( getGrayLevelPrecision() );
         dotToTest->setSizePrecision( getSizePrecision() );
         dotToTest->setGraphics( graphics );
+        dotToTest->setGraphicsThickness( thickness );
         dotToTest->setComputeMoments( true );
         dotToTest->setArea( area );
         dotToTest->setEllipsoidShapePrecision( ellipsoidShapePrecision );
@@ -1250,8 +1251,7 @@ vpList<vpDot2>* vpDot2::searchDotsInArea(const vpImage<unsigned char>& I)
 /*!
 
   \deprecated This method is deprecated. You should use
-  searchDotsInArea(vpImage<unsigned char>&, int, int, unsigned int, unsigned int, std::list<vpDot2> &) instead.
-
+  searchDotsInArea(vpImage<unsigned char>&, int, int, unsigned int, unsigned int, std::list<vpDot2> &) instead.\n \n
   Look for a list of dot matching this dot parameters within a rectangle
   search area in the image. The rectangle upper-left coordinates are given by
   (\e area_u, \e area_v). The size of the rectangle is given by \e area_w and
@@ -1288,7 +1288,7 @@ vpDot2::searchDotsInArea(const vpImage<unsigned char>& I,
 
   if (graphics) {
     // Display the area were the dot is search
-    vpDisplay::displayRectangle(I, area, vpColor::blue);
+    vpDisplay::displayRectangle(I, area, vpColor::blue, false, thickness);
     //vpDisplay::flush(I);
   }
 
@@ -1410,6 +1410,7 @@ vpDot2::searchDotsInArea(const vpImage<unsigned char>& I,
       dotToTest->setGrayLevelPrecision( getGrayLevelPrecision() );
       dotToTest->setSizePrecision( getSizePrecision() );
       dotToTest->setGraphics( graphics );
+      dotToTest->setGraphicsThickness( thickness );
       dotToTest->setComputeMoments( true );
       dotToTest->setArea( area );
       dotToTest->setEllipsoidShapePrecision( ellipsoidShapePrecision );
@@ -1603,7 +1604,7 @@ void vpDot2::searchDotsInArea(const vpImage<unsigned char>& I,
 
   if (graphics) {
     // Display the area were the dot is search
-    vpDisplay::displayRectangle(I, area, vpColor::blue);
+    vpDisplay::displayRectangle(I, area, vpColor::blue, false, thickness);
     //vpDisplay::flush(I);
   }
 
@@ -1725,6 +1726,7 @@ void vpDot2::searchDotsInArea(const vpImage<unsigned char>& I,
       dotToTest->setGrayLevelPrecision( getGrayLevelPrecision() );
       dotToTest->setSizePrecision( getSizePrecision() );
       dotToTest->setGraphics( graphics );
+      dotToTest->setGraphicsThickness( thickness );
       dotToTest->setComputeMoments( true );
       dotToTest->setArea( area );
       dotToTest->setEllipsoidShapePrecision( ellipsoidShapePrecision );
@@ -2000,13 +2002,14 @@ bool vpDot2::isValid(const vpImage<unsigned char>& I, const vpDot2& wantedDot )
         nb_bad_points ++;
       }
       if (graphics) {
-        ip.set_u( u );
-        ip.set_v( v );
-
-        vpDisplay::displayCross( I, ip, 1, vpColor::green ) ;
+        for (unsigned int t=0; t< thickness; t++) {
+          ip.set_u( u + t );
+          ip.set_v( v );
+          vpDisplay::displayPoint( I, ip, vpColor::green ) ;
+        }
       }
 #ifdef DEBUG
-      vpDisplay::displayCross( I, ip, 1, vpColor::green ) ;
+      vpDisplay::displayPoint( I, ip, vpColor::green ) ;
       vpDisplay::flush(I);
 #endif
     }
@@ -2049,10 +2052,12 @@ bool vpDot2::isValid(const vpImage<unsigned char>& I, const vpDot2& wantedDot )
         //return false;
       }
       if (graphics) {
-        ip.set_u( u );
-        ip.set_v( v );
+        for(unsigned int t=0; t<thickness; t++) {
+          ip.set_u( u + t);
+          ip.set_v( v );
 
-        vpDisplay::displayCross( I, ip, 1, vpColor::green ) ;
+          vpDisplay::displayPoint( I, ip, vpColor::green ) ;
+        }
       }
     }
   }
@@ -2154,8 +2159,7 @@ vpDot2* vpDot2::getInstance()
 /*!
 
   \deprecated This method is deprecated. You shoud use
-  getFreemanChain(std::list<unsigned int> &) instead.
-
+  getFreemanChain(std::list<unsigned int> &) instead.\n \n
   Returns the list of Freeman chain code used to turn around the dot
   counterclockwise.
 
@@ -2337,10 +2341,12 @@ bool vpDot2::computeParameters(const vpImage<unsigned char> &I,
   do {
     // if it was asked, show the border
     if (graphics) {
-      ip.set_u ( border_u );
-      ip.set_v ( border_v );
+      for(int t=0; t< (int)thickness; t++) {
+        ip.set_u ( border_u + t);
+        ip.set_v ( border_v );
       
-      vpDisplay::displayPoint(I, ip, vpColor::red) ;
+        vpDisplay::displayPoint(I, ip, vpColor::red) ;
+      }
       //vpDisplay::flush(I);
     }
 #ifdef DEBUG
@@ -2556,7 +2562,7 @@ bool
         updateFreemanPosition( _u, _v, element ); // same direction
 
         if ( hasGoodLevel( I, _u, _v )) {
-          element = element;      // keep same dir
+          //element = element;      // keep same dir
         }
         else {
           unsigned int _u = u;
@@ -3026,8 +3032,8 @@ vpMatrix vpDot2::defineDots(vpDot2 dot[], const unsigned int &n, const std::stri
 			for(i=0;i<n;++i)
 			{
 				cog.set_uv(Cogs[i][0], Cogs[i][1]);
-				dot[i].setGraphics(true);
-				dot[i].setCog(cog);
+        dot[i].setGraphics(true);
+        dot[i].setCog(cog);
 				if(trackDot)
 				{
 					dot[i].initTracking(I,cog);
@@ -3068,8 +3074,8 @@ vpMatrix vpDot2::defineDots(vpDot2 dot[], const unsigned int &n, const std::stri
 		{
 			if(trackDot)
 			{
-				dot[i].setGraphics(true);
-				dot[i].initTracking(I);
+        dot[i].setGraphics(true);
+        dot[i].initTracking(I);
 				cog = dot[i].getCog();
 			}
 			else
@@ -3146,8 +3152,8 @@ void vpDot2::trackAndDisplay(vpDot2 dot[], const unsigned int &n, vpImage<unsign
   \param thickness : Thickness of the dot.
 */
 void vpDot2::display(const vpImage<unsigned char>& I,const vpImagePoint &cog, 
-		    const std::list<vpImagePoint> &edges_list, vpColor color, 
-		    unsigned int thickness)
+                     const std::list<vpImagePoint> &edges_list, vpColor color,
+                     unsigned int thickness)
 {
   vpDisplay::displayCross(I, cog, 3*thickness+8, color, thickness);
   std::list<vpImagePoint>::const_iterator it;
@@ -3158,9 +3164,29 @@ void vpDot2::display(const vpImage<unsigned char>& I,const vpImagePoint &cog,
   }
 }
 
+/*!
 
-/*
- * Local variables:
- * c-basic-offset: 2
- * End:
- */
+  Display the dot center of gravity and its list of edges.
+
+  \param I : The image used as background.
+
+  \param cog : The center of gravity.
+
+  \param edges_list : The list of edges;
+
+  \param color : Color used to display the dot.
+
+  \param thickness : Thickness of the dot.
+*/
+void vpDot2::display(const vpImage<vpRGBa>& I,const vpImagePoint &cog,
+                     const std::list<vpImagePoint> &edges_list, vpColor color,
+                     unsigned int thickness)
+{
+  vpDisplay::displayCross(I, cog, 3*thickness+8, color, thickness);
+  std::list<vpImagePoint>::const_iterator it;
+
+  for (it = edges_list.begin(); it != edges_list.end(); ++it)
+  {
+    vpDisplay::displayPoint(I, *it, color);
+  }
+}

@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMeSite.h 3674 2012-04-05 08:51:50Z ayol $
+ * $Id: vpMeSite.h 4062 2013-01-09 10:30:06Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -244,8 +244,11 @@ public:
   static double sqrDistance (const vpMeSite S1, const vpMeSite S2) {
     return(vpMath::sqr(S1.ifloat-S2.ifloat)+vpMath::sqr(S1.jfloat-S2.jfloat));}
     
-  static void display(const vpImage<unsigned char>& I, const double &i, const double &j, const vpMeSiteState &state = NO_SUPPRESSION);
-  
+  static void display(const vpImage<unsigned char>& I, const double &i, const double &j,
+                      const vpMeSiteState &state = NO_SUPPRESSION);
+  static void display(const vpImage<vpRGBa>& I, const double &i, const double &j,
+                      const vpMeSiteState &state = NO_SUPPRESSION);
+
 //Deprecated 
 #ifdef VISP_BUILD_DEPRECATED_FUNCTIONS
 public:

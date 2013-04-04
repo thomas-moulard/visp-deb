@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMeNurbs.h 3587 2012-03-02 16:26:32Z fspindle $
+ * $Id: vpMeNurbs.h 4062 2013-01-09 10:30:06Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -230,7 +230,8 @@ class VISP_EXPORT vpMeNurbs : public vpMeTracker
     bool farFromImageEdge(const vpImage<unsigned char>& I, const vpImagePoint& iP);
     
 public:
-  static void display(const vpImage<unsigned char>& I, vpNurbs &n, vpColor color = vpColor::green);
+    static void display(const vpImage<unsigned char>& I, vpNurbs &n, vpColor color = vpColor::green);
+    static void display(const vpImage<vpRGBa>& I, vpNurbs &n, vpColor color = vpColor::green);
 };
 
 #endif

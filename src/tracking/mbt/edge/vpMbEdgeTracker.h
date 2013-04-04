@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMbEdgeTracker.h 2807 2010-09-14 10:14:54Z fspindle $
+ * $Id: vpMbEdgeTracker.h 4122 2013-02-08 10:45:54Z ayol $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -110,29 +110,42 @@
 \code
 #include <visp/vpMbEdgeTracker.h>
 #include <visp/vpImage.h>
+#include <visp/vpImageIo.h>
 #include <visp/vpHomogeneousMatrix.h>
 #include <visp/vpCameraParameters.h>
 #include <visp/vpException.h>
+#include <visp/vpDisplayX.h>
 
 int main()
 {
   vpMbEdgeTracker tracker; // Create a model based tracker.
   vpImage<unsigned char> I;
-  vpHomogeneousMatrix cMo; // Pose computed using the tracker.
+  vpHomogeneousMatrix cMo; // Pose computed using the tracker. 
   vpCameraParameters cam;
-
+  
   // Acquire an image
+  vpImageIo::readPGM(I, "cube.pgm");
+  
+#if defined VISP_HAVE_X11
+  vpDisplayX display;
+  display.init(I,100,100,"Mb Edge Tracker");
+#endif
 
+#if defined VISP_HAVE_XML2
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
+#endif
   tracker.getCameraParameters(cam);   // Get the camera parameters used by the tracker (from the configuration file).
   tracker.loadModel("cube.cao");      // Load the 3d model in cao format. No 3rd party library is required
   tracker.initClick(I, "cube.init");  // Initialise manually the pose by clicking on the image points associated to the 3d points containned in the cube.init file.
 
   while(true){
     // Acquire a new image
+    vpDisplay::display(I);
     tracker.track(I);     // Track the object on this image
     tracker.getPose(cMo); // Get the pose
+    
     tracker.display(I, cMo, cam, vpColor::darkRed, 1); // Display the model at the computed pose.
+    vpDisplay::flush(I);
   }
 
   // Cleanup memory allocated by xml library used to parse the xml config file in vpMbEdgeTracker::loadConfigFile()
@@ -172,29 +185,29 @@ int main()
 #include <visp/vpImage.h>
 #include <visp/vpHomogeneousMatrix.h>
 #include <visp/vpCameraParameters.h>
+#include <visp/vpImageIo.h>
 
 int main()
 {
   vpMbEdgeTracker tracker; // Create a model based tracker.
   vpImage<unsigned char> I;
-  vpHomogeneousMatrix cMo; // Pose computed using the tracker.
-  vpCameraParameters cam;
-
+  vpHomogeneousMatrix cMo; // Pose used in entry (has to be defined), then computed using the tracker. 
+  
   //acquire an image
+  vpImageIo::readPGM(I, "cube.pgm"); // Example of acquisition
 
-  // Get the cMo from a known pose or a 'client' in a server/client configuration
-
+#if defined VISP_HAVE_XML2
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
-  tracker.getCameraParameters(cam); // Get the camera parameters used by the tracker (from the configuration file).
-  tracker.loadModel("cube.wrl"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
-  tracker.initFromPose(I, cMo); // initialise manually the pose by clicking on the image points associated to the 3d points containned in the cube.init file.
+#endif
+  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
+  tracker.initFromPose(I, cMo); // initialise the tracker with the given pose.
 
   while(true){
     // acquire a new image
     tracker.track(I); // track the object on this image
-    tracker.getPose(cMo); // get the pose
+    tracker.getPose(cMo); // get the pose 
   }
-
+  
   // Cleanup memory allocated by xml library used to parse the xml config file in vpMbEdgeTracker::loadConfigFile()
   vpXmlParser::cleanup();
 
@@ -208,29 +221,40 @@ int main()
 \code
 #include <visp/vpMbEdgeTracker.h>
 #include <visp/vpImage.h>
+#include <visp/vpImageIo.h>
 #include <visp/vpHomogeneousMatrix.h>
 #include <visp/vpCameraParameters.h>
+#include <visp/vpDisplayX.h>
 
 int main()
 {
   vpMbEdgeTracker tracker; // Create a model based tracker.
   vpImage<unsigned char> I;
-  vpHomogeneousMatrix cMo; // Pose computed using the tracker.
+  vpHomogeneousMatrix cMo; // Pose used to display the model. 
   vpCameraParameters cam;
+  
+  // Acquire an image
+  vpImageIo::readPGM(I, "cube.pgm");
+  
+#if defined VISP_HAVE_X11
+  vpDisplayX display;
+  display.init(I,100,100,"Mb Edge Tracker");
+#endif
 
-  //acquire an image
-
-  // Get the cMo from a known pose or a 'server' in a server/client configuration
-
+#if defined VISP_HAVE_XML2
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
+#endif
   tracker.getCameraParameters(cam); // Get the camera parameters used by the tracker (from the configuration file).
-  tracker.loadModel("cube.wrl"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
+  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
 
   while(true){
     // acquire a new image
     // Get the pose using any method
-    tracker.display(I, cMo, cam, vpColor::darkRed, 1);// display the model at the given pose.
+    vpDisplay::display(I);
+    tracker.display(I, cMo, cam, vpColor::darkRed, 1, true); // Display the model at the computed pose.
+    vpDisplay::flush(I);
   }
+  
   // Cleanup memory allocated by xml library used to parse the xml config file in vpMbEdgeTracker::loadConfigFile()
   vpXmlParser::cleanup();
 
@@ -240,7 +264,7 @@ int main()
 
 */
 
-class VISP_EXPORT vpMbEdgeTracker: public vpMbTracker
+class VISP_EXPORT vpMbEdgeTracker: virtual public vpMbTracker
 {
   protected :
     
@@ -267,13 +291,12 @@ class VISP_EXPORT vpMbEdgeTracker: public vpMbTracker
     
     //! Index of the polygon to add, and total number of polygon extracted so far. Cannot be unsigned because the default index of a polygon is -1.
     int index_polygon;
+    
     //! Set of faces describing the object. 
-    vpMbtHiddenFaces faces;
+    vpMbHiddenFaces<vpMbtPolygon> faces;
+    
     //! Number of polygon (face) currently visible. 
     unsigned int nbvisiblepolygone;
-    
-    //! If true, the moving edges are displayed during the track() method. 
-    bool displayMe;
     
     //! Percentage of good points over total number of points below which tracking is supposed to have failed.
     double percentageGdPt;
@@ -286,74 +309,49 @@ class VISP_EXPORT vpMbEdgeTracker: public vpMbTracker
     
     //! Current scale level used. This attribute must not be modified outsied of the downScale() and upScale() methods, as it used to specify to some methods which set of distanceLine use. 
     unsigned int scaleLevel;
+    
+    //! Use Ogre3d for visibility tests
+    bool useOgre;
   
- public:
+    //! Angle used to detect a face apparition
+    double angleAppears;
+  
+    //! Angle used to detect a face disparition
+    double angleDisappears;
+  
+public:
   
   vpMbEdgeTracker(); 
   virtual ~vpMbEdgeTracker();
   
-  /*!
-    Set the value of the gain used to compute the control law.
-    
-    \param lambda : the desired value for the gain.
-  */
-  inline void setLambda(const double lambda) {this->lambda = lambda;}
+  void display(const vpImage<unsigned char>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters &cam,
+               const vpColor& col , const unsigned int thickness=1, const bool displayFullModel = false);
+  void display(const vpImage<vpRGBa>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters &cam,
+               const vpColor& col , const unsigned int thickness=1, const bool displayFullModel = false);
   
-  void setMovingEdge(const vpMe &_me);
-  void loadConfigFile(const std::string &filename);
-  void loadConfigFile(const char* filename);
-  void loadModel(const std::string &cad_name);
-  void loadModel(const char* cad_name);
-
-private:
-	void init(const vpImage<unsigned char>& I);
-	
-public:
-  void track(const vpImage<unsigned char> &I);
-  void display(const vpImage<unsigned char>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters &cam, const vpColor& col , const unsigned int l=1, const bool displayFullModel = false);
-  void display(const vpImage<vpRGBa>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters &cam, const vpColor& col , const unsigned int l=1, const bool displayFullModel = false);
-  void resetTracker();
-  void reInitModel(const vpImage<unsigned char>& I, const char* cad_name, const vpHomogeneousMatrix& _cMo);
-   
-  /*!
-    Enable to display the points along the line with a color corresponding to their state.
-    
-    - If green : The vpMeSite is a good point.
-    - If blue : The point is removed because of the vpMeSite tracking phase (constrast problem).
-    - If purple : The point is removed because of the vpMeSite tracking phase (threshold problem).
-    - If red : The point is removed because of the robust method in the virtual visual servoing.
-    
-    \param displayMe : set it to true to display the points.
-  */
-  void setDisplayMovingEdges(const bool displayMe) {this->displayMe = displayMe;}
+  /*! Return the angle used to test polygons apparition. */
+  virtual inline double getAngleAppear() { return angleAppears; }   
   
-  /*!
-    Set the first threshold used to check if the tracking failed. It corresponds to the percentage of good point which is necessary.
-    
-    The condition which has to be be satisfied is the following : \f$ nbGoodPoint > threshold1 \times (nbGoodPoint + nbBadPoint)\f$.
-    
-    The threshold is ideally between 0 and 1.
-    
-    \param threshold1 : The new value of the threshold. 
-  */
-  void setFirstThreshold(const double  threshold1) {percentageGdPt = threshold1;}
+  /*! Return the angle used to test polygons disparition. */
+  virtual inline double getAngleDisappear() { return angleDisappears; } 
+  
+  /*! Return a reference to the faces structure. */
+  vpMbHiddenFaces<vpMbtPolygon> & getFaces() { return faces;}
   double getFirstThreshold() { return percentageGdPt;}
-
-
+  
+  void getLline(std::list<vpMbtDistanceLine *>& linesList, const unsigned int level = 0);
+  void getLcylinder(std::list<vpMbtDistanceCylinder *>& cylindersList, const unsigned int level = 0);
+  
   /*!
     Get the moving edge parameters.
     
     \return an instance of the moving edge parameters used by the tracker.
   */
-  inline void getMovingEdge(vpMe &_me ) { _me = this->me;}
+  inline void getMovingEdge(vpMe &me ) { me = this->me;}
   
-  unsigned int getNbPoints(const unsigned int _level=0);
-  vpMbtPolygon* getPolygon(const unsigned int _index); 
+  unsigned int getNbPoints(const unsigned int level=0);
   unsigned int getNbPolygon();
-  void getLline(std::list<vpMbtDistanceLine *>& linesList, const unsigned int _level = 0);
-  void getLcylinder(std::list<vpMbtDistanceCylinder *>& cylindersList, const unsigned int _level = 0);
-  
-  void setScales(const std::vector<bool>& _scales);
+  vpMbtPolygon* getPolygon(const unsigned int index);
   
   /*!
     Return the scales levels used for the tracking. 
@@ -361,17 +359,50 @@ public:
     \return The scales levels used for the tracking. 
   */
   std::vector<bool> getScales() const {return scales;}
+  
+  void loadConfigFile(const std::string &configFile);
+  void loadConfigFile(const char* configFile);
+  void loadModel(const std::string &cad_name);
+  void loadModel(const char* cad_name);  
+  
+  void reInitModel(const vpImage<unsigned char>& I, const char* cad_name, const vpHomogeneousMatrix& cMo);
+  void resetTracker();
+  
+  /*!
+    Set the angle used to test polygons apparition.
+    If the angle between the normal of the polygon and the line going
+    from the camera to the polygon center has a value lower than
+    this parameter, the polygon is considered as appearing.
+    The polygon will then be tracked.
 
+    \warning This angle will only be used when setOgreVisibilityTest(true)
+    is called.
 
+    \param a : new angle in radian.
+  */
+  virtual inline  void setAngleAppear(const double &a) { angleAppears = a; }   
+  
+  /*!
+    Set the angle used to test polygons disparition.
+    If the angle between the normal of the polygon and the line going
+    from the camera to the polygon center has a value greater than
+    this parameter, the polygon is considered as disappearing.
+    The tracking of the polygon will then be stopped.
 
+    \warning This angle will only be used when setOgreVisibilityTest(true)
+    is called.
+
+    \param a : new angle in radian.
+  */
+  virtual inline void setAngleDisappear(const double &a) { angleDisappears = a; }
+  
   /*!
     Set the camera parameters.
 
-    \param _cam : the new camera parameters
+    \param cam : the new camera parameters
   */
-  virtual void setCameraParameters(const vpCameraParameters& _cam) {
-    this->cam = _cam; 
-    cameraInitialised = true;
+  virtual void setCameraParameters(const vpCameraParameters& cam) {
+    this->cam = cam;
 
     for (unsigned int i = 0; i < scales.size(); i += 1){
       if(scales[i]){
@@ -385,57 +416,69 @@ public:
       }
     }
   }
+  
+  /*!
+    Enable to display the points along the line with a color corresponding to their state.
+    
+    - If green : The vpMeSite is a good point.
+    - If blue : The point is removed because of the vpMeSite tracking phase (constrast problem).
+    - If purple : The point is removed because of the vpMeSite tracking phase (threshold problem).
+    - If red : The point is removed because of the robust method in the virtual visual servoing.
+    
+    \param displayMe : set it to true to display the points.
+  */
+  void setDisplayMovingEdges(const bool displayMe) {displayFeatures = displayMe;}
+  
+  /*!
+    Set the first threshold used to check if the tracking failed. It corresponds to the percentage of good point which is necessary.
+    
+    The condition which has to be be satisfied is the following : \f$ nbGoodPoint > threshold1 \times (nbGoodPoint + nbBadPoint)\f$.
+    
+    The threshold is ideally between 0 and 1.
+    
+    \param threshold1 : The new value of the threshold. 
+  */
+  void setFirstThreshold(const double  threshold1) {percentageGdPt = threshold1;}
+  
+  /*!
+    Set the value of the gain used to compute the control law.
+    
+    \param lambda : the desired value for the gain.
+  */
+  inline void setLambda(const double lambda) {this->lambda = lambda;}
+  
+  void setMovingEdge(const vpMe &me);
+  
+  virtual void setOgreVisibilityTest(const bool &v);
+  
+  virtual void setPose(const vpImage<unsigned char> &I, const vpHomogeneousMatrix& cdMo);
+  
+  void setScales(const std::vector<bool>& _scales);
 
- protected:
+  void track(const vpImage<unsigned char> &I);
+
+protected:
+  void addCylinder(const vpPoint &P1, const vpPoint &P2, const double r, const std::string& name = "");
+  void addLine(vpPoint &p1, vpPoint &p2, int polygone = -1, std::string name = "");
+  void addPolygon(vpMbtPolygon &p) ;
+  void cleanPyramid(std::vector<const vpImage<unsigned char>* >& _pyramid);
   void computeVVS(const vpImage<unsigned char>& _I);
+  void downScale(const unsigned int _scale);
+  void init(const vpImage<unsigned char>& I);
+  virtual void initCylinder(const vpPoint& _p1, const vpPoint _p2, const double _radius, const unsigned int _indexCylinder=0);
+  virtual void initFaceFromCorners(const std::vector<vpPoint>& _corners, const unsigned int _indexFace = -1);
   void initMovingEdge(const vpImage<unsigned char> &I, const vpHomogeneousMatrix &_cMo) ;
+  void initPyramid(const vpImage<unsigned char>& _I, std::vector<const vpImage<unsigned char>* >& _pyramid);
+  void reInitLevel(const unsigned int _lvl);
+  void reinitMovingEdge(const vpImage<unsigned char> &I, const vpHomogeneousMatrix &_cMo);
+  void removeCylinder(const std::string& name);
+  void removeLine(const std::string& name);
+  void testTracking();
   void trackMovingEdge(const vpImage<unsigned char> &I) ;
   void updateMovingEdge(const vpImage<unsigned char> &I) ;
-  void visibleFace(const vpHomogeneousMatrix &cMo, bool &newvisibleline) ;
-  void reinitMovingEdge(const vpImage<unsigned char> &I, const vpHomogeneousMatrix &_cMo);
-  void addPolygon(vpMbtPolygon &p) ;
-  void addLine(vpPoint &p1, vpPoint &p2, int polygone = -1, std::string name = "");
-  void removeLine(const std::string& name);
-  void addCylinder(const vpPoint &P1, const vpPoint &P2, const double r, const std::string& name = "");
-  void removeCylinder(const std::string& name);
-  virtual void initFaceFromCorners(const std::vector<vpPoint>& _corners, const unsigned int _indexFace = -1);
-  virtual void initCylinder(const vpPoint& _p1, const vpPoint _p2, const double _radius, const unsigned int _indexCylinder=0);
-  
-  void testTracking();
-  void initPyramid(const vpImage<unsigned char>& _I, std::vector<const vpImage<unsigned char>* >& _pyramid);
-  void cleanPyramid(std::vector<const vpImage<unsigned char>* >& _pyramid);
-  void reInitLevel(const unsigned int _lvl);
-  void downScale(const unsigned int _scale);
-  void upScale(const unsigned int _scale);
-
-  public:
-#ifdef VISP_BUILD_DEPRECATED_FUNCTIONS
-  /*!
-    @name Deprecated functions
-  */
-
-  /*!
-    \deprecated This method is deprecated. You should use
-    void getLline(std::list<vpMbtDistanceLine *> &, const unsigned int)
-    instead.
-  */
-  vp_deprecated vpList<vpMbtDistanceLine *>* getLline(const unsigned int _level = 0);
-  /*!
-    \deprecated This method is deprecated. You should use
-    void getLcylinder(std::list<vpMbtDistanceCylinder *> &, const unsigned int)
-    instead.
-  */
-  vp_deprecated vpList<vpMbtDistanceCylinder *>* getLcylinder(const unsigned int _level = 0);
-  
-  /*!
-    \deprecated This method is deprecated. You should use
-    void vpMbTracker::initFromPose(const vpImage<unsigned char>& I, const vpHomogeneousMatrix &cMo)
-    instead.
-  */
-  vp_deprecated void init(const vpImage<unsigned char>& I, const vpHomogeneousMatrix &cMo) ;
-#endif
-
-  
+  void upScale(const unsigned int _scale); 
+  void visibleFace(const vpHomogeneousMatrix &_cMo, bool &newvisibleline) ;
+  void visibleFace(const vpImage<unsigned char> &_I, const vpHomogeneousMatrix &_cMo, bool &newvisibleline) ; 
 };
 
 #endif

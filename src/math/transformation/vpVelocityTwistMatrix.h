@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpVelocityTwistMatrix.h 3630 2012-03-14 11:06:16Z fspindle $
+ * $Id: vpVelocityTwistMatrix.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

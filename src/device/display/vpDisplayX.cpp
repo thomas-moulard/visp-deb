@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpDisplayX.cpp 3590 2012-03-05 09:48:31Z ayol $
+ * $Id: vpDisplayX.cpp 4091 2013-02-04 09:48:34Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -2669,21 +2669,22 @@ vpDisplayX::displayRectangle ( const vpImagePoint &topLeft,
     XSetLineAttributes ( display, context, thickness,
                          LineSolid, CapButt, JoinBevel );
 
-    unsigned int width  = (unsigned int)vpMath::round( bottomRight.get_u() - topLeft.get_u() );
-    unsigned int height = (unsigned int)vpMath::round( bottomRight.get_v() - topLeft.get_v() );
+    unsigned int width  = (unsigned int)vpMath::round( std::fabs(bottomRight.get_u() - topLeft.get_u()) );
+    unsigned int height = (unsigned int)vpMath::round( std::fabs(bottomRight.get_v() - topLeft.get_v()) );
     if ( fill == false )
     {    
+
       XDrawRectangle ( display, pixmap, context, 
-		       vpMath::round( topLeft.get_u() ),
-		       vpMath::round( topLeft.get_v() ),
-		       width-1, height-1 );
+                       vpMath::round( topLeft.get_u() < bottomRight.get_u() ? topLeft.get_u() : bottomRight.get_u() ),
+                       vpMath::round( topLeft.get_v() < bottomRight.get_v() ? topLeft.get_v() : bottomRight.get_v() ),
+                       width > 0 ? width-1 : 1, height > 0 ? height : 1 );
     }
     else
     {  
       XFillRectangle ( display, pixmap, context, 
-		       vpMath::round( topLeft.get_u() ),
-		       vpMath::round( topLeft.get_v() ),
-		       width, height );
+                       vpMath::round( topLeft.get_u() < bottomRight.get_u() ? topLeft.get_u() : bottomRight.get_u() ),
+                       vpMath::round( topLeft.get_v() < bottomRight.get_v() ? topLeft.get_v() : bottomRight.get_v() ),
+                       width, height );
     }
   }
   else

@@ -1,9 +1,9 @@
 #############################################################################
 #
-# $Id: CMakeLists.txt 3846 2012-07-15 10:35:34Z fspindle $
+# $Id: CMakeLists.txt 4137 2013-02-14 06:56:53Z fspindle $
 #
 # This file is part of the ViSP software.
-# Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
 # 
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -45,26 +45,39 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 #-----------------------------------------------------------------------------
 # VISP version number.  An even minor number corresponds to releases.
 SET(VISP_VERSION_MAJOR "2")
-SET(VISP_VERSION_MINOR "6")
-SET(VISP_VERSION_PATCH "2")
+SET(VISP_VERSION_MINOR "7")
+SET(VISP_VERSION_PATCH "0")
 SET(VISP_VERSION "${VISP_VERSION_MAJOR}.${VISP_VERSION_MINOR}.${VISP_VERSION_PATCH}")
 # Package revision number
-SET(VISP_REVISION "1")
+SET(VISP_REVISION "2")
 
-SET(VISP_INCLUDE_DIR "${VISP_BINARY_DIR}/include/visp")
+# where are user-specific cmake modules
+set(VISP_CMAKE_MODULE_PATH ${VISP_SOURCE_DIR}/CMakeModules)
+
+find_file(GNU_INSTALL_DIRS_FROM_CMAKE ${CMAKE_ROOT}/Modules/GNUInstallDirs.cmake)
+mark_as_advanced(GNU_INSTALL_DIRS_FROM_CMAKE)
+if(GNU_INSTALL_DIRS_FROM_CMAKE)
+  include(${CMAKE_ROOT}/Modules/GNUInstallDirs.cmake)
+else()
+  include(${VISP_CMAKE_MODULE_PATH}/GNUInstallDirs.cmake)
+endif()
+
+list(APPEND CMAKE_MODULE_PATH ${VISP_CMAKE_MODULE_PATH})
+
+# the include directory we depend on
+SET(VISP_INTERN_INCLUDE_DIR ${VISP_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR})
+SET(VISP_INCLUDE_DIR "${VISP_INTERN_INCLUDE_DIR}/visp")
 SET(VISP_DOC_DIR "${VISP_BINARY_DIR}/doc")
 
 # The location in which to install VISP libraries.
-SET(LIBRARY_OUTPUT_PATH ${VISP_BINARY_DIR}/lib)
+SET(LIBRARY_OUTPUT_PATH ${VISP_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 # The location in which to install some VISP binaries.
-SET(BINARY_OUTPUT_PATH ${VISP_BINARY_DIR}/bin)
+SET(BINARY_OUTPUT_PATH ${VISP_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
-# the include directory we depend on
-SET(VISP_INTERN_INCLUDE_DIR ${VISP_BINARY_DIR}/include)
 # the third party include directories we depend on
 SET(VISP_EXTERN_INCLUDE_DIRS "")
 # the internal visp libs we depend on
-SET(VISP_INTERN_LIBRARY visp-2)
+SET(VISP_INTERN_LIBRARY visp)
 # the third party libraries we depend on
 SET(VISP_EXTERN_LIBRARIES "")
 # the compiler definitions
@@ -77,19 +90,6 @@ endif()
 
 # Get the OS
 SET(OS ${CMAKE_SYSTEM_NAME})
-
-# where are user-specific cmake modules
-set(VISP_CMAKE_MODULE_PATH ${VISP_SOURCE_DIR}/CMakeModules)
-
-find_file(GNU_INSTALL_DIRS_FROM_CMAKE ${CMAKE_ROOT}/Modules/GNUInstallDirs.cmake)
-mark_as_advanced(GNU_INSTALL_DIRS_FROM_CMAKE)
-if(GNU_INSTALL_DIRS_FROM_CMAKE)
-  include(${CMAKE_ROOT}/Modules/GNUInstallDirs.cmake)
-else()
-  include(${VISP_CMAKE_MODULE_PATH}/GNUInstallDirs.cmake)
-endif() 
-
-list(APPEND CMAKE_MODULE_PATH ${VISP_CMAKE_MODULE_PATH})
 
 SET(OGRE_HOME $ENV{OGRE_HOME})
 if(OGRE_HOME)
@@ -189,10 +189,12 @@ IF (UNIX)
   IF(RAW1394_FOUND AND RT_FOUND AND CALINUX_FOUND AND IRISA_FOUND)
     OPTION(USE_AFMA4   "Compile ViSP for Afma4 robot usage at Irisa" ON)
     OPTION(USE_AFMA6   "Compile ViSP for Afma6 robot usage at Irisa" ON)
+    OPTION(USE_VIPER650 "Compile ViSP for Viper S650 robot usage at Irisa" ON)
     OPTION(USE_VIPER850 "Compile ViSP for Viper S850 robot usage at Irisa" ON)
   ELSE(RAW1394_FOUND AND RT_FOUND AND CALINUX_FOUND AND IRISA_FOUND)
     SET(USE_AFMA4 OFF)
     SET(USE_AFMA6 OFF)
+    SET(USE_VIPER650 OFF)
     SET(USE_VIPER850 OFF)
   ENDIF(RAW1394_FOUND AND RT_FOUND AND CALINUX_FOUND AND IRISA_FOUND)
 
@@ -596,9 +598,23 @@ IF(WIN32 AND NOT CYGWIN)
     #MESSAGE("have winmm.lib")
     LIST(APPEND VISP_EXTERN_LIBRARIES "winmm.lib")
   ENDIF(HAVE_LIBWINMM)
-  IF(MSVC) #check if MSVC is the compiler and set VISP_USE_MSVC accordingly
+  if(MSVC) #check if MSVC is the compiler and set VISP_USE_MSVC accordingly
     SET(VISP_USE_MSVC TRUE)
-  ENDIF(MSVC)
+  endif()
+  # Add library ws2_32.a or ws2_32.lib for vpNetwork class
+  if(MINGW)
+    CHECK_LIBRARY_EXISTS("ws2_32.a" getch "" HAVE_LIBWS2_32) # for inet_ntoa() and socket functionalities
+    if(HAVE_LIBWS2_32)
+      #message("have ws2_32.a")
+      list(APPEND VISP_EXTERN_LIBRARIES "ws2_32.a")
+    endif()
+  else() # pure WIN32
+    CHECK_LIBRARY_EXISTS("ws2_32.lib" getch "" HAVE_LIBWS2_32) # for inet_ntoa() and socket functionalities
+    if(HAVE_LIBWS2_32)
+      #message("have ws2_32.lib")
+      list(APPEND VISP_EXTERN_LIBRARIES "ws2_32.lib")
+    endif() 
+  endif()
 ENDIF(WIN32 AND NOT CYGWIN)
 
 IF(UNIX)
@@ -707,11 +723,11 @@ IF(USE_OGRE)
 	# search names with "lib". This is the workaround.
 	set(CMAKE_FIND_LIBRARY_PREFIXES ${CMAKE_FIND_LIBRARY_PREFIXES} "")
     endif ()
-    set(Boost_ADDITIONAL_VERSIONS "1.44" "1.44.0" "1.42" "1.42.0" "1.41.0" "1.41" "1.40.0" "1.40" "1.39.0" "1.39" "1.38.0" "1.38" "1.37.0" "1.37" )
+    set(Boost_ADDITIONAL_VERSIONS "1.53.0" "1.52.0" "1.51.0" "1.50.0" "1.49.0" "1.48.0" "1.47.0" "1.46.0" "1.45.0" "1.44.0" "1.44" "1.44.0" "1.42" "1.42.0" "1.41.0" "1.41" "1.40.0" "1.40" "1.39.0" "1.39" "1.38.0" "1.38" "1.37.0" "1.37" )
     # Components that need linking (NB does not include header-only components like bind)
     set(OGRE_BOOST_COMPONENTS thread date_time)
     find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
-    mark_as_advanced(Boost_LIB_DIAGNOSTIC_DEFINITIONS)
+    mark_as_advanced(Boost_LIB_DIAGNOSTIC_DEFINITIONS Boost_DIR)
     if (NOT Boost_FOUND)
       # Try again with the other type of libs
       set(Boost_USE_STATIC_LIBS NOT ${Boost_USE_STATIC_LIBS})
@@ -739,6 +755,8 @@ IF(USE_OGRE)
     FIND_PATH(OGRE_MEDIA_DIR ../plugins.cfg
       $ENV{OGRE_MEDIA_DIR}
       /usr/share/OGRE-1.7.4/media	
+      /usr/share/OGRE-1.8.0/media	
+      /usr/share/OGRE-1.8.1/media	
     )
   endif()
 
@@ -770,7 +788,7 @@ IF(USE_OGRE)
     # case 2: install or packaging case
     #--------------
     IF(UNIX)
-      set(VISP_INSTALL_DIR_OGRE_PLUGINS "${CMAKE_INSTALL_PREFIX}/share/visp/data/ogre-simulator")
+      set(VISP_INSTALL_DIR_OGRE_PLUGINS "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/visp/data/ogre-simulator")
     ELSE()
       set(VISP_INSTALL_DIR_OGRE_PLUGINS "${CMAKE_INSTALL_PREFIX}/data/ogre-simulator")
     ENDIF()
@@ -780,7 +798,7 @@ IF(USE_OGRE)
       if(OGRE_PLUGIN_DIR_REL)
         INSTALL(FILES
           ${VISP_HAVE_OGRE_PLUGINS_PATH}/plugins.cfg
-          DESTINATION share/visp/data/ogre-simulator
+          DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/visp/data/ogre-simulator
           PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
           COMPONENT libraries
           )
@@ -788,7 +806,7 @@ IF(USE_OGRE)
       if(OGRE_PLUGIN_DIR_DBG)
         INSTALL(FILES
           ${VISP_HAVE_OGRE_PLUGINS_PATH}/plugins_d.cfg
-          DESTINATION share/visp/data/ogre-simulator
+          DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/visp/data/ogre-simulator
           PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
           COMPONENT libraries
           )
@@ -834,7 +852,7 @@ IF(USE_OGRE)
     # case 2: install or packaging case
     #--------------
     IF(UNIX)
-      set(VISP_INSTALL_DIR_OGRE_RESOURCES "${CMAKE_INSTALL_PREFIX}/share/visp/data/ogre-simulator")
+      set(VISP_INSTALL_DIR_OGRE_RESOURCES "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/visp/data/ogre-simulator")
     ELSE()
       set(VISP_INSTALL_DIR_OGRE_RESOURCES "${CMAKE_INSTALL_PREFIX}/data/ogre-simulator")
     ENDIF()
@@ -843,7 +861,7 @@ IF(USE_OGRE)
     IF(UNIX)
       INSTALL(FILES
         ${VISP_HAVE_OGRE_RESOURCES_PATH}/resources.cfg
-        DESTINATION share/visp/data/ogre-simulator
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/visp/data/ogre-simulator
         PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
         COMPONENT libraries
       )
@@ -871,6 +889,12 @@ IF(USE_OIS AND USE_OGRE)
   SET(VISP_HAVE_OIS TRUE)           # for header vpConfig.h
   LIST(APPEND VISP_EXTERN_INCLUDE_DIRS ${OIS_INCLUDE_DIR})
   LIST(APPEND VISP_EXTERN_LIBRARIES ${OIS_LIBRARIES})   
+  IF(APPLE)
+    # With Ogre 1.7.4 and 1.8.1 to be able to link with libOIS.a, Cocoa framework is requested.
+    # This is a work arround since it should come with FindOGRE.cmake
+    LIST(APPEND VISP_EXTERN_LIBRARIES "-framework Cocoa")
+  ENDIF(APPLE)
+
 ENDIF(USE_OIS AND USE_OGRE)
 
 IF(USE_COIN)
@@ -1146,6 +1170,15 @@ IF(USE_OPENCV)
     #MESSAGE("OpenCV_LIB_DIR = ${OpenCV_LIB_DIR}")
     SET(VISP_HAVE_OPENCV_VERSION "(${OpenCV_VERSION_MAJOR}*65536 + ${OpenCV_VERSION_MINOR}*256 + ${OpenCV_VERSION_PATCH})") # for ViSP-third-party.txt
     #MESSAGE("VISP_HAVE_OPENCV_VERSION = ${VISP_HAVE_OPENCV_VERSION}")
+
+    # additional check to see if opencv_nonfree module is available
+    #message("OpenCV_NONFREE_FOUND: ${OPENCV_NONFREE_FOUND}")
+    if(OPENCV_NONFREE_FOUND)
+      message(STATUS "OpenCV nonfree found")
+      set(VISP_HAVE_OPENCV_NONFREE TRUE)  # for header vpConfig.h
+    else()
+      message(STATUS "OpenCV nonfree not found")
+    endif()
   ELSE(OpenCV_FOUND)
     MESSAGE(STATUS "OpenCV not found")
     SET(VISP_HAVE_OPENCV_FOUND "no")    # for ViSP-third-party.txt
@@ -1438,6 +1471,13 @@ IF(USE_DIRECTSHOW)
   ENDIF(DIRECTSHOW_FOUND)
 ENDIF(USE_DIRECTSHOW)
 
+#----------------------------------------------------------------------
+# Specific compiler options
+#----------------------------------------------------------------------
+# default initialisation
+SET(VISP_HAVE_OPENMP_FOUND "no")
+SET(VISP_HAVE_CPP11_COMPATIBILITY_FOUND "no")
+
 IF(USE_OPENMP)
   IF(OPENMP_FOUND)
     MESSAGE(STATUS "OpenMP found")
@@ -1545,6 +1585,8 @@ SET(VISP_HAVE_AFMA4_FOUND "no")  # for ViSP-third-party.txt
 SET(VISP_HAVE_AFMA6_FOUND "no")  # for ViSP-third-party.txt
 SET(VISP_HAVE_BICLOPS_FOUND "no")  # for ViSP-third-party.txt
 SET(VISP_HAVE_PTU46_FOUND "no")  # for ViSP-third-party.txt
+SET(VISP_HAVE_PIONEER_FOUND "no")  # for ViSP-third-party.txt
+SET(VISP_HAVE_VIPER650_FOUND "no")  # for ViSP-third-party.txt
 SET(VISP_HAVE_VIPER850_FOUND "no")  # for ViSP-third-party.txt
 SET(VISP_HAVE_CYCAB_FOUND "no")  # for ViSP-third-party.txt
 
@@ -1606,7 +1648,7 @@ IF(USE_AFMA6)
   ENDIF(RAW1394_FOUND AND RT_FOUND AND CALINUX_FOUND AND IRISA_FOUND)
 ENDIF(USE_AFMA6)
 
-# library for Irisa's Viper850 cartesian robot
+# library for Irisa's Viper850 arm robot
 IF(USE_VIPER850)
   # Low level API to control the robot: 
   # libcalinux - librt - libraw1394 - libirisa
@@ -1634,6 +1676,35 @@ IF(USE_VIPER850)
     # SET(USE_VIPER850 OFF)
   ENDIF(RAW1394_FOUND AND RT_FOUND AND CALINUX_FOUND AND IRISA_FOUND)
 ENDIF(USE_VIPER850)
+
+# library for Irisa's Viper650 arm robot
+IF(USE_VIPER650)
+  # Low level API to control the robot:
+  # libcalinux - librt - libraw1394 - libirisa
+#   IF(NOT RAW1394_FOUND)
+#     FIND_PACKAGE(RAW1394)
+#   ENDIF(NOT RAW1394_FOUND)
+#   FIND_PACKAGE(RT)
+#   FIND_PACKAGE(CALINUX)
+#   FIND_PACKAGE(IRISA)
+  IF(RAW1394_FOUND AND RT_FOUND AND CALINUX_FOUND AND IRISA_FOUND)
+    MESSAGE(STATUS "Viper650 found")
+    SET(VISP_HAVE_VIPER650 TRUE) # for header vpConfig.h
+    SET(VISP_HAVE_VIPER650_FOUND "yes")  # for ViSP-third-party.txt
+    LIST(APPEND VISP_EXTERN_INCLUDE_DIRS ${RAW1394_INCLUDE_DIRS})
+    LIST(APPEND VISP_EXTERN_INCLUDE_DIRS ${CALINUX_INCLUDE_DIRS})
+    LIST(APPEND VISP_EXTERN_INCLUDE_DIRS ${IRISA_INCLUDE_DIRS})
+    LIST(APPEND VISP_EXTERN_LIBRARIES ${IRISA_LIBRARIES})
+    LIST(APPEND VISP_EXTERN_LIBRARIES ${CALINUX_LIBRARIES})
+    LIST(APPEND VISP_EXTERN_LIBRARIES ${RAW1394_LIBRARIES})
+    LIST(APPEND VISP_EXTERN_LIBRARIES ${RT_LIBRARIES})
+  ELSE(RAW1394_FOUND AND RT_FOUND AND CALINUX_FOUND AND IRISA_FOUND)
+    MESSAGE(STATUS "Viper S650 not found")
+    MESSAGE("Viper S650 robot requested but not found. Turn off USE_VIPER650 option!")
+    SET(VISP_HAVE_VIPER650_FOUND "no")  # for ViSP-third-party.txt
+    # SET(USE_VIPER650 OFF)
+  ENDIF(RAW1394_FOUND AND RT_FOUND AND CALINUX_FOUND AND IRISA_FOUND)
+ENDIF(USE_VIPER650)
 
 # library for Biclops pan-tilt head
 IF(USE_BICLOPS)
@@ -1832,14 +1903,14 @@ INCLUDE(${VISP_CMAKE_MODULE_PATH}/GenerateConfigScript.cmake)
 # install rule for visp-config shell script
 IF (UNIX)
   INSTALL(FILES ${BINARY_OUTPUT_PATH}/visp-config
-    DESTINATION bin
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
     PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
     OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE
     OWNER_WRITE
     COMPONENT libraries)
 ELSE(UNIX)
   INSTALL(FILES ${BINARY_OUTPUT_PATH}/visp-config.bat
-    DESTINATION bin
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
     PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
     OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE
     OWNER_WRITE
@@ -1938,7 +2009,7 @@ CONFIGURE_FILE(${VISP_SOURCE_DIR}/ViSP-third-party.txt.cmake
 
 set(VISP_ROOT_DIR_CONFIGCMAKE "${CMAKE_INSTALL_PREFIX}")
 IF(UNIX)
-  set(VISP_ROOT_DIR_CMAKE_CONFIGCMAKE "${CMAKE_INSTALL_PREFIX}/share/visp")
+  set(VISP_ROOT_DIR_CMAKE_CONFIGCMAKE "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/visp")
 ELSE()
   set(VISP_ROOT_DIR_CMAKE_CONFIGCMAKE "${CMAKE_INSTALL_PREFIX}")
 ENDIF()
@@ -1982,10 +2053,31 @@ EXPORT_LIBRARY_DEPENDENCIES(
 
 # Install vpConfig.h that may differ from the one in include/visp
 INSTALL(FILES ${VISP_BINARY_DIR}/install/vpConfig.h
-  DESTINATION include/visp
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/visp
   PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
   COMPONENT headers
   )
+
+# Create and install visp-config.1.gz man page
+if(UNIX)
+  FIND_PROGRAM(GZIP gzip)
+  file(MAKE_DIRECTORY ${VISP_BINARY_DIR}/doc/man/man1)
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${VISP_BINARY_DIR}/doc/man/man1/visp-config.1.gz
+    COMMAND ${GZIP} --best -c ${CMAKE_CURRENT_SOURCE_DIR}/doc/man/man1/visp-config.1 > ${VISP_BINARY_DIR}/doc/man/man1/visp-config.1.gz
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/doc/man/man1/visp-config.1
+  )
+  ADD_CUSTOM_TARGET(man ALL
+    DEPENDS ${VISP_BINARY_DIR}/doc/man/man1/visp-config.1.gz
+  )
+  INSTALL(FILES
+    ${VISP_BINARY_DIR}/doc/man/man1/visp-config.1.gz
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/man/man1
+    PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
+    COMPONENT libraries
+  )
+  MARK_AS_ADVANCED(GZIP)
+endif()
 
 # Install the packaging files for use by FIND_PACKAGE(VISP) in user projects
 # install rule for vpConfig.h:
@@ -1998,14 +2090,14 @@ IF(UNIX)
     ${VISP_BINARY_DIR}/install/VISPBuildSettings.cmake
     ${VISP_BINARY_DIR}/install/VISPLibraryDepends.cmake
     ${VISP_BINARY_DIR}/ViSP-third-party.txt
-    DESTINATION share/visp
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/visp
     PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
     COMPONENT libraries
   )
   foreach(SCENE ${WIREFRAME_SCENES})
     INSTALL(FILES 
       "${VISP_SOURCE_DIR}/src/simulator/wireframe-simulator/scene/${SCENE}"
-      DESTINATION share/visp/data/wireframe-simulator
+      DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/visp/data/wireframe-simulator
       PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
       COMPONENT libraries
     )
@@ -2013,7 +2105,7 @@ IF(UNIX)
   foreach(SCENE ${ROBOT_ARMS_SCENES})
     INSTALL(FILES 
       "${VISP_SOURCE_DIR}/src/robot/simulator-robot/arms/${SCENE}"
-      DESTINATION share/visp/data/robot-simulator
+      DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/visp/data/robot-simulator
       PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
       COMPONENT libraries
     )

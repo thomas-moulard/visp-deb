@@ -1,9 +1,9 @@
 /****************************************************************************
  *
- * $Id: vpMbtXmlParser.h 3530 2012-01-03 10:52:12Z fspindle $
+ * $Id: vpMbtXmlParser.h 4056 2013-01-05 13:04:42Z fspindle $
  *
  * This file is part of the ViSP software.
- * Copyright (C) 2005 - 2012 by INRIA. All rights reserved.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
  * 
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,8 +46,6 @@
  * \brief Parse an Xml file to extract configuration parameters of a mbtConfig object.
 */
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 #ifndef vpMbtXmlParser_HH
 #define vpMbtXmlParser_HH
 
@@ -65,6 +63,7 @@
 
 /*!
   \class vpMbtXmlParser
+  \brief Parse an Xml file to extract configuration parameters of a mbtConfig object.
   \ingroup ModelBasedTracking
 
   Data parser for the model based tracker.
@@ -77,6 +76,10 @@ protected:
   vpMe m_ecm;
   //! Camera parameters.
   vpCameraParameters cam;
+  //! Angle to determine if a face appeared
+  double angleAppear;
+  //! Angle to determine if a face disappeared
+  double angleDisappear;
     
   typedef enum{
     conf,
@@ -93,6 +96,9 @@ protected:
     sample,
     step,
     nb_sample,
+    face,
+    angle_appear,
+    angle_disappear,
     camera,
     height,
     width,
@@ -108,27 +114,57 @@ public:
 	vpMbtXmlParser();
 	virtual ~vpMbtXmlParser();
 
+  /*!
+    Get the angle to determine if a face appeared.
+
+    \return angleAppear
+  */
+  inline double getAngleAppear() const {return angleAppear;}
+  
+  /*!
+    Get the angle to determine if a face disappeared.
+
+    \return angleDisappear
+  */
+  inline double getAngleDisappear() const {return angleDisappear;}
+  
+  void getCameraParameters(vpCameraParameters& _cam) const { _cam = this->cam;}
+  void getMe(vpMe& _ecm) const { _ecm = this->m_ecm;}
+  
 	void parse(const char * filename);
 
-	void readMainClass(xmlDocPtr doc, xmlNodePtr node);
-	void writeMainClass(xmlNodePtr node);
+  void readMainClass(xmlDocPtr doc, xmlNodePtr node);
+	void read_ecm (xmlDocPtr doc, xmlNodePtr node);
+	void read_sample (xmlDocPtr doc, xmlNodePtr node);
+	void read_camera (xmlDocPtr doc, xmlNodePtr node);
+	void read_mask (xmlDocPtr doc, xmlNodePtr node);
+	void read_range (xmlDocPtr doc, xmlNodePtr node);
+	void read_contrast (xmlDocPtr doc, xmlNodePtr node);
+  void read_face(xmlDocPtr doc, xmlNodePtr node);
+  
+  /*!
+    Set the angle to determine if a face appeared.
 
-	void lecture_ecm (xmlDocPtr doc, xmlNodePtr node);
-	void lecture_sample (xmlDocPtr doc, xmlNodePtr node);
-	void lecture_camera (xmlDocPtr doc, xmlNodePtr node);
-	void lecture_mask (xmlDocPtr doc, xmlNodePtr node);
-	void lecture_range (xmlDocPtr doc, xmlNodePtr node);
-	void lecture_contrast (xmlDocPtr doc, xmlNodePtr node);
+    \param aappear : New angleAppear
+  */
+  inline void setAngleAppear(const double &aappear) {angleAppear = aappear;}
+  
+  /*!
+    Set the angle to determine if a face disappeared.
+
+    \param adisappear : New angleDisappear
+  */
+  inline void setAngleDisappear(const double &adisappear) {angleDisappear = adisappear;}
+  
+  void setCameraParameters(const vpCameraParameters &_cam){ cam = _cam; }
+  void setMovingEdge(const vpMe &_ecm){ m_ecm = _ecm; }
 	
-	void getCameraParameters(vpCameraParameters& _cam) const { _cam = this->cam;}
-	void getMe(vpMe& _ecm) const { _ecm = this->m_ecm;}
+  void writeMainClass(xmlNodePtr node);
 	
 protected:
   void init();
 
 };
-
-#endif
 
 #endif
 
