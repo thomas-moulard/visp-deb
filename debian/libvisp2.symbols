@@ -18,6 +18,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _Z12computeThetaRdR11vpColVector12vpImagePoint@Base 2.6.2
  _Z12extractFacesP20SoVRMLIndexedFaceSetP12indexFaceSet@Base 2.6.2
  _Z12getExtensionPKc@Base 2.6.2
+ _Z13allocate_workPPd@Base 2.7.0
  _Z13eval_functioniPdS_@Base 2.6.2
  _Z13set_scene_wrlPKcP11Bound_scenef@Base 2.6.2
  _Z13vp2jlc_matrix19vpHomogeneousMatrixRA4_A4_f@Base 2.6.2
@@ -26,12 +27,21 @@ libvisp.so.2 libvisp2 #MINVER#
  _Z15findCenterPointPSt4listI12vpImagePointSaIS0_EE@Base 2.6.2
  _Z15findFirstBorderRK7vpImageIhERK12vpImagePoint@Base 2.6.2
  _Z17laFonctionSansNomd@Base 2.6.2
- _Z20naiveNearestNeighborPKfPK5CvSeqS3_@Base 2.6.2
- _Z20naiveNearestNeighborPKfiPK5CvSeqS3_@Base 2.6.2
- _Z22compareSURFDescriptorsPKfS0_di@Base 2.6.2
  _Z23compare_vpHistogramPeak15vpHistogramPeakS_@Base 2.6.2
  _Z3HLMjjPdS_S_S_R8vpMatrix@Base 2.6.2
  _Z3fcniiPdS_S_ii@Base 2.6.2
+ _Z5GEMM1ILj0EEvRKjS1_S1_RK8vpMatrixS4_RKdRS2_@Base 2.7.0
+ _Z5GEMM1ILj1EEvRKjS1_S1_RK8vpMatrixS4_RKdRS2_@Base 2.7.0
+ _Z5GEMM1ILj2EEvRKjS1_S1_RK8vpMatrixS4_RKdRS2_@Base 2.7.0
+ _Z5GEMM1ILj3EEvRKjS1_S1_RK8vpMatrixS4_RKdRS2_@Base 2.7.0
+ _Z5GEMM2ILj0EEvRKjS1_S1_RK8vpMatrixS4_RKdS4_S6_RS2_@Base 2.7.0
+ _Z5GEMM2ILj1EEvRKjS1_S1_RK8vpMatrixS4_RKdS4_S6_RS2_@Base 2.7.0
+ _Z5GEMM2ILj2EEvRKjS1_S1_RK8vpMatrixS4_RKdS4_S6_RS2_@Base 2.7.0
+ _Z5GEMM2ILj3EEvRKjS1_S1_RK8vpMatrixS4_RKdS4_S6_RS2_@Base 2.7.0
+ _Z5GEMM2ILj4EEvRKjS1_S1_RK8vpMatrixS4_RKdS4_S6_RS2_@Base 2.7.0
+ _Z5GEMM2ILj5EEvRKjS1_S1_RK8vpMatrixS4_RKdS4_S6_RS2_@Base 2.7.0
+ _Z5GEMM2ILj6EEvRKjS1_S1_RK8vpMatrixS4_RKdS4_S6_RS2_@Base 2.7.0
+ _Z5GEMM2ILj7EEvRKjS1_S1_RK8vpMatrixS4_RKdS4_S6_RS2_@Base 2.7.0
  _Z5HLM2DjR8vpMatrixS0_S0_@Base 2.6.2
  _Z5HLM3DjR8vpMatrixS0_S0_@Base 2.6.2
  _Z5enormPKdi@Base 2.6.2
@@ -41,10 +51,17 @@ libvisp.so.2 libvisp2 #MINVER#
  _Z6lmder1PFviiPdS_S_iiEiiS_S_S_idPiS2_iS_@Base 2.6.2
  _Z6pythagdd@Base 2.6.2
  _Z6qrsolviPdiPiS_S_S_S_S_@Base 2.6.2
+ _Z7vpTGEMMILj0EEvRK8vpMatrixS2_RKdS2_S4_RS0_@Base 2.7.0
+ _Z7vpTGEMMILj1EEvRK8vpMatrixS2_RKdS2_S4_RS0_@Base 2.7.0
+ _Z7vpTGEMMILj2EEvRK8vpMatrixS2_RKdS2_S4_RS0_@Base 2.7.0
+ _Z7vpTGEMMILj3EEvRK8vpMatrixS2_RKdS2_S4_RS0_@Base 2.7.0
+ _Z7vpTGEMMILj4EEvRK8vpMatrixS2_RKdS2_S4_RS0_@Base 2.7.0
+ _Z7vpTGEMMILj5EEvRK8vpMatrixS2_RKdS2_S4_RS0_@Base 2.7.0
+ _Z7vpTGEMMILj6EEvRK8vpMatrixS2_RKdS2_S4_RS0_@Base 2.7.0
+ _Z7vpTGEMMILj7EEvRK8vpMatrixS2_RKdS2_S4_RS0_@Base 2.7.0
  _Z8subblockRK8vpMatrixjj@Base 2.6.2
  _Z9buildLineR7vpPointS0_S0_S0_R6vpLine@Base 2.6.2
  _Z9findAngleRK7vpImageIhERK12vpImagePointP4vpMeRdS8_@Base 2.6.2
- _Z9findPairsPK5CvSeqS1_S1_S1_RSt6vectorIiSaIiEE@Base 2.6.2
  _Z9samePointRK7vpPointS1_d@Base 2.6.2
  _Z9set_scenePKcP11Bound_scenef@Base 2.6.2
  _ZN10vpCylinder10projectionERK11vpColVectorRS0_@Base 2.6.2
@@ -134,6 +151,24 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN10vpTriangleD1Ev@Base 2.6.2
  _ZN10vpTriangleD2Ev@Base 2.6.2
  _ZN10vpTriangleaSERKS_@Base 2.6.2
+ _ZN10vpUnicycleD0Ev@Base 2.7.0
+ _ZN10vpUnicycleD1Ev@Base 2.7.0
+ _ZN10vpUnicycleD2Ev@Base 2.7.0
+ _ZN10vpViper65011defaultToolE@Base 2.7.0
+ _ZN10vpViper65019getCameraParametersER18vpCameraParametersRK7vpImageI6vpRGBaE@Base 2.7.0
+ _ZN10vpViper65019getCameraParametersER18vpCameraParametersRK7vpImageIhE@Base 2.7.0
+ _ZN10vpViper65019getCameraParametersER18vpCameraParametersRKjS3_@Base 2.7.0
+ _ZN10vpViper65025CONST_GENERIC_CAMERA_NAMEE@Base 2.7.0
+ _ZN10vpViper65030CONST_MARLIN_F033C_CAMERA_NAMEE@Base 2.7.0
+ _ZN10vpViper65030CONST_PTGREY_FLEA2_CAMERA_NAMEE@Base 2.7.0
+ _ZN10vpViper65032CONST_SCHUNK_GRIPPER_CAMERA_NAMEE@Base 2.7.0
+ _ZN10vpViper6504initENS_10vpToolTypeEN18vpCameraParameters26vpCameraParametersProjTypeE@Base 2.7.0
+ _ZN10vpViper6504initEv@Base 2.7.0
+ _ZN10vpViper650C1Ev@Base 2.7.0
+ _ZN10vpViper650C2Ev@Base 2.7.0
+ _ZN10vpViper650D0Ev@Base 2.7.0
+ _ZN10vpViper650D1Ev@Base 2.7.0
+ _ZN10vpViper650D2Ev@Base 2.7.0
  _ZN10vpViper85011defaultToolE@Base 2.6.2
  _ZN10vpViper85019getCameraParametersER18vpCameraParametersRK7vpImageI6vpRGBaE@Base 2.6.2
  _ZN10vpViper85019getCameraParametersER18vpCameraParametersRK7vpImageIhE@Base 2.6.2
@@ -155,6 +190,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN11vpColVector5stackERKS_@Base 2.6.2
  _ZN11vpColVector5stackERKS_S1_@Base 2.6.2
  _ZN11vpColVector5stackERKS_S1_RS_@Base 2.6.2
+ _ZN11vpColVector5stackERKd@Base 2.7.0
  _ZN11vpColVector6medianERKS_@Base 2.6.2
  _ZN11vpColVector7dotProdERKS_S1_@Base 2.6.2
  _ZN11vpColVector7invSortERKS_@Base 2.6.2
@@ -222,10 +258,13 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN11vpKltOpencv10addFeatureERKiRKfS3_@Base 2.6.2
  _ZN11vpKltOpencv12initTrackingEPK9_IplImageS2_@Base 2.6.2
  _ZN11vpKltOpencv14setMaxFeaturesEi@Base 2.6.2
+ _ZN11vpKltOpencv15setInitialGuessEPP12CvPoint2D32f@Base 2.7.0
  _ZN11vpKltOpencv15suppressFeatureEi@Base 2.6.2
  _ZN11vpKltOpencv5cleanEv@Base 2.6.2
  _ZN11vpKltOpencv5resetEv@Base 2.6.2
  _ZN11vpKltOpencv5trackEPK9_IplImage@Base 2.6.2
+ _ZN11vpKltOpencv7displayERK7vpImageI6vpRGBaEPK12CvPoint2D32fPKlRKi7vpColorj@Base 2.7.0
+ _ZN11vpKltOpencv7displayERK7vpImageI6vpRGBaEPK12CvPoint2D32fRKi7vpColorj@Base 2.7.0
  _ZN11vpKltOpencv7displayERK7vpImageIhE7vpColor@Base 2.6.2
  _ZN11vpKltOpencv7displayERK7vpImageIhEPK12CvPoint2D32fPKlRKi7vpColorj@Base 2.6.2
  _ZN11vpKltOpencv7displayERK7vpImageIhEPK12CvPoint2D32fRKi7vpColorj@Base 2.6.2
@@ -238,7 +277,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN11vpKltOpencvD1Ev@Base 2.6.2
  _ZN11vpKltOpencvD2Ev@Base 2.6.2
  _ZN11vpMbTracker10computeJTRERK8vpMatrixRK11vpColVectorRS0_@Base 2.6.2
- _ZN11vpMbTracker12extractFacesEP20SoVRMLIndexedFaceSet@Base 2.6.2
+ _ZN11vpMbTracker12extractFacesEP20SoVRMLIndexedFaceSetR19vpHomogeneousMatrixRj@Base 2.7.0
+ _ZN11vpMbTracker12extractGroupEP11SoVRMLGroupR19vpHomogeneousMatrixRj@Base 2.7.0
  _ZN11vpMbTracker12extractLinesEP20SoVRMLIndexedLineSet@Base 2.6.2
  _ZN11vpMbTracker12initFromPoseERK7vpImageIhERK12vpPoseVector@Base 2.6.2
  _ZN11vpMbTracker12initFromPoseERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.6.2
@@ -247,7 +287,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN11vpMbTracker13loadVRMLModelERKSs@Base 2.6.2
  _ZN11vpMbTracker14initFromPointsERK7vpImageIhERKSs@Base 2.6.2
  _ZN11vpMbTracker14initFromPointsERK7vpImageIhERKSt6vectorI12vpImagePointSaIS5_EERKS4_I7vpPointSaISA_EE@Base 2.6.2
- _ZN11vpMbTracker16extractCylindersEP20SoVRMLIndexedFaceSet@Base 2.6.2
+ _ZN11vpMbTracker16extractCylindersEP20SoVRMLIndexedFaceSetR19vpHomogeneousMatrix@Base 2.7.0
  _ZN11vpMbTracker16getGravityCenterERKSt6vectorI7vpPointSaIS1_EE@Base 2.6.2
  _ZN11vpMbTracker19setCameraParametersERK18vpCameraParameters@Base 2.6.2
  _ZN11vpMbTracker24setCovarianceComputationERKb@Base 2.6.2
@@ -297,6 +337,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN11vpMeEllipse15seekExtremitiesERK7vpImageIhE@Base 2.6.2
  _ZN11vpMeEllipse5trackERK7vpImageIhE@Base 2.6.2
  _ZN11vpMeEllipse6sampleERK7vpImageIhE@Base 2.6.2
+ _ZN11vpMeEllipse7displayERK7vpImageI6vpRGBaERK12vpImagePointRKdS9_S9_S9_S9_7vpColor@Base 2.7.0
  _ZN11vpMeEllipse7displayERK7vpImageIhE7vpColor@Base 2.6.2
  _ZN11vpMeEllipse7displayERK7vpImageIhERK12vpImagePointRKdS8_S8_S8_S8_7vpColor@Base 2.6.2
  _ZN11vpMeEllipse8reSampleERK7vpImageIhE@Base 2.6.2
@@ -567,15 +608,22 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN12vpImagePointD2Ev@Base 2.6.2
  _ZN12vpImageTools14createSubImageI6vpRGBaEEvRK7vpImageIT_EjjjjRS4_@Base 2.6.2
  _ZN12vpImageTools14createSubImageIhEEvRK7vpImageIT_ERK6vpRectRS3_@Base 2.6.2
- _ZN12vpImageTools15imageDifferenceER7vpImageIhES2_S2_@Base 2.6.2
+ _ZN12vpImageTools15imageDifferenceERK7vpImageIhES3_RS1_@Base 2.7.0
+ _ZN12vpImageTools23imageDifferenceAbsoluteERK7vpImageIhES3_RS1_@Base 2.7.0
  _ZN12vpImageTools9changeLUTER7vpImageIhEhhhh@Base 2.6.2
  _ZN12vpMbtPolygon10setNbPointEj@Base 2.6.2
  _ZN12vpMbtPolygon11changeFrameERK19vpHomogeneousMatrix@Base 2.6.2
+ _ZN12vpMbtPolygon12getMinMaxRoiERKSt6vectorI12vpImagePointSaIS1_EERiS6_S6_S6_@Base 2.7.0
+ _ZN12vpMbtPolygon14roiInsideImageERK7vpImageIhERKSt6vectorI12vpImagePointSaIS5_EE@Base 2.7.0
+ _ZN12vpMbtPolygon6getRoiERK18vpCameraParameters@Base 2.7.0
  _ZN12vpMbtPolygon8addPointEjRK7vpPoint@Base 2.6.2
- _ZN12vpMbtPolygon9isVisibleERK19vpHomogeneousMatrix@Base 2.6.2
+ _ZN12vpMbtPolygon8getPointEj@Base 2.7.0
+ _ZN12vpMbtPolygon8setIndexEi@Base 2.7.0
+ _ZN12vpMbtPolygon9isVisibleERK19vpHomogeneousMatrixRKb@Base 2.7.0
  _ZN12vpMbtPolygon9isVisibleERK19vpHomogeneousMatrixd@Base 2.6.2
  _ZN12vpMbtPolygonC1Ev@Base 2.6.2
  _ZN12vpMbtPolygonC2Ev@Base 2.6.2
+ _ZN12vpMbtPolygonD0Ev@Base 2.7.0
  _ZN12vpMbtPolygonD1Ev@Base 2.6.2
  _ZN12vpMbtPolygonD2Ev@Base 2.6.2
  _ZN12vpMomentArea4nameEv@Base 2.6.2
@@ -585,6 +633,9 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN12vpMomentAreaD0Ev@Base 2.6.2
  _ZN12vpMomentAreaD1Ev@Base 2.6.2
  _ZN12vpMomentAreaD2Ev@Base 2.6.2
+ _ZN12vpPioneerPanD0Ev@Base 2.7.0
+ _ZN12vpPioneerPanD1Ev@Base 2.7.0
+ _ZN12vpPioneerPanD2Ev@Base 2.7.0
  _ZN12vpPoseVector4initEv@Base 2.6.2
  _ZN12vpPoseVector4loadERSt14basic_ifstreamIcSt11char_traitsIcEE@Base 2.6.2
  _ZN12vpPoseVector5printEv@Base 2.6.2
@@ -670,10 +721,13 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN13vpDiskGrabber14setImageNumberEl@Base 2.6.2
  _ZN13vpDiskGrabber15setNumberOfZeroEj@Base 2.6.2
  _ZN13vpDiskGrabber4openER7vpImageI6vpRGBaE@Base 2.6.2
+ _ZN13vpDiskGrabber4openER7vpImageIfE@Base 2.7.0
  _ZN13vpDiskGrabber4openER7vpImageIhE@Base 2.6.2
  _ZN13vpDiskGrabber5closeEv@Base 2.6.2
  _ZN13vpDiskGrabber7acquireER7vpImageI6vpRGBaE@Base 2.6.2
  _ZN13vpDiskGrabber7acquireER7vpImageI6vpRGBaEl@Base 2.6.2
+ _ZN13vpDiskGrabber7acquireER7vpImageIfE@Base 2.7.0
+ _ZN13vpDiskGrabber7acquireER7vpImageIfEl@Base 2.7.0
  _ZN13vpDiskGrabber7acquireER7vpImageIhE@Base 2.6.2
  _ZN13vpDiskGrabber7acquireER7vpImageIhEl@Base 2.6.2
  _ZN13vpDiskGrabber7setStepEi@Base 2.6.2
@@ -725,16 +779,12 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN13vpMomentBasicD1Ev@Base 2.6.2
  _ZN13vpMomentBasicD2Ev@Base 2.6.2
  _ZN13vpRobotCamera11getPositionEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.6.2
- _ZN13vpRobotCamera11getPositionER11vpColVector@Base 2.6.2
  _ZN13vpRobotCamera11setPositionEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.6.2
  _ZN13vpRobotCamera11setPositionERK19vpHomogeneousMatrix@Base 2.6.2
  _ZN13vpRobotCamera11setVelocityEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.6.2
  _ZN13vpRobotCamera15getDisplacementEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.6.2
- _ZN13vpRobotCamera17setCameraVelocityERK11vpColVector@Base 2.6.2
- _ZN13vpRobotCamera20setArticularVelocityERK11vpColVector@Base 2.6.2
- _ZN13vpRobotCamera21getCameraDisplacementER11vpColVector@Base 2.6.2
- _ZN13vpRobotCamera24getArticularDisplacementER11vpColVector@Base 2.6.2
  _ZN13vpRobotCamera4initEv@Base 2.6.2
+ _ZN13vpRobotCamera7get_cVeER21vpVelocityTwistMatrix@Base 2.7.0
  _ZN13vpRobotCamera7get_eJeER8vpMatrix@Base 2.6.2
  _ZN13vpRobotCamera7get_fJeER8vpMatrix@Base 2.6.2
  _ZN13vpRobotCameraC1Ev@Base 2.6.2
@@ -787,6 +837,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN13vpV4l2GrabberD1Ev@Base 2.6.2
  _ZN13vpV4l2GrabberD2Ev@Base 2.6.2
  _ZN13vpVideoReader11setFileNameEPKc@Base 2.6.2
+ _ZN13vpVideoReader11setFileNameERKSs@Base 2.7.0
  _ZN13vpVideoReader12getExtensionERKSs@Base 2.6.2
  _ZN13vpVideoReader18findLastFrameIndexEv@Base 2.6.2
  _ZN13vpVideoReader4openER7vpImageI6vpRGBaE@Base 2.6.2
@@ -803,6 +854,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN13vpVideoReaderD1Ev@Base 2.6.2
  _ZN13vpVideoReaderD2Ev@Base 2.6.2
  _ZN13vpVideoWriter11setFileNameEPKc@Base 2.6.2
+ _ZN13vpVideoWriter11setFileNameERKSs@Base 2.7.0
  _ZN13vpVideoWriter12getExtensionERKSs@Base 2.6.2
  _ZN13vpVideoWriter4openER7vpImageI6vpRGBaE@Base 2.6.2
  _ZN13vpVideoWriter4openER7vpImageIhE@Base 2.6.2
@@ -891,7 +943,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN14vpImageConvert15computeYCbCrLUTEv@Base 2.6.2
  _ZN14vpImageConvert16YCbCrLUTcomputedE@Base 2.6.2
  _ZN14vpImageConvert19convertToJPEGBufferEPhmR7vpImageIhE@Base 2.6.2
- _ZN14vpImageConvert19convertToJPEGBufferERK7vpImageIhEPPhRmj@Base 2.6.2
+ _ZN14vpImageConvert19convertToJPEGBufferERK7vpImageIhEPPhRmi@Base 2.7.0
  _ZN14vpImageConvert5splitERK7vpImageI6vpRGBaEPS0_IhES6_S6_S6_@Base 2.6.2
  _ZN14vpImageConvert5vpCbbE@Base 2.6.2
  _ZN14vpImageConvert5vpCgbE@Base 2.6.2
@@ -931,38 +983,49 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN14vpKalmanFilterC2Ej@Base 2.6.2
  _ZN14vpKalmanFilterC2Ejjj@Base 2.6.2
  _ZN14vpKalmanFilterC2Ev@Base 2.6.2
- _ZN14vpKeyPointSurf10matchPointE6vpListIPfES0_IiE@Base 2.6.2
- _ZN14vpKeyPointSurf10matchPointERK7vpImageIhE@Base 2.6.2
- _ZN14vpKeyPointSurf10matchPointERK7vpImageIhERK12vpImagePointjj@Base 2.6.2
- _ZN14vpKeyPointSurf10matchPointERK7vpImageIhERK6vpRect@Base 2.6.2
- _ZN14vpKeyPointSurf10matchPointESt4listIPfSaIS1_EES0_IiSaIiEE@Base 2.6.2
- _ZN14vpKeyPointSurf14buildReferenceERK7vpImageIhE@Base 2.6.2
- _ZN14vpKeyPointSurf14buildReferenceERK7vpImageIhERK12vpImagePointjj@Base 2.6.2
- _ZN14vpKeyPointSurf14buildReferenceERK7vpImageIhERK6vpRect@Base 2.6.2
- _ZN14vpKeyPointSurf26getLaplacianReferencePointEi@Base 2.6.2
- _ZN14vpKeyPointSurf27getDescriptorReferencePointEi@Base 2.6.2
- _ZN14vpKeyPointSurf32getDescriptorParamReferencePointEiRiRf@Base 2.6.2
- _ZN14vpKeyPointSurf4initEv@Base 2.6.2
- _ZN14vpKeyPointSurf7displayERK7vpImageIhES3_j@Base 2.6.2
- _ZN14vpKeyPointSurf7displayERK7vpImageIhEjRK7vpColor@Base 2.6.2
- _ZN14vpKeyPointSurfC1Ev@Base 2.6.2
- _ZN14vpKeyPointSurfC2Ev@Base 2.6.2
- _ZN14vpKeyPointSurfD0Ev@Base 2.6.2
- _ZN14vpKeyPointSurfD1Ev@Base 2.6.2
- _ZN14vpKeyPointSurfD2Ev@Base 2.6.2
  _ZN14vpLaserScannerD0Ev@Base 2.6.2
  _ZN14vpLaserScannerD1Ev@Base 2.6.2
  _ZN14vpLaserScannerD2Ev@Base 2.6.2
- _ZN14vpMbtXmlParser11lecture_ecmEP7_xmlDocP8_xmlNode@Base 2.6.2
- _ZN14vpMbtXmlParser12lecture_maskEP7_xmlDocP8_xmlNode@Base 2.6.2
- _ZN14vpMbtXmlParser13lecture_rangeEP7_xmlDocP8_xmlNode@Base 2.6.2
+ _ZN14vpMbKltTracker10computeVVSERKjR11vpColVector@Base 2.7.0
+ _ZN14vpMbKltTracker11preTrackingERK7vpImageIhERjS4_@Base 2.7.0
+ _ZN14vpMbKltTracker12initCylinderERK7vpPointS0_dj@Base 2.7.0
+ _ZN14vpMbKltTracker12postTrackingERK7vpImageIhER11vpColVector@Base 2.7.0
+ _ZN14vpMbKltTracker12resetTrackerEv@Base 2.7.0
+ _ZN14vpMbKltTracker12setKltOpencvERK11vpKltOpencv@Base 2.7.0
+ _ZN14vpMbKltTracker12testTrackingEv@Base 2.7.0
+ _ZN14vpMbKltTracker14getAngleAppearEv@Base 2.7.0
+ _ZN14vpMbKltTracker14loadConfigFileEPKc@Base 2.7.0
+ _ZN14vpMbKltTracker14loadConfigFileERKSs@Base 2.7.0
+ _ZN14vpMbKltTracker14setAngleAppearERKd@Base 2.7.0
+ _ZN14vpMbKltTracker17getAngleDisappearEv@Base 2.7.0
+ _ZN14vpMbKltTracker17getKltImagePointsEv@Base 2.7.0
+ _ZN14vpMbKltTracker17setAngleDisappearERKd@Base 2.7.0
+ _ZN14vpMbKltTracker19initFaceFromCornersERKSt6vectorI7vpPointSaIS1_EEj@Base 2.7.0
+ _ZN14vpMbKltTracker19setCameraParametersERK18vpCameraParameters@Base 2.7.0
+ _ZN14vpMbKltTracker21setOgreVisibilityTestERKb@Base 2.7.0
+ _ZN14vpMbKltTracker23getKltImagePointsWithIdEv@Base 2.7.0
+ _ZN14vpMbKltTracker4initERK7vpImageIhE@Base 2.7.0
+ _ZN14vpMbKltTracker5trackERK7vpImageIhE@Base 2.7.0
+ _ZN14vpMbKltTracker6reinitERK7vpImageIhE@Base 2.7.0
+ _ZN14vpMbKltTracker7displayERK7vpImageI6vpRGBaERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZN14vpMbKltTracker7displayERK7vpImageIhERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZN14vpMbKltTracker7setPoseERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.7.0
+ _ZN14vpMbKltTrackerC1Ev@Base 2.7.0
+ _ZN14vpMbKltTrackerC2Ev@Base 2.7.0
+ _ZN14vpMbKltTrackerD0Ev@Base 2.7.0
+ _ZN14vpMbKltTrackerD1Ev@Base 2.7.0
+ _ZN14vpMbKltTrackerD2Ev@Base 2.7.0
+ _ZN14vpMbtXmlParser10read_rangeEP7_xmlDocP8_xmlNode@Base 2.7.0
+ _ZN14vpMbtXmlParser11read_cameraEP7_xmlDocP8_xmlNode@Base 2.7.0
+ _ZN14vpMbtXmlParser11read_sampleEP7_xmlDocP8_xmlNode@Base 2.7.0
  _ZN14vpMbtXmlParser13readMainClassEP7_xmlDocP8_xmlNode@Base 2.6.2
- _ZN14vpMbtXmlParser14lecture_cameraEP7_xmlDocP8_xmlNode@Base 2.6.2
- _ZN14vpMbtXmlParser14lecture_sampleEP7_xmlDocP8_xmlNode@Base 2.6.2
+ _ZN14vpMbtXmlParser13read_contrastEP7_xmlDocP8_xmlNode@Base 2.7.0
  _ZN14vpMbtXmlParser14writeMainClassEP8_xmlNode@Base 2.6.2
- _ZN14vpMbtXmlParser16lecture_contrastEP7_xmlDocP8_xmlNode@Base 2.6.2
  _ZN14vpMbtXmlParser4initEv@Base 2.6.2
  _ZN14vpMbtXmlParser5parseEPKc@Base 2.6.2
+ _ZN14vpMbtXmlParser8read_ecmEP7_xmlDocP8_xmlNode@Base 2.7.0
+ _ZN14vpMbtXmlParser9read_faceEP7_xmlDocP8_xmlNode@Base 2.7.0
+ _ZN14vpMbtXmlParser9read_maskEP7_xmlDocP8_xmlNode@Base 2.7.0
  _ZN14vpMbtXmlParserC1Ev@Base 2.6.2
  _ZN14vpMbtXmlParserC2Ev@Base 2.6.2
  _ZN14vpMbtXmlParserD0Ev@Base 2.6.2
@@ -1168,32 +1231,36 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN15vpMbEdgeTracker11reInitLevelEj@Base 2.6.2
  _ZN15vpMbEdgeTracker11reInitModelERK7vpImageIhEPKcRK19vpHomogeneousMatrix@Base 2.6.2
  _ZN15vpMbEdgeTracker11visibleFaceERK19vpHomogeneousMatrixRb@Base 2.6.2
+ _ZN15vpMbEdgeTracker11visibleFaceERK7vpImageIhERK19vpHomogeneousMatrixRb@Base 2.7.0
  _ZN15vpMbEdgeTracker12cleanPyramidERSt6vectorIPK7vpImageIhESaIS4_EE@Base 2.6.2
  _ZN15vpMbEdgeTracker12getLcylinderERSt4listIP21vpMbtDistanceCylinderSaIS2_EEj@Base 2.6.2
- _ZN15vpMbEdgeTracker12getLcylinderEj@Base 2.6.2
  _ZN15vpMbEdgeTracker12getNbPolygonEv@Base 2.6.2
  _ZN15vpMbEdgeTracker12initCylinderERK7vpPointS0_dj@Base 2.6.2
  _ZN15vpMbEdgeTracker12resetTrackerEv@Base 2.6.2
  _ZN15vpMbEdgeTracker12testTrackingEv@Base 2.6.2
  _ZN15vpMbEdgeTracker13setMovingEdgeERK4vpMe@Base 2.6.2
+ _ZN15vpMbEdgeTracker14getAngleAppearEv@Base 2.7.0
  _ZN15vpMbEdgeTracker14initMovingEdgeERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.6.2
  _ZN15vpMbEdgeTracker14loadConfigFileEPKc@Base 2.6.2
  _ZN15vpMbEdgeTracker14loadConfigFileERKSs@Base 2.6.2
  _ZN15vpMbEdgeTracker14removeCylinderERKSs@Base 2.6.2
+ _ZN15vpMbEdgeTracker14setAngleAppearERKd@Base 2.7.0
  _ZN15vpMbEdgeTracker15trackMovingEdgeERK7vpImageIhE@Base 2.6.2
  _ZN15vpMbEdgeTracker16reinitMovingEdgeERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.6.2
  _ZN15vpMbEdgeTracker16updateMovingEdgeERK7vpImageIhE@Base 2.6.2
+ _ZN15vpMbEdgeTracker17getAngleDisappearEv@Base 2.7.0
+ _ZN15vpMbEdgeTracker17setAngleDisappearERKd@Base 2.7.0
  _ZN15vpMbEdgeTracker19initFaceFromCornersERKSt6vectorI7vpPointSaIS1_EEj@Base 2.6.2
  _ZN15vpMbEdgeTracker19setCameraParametersERK18vpCameraParameters@Base 2.6.2
+ _ZN15vpMbEdgeTracker21setOgreVisibilityTestERKb@Base 2.7.0
  _ZN15vpMbEdgeTracker4initERK7vpImageIhE@Base 2.6.2
- _ZN15vpMbEdgeTracker4initERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.6.2
  _ZN15vpMbEdgeTracker5trackERK7vpImageIhE@Base 2.6.2
  _ZN15vpMbEdgeTracker7addLineER7vpPointS1_iSs@Base 2.6.2
  _ZN15vpMbEdgeTracker7displayERK7vpImageI6vpRGBaERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.6.2
  _ZN15vpMbEdgeTracker7displayERK7vpImageIhERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.6.2
+ _ZN15vpMbEdgeTracker7setPoseERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.7.0
  _ZN15vpMbEdgeTracker7upScaleEj@Base 2.6.2
  _ZN15vpMbEdgeTracker8getLlineERSt4listIP17vpMbtDistanceLineSaIS2_EEj@Base 2.6.2
- _ZN15vpMbEdgeTracker8getLlineEj@Base 2.6.2
  _ZN15vpMbEdgeTracker9downScaleEj@Base 2.6.2
  _ZN15vpMbEdgeTracker9loadModelEPKc@Base 2.6.2
  _ZN15vpMbEdgeTracker9loadModelERKSs@Base 2.6.2
@@ -1203,6 +1270,41 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN15vpMbEdgeTrackerD0Ev@Base 2.6.2
  _ZN15vpMbEdgeTrackerD1Ev@Base 2.6.2
  _ZN15vpMbEdgeTrackerD2Ev@Base 2.6.2
+ _ZN15vpMbHiddenFacesI12vpMbtPolygonE10addPolygonEPS0_@Base 2.7.0
+ _ZN15vpMbHiddenFacesI12vpMbtPolygonE13isVisibleOgreERK19vpTranslationVectorRKj@Base 2.7.0
+ _ZN15vpMbHiddenFacesI12vpMbtPolygonE14setVisibleOgreERK19vpHomogeneousMatrixRKdS6_Rb@Base 2.7.0
+ _ZN15vpMbHiddenFacesI12vpMbtPolygonE5resetEv@Base 2.7.0
+ _ZN15vpMbHiddenFacesI12vpMbtPolygonE8initOgreE18vpCameraParameters@Base 2.7.0
+ _ZN15vpMbHiddenFacesI12vpMbtPolygonEC1Ev@Base 2.7.0
+ _ZN15vpMbHiddenFacesI12vpMbtPolygonEC2Ev@Base 2.7.0
+ _ZN15vpMbHiddenFacesI12vpMbtPolygonED1Ev@Base 2.7.0
+ _ZN15vpMbHiddenFacesI12vpMbtPolygonED2Ev@Base 2.7.0
+ _ZN15vpMbHiddenFacesI15vpMbtKltPolygonE10addPolygonEPS0_@Base 2.7.0
+ _ZN15vpMbHiddenFacesI15vpMbtKltPolygonE13isVisibleOgreERK19vpTranslationVectorRKj@Base 2.7.0
+ _ZN15vpMbHiddenFacesI15vpMbtKltPolygonE5resetEv@Base 2.7.0
+ _ZN15vpMbHiddenFacesI15vpMbtKltPolygonE8initOgreE18vpCameraParameters@Base 2.7.0
+ _ZN15vpMbHiddenFacesI15vpMbtKltPolygonEC1Ev@Base 2.7.0
+ _ZN15vpMbHiddenFacesI15vpMbtKltPolygonEC2Ev@Base 2.7.0
+ _ZN15vpMbHiddenFacesI15vpMbtKltPolygonED1Ev@Base 2.7.0
+ _ZN15vpMbHiddenFacesI15vpMbtKltPolygonED2Ev@Base 2.7.0
+ _ZN15vpMbtKltPolygon10updateMaskEP9_IplImagejj@Base 2.7.0
+ _ZN15vpMbtKltPolygon14removeOutliersERK11vpColVectorRKd@Base 2.7.0
+ _ZN15vpMbtKltPolygon16compute_1_over_ZEdd@Base 2.7.0
+ _ZN15vpMbtKltPolygon16displayPrimitiveERK7vpImageI6vpRGBaE@Base 2.7.0
+ _ZN15vpMbtKltPolygon16displayPrimitiveERK7vpImageIhE@Base 2.7.0
+ _ZN15vpMbtKltPolygon16isTrackedFeatureEi@Base 2.7.0
+ _ZN15vpMbtKltPolygon17computeHomographyERK19vpHomogeneousMatrixR12vpHomography@Base 2.7.0
+ _ZN15vpMbtKltPolygon19setCameraParametersERK18vpCameraParameters@Base 2.7.0
+ _ZN15vpMbtKltPolygon24computeNbDetectedCurrentERK11vpKltOpencv@Base 2.7.0
+ _ZN15vpMbtKltPolygon33computeInteractionMatrixAndResiduER11vpColVectorR8vpMatrix@Base 2.7.0
+ _ZN15vpMbtKltPolygon4initERK11vpKltOpencv@Base 2.7.0
+ _ZN15vpMbtKltPolygon8isInsideERKSt6vectorI12vpImagePointSaIS1_EEdd@Base 2.7.0
+ _ZN15vpMbtKltPolygon9intersectERK12vpImagePointS2_dddd@Base 2.7.0
+ _ZN15vpMbtKltPolygonC1Ev@Base 2.7.0
+ _ZN15vpMbtKltPolygonC2Ev@Base 2.7.0
+ _ZN15vpMbtKltPolygonD0Ev@Base 2.7.0
+ _ZN15vpMbtKltPolygonD1Ev@Base 2.7.0
+ _ZN15vpMbtKltPolygonD2Ev@Base 2.7.0
  _ZN15vpOpenCVGrabber12getFramerateERd@Base 2.6.2
  _ZN15vpOpenCVGrabber12setFramerateEd@Base 2.6.2
  _ZN15vpOpenCVGrabber13setDeviceTypeEi@Base 2.6.2
@@ -1233,9 +1335,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN15vpRobotTemplate15getDisplacementEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.6.2
  _ZN15vpRobotTemplate18sendCameraVelocityERK11vpColVector@Base 2.6.2
  _ZN15vpRobotTemplate20getArticularPositionER11vpColVector@Base 2.6.2
- _ZN15vpRobotTemplate21getCameraDisplacementER11vpColVector@Base 2.6.2
  _ZN15vpRobotTemplate21sendArticularVelocityERK11vpColVector@Base 2.6.2
- _ZN15vpRobotTemplate24getArticularDisplacementER11vpColVector@Base 2.6.2
  _ZN15vpRobotTemplate4initEv@Base 2.6.2
  _ZN15vpRobotTemplate7get_eJeER8vpMatrix@Base 2.6.2
  _ZN15vpRobotTemplate7get_fJeER8vpMatrix@Base 2.6.2
@@ -1477,15 +1577,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN16vpImageSimulatorD1Ev@Base 2.6.2
  _ZN16vpImageSimulatorD2Ev@Base 2.6.2
  _ZN16vpImageSimulatoraSERKS_@Base 2.6.2
- _ZN16vpMbtHiddenFaces10addPolygonEP12vpMbtPolygon@Base 2.6.2
- _ZN16vpMbtHiddenFaces10setVisibleERK19vpHomogeneousMatrix@Base 2.6.2
- _ZN16vpMbtHiddenFaces11isAppearingEi@Base 2.6.2
- _ZN16vpMbtHiddenFaces5resetEv@Base 2.6.2
- _ZN16vpMbtHiddenFaces9isVisibleEi@Base 2.6.2
- _ZN16vpMbtHiddenFacesC1Ev@Base 2.6.2
- _ZN16vpMbtHiddenFacesC2Ev@Base 2.6.2
- _ZN16vpMbtHiddenFacesD1Ev@Base 2.6.2
- _ZN16vpMbtHiddenFacesD2Ev@Base 2.6.2
  _ZN16vpMomentCentered3getEjj@Base 2.6.2
  _ZN16vpMomentCentered4nameEv@Base 2.6.2
  _ZN16vpMomentCentered7computeEv@Base 2.6.2
@@ -1505,18 +1596,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN16vpRobotExceptionD0Ev@Base 2.6.2
  _ZN16vpRobotExceptionD1Ev@Base 2.6.2
  _ZN16vpRobotExceptionD2Ev@Base 2.6.2
- _ZN16vpRobotSimulator15getInternalViewER7vpImageI6vpRGBaE@Base 2.6.2
- _ZN16vpRobotSimulator15getInternalViewER7vpImageIhE@Base 2.6.2
- _ZN16vpRobotSimulator4initEv@Base 2.6.2
- _ZN16vpRobotSimulator7get_cMoEv@Base 2.6.2
- _ZN16vpRobotSimulator8launcherEPv@Base 2.6.2
- _ZN16vpRobotSimulator9initSceneEN20vpWireFrameSimulator13vpSceneObjectE@Base 2.6.2
- _ZN16vpRobotSimulator9initSceneEN20vpWireFrameSimulator13vpSceneObjectENS0_20vpSceneDesiredObjectE@Base 2.6.2
- _ZN16vpRobotSimulator9initSceneEPKc@Base 2.6.2
- _ZN16vpRobotSimulator9initSceneEPKcS1_@Base 2.6.2
- _ZN16vpRobotSimulatorC1Eb@Base 2.6.2
+ _ZN16vpRobotSimulator15setSamplingTimeERKd@Base 2.7.0
  _ZN16vpRobotSimulatorC1Ev@Base 2.6.2
- _ZN16vpRobotSimulatorC2Eb@Base 2.6.2
  _ZN16vpRobotSimulatorC2Ev@Base 2.6.2
  _ZN16vpRobotSimulatorD0Ev@Base 2.6.2
  _ZN16vpRobotSimulatorD1Ev@Base 2.6.2
@@ -1636,6 +1717,32 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN17vpMbtDistanceLineC2Ev@Base 2.6.2
  _ZN17vpMbtDistanceLineD1Ev@Base 2.6.2
  _ZN17vpMbtDistanceLineD2Ev@Base 2.6.2
+ _ZN17vpMbtKltXmlParser11read_cameraEP7_xmlDocP8_xmlNode@Base 2.7.0
+ _ZN17vpMbtKltXmlParser13readMainClassEP7_xmlDocP8_xmlNode@Base 2.7.0
+ _ZN17vpMbtKltXmlParser14writeMainClassEP8_xmlNode@Base 2.7.0
+ _ZN17vpMbtKltXmlParser4initEv@Base 2.7.0
+ _ZN17vpMbtKltXmlParser5parseEPKc@Base 2.7.0
+ _ZN17vpMbtKltXmlParser8read_kltEP7_xmlDocP8_xmlNode@Base 2.7.0
+ _ZN17vpMbtKltXmlParser9read_faceEP7_xmlDocP8_xmlNode@Base 2.7.0
+ _ZN17vpMbtKltXmlParserC1Ev@Base 2.7.0
+ _ZN17vpMbtKltXmlParserC2Ev@Base 2.7.0
+ _ZN17vpMbtKltXmlParserD0Ev@Base 2.7.0
+ _ZN17vpMbtKltXmlParserD1Ev@Base 2.7.0
+ _ZN17vpMbtKltXmlParserD2Ev@Base 2.7.0
+ _ZN17vpSimulatorCamera11getPositionEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.7.0
+ _ZN17vpSimulatorCamera11setPositionEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.7.0
+ _ZN17vpSimulatorCamera11setPositionERK19vpHomogeneousMatrix@Base 2.7.0
+ _ZN17vpSimulatorCamera11setVelocityEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.7.0
+ _ZN17vpSimulatorCamera15getDisplacementEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.7.0
+ _ZN17vpSimulatorCamera4initEv@Base 2.7.0
+ _ZN17vpSimulatorCamera7get_cVeER21vpVelocityTwistMatrix@Base 2.7.0
+ _ZN17vpSimulatorCamera7get_eJeER8vpMatrix@Base 2.7.0
+ _ZN17vpSimulatorCamera7get_fJeER8vpMatrix@Base 2.7.0
+ _ZN17vpSimulatorCameraC1Ev@Base 2.7.0
+ _ZN17vpSimulatorCameraC2Ev@Base 2.7.0
+ _ZN17vpSimulatorCameraD0Ev@Base 2.7.0
+ _ZN17vpSimulatorCameraD1Ev@Base 2.7.0
+ _ZN17vpSimulatorCameraD2Ev@Base 2.7.0
  _ZN17vpXmlParserCamera11find_cameraEP7_xmlDocP8_xmlNodeRKSsjjjj@Base 2.6.2
  _ZN17vpXmlParserCamera11read_cameraEP7_xmlDocP8_xmlNodeRKSsRKN18vpCameraParameters26vpCameraParametersProjTypeEjjjj@Base 2.6.2
  _ZN17vpXmlParserCamera11str2xmlcodeEPcRNS_13vpXmlCodeTypeE@Base 2.6.2
@@ -1727,6 +1834,35 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN18vpForceTwistMatrixD1Ev@Base 2.6.2
  _ZN18vpForceTwistMatrixD2Ev@Base 2.6.2
  _ZN18vpForceTwistMatrixaSERKS_@Base 2.6.2
+ _ZN18vpMbEdgeKltTracker10computeVVSERK7vpImageIhERKjR11vpColVectorS7_j@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker12initCylinderERK7vpPointS0_dj@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker12postTrackingERK7vpImageIhER11vpColVectorS5_j@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker12resetTrackerEv@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker12testTrackingEv@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker14getAngleAppearEv@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker14loadConfigFileEPKc@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker14loadConfigFileERKSs@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker14setAngleAppearERKd@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker14trackFirstLoopERK7vpImageIhER11vpColVectorj@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker15initMbtTrackingEj@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker15postTrackingMbtER11vpColVectorj@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker15trackSecondLoopERK7vpImageIhER8vpMatrixR11vpColVectorR19vpHomogeneousMatrixj@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker17getAngleDisappearEv@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker17setAngleDisappearERKd@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker19initFaceFromCornersERKSt6vectorI7vpPointSaIS1_EEj@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker19setCameraParametersERK18vpCameraParameters@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker21setOgreVisibilityTestERKb@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker4initERK7vpImageIhE@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker5trackERK7vpImageIhE@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker7displayERK7vpImageI6vpRGBaERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker7displayERK7vpImageIhERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker7setPoseERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.7.0
+ _ZN18vpMbEdgeKltTracker9loadModelERKSs@Base 2.7.0
+ _ZN18vpMbEdgeKltTrackerC1Ev@Base 2.7.0
+ _ZN18vpMbEdgeKltTrackerC2Ev@Base 2.7.0
+ _ZN18vpMbEdgeKltTrackerD0Ev@Base 2.7.0
+ _ZN18vpMbEdgeKltTrackerD1Ev@Base 2.7.0
+ _ZN18vpMbEdgeKltTrackerD2Ev@Base 2.7.0
  _ZN18vpMomentCInvariant4nameEv@Base 2.6.2
  _ZN18vpMomentCInvariant6printIEj@Base 2.6.2
  _ZN18vpMomentCInvariant7computeEv@Base 2.6.2
@@ -1753,6 +1889,18 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN18vpQuaternionVectormlEd@Base 2.6.2
  _ZN18vpQuaternionVectorngEv@Base 2.6.2
  _ZN18vpQuaternionVectorplERS_@Base 2.6.2
+ _ZN18vpSimulatorPioneer11getPositionEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.7.0
+ _ZN18vpSimulatorPioneer11setPositionEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.7.0
+ _ZN18vpSimulatorPioneer11setVelocityEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.7.0
+ _ZN18vpSimulatorPioneer15getDisplacementEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.7.0
+ _ZN18vpSimulatorPioneer4initEv@Base 2.7.0
+ _ZN18vpSimulatorPioneer7get_eJeER8vpMatrix@Base 2.7.0
+ _ZN18vpSimulatorPioneer7get_fJeER8vpMatrix@Base 2.7.0
+ _ZN18vpSimulatorPioneerC1Ev@Base 2.7.0
+ _ZN18vpSimulatorPioneerC2Ev@Base 2.7.0
+ _ZN18vpSimulatorPioneerD0Ev@Base 2.7.0
+ _ZN18vpSimulatorPioneerD1Ev@Base 2.7.0
+ _ZN18vpSimulatorPioneerD2Ev@Base 2.7.0
  _ZN19vpFeatureMomentArea10momentNameEv@Base 2.6.2
  _ZN19vpFeatureMomentArea19compute_interactionEv@Base 2.6.2
  _ZN19vpFeatureMomentArea4nameEv@Base 2.6.2
@@ -1775,6 +1923,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN19vpForwardProjection5trackERK19vpHomogeneousMatrix@Base 2.6.2
  _ZN19vpForwardProjection7projectERK19vpHomogeneousMatrix@Base 2.6.2
  _ZN19vpForwardProjection7projectEv@Base 2.6.2
+ _ZN19vpForwardProjectionC1ERKS_@Base 2.7.0
+ _ZN19vpForwardProjectionC2ERKS_@Base 2.7.0
  _ZN19vpForwardProjectionD0Ev@Base 2.6.2
  _ZN19vpForwardProjectionD1Ev@Base 2.6.2
  _ZN19vpForwardProjectionD2Ev@Base 2.6.2
@@ -1875,8 +2025,10 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN19vpTranslationVector5crossERKS_S1_@Base 2.6.2
  _ZN19vpTranslationVectorC1ERKS_@Base 2.6.2
  _ZN19vpTranslationVectorC1Eddd@Base 2.6.2
+ _ZN19vpTranslationVectorC1Ev@Base 2.7.0
  _ZN19vpTranslationVectorC2ERKS_@Base 2.6.2
  _ZN19vpTranslationVectorC2Eddd@Base 2.6.2
+ _ZN19vpTranslationVectorC2Ev@Base 2.7.0
  _ZN19vpTranslationVectorD0Ev@Base 2.6.2
  _ZN19vpTranslationVectorD1Ev@Base 2.6.2
  _ZN19vpTranslationVectorD2Ev@Base 2.6.2
@@ -1913,36 +2065,36 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN20vpFeatureTranslationD0Ev@Base 2.6.2
  _ZN20vpFeatureTranslationD1Ev@Base 2.6.2
  _ZN20vpFeatureTranslationD2Ev@Base 2.6.2
- _ZN20vpWireFrameSimulator10navigationER7vpImageI6vpRGBaERb@Base 2.6.2
- _ZN20vpWireFrameSimulator10navigationER7vpImageIhERb@Base 2.6.2
- _ZN20vpWireFrameSimulator13display_sceneEPA4_fR11Bound_sceneR7vpImageI6vpRGBaE7vpColor@Base 2.6.2
- _ZN20vpWireFrameSimulator13display_sceneEPA4_fR11Bound_sceneR7vpImageIhE7vpColor@Base 2.6.2
- _ZN20vpWireFrameSimulator16getExternalImageER7vpImageI6vpRGBaE19vpHomogeneousMatrix@Base 2.6.2
+ _ZN20vpWireFrameSimulator10navigationERK7vpImageI6vpRGBaERb@Base 2.7.0
+ _ZN20vpWireFrameSimulator10navigationERK7vpImageIhERb@Base 2.7.0
+ _ZN20vpWireFrameSimulator13display_sceneEPA4_fR11Bound_sceneRK7vpImageI6vpRGBaERK7vpColor@Base 2.7.0
+ _ZN20vpWireFrameSimulator13display_sceneEPA4_fR11Bound_sceneRK7vpImageIhERK7vpColor@Base 2.7.0
  _ZN20vpWireFrameSimulator16getExternalImageER7vpImageI6vpRGBaE@Base 2.6.2
- _ZN20vpWireFrameSimulator16getExternalImageER7vpImageIhE19vpHomogeneousMatrix@Base 2.6.2
+ _ZN20vpWireFrameSimulator16getExternalImageER7vpImageI6vpRGBaERK19vpHomogeneousMatrix@Base 2.7.0
  _ZN20vpWireFrameSimulator16getExternalImageER7vpImageIhE@Base 2.6.2
+ _ZN20vpWireFrameSimulator16getExternalImageER7vpImageIhERK19vpHomogeneousMatrix@Base 2.7.0
  _ZN20vpWireFrameSimulator16getInternalImageER7vpImageI6vpRGBaE@Base 2.6.2
  _ZN20vpWireFrameSimulator16getInternalImageER7vpImageIhE@Base 2.6.2
- _ZN20vpWireFrameSimulator17displayTrajectoryER7vpImageI6vpRGBaER6vpListI19vpHomogeneousMatrixES7_S5_@Base 2.6.2
- _ZN20vpWireFrameSimulator17displayTrajectoryER7vpImageI6vpRGBaERKSt4listI19vpHomogeneousMatrixSaIS5_EES9_RKS5_@Base 2.6.2
- _ZN20vpWireFrameSimulator17displayTrajectoryER7vpImageIhER6vpListI19vpHomogeneousMatrixES6_S4_@Base 2.6.2
- _ZN20vpWireFrameSimulator17displayTrajectoryER7vpImageIhERKSt4listI19vpHomogeneousMatrixSaIS4_EES8_RKS4_@Base 2.6.2
- _ZN20vpWireFrameSimulator23projectCameraTrajectoryER7vpImageI6vpRGBaE19vpHomogeneousMatrixS4_@Base 2.6.2
- _ZN20vpWireFrameSimulator23projectCameraTrajectoryER7vpImageI6vpRGBaE19vpHomogeneousMatrixS4_S4_@Base 2.6.2
- _ZN20vpWireFrameSimulator23projectCameraTrajectoryER7vpImageIhE19vpHomogeneousMatrixS3_@Base 2.6.2
- _ZN20vpWireFrameSimulator23projectCameraTrajectoryER7vpImageIhE19vpHomogeneousMatrixS3_S3_@Base 2.6.2
- _ZN20vpWireFrameSimulator9initSceneENS_13vpSceneObjectE@Base 2.6.2
- _ZN20vpWireFrameSimulator9initSceneENS_13vpSceneObjectENS_20vpSceneDesiredObjectE@Base 2.6.2
+ _ZN20vpWireFrameSimulator17displayTrajectoryERK7vpImageI6vpRGBaER6vpListI19vpHomogeneousMatrixES8_S6_@Base 2.7.0
+ _ZN20vpWireFrameSimulator17displayTrajectoryERK7vpImageI6vpRGBaERKSt4listI19vpHomogeneousMatrixSaIS6_EESA_RKS6_@Base 2.7.0
+ _ZN20vpWireFrameSimulator17displayTrajectoryERK7vpImageIhER6vpListI19vpHomogeneousMatrixES7_S5_@Base 2.7.0
+ _ZN20vpWireFrameSimulator17displayTrajectoryERK7vpImageIhERKSt4listI19vpHomogeneousMatrixSaIS5_EES9_RKS5_@Base 2.7.0
+ _ZN20vpWireFrameSimulator23projectCameraTrajectoryERK7vpImageI6vpRGBaERK19vpHomogeneousMatrixS7_@Base 2.7.0
+ _ZN20vpWireFrameSimulator23projectCameraTrajectoryERK7vpImageI6vpRGBaERK19vpHomogeneousMatrixS7_S7_@Base 2.7.0
+ _ZN20vpWireFrameSimulator23projectCameraTrajectoryERK7vpImageIhERK19vpHomogeneousMatrixS6_@Base 2.7.0
+ _ZN20vpWireFrameSimulator23projectCameraTrajectoryERK7vpImageIhERK19vpHomogeneousMatrixS6_S6_@Base 2.7.0
  _ZN20vpWireFrameSimulator9initSceneENS_13vpSceneObjectENS_20vpSceneDesiredObjectER6vpListI16vpImageSimulatorE@Base 2.6.2
- _ZN20vpWireFrameSimulator9initSceneENS_13vpSceneObjectENS_20vpSceneDesiredObjectERKSt4listI16vpImageSimulatorSaIS3_EE@Base 2.6.2
  _ZN20vpWireFrameSimulator9initSceneENS_13vpSceneObjectER6vpListI16vpImageSimulatorE@Base 2.6.2
- _ZN20vpWireFrameSimulator9initSceneENS_13vpSceneObjectERKSt4listI16vpImageSimulatorSaIS2_EE@Base 2.6.2
  _ZN20vpWireFrameSimulator9initSceneEPKc@Base 2.6.2
  _ZN20vpWireFrameSimulator9initSceneEPKcR6vpListI16vpImageSimulatorE@Base 2.6.2
  _ZN20vpWireFrameSimulator9initSceneEPKcRKSt4listI16vpImageSimulatorSaIS3_EE@Base 2.6.2
  _ZN20vpWireFrameSimulator9initSceneEPKcS1_@Base 2.6.2
  _ZN20vpWireFrameSimulator9initSceneEPKcS1_R6vpListI16vpImageSimulatorE@Base 2.6.2
  _ZN20vpWireFrameSimulator9initSceneEPKcS1_RKSt4listI16vpImageSimulatorSaIS3_EE@Base 2.6.2
+ _ZN20vpWireFrameSimulator9initSceneERKNS_13vpSceneObjectE@Base 2.7.0
+ _ZN20vpWireFrameSimulator9initSceneERKNS_13vpSceneObjectERKNS_20vpSceneDesiredObjectE@Base 2.7.0
+ _ZN20vpWireFrameSimulator9initSceneERKNS_13vpSceneObjectERKNS_20vpSceneDesiredObjectERKSt4listI16vpImageSimulatorSaIS7_EE@Base 2.7.0
+ _ZN20vpWireFrameSimulator9initSceneERKNS_13vpSceneObjectERKSt4listI16vpImageSimulatorSaIS4_EE@Base 2.7.0
  _ZN20vpWireFrameSimulatorC1Ev@Base 2.6.2
  _ZN20vpWireFrameSimulatorC2Ev@Base 2.6.2
  _ZN20vpWireFrameSimulatorD0Ev@Base 2.6.2
@@ -1979,6 +2131,18 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN21vpMomentGravityCenterD0Ev@Base 2.6.2
  _ZN21vpMomentGravityCenterD1Ev@Base 2.6.2
  _ZN21vpMomentGravityCenterD2Ev@Base 2.6.2
+ _ZN21vpSimulatorPioneerPan11getPositionEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.7.0
+ _ZN21vpSimulatorPioneerPan11setPositionEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.7.0
+ _ZN21vpSimulatorPioneerPan11setVelocityEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.7.0
+ _ZN21vpSimulatorPioneerPan15getDisplacementEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.7.0
+ _ZN21vpSimulatorPioneerPan4initEv@Base 2.7.0
+ _ZN21vpSimulatorPioneerPan7get_eJeER8vpMatrix@Base 2.7.0
+ _ZN21vpSimulatorPioneerPan7get_fJeER8vpMatrix@Base 2.7.0
+ _ZN21vpSimulatorPioneerPanC1Ev@Base 2.7.0
+ _ZN21vpSimulatorPioneerPanC2Ev@Base 2.7.0
+ _ZN21vpSimulatorPioneerPanD0Ev@Base 2.7.0
+ _ZN21vpSimulatorPioneerPanD1Ev@Base 2.7.0
+ _ZN21vpSimulatorPioneerPanD2Ev@Base 2.7.0
  _ZN21vpVelocityTwistMatrix11setIdentityEv@Base 2.6.2
  _ZN21vpVelocityTwistMatrix4initEv@Base 2.6.2
  _ZN21vpVelocityTwistMatrix9buildFromERK19vpHomogeneousMatrix@Base 2.6.2
@@ -2004,6 +2168,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN22vpCalibrationExceptionD1Ev@Base 2.6.2
  _ZN22vpCalibrationExceptionD2Ev@Base 2.6.2
  _ZN22vpMeterPixelConversion11convertLineERK18vpCameraParametersRKdS4_RdS5_@Base 2.6.2
+ _ZN22vpMeterPixelConversion12convertPointERK18vpCameraParametersRKdS4_R12vpImagePoint@Base 2.7.0
  _ZN22vpMomentAreaNormalized4nameEv@Base 2.6.2
  _ZN22vpMomentAreaNormalized7computeEv@Base 2.6.2
  _ZN22vpMomentAreaNormalizedC1Edd@Base 2.6.2
@@ -2082,6 +2247,23 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN25vpFeatureMomentCInvariantD0Ev@Base 2.6.2
  _ZN25vpFeatureMomentCInvariantD1Ev@Base 2.6.2
  _ZN25vpFeatureMomentCInvariantD2Ev@Base 2.6.2
+ _ZN25vpRobotWireFrameSimulator15getInternalViewER7vpImageI6vpRGBaE@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulator15getInternalViewER7vpImageIhE@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulator15setSamplingTimeERKd@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulator4initEv@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulator7get_cMoEv@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulator8launcherEPv@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulator9initSceneEN20vpWireFrameSimulator13vpSceneObjectE@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulator9initSceneEN20vpWireFrameSimulator13vpSceneObjectENS0_20vpSceneDesiredObjectE@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulator9initSceneEPKc@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulator9initSceneEPKcS1_@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulatorC1Eb@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulatorC1Ev@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulatorC2Eb@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulatorC2Ev@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulatorD0Ev@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulatorD1Ev@Base 2.7.0
+ _ZN25vpRobotWireFrameSimulatorD2Ev@Base 2.7.0
  _ZN28vpFeatureMomentGravityCenter10momentNameEv@Base 2.6.2
  _ZN28vpFeatureMomentGravityCenter19compute_interactionEv@Base 2.6.2
  _ZN28vpFeatureMomentGravityCenter4nameEv@Base 2.6.2
@@ -2130,12 +2312,23 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN4Ogre11MaterialPtrD0Ev@Base 2.6.2
  _ZN4Ogre11MaterialPtrD1Ev@Base 2.6.2
  _ZN4Ogre11MaterialPtrD2Ev@Base 2.6.2
+ _ZN4Ogre12STLAllocatorISsNS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEED0Ev@Base 2.7.0
+ _ZN4Ogre12STLAllocatorISsNS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEED1Ev@Base 2.7.0
+ _ZN4Ogre12STLAllocatorISsNS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEED2Ev@Base 2.7.0
+ _ZN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsNS_13_ConfigOptionEEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEED0Ev@Base 2.7.0
+ _ZN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsNS_13_ConfigOptionEEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEED1Ev@Base 2.7.0
+ _ZN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsNS_13_ConfigOptionEEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEED2Ev@Base 2.7.0
+ _ZN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsSsEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEED0Ev@Base 2.7.0
+ _ZN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsSsEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEED1Ev@Base 2.7.0
+ _ZN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsSsEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEED2Ev@Base 2.7.0
  _ZN4Ogre13FrameListener10frameEndedERKNS_10FrameEventE@Base 2.6.2
  _ZN4Ogre13FrameListener12frameStartedERKNS_10FrameEventE@Base 2.6.2
  _ZN4Ogre13FrameListener20frameRenderingQueuedERKNS_10FrameEventE@Base 2.6.2
  _ZN4Ogre13FrameListenerD0Ev@Base 2.6.2
  _ZN4Ogre13FrameListenerD1Ev@Base 2.6.2
  _ZN4Ogre13FrameListenerD2Ev@Base 2.6.2
+ _ZN4Ogre13_ConfigOptionC1ERKS0_@Base 2.7.0
+ _ZN4Ogre13_ConfigOptionC2ERKS0_@Base 2.7.0
  _ZN4Ogre14AxisAlignedBoxD1Ev@Base 2.6.2
  _ZN4Ogre14AxisAlignedBoxD2Ev@Base 2.6.2
  _ZN4Ogre19WindowEventListener11windowMovedEPNS_12RenderWindowE@Base 2.6.2
@@ -2227,6 +2420,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN5vpDot5trackERK7vpImageIhER12vpImagePoint@Base 2.6.2
  _ZN5vpDot7connexeERK7vpImageIhEjjRdS4_S4_S4_@Base 2.6.2
  _ZN5vpDot7connexeERK7vpImageIhEjjRdS4_S4_S4_RSt6vectorIbSaIbEE@Base 2.6.2
+ _ZN5vpDot7displayERK7vpImageI6vpRGBaERK12vpImagePointRKSt4listIS5_SaIS5_EE7vpColorj@Base 2.7.0
  _ZN5vpDot7displayERK7vpImageIhE7vpColorj@Base 2.6.2
  _ZN5vpDot7displayERK7vpImageIhERK12vpImagePointRKSt4listIS4_SaIS4_EE7vpColorj@Base 2.6.2
  _ZN5vpDotC1ERK12vpImagePoint@Base 2.6.2
@@ -2268,6 +2462,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN6vpDot24initEv@Base 2.6.2
  _ZN6vpDot25trackERK7vpImageIhE@Base 2.6.2
  _ZN6vpDot25trackERK7vpImageIhER12vpImagePoint@Base 2.6.2
+ _ZN6vpDot27displayERK7vpImageI6vpRGBaERK12vpImagePointRKSt4listIS5_SaIS5_EE7vpColorj@Base 2.7.0
  _ZN6vpDot27displayERK7vpImageIhE7vpColorj@Base 2.6.2
  _ZN6vpDot27displayERK7vpImageIhERK12vpImagePointRKSt4listIS4_SaIS4_EE7vpColorj@Base 2.6.2
  _ZN6vpDot27isValidERK7vpImageIhERKS_@Base 2.6.2
@@ -2311,15 +2506,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN6vpListIP14vpBasicFeatureED0Ev@Base 2.6.2
  _ZN6vpListIP14vpBasicFeatureED1Ev@Base 2.6.2
  _ZN6vpListIP14vpBasicFeatureED2Ev@Base 2.6.2
- _ZN6vpListIP17vpMbtDistanceLineED0Ev@Base 2.6.2
- _ZN6vpListIP17vpMbtDistanceLineED1Ev@Base 2.6.2
- _ZN6vpListIP17vpMbtDistanceLineED2Ev@Base 2.6.2
- _ZN6vpListIP21vpMbtDistanceCylinderED0Ev@Base 2.6.2
- _ZN6vpListIP21vpMbtDistanceCylinderED1Ev@Base 2.6.2
- _ZN6vpListIP21vpMbtDistanceCylinderED2Ev@Base 2.6.2
- _ZN6vpListIPiED0Ev@Base 2.6.2
- _ZN6vpListIPiED1Ev@Base 2.6.2
- _ZN6vpListIPiED2Ev@Base 2.6.2
  _ZN6vpListIjED0Ev@Base 2.6.2
  _ZN6vpListIjED1Ev@Base 2.6.2
  _ZN6vpListIjED2Ev@Base 2.6.2
@@ -2361,9 +2547,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN6vpPose12displayModelER7vpImageI6vpRGBaER18vpCameraParameters7vpColor@Base 2.6.2
  _ZN6vpPose12displayModelER7vpImageIhER18vpCameraParameters7vpColor@Base 2.6.2
  _ZN6vpPose13poseVirtualVSER19vpHomogeneousMatrix@Base 2.6.2
- _ZN6vpPose15computeResidualER11vpColVectorS1_S1_@Base 2.6.2
- _ZN6vpPose15computeResidualER19vpHomogeneousMatrix@Base 2.6.2
- _ZN6vpPose16poseLagrangePlanER19vpHomogeneousMatrix@Base 2.6.2
+ _ZN6vpPose15computeResidualERK11vpColVectorS2_RS0_@Base 2.7.0
+ _ZN6vpPose16poseLagrangePlanER19vpHomogeneousMatrixi@Base 2.7.0
  _ZN6vpPose17poseDementhonPlanER19vpHomogeneousMatrix@Base 2.6.2
  _ZN6vpPose17poseFromRectangleER7vpPointS1_S1_S1_dR18vpCameraParametersR19vpHomogeneousMatrix@Base 2.6.2
  _ZN6vpPose19poseLagrangeNonPlanER19vpHomogeneousMatrix@Base 2.6.2
@@ -2372,7 +2557,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN6vpPose20poseDementhonNonPlanER19vpHomogeneousMatrix@Base 2.6.2
  _ZN6vpPose21computeTransformationER11vpColVectorPjS1_@Base 2.6.2
  _ZN6vpPose23degenerateConfigurationER11vpColVectorPj@Base 2.6.2
- _ZN6vpPose24computeResidualDementhonER19vpHomogeneousMatrix@Base 2.6.2
+ _ZN6vpPose24computeResidualDementhonERK19vpHomogeneousMatrix@Base 2.7.0
  _ZN6vpPose36setDistanceToPlaneForCoplanarityTestEd@Base 2.6.2
  _ZN6vpPose4initEv@Base 2.6.2
  _ZN6vpPose6ransacERSt4listI7vpPointSaIS1_EES4_idRjS4_R19vpHomogeneousMatrixi@Base 2.6.2
@@ -2381,9 +2566,9 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN6vpPose7displayER7vpImageI6vpRGBaER19vpHomogeneousMatrixR18vpCameraParametersd7vpColor@Base 2.6.2
  _ZN6vpPose7displayER7vpImageIhER19vpHomogeneousMatrixR18vpCameraParametersd7vpColor@Base 2.6.2
  _ZN6vpPose8addPointERK7vpPoint@Base 2.6.2
- _ZN6vpPose8coplanarEv@Base 2.6.2
+ _ZN6vpPose8coplanarERi@Base 2.7.0
  _ZN6vpPose8poseLoweER19vpHomogeneousMatrix@Base 2.6.2
- _ZN6vpPose9findMatchERSt6vectorI7vpPointSaIS1_EES4_RKiRKdRjS4_R19vpHomogeneousMatrixS6_@Base 2.6.2
+ _ZN6vpPose9findMatchERSt6vectorI7vpPointSaIS1_EES4_RKjRKdRjS4_R19vpHomogeneousMatrixRKi@Base 2.7.0
  _ZN6vpPoseC1Ev@Base 2.6.2
  _ZN6vpPoseC2Ev@Base 2.6.2
  _ZN6vpPoseD0Ev@Base 2.6.2
@@ -2411,6 +2596,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN6vpTime20minTimeForUsleepCallE@Base 2.6.2
  _ZN6vpTime4waitEd@Base 2.6.2
  _ZN6vpTime4waitEdd@Base 2.6.2
+ _ZN6vpTime7sleepMsEd@Base 2.7.0
  _ZN7vpAfma411getJointMaxEv@Base 2.6.2
  _ZN7vpAfma411getJointMinEv@Base 2.6.2
  _ZN7vpAfma415get_fJe_inverseERK11vpColVectorR8vpMatrix@Base 2.6.2
@@ -2662,6 +2848,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN8vpAROgre12frameStartedERKN4Ogre10FrameEventE@Base 2.6.2
  _ZN8vpAROgre12windowClosedEPN4Ogre12RenderWindowE@Base 2.6.2
  _ZN8vpAROgre13setVisibilityERKSsb@Base 2.6.2
+ _ZN8vpAROgre14renderOneFrameERK7vpImageI6vpRGBaERK19vpHomogeneousMatrix@Base 2.7.0
+ _ZN8vpAROgre14renderOneFrameERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.7.0
  _ZN8vpAROgre16createBackgroundER7vpImageI6vpRGBaE@Base 2.6.2
  _ZN8vpAROgre16createBackgroundER7vpImageIhE@Base 2.6.2
  _ZN8vpAROgre16customframeEndedERKN4Ogre10FrameEventE@Base 2.6.2
@@ -2674,9 +2862,9 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN8vpAROgre22updateCameraProjectionEv@Base 2.6.2
  _ZN8vpAROgre23updateBackgroundTextureERK7vpImageI6vpRGBaE@Base 2.6.2
  _ZN8vpAROgre23updateBackgroundTextureERK7vpImageIhE@Base 2.6.2
- _ZN8vpAROgre4initER7vpImageI6vpRGBaEb@Base 2.6.2
- _ZN8vpAROgre4initER7vpImageIhEb@Base 2.6.2
- _ZN8vpAROgre4initEb@Base 2.6.2
+ _ZN8vpAROgre4initER7vpImageI6vpRGBaEbb@Base 2.7.0
+ _ZN8vpAROgre4initER7vpImageIhEbb@Base 2.7.0
+ _ZN8vpAROgre4initEbb@Base 2.7.0
  _ZN8vpAROgre4loadERKSsS1_@Base 2.6.2
  _ZN8vpAROgre7displayERK7vpImageI6vpRGBaERK19vpHomogeneousMatrix@Base 2.6.2
  _ZN8vpAROgre7displayERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.6.2
@@ -2706,12 +2894,12 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN8vpCircleD0Ev@Base 2.6.2
  _ZN8vpCircleD1Ev@Base 2.6.2
  _ZN8vpCircleD2Ev@Base 2.6.2
- _ZN8vpClient11connectToIPERKSsRKi@Base 2.6.2
+ _ZN8vpClient11connectToIPERKSsRKj@Base 2.7.0
  _ZN8vpClient13connectServerERN9vpNetwork10vpReceptorE@Base 2.6.2
- _ZN8vpClient17connectToHostnameERKSsRKi@Base 2.6.2
+ _ZN8vpClient17connectToHostnameERKSsRKj@Base 2.7.0
  _ZN8vpClient4stopEv@Base 2.6.2
  _ZN8vpClient5printEv@Base 2.6.2
- _ZN8vpClient9deconnectERKi@Base 2.6.2
+ _ZN8vpClient9deconnectERKj@Base 2.7.0
  _ZN8vpClientC1Ev@Base 2.6.2
  _ZN8vpClientC2Ev@Base 2.6.2
  _ZN8vpClientD0Ev@Base 2.6.2
@@ -2737,6 +2925,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN8vpFFMPEGD1Ev@Base 2.6.2
  _ZN8vpFFMPEGD2Ev@Base 2.6.2
  _ZN8vpMatrix10loadMatrixEPKcRS_bPc@Base 2.6.2
+ _ZN8vpMatrix10maplePrintERSo@Base 2.7.0
  _ZN8vpMatrix10saveMatrixEPKcRKS_bS1_@Base 2.6.2
  _ZN8vpMatrix11eigenValuesER11vpColVectorRS_@Base 2.6.2
  _ZN8vpMatrix11eigenValuesEv@Base 2.6.2
@@ -2821,9 +3010,11 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN8vpMeLine15seekExtremitiesERK7vpImageIhE@Base 2.6.2
  _ZN8vpMeLine5trackERK7vpImageIhE@Base 2.6.2
  _ZN8vpMeLine6sampleERK7vpImageIhE@Base 2.6.2
+ _ZN8vpMeLine7displayERK7vpImageI6vpRGBaERK8vpMeSiteS7_RKSt4listIS5_SaIS5_EERKdSE_SE_RK7vpColorj@Base 2.7.0
+ _ZN8vpMeLine7displayERK7vpImageI6vpRGBaERK8vpMeSiteS7_RKdS9_S9_RK7vpColorj@Base 2.7.0
  _ZN8vpMeLine7displayERK7vpImageIhE7vpColor@Base 2.6.2
- _ZN8vpMeLine7displayERK7vpImageIhERK8vpMeSiteS6_RKSt4listIS4_SaIS4_EERKdSD_SD_7vpColorj@Base 2.6.2
- _ZN8vpMeLine7displayERK7vpImageIhERK8vpMeSiteS6_RKdS8_S8_7vpColorj@Base 2.6.2
+ _ZN8vpMeLine7displayERK7vpImageIhERK8vpMeSiteS6_RKSt4listIS4_SaIS4_EERKdSD_SD_RK7vpColorj@Base 2.7.0
+ _ZN8vpMeLine7displayERK7vpImageIhERK8vpMeSiteS6_RKdS8_S8_RK7vpColorj@Base 2.7.0
  _ZN8vpMeLine8reSampleERK7vpImageIhE@Base 2.6.2
  _ZN8vpMeLineC1ERKS_@Base 2.6.2
  _ZN8vpMeLineC1Ev@Base 2.6.2
@@ -2839,6 +3030,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN8vpMeSite4initEddddi@Base 2.6.2
  _ZN8vpMeSite4initEv@Base 2.6.2
  _ZN8vpMeSite5trackERK7vpImageIhEPK4vpMeb@Base 2.6.2
+ _ZN8vpMeSite7displayERK7vpImageI6vpRGBaERKdS6_RKNS_13vpMeSiteStateE@Base 2.7.0
  _ZN8vpMeSite7displayERK7vpImageIhE@Base 2.6.2
  _ZN8vpMeSite7displayERK7vpImageIhERKdS5_RKNS_13vpMeSiteStateE@Base 2.6.2
  _ZN8vpMeSite7getSignERK7vpImageIhEi@Base 2.6.2
@@ -3113,6 +3305,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN9vpImageIo9writeJPEGERK7vpImageIhESs@Base 2.6.2
  _ZN9vpIoTools10configFileE@Base 2.6.2
  _ZN9vpIoTools10configVarsE@Base 2.6.2
+ _ZN9vpIoTools10getVersionERKSsRjS2_S2_@Base 2.7.0
  _ZN9vpIoTools11getUserNameERSs@Base 2.6.2
  _ZN9vpIoTools11getUserNameEv@Base 2.6.2
  _ZN9vpIoTools12configValuesE@Base 2.6.2
@@ -3160,6 +3353,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN9vpMeNurbs26computeFreemanChainElementERK7vpImageIhER12vpImagePointRj@Base 2.6.2
  _ZN9vpMeNurbs5trackERK7vpImageIhE@Base 2.6.2
  _ZN9vpMeNurbs6sampleERK7vpImageIhE@Base 2.6.2
+ _ZN9vpMeNurbs7displayERK7vpImageI6vpRGBaER7vpNurbs7vpColor@Base 2.7.0
  _ZN9vpMeNurbs7displayERK7vpImageIhE7vpColor@Base 2.6.2
  _ZN9vpMeNurbs7displayERK7vpImageIhER7vpNurbs7vpColor@Base 2.6.2
  _ZN9vpMeNurbs8reSampleERK7vpImageIhE@Base 2.6.2
@@ -3173,32 +3367,35 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN9vpNetwork10vpReceptorD1Ev@Base 2.6.2
  _ZN9vpNetwork10vpReceptorD2Ev@Base 2.6.2
  _ZN9vpNetwork11sendRequestER9vpRequest@Base 2.6.2
- _ZN9vpNetwork13sendRequestToER9vpRequestRKi@Base 2.6.2
+ _ZN9vpNetwork13sendRequestToER9vpRequestRKj@Base 2.7.0
  _ZN9vpNetwork14receiveRequestEv@Base 2.6.2
  _ZN9vpNetwork15_handleRequestsEv@Base 2.6.2
  _ZN9vpNetwork15_receiveRequestEv@Base 2.6.2
  _ZN9vpNetwork16getReceptorIndexEPKc@Base 2.6.2
  _ZN9vpNetwork18addDecodingRequestEP9vpRequest@Base 2.6.2
- _ZN9vpNetwork18receiveRequestFromERKi@Base 2.6.2
+ _ZN9vpNetwork18receiveRequestFromERKj@Base 2.7.0
  _ZN9vpNetwork18receiveRequestOnceEv@Base 2.6.2
  _ZN9vpNetwork19_handleFirstRequestEv@Base 2.6.2
- _ZN9vpNetwork19_receiveRequestFromERKi@Base 2.6.2
+ _ZN9vpNetwork19_receiveRequestFromERKj@Base 2.7.0
  _ZN9vpNetwork19_receiveRequestOnceEv@Base 2.6.2
  _ZN9vpNetwork20sendAndEncodeRequestER9vpRequest@Base 2.6.2
  _ZN9vpNetwork21removeDecodingRequestEPKc@Base 2.6.2
- _ZN9vpNetwork22receiveRequestOnceFromERKi@Base 2.6.2
- _ZN9vpNetwork22sendAndEncodeRequestToER9vpRequestRKi@Base 2.6.2
- _ZN9vpNetwork23_receiveRequestOnceFromERKi@Base 2.6.2
+ _ZN9vpNetwork22receiveRequestOnceFromERKj@Base 2.7.0
+ _ZN9vpNetwork22sendAndEncodeRequestToER9vpRequestRKj@Base 2.7.0
+ _ZN9vpNetwork23_receiveRequestOnceFromERKj@Base 2.7.0
  _ZN9vpNetwork23receiveAndDecodeRequestEv@Base 2.6.2
- _ZN9vpNetwork27receiveAndDecodeRequestFromERKi@Base 2.6.2
+ _ZN9vpNetwork27receiveAndDecodeRequestFromERKj@Base 2.7.0
  _ZN9vpNetwork27receiveAndDecodeRequestOnceEv@Base 2.6.2
- _ZN9vpNetwork31receiveAndDecodeRequestOnceFromERKi@Base 2.6.2
+ _ZN9vpNetwork31receiveAndDecodeRequestOnceFromERKj@Base 2.7.0
  _ZN9vpNetwork5printEPKc@Base 2.6.2
  _ZN9vpNetworkC1Ev@Base 2.6.2
  _ZN9vpNetworkC2Ev@Base 2.6.2
  _ZN9vpNetworkD0Ev@Base 2.6.2
  _ZN9vpNetworkD1Ev@Base 2.6.2
  _ZN9vpNetworkD2Ev@Base 2.6.2
+ _ZN9vpPioneerD0Ev@Base 2.7.0
+ _ZN9vpPioneerD1Ev@Base 2.7.0
+ _ZN9vpPioneerD2Ev@Base 2.7.0
  _ZN9vpPolygon10updateAreaEv@Base 2.6.2
  _ZN9vpPolygon12updateCenterEv@Base 2.6.2
  _ZN9vpPolygon17updateBoundingBoxEv@Base 2.6.2
@@ -3266,7 +3463,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNK13vpFeatureLine7displayERK18vpCameraParametersRK7vpImageIhERK7vpColorj@Base 2.6.2
  _ZNK13vpFeatureLine9duplicateEv@Base 2.6.2
  _ZNK13vpRobotCamera11getPositionER19vpHomogeneousMatrix@Base 2.6.2
- _ZNK13vpRobotCamera20getArticularPositionER11vpColVector@Base 2.6.2
  _ZNK14vpAdaptiveGain10limitValueEv@Base 2.6.2
  _ZNK14vpAdaptiveGain11value_constEd@Base 2.6.2
  _ZNK14vpAdaptiveGain16limitValue_constEv@Base 2.6.2
@@ -3350,6 +3546,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNK16vpRotationMatrixplERKS_@Base 2.6.2
  _ZNK16vpRotationVector1tEv@Base 2.6.2
  _ZNK16vpRotationVector4sizeEv@Base 2.6.2
+ _ZNK17vpSimulatorCamera11getPositionER19vpHomogeneousMatrix@Base 2.7.0
+ _ZNK18vpCameraParameters13get_K_inverseEv@Base 2.7.0
  _ZNK18vpCameraParameters5get_KEv@Base 2.6.2
  _ZNK18vpFeatureLuminance5get_ZEv@Base 2.6.2
  _ZNK18vpFeatureLuminance5printEj@Base 2.6.2
@@ -3359,6 +3557,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNK18vpForceTwistMatrixmlERK11vpColVector@Base 2.6.2
  _ZNK18vpForceTwistMatrixmlERK8vpMatrix@Base 2.6.2
  _ZNK18vpForceTwistMatrixmlERKS_@Base 2.6.2
+ _ZNK18vpSimulatorPioneer11getPositionER19vpHomogeneousMatrix@Base 2.7.0
  _ZNK19vpFeaturePointPolar5get_ZEv@Base 2.6.2
  _ZNK19vpFeaturePointPolar5printEj@Base 2.6.2
  _ZNK19vpFeaturePointPolar7displayERK18vpCameraParametersRK7vpImageI6vpRGBaERK7vpColorj@Base 2.6.2
@@ -3389,6 +3588,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNK20vpFeatureTranslation7displayERK18vpCameraParametersRK7vpImageI6vpRGBaERK7vpColorj@Base 2.6.2
  _ZNK20vpFeatureTranslation7displayERK18vpCameraParametersRK7vpImageIhERK7vpColorj@Base 2.6.2
  _ZNK20vpFeatureTranslation9duplicateEv@Base 2.6.2
+ _ZNK21vpSimulatorPioneerPan11getPositionER19vpHomogeneousMatrix@Base 2.7.0
  _ZNK21vpVelocityTwistMatrix7extractER16vpRotationMatrix@Base 2.6.2
  _ZNK21vpVelocityTwistMatrix7extractER19vpTranslationVector@Base 2.6.2
  _ZNK21vpVelocityTwistMatrix7inverseERS_@Base 2.6.2
@@ -3420,6 +3620,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNK6vpDot29isInImageERK7vpImageIhE@Base 2.6.2
  _ZNK6vpDot29isInImageERK7vpImageIhERK12vpImagePoint@Base 2.6.2
  _ZNK6vpLine9duplicateEv@Base 2.6.2
+ _ZNK6vpPose15computeResidualERK19vpHomogeneousMatrix@Base 2.7.0
  _ZNK6vpRGBagtERKS_@Base 2.6.2
  _ZNK6vpRGBaltERKS_@Base 2.6.2
  _ZNK6vpRGBamiERK11vpColVector@Base 2.6.2
@@ -3443,6 +3644,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNK8vpMatrix11getMaxValueEv@Base 2.6.2
  _ZNK8vpMatrix11getMinValueEv@Base 2.6.2
  _ZNK8vpMatrix11inverseByLUEv@Base 2.6.2
+ _ZNK8vpMatrix11inverseByQREv@Base 2.7.0
  _ZNK8vpMatrix12infinityNormEv@Base 2.6.2
  _ZNK8vpMatrix13euclideanNormEv@Base 2.6.2
  _ZNK8vpMatrix13pseudoInverseERS_R11vpColVectord@Base 2.6.2
@@ -3450,7 +3652,10 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNK8vpMatrix13pseudoInverseERS_R11vpColVectordS0_S0_S0_@Base 2.6.2
  _ZNK8vpMatrix13pseudoInverseERS_d@Base 2.6.2
  _ZNK8vpMatrix13pseudoInverseEd@Base 2.6.2
+ _ZNK8vpMatrix17inverseByCholeskyEv@Base 2.7.0
+ _ZNK8vpMatrix17inverseByQRLapackEv@Base 2.7.0
  _ZNK8vpMatrix1tEv@Base 2.6.2
+ _ZNK8vpMatrix23inverseByCholeskyLapackEv@Base 2.7.0
  _ZNK8vpMatrix3AAtERS_@Base 2.6.2
  _ZNK8vpMatrix3AAtEv@Base 2.6.2
  _ZNK8vpMatrix3AtAERS_@Base 2.6.2
@@ -3473,6 +3678,13 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNK8vpSphere9duplicateEv@Base 2.6.2
  _ZNK9vpMeNurbs12hasGoodLevelERK7vpImageIhERK12vpImagePoint@Base 2.6.2
  _ZNK9vpMeNurbs9isInImageERK7vpImageIhERK12vpImagePoint@Base 2.6.2
+ _ZNKSt6vectorI12vpImagePointSaIS0_EE12_M_check_lenEmPKc@Base 2.7.0
+ _ZNKSt6vectorI7vpPointSaIS0_EE12_M_check_lenEmPKc@Base 2.7.0
+ _ZNKSt6vectorIP12vpMbtPolygonSaIS1_EE12_M_check_lenEmPKc@Base 2.7.0
+ _ZNKSt6vectorIP15vpMbtKltPolygonSaIS1_EE12_M_check_lenEmPKc@Base 2.7.0
+ _ZNKSt6vectorIPK7vpImageIhESaIS3_EE12_M_check_lenEmPKc@Base 2.7.0
+ _ZNKSt6vectorIPN4Ogre12ManualObjectESaIS2_EE12_M_check_lenEmPKc@Base 2.7.0
+ _ZNKSt6vectorIbSaIbEE12_M_check_lenEmPKc@Base 2.7.0
  _ZNSt10_List_baseI12vpImagePointSaIS0_EE8_M_clearEv@Base 2.6.2
  _ZNSt10_List_baseI15vpHistogramPeakSaIS0_EE8_M_clearEv@Base 2.6.2
  _ZNSt10_List_baseI16vpImageSimulatorSaIS0_EE8_M_clearEv@Base 2.6.2
@@ -3485,6 +3697,10 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNSt10_List_baseIdSaIdEE8_M_clearEv@Base 2.6.2
  _ZNSt10_List_baseIiSaIiEE8_M_clearEv@Base 2.6.2
  _ZNSt10_List_baseIjSaIjEE8_M_clearEv@Base 2.6.2
+ _ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIP12vpMbtPolygonEEPT_PKS5_S8_S6_@Base 2.7.0
+ _ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIP15vpMbtKltPolygonEEPT_PKS5_S8_S6_@Base 2.7.0
+ _ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIPK7vpImageIhEEEPT_PKS7_SA_S8_@Base 2.7.0
+ _ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIPN4Ogre12ManualObjectEEEPT_PKS6_S9_S7_@Base 2.7.0
  _ZNSt12_Destroy_auxILb0EE9__destroyIPN14vpPoseFeatures5vpDuoI13vpFeatureLine6vpLineEEEEvT_S8_@Base 2.6.2
  _ZNSt12_Destroy_auxILb0EE9__destroyIPN14vpPoseFeatures5vpDuoI14vpFeaturePoint7vpPointEEEEvT_S8_@Base 2.6.2
  _ZNSt12_Destroy_auxILb0EE9__destroyIPN14vpPoseFeatures5vpDuoI16vpFeaturePoint3D7vpPointEEEEvT_S8_@Base 2.6.2
@@ -3495,26 +3711,60 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNSt12_Destroy_auxILb0EE9__destroyIPSsEEvT_S3_@Base 2.6.2
  _ZNSt12_Destroy_auxILb0EE9__destroyIPSt4listIP17vpMbtDistanceLineSaIS4_EEEEvT_S8_@Base 2.6.2
  _ZNSt12_Destroy_auxILb0EE9__destroyIPSt4listIP21vpMbtDistanceCylinderSaIS4_EEEEvT_S8_@Base 2.6.2
+ _ZNSt12_Vector_baseI12vpImagePointSaIS0_EED1Ev@Base 2.7.0
+ _ZNSt12_Vector_baseI12vpImagePointSaIS0_EED2Ev@Base 2.7.0
  _ZNSt12_Vector_baseI7vpPointSaIS0_EED1Ev@Base 2.6.2
  _ZNSt12_Vector_baseI7vpPointSaIS0_EED2Ev@Base 2.6.2
  _ZNSt12_Vector_baseI8vpMatrixSaIS0_EED1Ev@Base 2.6.2
  _ZNSt12_Vector_baseI8vpMatrixSaIS0_EED2Ev@Base 2.6.2
  _ZNSt12_Vector_baseIN2cv3MatESaIS1_EED1Ev@Base 2.6.2
  _ZNSt12_Vector_baseIN2cv3MatESaIS1_EED2Ev@Base 2.6.2
+ _ZNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implD0Ev@Base 2.7.0
+ _ZNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implD1Ev@Base 2.7.0
+ _ZNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implD2Ev@Base 2.7.0
+ _ZNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEED1Ev@Base 2.7.0
+ _ZNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEED2Ev@Base 2.7.0
+ _ZNSt14_Bit_referenceaSEb@Base 2.7.0
  _ZNSt15basic_stringbufIcSt11char_traitsIcESaIcEED0Ev@Base 2.6.2
  _ZNSt15basic_stringbufIcSt11char_traitsIcESaIcEED1Ev@Base 2.6.2
  _ZNSt15basic_stringbufIcSt11char_traitsIcESaIcEED2Ev@Base 2.6.2
+ _ZNSt20__copy_move_backwardILb0ELb0ESt26random_access_iterator_tagE13__copy_move_bIP7vpPointS4_EET0_T_S6_S5_@Base 2.7.0
+ _ZNSt20__copy_move_backwardILb0ELb0ESt26random_access_iterator_tagE13__copy_move_bIPSt4listIP17vpMbtDistanceLineSaIS5_EES8_EET0_T_SA_S9_@Base 2.7.0
+ _ZNSt20__copy_move_backwardILb0ELb0ESt26random_access_iterator_tagE13__copy_move_bIPSt4listIP21vpMbtDistanceCylinderSaIS5_EES8_EET0_T_SA_S9_@Base 2.7.0
+ _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIP7vpPointS3_EET0_T_S5_S4_@Base 2.7.0
+ _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPSt4listIP17vpMbtDistanceLineSaIS4_EES7_EET0_T_S9_S8_@Base 2.7.0
+ _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPSt4listIP21vpMbtDistanceCylinderSaIS4_EES7_EET0_T_S9_S8_@Base 2.7.0
+ _ZNSt22__uninitialized_fill_nILb0EE15__uninit_fill_nIP7vpPointmS2_EEvT_T0_RKT1_@Base 2.7.0
+ _ZNSt22__uninitialized_fill_nILb0EE15__uninit_fill_nIPSt4listIP17vpMbtDistanceLineSaIS4_EEmS6_EEvT_T0_RKT1_@Base 2.7.0
+ _ZNSt22__uninitialized_fill_nILb0EE15__uninit_fill_nIPSt4listIP21vpMbtDistanceCylinderSaIS4_EEmS6_EEvT_T0_RKT1_@Base 2.7.0
+ _ZNSt3mapISsN4Ogre13_ConfigOptionESt4lessISsENS0_12STLAllocatorISt4pairIKSsS1_ENS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEED1Ev@Base 2.7.0
+ _ZNSt3mapISsN4Ogre13_ConfigOptionESt4lessISsENS0_12STLAllocatorISt4pairIKSsS1_ENS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEED2Ev@Base 2.7.0
+ _ZNSt3mapISsSsSt4lessISsEN4Ogre12STLAllocatorISt4pairIKSsSsENS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEEixERS5_@Base 2.7.0
  _ZNSt3mapISsiSt4lessISsESaISt4pairIKSsiEEEixERS3_@Base 2.6.2
+ _ZNSt3mapIi12vpImagePointSt4lessIiESaISt4pairIKiS0_EEED1Ev@Base 2.7.0
+ _ZNSt3mapIi12vpImagePointSt4lessIiESaISt4pairIKiS0_EEED2Ev@Base 2.7.0
+ _ZNSt3mapIiiSt4lessIiESaISt4pairIKiiEEED1Ev@Base 2.7.0
+ _ZNSt3mapIiiSt4lessIiESaISt4pairIKiiEEED2Ev@Base 2.7.0
  _ZNSt4listI12vpImagePointSaIS0_EED1Ev@Base 2.6.2
  _ZNSt4listI12vpImagePointSaIS0_EED2Ev@Base 2.6.2
  _ZNSt4listI15vpHistogramPeakSaIS0_EE4sortIPFbS0_S0_EEEvT_@Base 2.6.2
  _ZNSt4listI16vpImageSimulatorSaIS0_EEaSERKS2_@Base 2.6.2
  _ZNSt4listI8vpMeSiteSaIS0_EE4sortIPFbRKS0_S5_EEEvT_@Base 2.6.2
  _ZNSt4listI8vpMeSiteSaIS0_EEaSERKS2_@Base 2.6.2
+ _ZNSt4listIP17vpMbtDistanceLineSaIS1_EEC1ERKS3_@Base 2.7.0
+ _ZNSt4listIP17vpMbtDistanceLineSaIS1_EEC2ERKS3_@Base 2.7.0
+ _ZNSt4listIP17vpMbtDistanceLineSaIS1_EEaSERKS3_@Base 2.7.0
+ _ZNSt4listIP21vpMbtDistanceCylinderSaIS1_EEC1ERKS3_@Base 2.7.0
+ _ZNSt4listIP21vpMbtDistanceCylinderSaIS1_EEC2ERKS3_@Base 2.7.0
+ _ZNSt4listIP21vpMbtDistanceCylinderSaIS1_EEaSERKS3_@Base 2.7.0
  _ZNSt4listIdSaIdEED1Ev@Base 2.6.2
  _ZNSt4listIdSaIdEED2Ev@Base 2.6.2
+ _ZNSt4pairIKSsN4Ogre13_ConfigOptionEEC1ERKS3_@Base 2.7.0
+ _ZNSt4pairIKSsN4Ogre13_ConfigOptionEEC2ERKS3_@Base 2.7.0
  _ZNSt4pairIKSsSsEC1ERKS1_@Base 2.6.2
+ _ZNSt4pairIKSsSsEC1ERS0_S2_@Base 2.7.0
  _ZNSt4pairIKSsSsEC2ERKS1_@Base 2.6.2
+ _ZNSt4pairIKSsSsEC2ERS0_S2_@Base 2.7.0
  _ZNSt4pairIKSsSsED1Ev@Base 2.6.2
  _ZNSt4pairIKSsSsED2Ev@Base 2.6.2
  _ZNSt4pairISsSsED1Ev@Base 2.6.2
@@ -3527,6 +3777,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNSt6vectorI12vpImagePointSaIS0_EEaSERKS2_@Base 2.6.2
  _ZNSt6vectorI7vpPointSaIS0_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS0_S2_EERKS0_@Base 2.6.2
  _ZNSt6vectorI7vpPointSaIS0_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS0_S2_EEmRKS0_@Base 2.6.2
+ _ZNSt6vectorI7vpPointSaIS0_EE6resizeEmS0_@Base 2.7.0
  _ZNSt6vectorI7vpPointSaIS0_EED1Ev@Base 2.6.2
  _ZNSt6vectorI7vpPointSaIS0_EED2Ev@Base 2.6.2
  _ZNSt6vectorI7vpPointSaIS0_EEaSERKS2_@Base 2.6.2
@@ -3561,11 +3812,23 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNSt6vectorIN2cv8KeyPointESaIS1_EED2Ev@Base 2.6.2
  _ZNSt6vectorIN9vpNetwork10vpReceptorESaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_@Base 2.6.2
  _ZNSt6vectorIN9vpNetwork10vpReceptorESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE@Base 2.6.2
+ _ZNSt6vectorIP12vpMbtPolygonSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_@Base 2.7.0
+ _ZNSt6vectorIP12vpMbtPolygonSaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_@Base 2.7.0
+ _ZNSt6vectorIP12vpMbtPolygonSaIS1_EED1Ev@Base 2.7.0
+ _ZNSt6vectorIP12vpMbtPolygonSaIS1_EED2Ev@Base 2.7.0
  _ZNSt6vectorIP15vpFeatureMomentSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_@Base 2.6.2
+ _ZNSt6vectorIP15vpMbtKltPolygonSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_@Base 2.7.0
+ _ZNSt6vectorIP15vpMbtKltPolygonSaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_@Base 2.7.0
+ _ZNSt6vectorIP15vpMbtKltPolygonSaIS1_EED1Ev@Base 2.7.0
+ _ZNSt6vectorIP15vpMbtKltPolygonSaIS1_EED2Ev@Base 2.7.0
  _ZNSt6vectorIP9vpRequestSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_@Base 2.6.2
  _ZNSt6vectorIPK7vpImageIhESaIS3_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS3_S5_EEmRKS3_@Base 2.6.2
  _ZNSt6vectorIPK7vpImageIhESaIS3_EED1Ev@Base 2.6.2
  _ZNSt6vectorIPK7vpImageIhESaIS3_EED2Ev@Base 2.6.2
+ _ZNSt6vectorIPN4Ogre12ManualObjectESaIS2_EED1Ev@Base 2.7.0
+ _ZNSt6vectorIPN4Ogre12ManualObjectESaIS2_EED2Ev@Base 2.7.0
+ _ZNSt6vectorISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEEC1ERKS6_@Base 2.7.0
+ _ZNSt6vectorISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEEC2ERKS6_@Base 2.7.0
  _ZNSt6vectorISsSaISsEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPSsS1_EERKSs@Base 2.6.2
  _ZNSt6vectorISsSaISsEED1Ev@Base 2.6.2
  _ZNSt6vectorISsSaISsEED2Ev@Base 2.6.2
@@ -3577,10 +3840,14 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNSt6vectorISt4listIP21vpMbtDistanceCylinderSaIS2_EESaIS4_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS4_S6_EEmRKS4_@Base 2.6.2
  _ZNSt6vectorISt4listIP21vpMbtDistanceCylinderSaIS2_EESaIS4_EED1Ev@Base 2.6.2
  _ZNSt6vectorISt4listIP21vpMbtDistanceCylinderSaIS2_EESaIS4_EED2Ev@Base 2.6.2
+ _ZNSt6vectorIbSaIbEE13_M_initializeEm@Base 2.7.0
  _ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb@Base 2.6.2
  _ZNSt6vectorIbSaIbEE14_M_fill_insertESt13_Bit_iteratormb@Base 2.6.2
+ _ZNSt6vectorIbSaIbEE6resizeEmb@Base 2.7.0
+ _ZNSt6vectorIbSaIbEE9push_backEb@Base 2.7.0
  _ZNSt6vectorIbSaIbEED1Ev@Base 2.6.2
  _ZNSt6vectorIbSaIbEED2Ev@Base 2.6.2
+ _ZNSt6vectorIbSaIbEEaSERKS1_@Base 2.7.0
  _ZNSt6vectorIdSaIdEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPdS1_EERKd@Base 2.6.2
  _ZNSt6vectorIdSaIdEE14_M_fill_assignEmRKd@Base 2.6.2
  _ZNSt6vectorIdSaIdEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPdS1_EEmRKd@Base 2.6.2
@@ -3589,7 +3856,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNSt6vectorIdSaIdEEaSERKS1_@Base 2.6.2
  _ZNSt6vectorIfSaIfEED1Ev@Base 2.6.2
  _ZNSt6vectorIfSaIfEED2Ev@Base 2.6.2
- _ZNSt6vectorIiSaIiEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPiS1_EERKi@Base 2.6.2
  _ZNSt6vectorIiSaIiEED1Ev@Base 2.6.2
  _ZNSt6vectorIiSaIiEED2Ev@Base 2.6.2
  _ZNSt6vectorIjSaIjEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPjS1_EERKj@Base 2.6.2
@@ -3604,6 +3870,22 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNSt8_Rb_treeIPKcSt4pairIKS1_P15vpFeatureMomentESt10_Select1stIS6_EN23vpFeatureMomentDatabase7cmp_strESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E@Base 2.6.2
  _ZNSt8_Rb_treeIPKcSt4pairIKS1_P8vpMomentESt10_Select1stIS6_EN16vpMomentDatabase7cmp_strESaIS6_EE16_M_insert_uniqueERKS6_@Base 2.6.2
  _ZNSt8_Rb_treeIPKcSt4pairIKS1_P8vpMomentESt10_Select1stIS6_EN16vpMomentDatabase7cmp_strESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E@Base 2.6.2
+ _ZNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EED0Ev@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EED1Ev@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EED2Ev@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE7_M_copyEPKSt13_Rb_tree_nodeIS4_EPSG_@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE8_M_eraseEPSt13_Rb_tree_nodeIS4_E@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEEC1ERKSE_@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEEC2ERKSE_@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE10_M_insert_EPKSt18_Rb_tree_node_baseSG_RKS2_@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EED0Ev@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EED1Ev@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EED2Ev@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE16_M_insert_uniqueERKS2_@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS2_ERKS2_@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEED1Ev@Base 2.7.0
+ _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEED2Ev@Base 2.7.0
  _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE10_M_insert_EPKSt18_Rb_tree_node_baseSB_RKS2_@Base 2.6.2
  _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE15_M_insert_equalERKS2_@Base 2.6.2
  _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.6.2
@@ -3613,13 +3895,36 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE7_M_copyEPKSt13_Rb_tree_nodeIS2_EPSA_@Base 2.6.2
  _ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.6.2
  _ZNSt8_Rb_treeIddSt9_IdentityIdESt4lessIdESaIdEE8_M_eraseEPSt13_Rb_tree_nodeIdE@Base 2.6.2
+ _ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE10_M_insert_EPKSt18_Rb_tree_node_baseSC_RKS3_@Base 2.7.0
+ _ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE16_M_insert_uniqueERKS3_@Base 2.7.0
+ _ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS3_ERKS3_@Base 2.7.0
+ _ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE7_M_copyEPKSt13_Rb_tree_nodeIS3_EPSB_@Base 2.7.0
+ _ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE8_M_eraseEPSt13_Rb_tree_nodeIS3_E@Base 2.7.0
+ _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE10_M_insert_EPKSt18_Rb_tree_node_baseSB_RKS2_@Base 2.7.0
+ _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE16_M_insert_uniqueERKS2_@Base 2.7.0
+ _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS2_ERKS2_@Base 2.7.0
+ _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE7_M_copyEPKSt13_Rb_tree_nodeIS2_EPSA_@Base 2.7.0
+ _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.7.0
+ _ZNSt8ios_base7failureC1ERKS0_@Base 2.7.0
+ _ZNSt8ios_base7failureC2ERKS0_@Base 2.7.0
  _ZNSt8multimapISsSsSt4lessISsESaISt4pairIKSsSsEEED1Ev@Base 2.6.2
  _ZNSt8multimapISsSsSt4lessISsESaISt4pairIKSsSsEEED2Ev@Base 2.6.2
+ _ZSt13copy_backwardIPP12vpMbtPolygonS2_ET0_T_S4_S3_@Base 2.7.0
+ _ZSt13copy_backwardIPP15vpMbtKltPolygonS2_ET0_T_S4_S3_@Base 2.7.0
+ _ZSt13copy_backwardIPPK7vpImageIhES4_ET0_T_S6_S5_@Base 2.7.0
+ _ZSt4fillSt13_Bit_iteratorS_RKb@Base 2.7.0
+ _ZSt8__fill_aIP7vpPointS0_EN9__gnu_cxx11__enable_ifIXntsrSt11__is_scalarIT0_E7__valueEvE6__typeET_S9_RKS5_@Base 2.7.0
+ _ZSt8__fill_aIPSt4listIP17vpMbtDistanceLineSaIS2_EES4_EN9__gnu_cxx11__enable_ifIXntsrSt11__is_scalarIT0_E7__valueEvE6__typeET_SD_RKS9_@Base 2.7.0
+ _ZSt8__fill_aIPSt4listIP21vpMbtDistanceCylinderSaIS2_EES4_EN9__gnu_cxx11__enable_ifIXntsrSt11__is_scalarIT0_E7__valueEvE6__typeET_SD_RKS9_@Base 2.7.0
  _ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_@Base 2.6.2
  _ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3_@Base 2.6.2
+ _ZTC18vpMbEdgeKltTracker0_14vpMbKltTracker@Base 2.7.0
+ _ZTC18vpMbEdgeKltTracker496_15vpMbEdgeTracker@Base 2.7.0
  _ZTI10vpCylinder@Base 2.6.2
  _ZTI10vpDisplayX@Base 2.6.2
  _ZTI10vpTriangle@Base 2.6.2
+ _ZTI10vpUnicycle@Base 2.7.0
+ _ZTI10vpViper650@Base 2.7.0
  _ZTI10vpViper850@Base 2.6.2
  _ZTI11vpColVector@Base 2.6.2
  _ZTI11vpException@Base 2.6.2
@@ -3637,7 +3942,9 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI12vpDisplayGTK@Base 2.6.2
  _ZTI12vpHomography@Base 2.6.2
  _ZTI12vpImagePoint@Base 2.6.2
+ _ZTI12vpMbtPolygon@Base 2.7.0
  _ZTI12vpMomentArea@Base 2.6.2
+ _ZTI12vpPioneerPan@Base 2.7.0
  _ZTI12vpPoseVector@Base 2.6.2
  _ZTI13vpCalibration@Base 2.6.2
  _ZTI13vpDiskGrabber@Base 2.6.2
@@ -3652,8 +3959,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI14vpFeatureDepth@Base 2.6.2
  _ZTI14vpFeaturePoint@Base 2.6.2
  _ZTI14vpFrameGrabber@Base 2.6.2
- _ZTI14vpKeyPointSurf@Base 2.6.2
  _ZTI14vpLaserScanner@Base 2.6.2
+ _ZTI14vpMbKltTracker@Base 2.7.0
  _ZTI14vpMbtXmlParser@Base 2.6.2
  _ZTI14vpMomentCommon@Base 2.6.2
  _ZTI14vpPoseFeatures@Base 2.6.2
@@ -3664,6 +3971,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI15vpFeatureMoment@Base 2.6.2
  _ZTI15vpFeatureThetaU@Base 2.6.2
  _ZTI15vpMbEdgeTracker@Base 2.6.2
+ _ZTI15vpMbtKltPolygon@Base 2.7.0
  _ZTI15vpOpenCVGrabber@Base 2.6.2
  _ZTI15vpPoseException@Base 2.6.2
  _ZTI15vpRobotTemplate@Base 2.6.2
@@ -3683,13 +3991,17 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI16vpServoException@Base 2.6.2
  _ZTI16vpSimulatorAfma6@Base 2.6.2
  _ZTI17vpMatrixException@Base 2.6.2
+ _ZTI17vpMbtKltXmlParser@Base 2.7.0
+ _ZTI17vpSimulatorCamera@Base 2.7.0
  _ZTI17vpXmlParserCamera@Base 2.6.2
  _ZTI18vpCameraParameters@Base 2.6.2
  _ZTI18vpDisplayException@Base 2.6.2
  _ZTI18vpFeatureException@Base 2.6.2
  _ZTI18vpFeatureLuminance@Base 2.6.2
  _ZTI18vpForceTwistMatrix@Base 2.6.2
+ _ZTI18vpMbEdgeKltTracker@Base 2.7.0
  _ZTI18vpMomentCInvariant@Base 2.6.2
+ _ZTI18vpSimulatorPioneer@Base 2.7.0
  _ZTI19vpFeatureMomentArea@Base 2.6.2
  _ZTI19vpFeaturePointPolar@Base 2.6.2
  _ZTI19vpForwardProjection@Base 2.6.2
@@ -3703,6 +4015,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI20vpWireFrameSimulator@Base 2.6.2
  _ZTI21vpFeatureMomentCommon@Base 2.6.2
  _ZTI21vpMomentGravityCenter@Base 2.6.2
+ _ZTI21vpSimulatorPioneerPan@Base 2.7.0
  _ZTI21vpVelocityTwistMatrix@Base 2.6.2
  _ZTI22vpCalibrationException@Base 2.6.2
  _ZTI22vpMomentAreaNormalized@Base 2.6.2
@@ -3714,6 +4027,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI23vpFrameGrabberException@Base 2.6.2
  _ZTI23vpParallelPortException@Base 2.6.2
  _ZTI25vpFeatureMomentCInvariant@Base 2.6.2
+ _ZTI25vpRobotWireFrameSimulator@Base 2.7.0
  _ZTI28vpFeatureMomentGravityCenter@Base 2.6.2
  _ZTI29vpFeatureMomentAreaNormalized@Base 2.6.2
  _ZTI31vpMomentGravityCenterNormalized@Base 2.6.2
@@ -3725,9 +4039,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI6vpListI15vpHistogramPeakE@Base 2.6.2
  _ZTI6vpListI6vpDot2E@Base 2.6.2
  _ZTI6vpListIP14vpBasicFeatureE@Base 2.6.2
- _ZTI6vpListIP17vpMbtDistanceLineE@Base 2.6.2
- _ZTI6vpListIP21vpMbtDistanceCylinderE@Base 2.6.2
- _ZTI6vpListIPiE@Base 2.6.2
  _ZTI6vpListIjE@Base 2.6.2
  _ZTI6vpPose@Base 2.6.2
  _ZTI7vpAfma6@Base 2.6.2
@@ -3753,14 +4064,22 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI9vpDisplay@Base 2.6.2
  _ZTI9vpMeNurbs@Base 2.6.2
  _ZTI9vpNetwork@Base 2.6.2
+ _ZTI9vpPioneer@Base 2.7.0
  _ZTI9vpPolygon@Base 2.6.2
  _ZTI9vpRequest@Base 2.6.2
  _ZTI9vpTracker@Base 2.6.2
+ _ZTIN11vpException20generalExceptionEnumE@Base 2.7.0
  _ZTIN17vpMatrixException13errorCodeEnumE@Base 2.6.2
  _ZTIN3OIS11KeyListenerE@Base 2.6.2
  _ZTIN4Ogre10TexturePtrE@Base 2.6.2
  _ZTIN4Ogre11MaterialPtrE@Base 2.6.2
+ _ZTIN4Ogre12STLAllocatorISsNS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEEE@Base 2.7.0
+ _ZTIN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsNS_13_ConfigOptionEEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEEE@Base 2.7.0
+ _ZTIN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsSsEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEEE@Base 2.7.0
  _ZTIN4Ogre13FrameListenerE@Base 2.6.2
+ _ZTIN4Ogre16STLAllocatorBaseISsEE@Base 2.7.0
+ _ZTIN4Ogre16STLAllocatorBaseISt13_Rb_tree_nodeISt4pairIKSsNS_13_ConfigOptionEEEEE@Base 2.7.0
+ _ZTIN4Ogre16STLAllocatorBaseISt13_Rb_tree_nodeISt4pairIKSsSsEEEE@Base 2.7.0
  _ZTIN4Ogre19WindowEventListenerE@Base 2.6.2
  _ZTIN4Ogre28HardwarePixelBufferSharedPtrE@Base 2.6.2
  _ZTIN4Ogre9SharedPtrINS_19HardwarePixelBufferEEE@Base 2.6.2
@@ -3773,9 +4092,14 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTIN5boost16exception_detail19error_info_injectorINS_10lock_errorEEE@Base 2.6.2
  _ZTIN5boost16thread_exceptionE@Base 2.6.2
  _ZTIN5boost9exceptionE@Base 2.6.2
+ _ZTINSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implE@Base 2.7.0
+ _ZTINSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EEE@Base 2.7.0
+ _ZTINSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EEE@Base 2.7.0
  _ZTS10vpCylinder@Base 2.6.2
  _ZTS10vpDisplayX@Base 2.6.2
  _ZTS10vpTriangle@Base 2.6.2
+ _ZTS10vpUnicycle@Base 2.7.0
+ _ZTS10vpViper650@Base 2.7.0
  _ZTS10vpViper850@Base 2.6.2
  _ZTS11vpColVector@Base 2.6.2
  _ZTS11vpException@Base 2.6.2
@@ -3793,7 +4117,9 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS12vpDisplayGTK@Base 2.6.2
  _ZTS12vpHomography@Base 2.6.2
  _ZTS12vpImagePoint@Base 2.6.2
+ _ZTS12vpMbtPolygon@Base 2.7.0
  _ZTS12vpMomentArea@Base 2.6.2
+ _ZTS12vpPioneerPan@Base 2.7.0
  _ZTS12vpPoseVector@Base 2.6.2
  _ZTS13vpCalibration@Base 2.6.2
  _ZTS13vpDiskGrabber@Base 2.6.2
@@ -3808,8 +4134,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS14vpFeatureDepth@Base 2.6.2
  _ZTS14vpFeaturePoint@Base 2.6.2
  _ZTS14vpFrameGrabber@Base 2.6.2
- _ZTS14vpKeyPointSurf@Base 2.6.2
  _ZTS14vpLaserScanner@Base 2.6.2
+ _ZTS14vpMbKltTracker@Base 2.7.0
  _ZTS14vpMbtXmlParser@Base 2.6.2
  _ZTS14vpMomentCommon@Base 2.6.2
  _ZTS14vpPoseFeatures@Base 2.6.2
@@ -3820,6 +4146,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS15vpFeatureMoment@Base 2.6.2
  _ZTS15vpFeatureThetaU@Base 2.6.2
  _ZTS15vpMbEdgeTracker@Base 2.6.2
+ _ZTS15vpMbtKltPolygon@Base 2.7.0
  _ZTS15vpOpenCVGrabber@Base 2.6.2
  _ZTS15vpPoseException@Base 2.6.2
  _ZTS15vpRobotTemplate@Base 2.6.2
@@ -3839,13 +4166,17 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS16vpServoException@Base 2.6.2
  _ZTS16vpSimulatorAfma6@Base 2.6.2
  _ZTS17vpMatrixException@Base 2.6.2
+ _ZTS17vpMbtKltXmlParser@Base 2.7.0
+ _ZTS17vpSimulatorCamera@Base 2.7.0
  _ZTS17vpXmlParserCamera@Base 2.6.2
  _ZTS18vpCameraParameters@Base 2.6.2
  _ZTS18vpDisplayException@Base 2.6.2
  _ZTS18vpFeatureException@Base 2.6.2
  _ZTS18vpFeatureLuminance@Base 2.6.2
  _ZTS18vpForceTwistMatrix@Base 2.6.2
+ _ZTS18vpMbEdgeKltTracker@Base 2.7.0
  _ZTS18vpMomentCInvariant@Base 2.6.2
+ _ZTS18vpSimulatorPioneer@Base 2.7.0
  _ZTS19vpFeatureMomentArea@Base 2.6.2
  _ZTS19vpFeaturePointPolar@Base 2.6.2
  _ZTS19vpForwardProjection@Base 2.6.2
@@ -3859,6 +4190,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS20vpWireFrameSimulator@Base 2.6.2
  _ZTS21vpFeatureMomentCommon@Base 2.6.2
  _ZTS21vpMomentGravityCenter@Base 2.6.2
+ _ZTS21vpSimulatorPioneerPan@Base 2.7.0
  _ZTS21vpVelocityTwistMatrix@Base 2.6.2
  _ZTS22vpCalibrationException@Base 2.6.2
  _ZTS22vpMomentAreaNormalized@Base 2.6.2
@@ -3870,6 +4202,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS23vpFrameGrabberException@Base 2.6.2
  _ZTS23vpParallelPortException@Base 2.6.2
  _ZTS25vpFeatureMomentCInvariant@Base 2.6.2
+ _ZTS25vpRobotWireFrameSimulator@Base 2.7.0
  _ZTS28vpFeatureMomentGravityCenter@Base 2.6.2
  _ZTS29vpFeatureMomentAreaNormalized@Base 2.6.2
  _ZTS31vpMomentGravityCenterNormalized@Base 2.6.2
@@ -3881,9 +4214,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS6vpListI15vpHistogramPeakE@Base 2.6.2
  _ZTS6vpListI6vpDot2E@Base 2.6.2
  _ZTS6vpListIP14vpBasicFeatureE@Base 2.6.2
- _ZTS6vpListIP17vpMbtDistanceLineE@Base 2.6.2
- _ZTS6vpListIP21vpMbtDistanceCylinderE@Base 2.6.2
- _ZTS6vpListIPiE@Base 2.6.2
  _ZTS6vpListIjE@Base 2.6.2
  _ZTS6vpPose@Base 2.6.2
  _ZTS7vpAfma6@Base 2.6.2
@@ -3909,14 +4239,22 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS9vpDisplay@Base 2.6.2
  _ZTS9vpMeNurbs@Base 2.6.2
  _ZTS9vpNetwork@Base 2.6.2
+ _ZTS9vpPioneer@Base 2.7.0
  _ZTS9vpPolygon@Base 2.6.2
  _ZTS9vpRequest@Base 2.6.2
  _ZTS9vpTracker@Base 2.6.2
+ _ZTSN11vpException20generalExceptionEnumE@Base 2.7.0
  _ZTSN17vpMatrixException13errorCodeEnumE@Base 2.6.2
  _ZTSN3OIS11KeyListenerE@Base 2.6.2
  _ZTSN4Ogre10TexturePtrE@Base 2.6.2
  _ZTSN4Ogre11MaterialPtrE@Base 2.6.2
+ _ZTSN4Ogre12STLAllocatorISsNS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEEE@Base 2.7.0
+ _ZTSN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsNS_13_ConfigOptionEEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEEE@Base 2.7.0
+ _ZTSN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsSsEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEEE@Base 2.7.0
  _ZTSN4Ogre13FrameListenerE@Base 2.6.2
+ _ZTSN4Ogre16STLAllocatorBaseISsEE@Base 2.7.0
+ _ZTSN4Ogre16STLAllocatorBaseISt13_Rb_tree_nodeISt4pairIKSsNS_13_ConfigOptionEEEEE@Base 2.7.0
+ _ZTSN4Ogre16STLAllocatorBaseISt13_Rb_tree_nodeISt4pairIKSsSsEEEE@Base 2.7.0
  _ZTSN4Ogre19WindowEventListenerE@Base 2.6.2
  _ZTSN4Ogre28HardwarePixelBufferSharedPtrE@Base 2.6.2
  _ZTSN4Ogre9SharedPtrINS_19HardwarePixelBufferEEE@Base 2.6.2
@@ -3929,9 +4267,17 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTSN5boost16exception_detail19error_info_injectorINS_10lock_errorEEE@Base 2.6.2
  _ZTSN5boost16thread_exceptionE@Base 2.6.2
  _ZTSN5boost9exceptionE@Base 2.6.2
+ _ZTSNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implE@Base 2.7.0
+ _ZTSNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EEE@Base 2.7.0
+ _ZTSNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EEE@Base 2.7.0
+ _ZTT14vpMbKltTracker@Base 2.7.0
+ _ZTT15vpMbEdgeTracker@Base 2.7.0
+ _ZTT18vpMbEdgeKltTracker@Base 2.7.0
  _ZTV10vpCylinder@Base 2.6.2
  _ZTV10vpDisplayX@Base 2.6.2
  _ZTV10vpTriangle@Base 2.6.2
+ _ZTV10vpUnicycle@Base 2.7.0
+ _ZTV10vpViper650@Base 2.7.0
  _ZTV10vpViper850@Base 2.6.2
  _ZTV11vpColVector@Base 2.6.2
  _ZTV11vpException@Base 2.6.2
@@ -3949,7 +4295,9 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV12vpDisplayGTK@Base 2.6.2
  _ZTV12vpHomography@Base 2.6.2
  _ZTV12vpImagePoint@Base 2.6.2
+ _ZTV12vpMbtPolygon@Base 2.7.0
  _ZTV12vpMomentArea@Base 2.6.2
+ _ZTV12vpPioneerPan@Base 2.7.0
  _ZTV12vpPoseVector@Base 2.6.2
  _ZTV13vpCalibration@Base 2.6.2
  _ZTV13vpDiskGrabber@Base 2.6.2
@@ -3964,8 +4312,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV14vpFeatureDepth@Base 2.6.2
  _ZTV14vpFeaturePoint@Base 2.6.2
  _ZTV14vpFrameGrabber@Base 2.6.2
- _ZTV14vpKeyPointSurf@Base 2.6.2
  _ZTV14vpLaserScanner@Base 2.6.2
+ _ZTV14vpMbKltTracker@Base 2.7.0
  _ZTV14vpMbtXmlParser@Base 2.6.2
  _ZTV14vpMomentCommon@Base 2.6.2
  _ZTV14vpPoseFeatures@Base 2.6.2
@@ -3976,6 +4324,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV15vpFeatureMoment@Base 2.6.2
  _ZTV15vpFeatureThetaU@Base 2.6.2
  _ZTV15vpMbEdgeTracker@Base 2.6.2
+ _ZTV15vpMbtKltPolygon@Base 2.7.0
  _ZTV15vpOpenCVGrabber@Base 2.6.2
  _ZTV15vpPoseException@Base 2.6.2
  _ZTV15vpRobotTemplate@Base 2.6.2
@@ -3995,13 +4344,17 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV16vpServoException@Base 2.6.2
  _ZTV16vpSimulatorAfma6@Base 2.6.2
  _ZTV17vpMatrixException@Base 2.6.2
+ _ZTV17vpMbtKltXmlParser@Base 2.7.0
+ _ZTV17vpSimulatorCamera@Base 2.7.0
  _ZTV17vpXmlParserCamera@Base 2.6.2
  _ZTV18vpCameraParameters@Base 2.6.2
  _ZTV18vpDisplayException@Base 2.6.2
  _ZTV18vpFeatureException@Base 2.6.2
  _ZTV18vpFeatureLuminance@Base 2.6.2
  _ZTV18vpForceTwistMatrix@Base 2.6.2
+ _ZTV18vpMbEdgeKltTracker@Base 2.7.0
  _ZTV18vpMomentCInvariant@Base 2.6.2
+ _ZTV18vpSimulatorPioneer@Base 2.7.0
  _ZTV19vpFeatureMomentArea@Base 2.6.2
  _ZTV19vpFeaturePointPolar@Base 2.6.2
  _ZTV19vpForwardProjection@Base 2.6.2
@@ -4015,6 +4368,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV20vpWireFrameSimulator@Base 2.6.2
  _ZTV21vpFeatureMomentCommon@Base 2.6.2
  _ZTV21vpMomentGravityCenter@Base 2.6.2
+ _ZTV21vpSimulatorPioneerPan@Base 2.7.0
  _ZTV21vpVelocityTwistMatrix@Base 2.6.2
  _ZTV22vpCalibrationException@Base 2.6.2
  _ZTV22vpMomentAreaNormalized@Base 2.6.2
@@ -4026,6 +4380,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV23vpFrameGrabberException@Base 2.6.2
  _ZTV23vpParallelPortException@Base 2.6.2
  _ZTV25vpFeatureMomentCInvariant@Base 2.6.2
+ _ZTV25vpRobotWireFrameSimulator@Base 2.7.0
  _ZTV28vpFeatureMomentGravityCenter@Base 2.6.2
  _ZTV29vpFeatureMomentAreaNormalized@Base 2.6.2
  _ZTV31vpMomentGravityCenterNormalized@Base 2.6.2
@@ -4037,9 +4392,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV6vpListI15vpHistogramPeakE@Base 2.6.2
  _ZTV6vpListI6vpDot2E@Base 2.6.2
  _ZTV6vpListIP14vpBasicFeatureE@Base 2.6.2
- _ZTV6vpListIP17vpMbtDistanceLineE@Base 2.6.2
- _ZTV6vpListIP21vpMbtDistanceCylinderE@Base 2.6.2
- _ZTV6vpListIPiE@Base 2.6.2
  _ZTV6vpListIjE@Base 2.6.2
  _ZTV6vpPose@Base 2.6.2
  _ZTV7vpImageI6vpRGBaE@Base 2.6.2
@@ -4064,12 +4416,16 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV9vpDisplay@Base 2.6.2
  _ZTV9vpMeNurbs@Base 2.6.2
  _ZTV9vpNetwork@Base 2.6.2
+ _ZTV9vpPioneer@Base 2.7.0
  _ZTV9vpPolygon@Base 2.6.2
  _ZTV9vpRequest@Base 2.6.2
  _ZTV9vpTracker@Base 2.6.2
  _ZTVN3OIS11KeyListenerE@Base 2.6.2
  _ZTVN4Ogre10TexturePtrE@Base 2.6.2
  _ZTVN4Ogre11MaterialPtrE@Base 2.6.2
+ _ZTVN4Ogre12STLAllocatorISsNS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEEE@Base 2.7.0
+ _ZTVN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsNS_13_ConfigOptionEEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEEE@Base 2.7.0
+ _ZTVN4Ogre12STLAllocatorISt13_Rb_tree_nodeISt4pairIKSsSsEENS_22CategorisedAllocPolicyILNS_14MemoryCategoryE0EEEEE@Base 2.7.0
  _ZTVN4Ogre13FrameListenerE@Base 2.6.2
  _ZTVN4Ogre19WindowEventListenerE@Base 2.6.2
  _ZTVN4Ogre28HardwarePixelBufferSharedPtrE@Base 2.6.2
@@ -4083,6 +4439,18 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTVN5boost16exception_detail19error_info_injectorINS_10lock_errorEEE@Base 2.6.2
  _ZTVN5boost16thread_exceptionE@Base 2.6.2
  _ZTVN5boost9exceptionE@Base 2.6.2
+ _ZTVNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implE@Base 2.7.0
+ _ZTVNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EEE@Base 2.7.0
+ _ZTVNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EEE@Base 2.7.0
+ _ZThn168_N21vpSimulatorPioneerPan11getPositionEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.7.0
+ _ZThn168_N21vpSimulatorPioneerPan11setPositionEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.7.0
+ _ZThn168_N21vpSimulatorPioneerPan11setVelocityEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.7.0
+ _ZThn168_N21vpSimulatorPioneerPan15getDisplacementEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.7.0
+ _ZThn168_N21vpSimulatorPioneerPan4initEv@Base 2.7.0
+ _ZThn168_N21vpSimulatorPioneerPan7get_eJeER8vpMatrix@Base 2.7.0
+ _ZThn168_N21vpSimulatorPioneerPan7get_fJeER8vpMatrix@Base 2.7.0
+ _ZThn168_N21vpSimulatorPioneerPanD0Ev@Base 2.7.0
+ _ZThn168_N21vpSimulatorPioneerPanD1Ev@Base 2.7.0
  _ZThn16_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED0Ev@Base 2.6.2
  _ZThn16_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED1Ev@Base 2.6.2
  _ZThn16_N5boost16exception_detail19error_info_injectorINS_10lock_errorEED0Ev@Base 2.6.2
@@ -4091,22 +4459,36 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZThn16_N8vpAROgre11keyReleasedERKN3OIS8KeyEventE@Base 2.6.2
  _ZThn16_N8vpAROgreD0Ev@Base 2.6.2
  _ZThn16_N8vpAROgreD1Ev@Base 2.6.2
- _ZThn2416_N19vpSimulatorViper850D0Ev@Base 2.6.2
- _ZThn2416_N19vpSimulatorViper850D1Ev@Base 2.6.2
+ _ZThn2424_N19vpSimulatorViper850D0Ev@Base 2.7.0
+ _ZThn2424_N19vpSimulatorViper850D1Ev@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker12initCylinderERK7vpPointS0_dj@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker12resetTrackerEv@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker12testTrackingEv@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker14getAngleAppearEv@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker14loadConfigFileERKSs@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker14setAngleAppearERKd@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker17getAngleDisappearEv@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker17setAngleDisappearERKd@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker19initFaceFromCornersERKSt6vectorI7vpPointSaIS1_EEj@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker19setCameraParametersERK18vpCameraParameters@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker21setOgreVisibilityTestERKb@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker4initERK7vpImageIhE@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker5trackERK7vpImageIhE@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker7displayERK7vpImageI6vpRGBaERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker7displayERK7vpImageIhERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker7setPoseERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTracker9loadModelERKSs@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTrackerD0Ev@Base 2.7.0
+ _ZThn496_N18vpMbEdgeKltTrackerD1Ev@Base 2.7.0
  _ZThn56_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED0Ev@Base 2.6.2
  _ZThn56_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED1Ev@Base 2.6.2
  _ZThn56_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEE5cloneEv@Base 2.6.2
  _ZThn56_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEE7rethrowEv@Base 2.6.2
- _ZThn696_N16vpRobotSimulator4initEv@Base 2.6.2
- _ZThn696_N16vpRobotSimulatorD0Ev@Base 2.6.2
- _ZThn696_N16vpRobotSimulatorD1Ev@Base 2.6.2
  _ZThn696_N16vpSimulatorAfma611getPositionEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.6.2
  _ZThn696_N16vpSimulatorAfma611setPositionEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.6.2
  _ZThn696_N16vpSimulatorAfma611setVelocityEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.6.2
  _ZThn696_N16vpSimulatorAfma613setRobotStateEN7vpRobot16vpRobotStateTypeE@Base 2.6.2
  _ZThn696_N16vpSimulatorAfma615getDisplacementEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.6.2
- _ZThn696_N16vpSimulatorAfma621getCameraDisplacementER11vpColVector@Base 2.6.2
- _ZThn696_N16vpSimulatorAfma624getArticularDisplacementER11vpColVector@Base 2.6.2
  _ZThn696_N16vpSimulatorAfma64initEv@Base 2.6.2
  _ZThn696_N16vpSimulatorAfma67get_eJeER8vpMatrix@Base 2.6.2
  _ZThn696_N16vpSimulatorAfma67get_fJeER8vpMatrix@Base 2.6.2
@@ -4117,16 +4499,68 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZThn696_N19vpSimulatorViper85011setVelocityEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.6.2
  _ZThn696_N19vpSimulatorViper85013setRobotStateEN7vpRobot16vpRobotStateTypeE@Base 2.6.2
  _ZThn696_N19vpSimulatorViper85015getDisplacementEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.6.2
- _ZThn696_N19vpSimulatorViper85021getCameraDisplacementER11vpColVector@Base 2.6.2
- _ZThn696_N19vpSimulatorViper85024getArticularDisplacementER11vpColVector@Base 2.6.2
  _ZThn696_N19vpSimulatorViper8504initEv@Base 2.6.2
  _ZThn696_N19vpSimulatorViper8507get_eJeER8vpMatrix@Base 2.6.2
  _ZThn696_N19vpSimulatorViper8507get_fJeER8vpMatrix@Base 2.6.2
  _ZThn696_N19vpSimulatorViper850D0Ev@Base 2.6.2
  _ZThn696_N19vpSimulatorViper850D1Ev@Base 2.6.2
+ _ZThn696_N25vpRobotWireFrameSimulator15setSamplingTimeERKd@Base 2.7.0
+ _ZThn696_N25vpRobotWireFrameSimulator4initEv@Base 2.7.0
+ _ZThn696_N25vpRobotWireFrameSimulatorD0Ev@Base 2.7.0
+ _ZThn696_N25vpRobotWireFrameSimulatorD1Ev@Base 2.7.0
+ _ZThn88_N18vpSimulatorPioneer11getPositionEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.7.0
+ _ZThn88_N18vpSimulatorPioneer11setPositionEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.7.0
+ _ZThn88_N18vpSimulatorPioneer11setVelocityEN7vpRobot18vpControlFrameTypeERK11vpColVector@Base 2.7.0
+ _ZThn88_N18vpSimulatorPioneer15getDisplacementEN7vpRobot18vpControlFrameTypeER11vpColVector@Base 2.7.0
+ _ZThn88_N18vpSimulatorPioneer4initEv@Base 2.7.0
+ _ZThn88_N18vpSimulatorPioneer7get_eJeER8vpMatrix@Base 2.7.0
+ _ZThn88_N18vpSimulatorPioneer7get_fJeER8vpMatrix@Base 2.7.0
+ _ZThn88_N18vpSimulatorPioneerD0Ev@Base 2.7.0
+ _ZThn88_N18vpSimulatorPioneerD1Ev@Base 2.7.0
  _ZThn8_N8vpAROgre12windowClosedEPN4Ogre12RenderWindowE@Base 2.6.2
  _ZThn8_N8vpAROgreD0Ev@Base 2.6.2
  _ZThn8_N8vpAROgreD1Ev@Base 2.6.2
+ _ZTv0_n128_N14vpMbKltTracker14loadConfigFileERKSs@Base 2.7.0
+ _ZTv0_n128_N15vpMbEdgeTracker14loadConfigFileERKSs@Base 2.7.0
+ _ZTv0_n128_N18vpMbEdgeKltTracker14loadConfigFileERKSs@Base 2.7.0
+ _ZTv0_n136_N15vpMbEdgeTracker9loadModelERKSs@Base 2.7.0
+ _ZTv0_n136_N18vpMbEdgeKltTracker9loadModelERKSs@Base 2.7.0
+ _ZTv0_n144_N14vpMbKltTracker12resetTrackerEv@Base 2.7.0
+ _ZTv0_n144_N15vpMbEdgeTracker12resetTrackerEv@Base 2.7.0
+ _ZTv0_n144_N18vpMbEdgeKltTracker12resetTrackerEv@Base 2.7.0
+ _ZTv0_n152_N14vpMbKltTracker19setCameraParametersERK18vpCameraParameters@Base 2.7.0
+ _ZTv0_n152_N15vpMbEdgeTracker19setCameraParametersERK18vpCameraParameters@Base 2.7.0
+ _ZTv0_n152_N18vpMbEdgeKltTracker19setCameraParametersERK18vpCameraParameters@Base 2.7.0
+ _ZTv0_n168_N14vpMbKltTracker7setPoseERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.7.0
+ _ZTv0_n168_N15vpMbEdgeTracker7setPoseERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.7.0
+ _ZTv0_n168_N18vpMbEdgeKltTracker7setPoseERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.7.0
+ _ZTv0_n176_N14vpMbKltTracker12testTrackingEv@Base 2.7.0
+ _ZTv0_n176_N15vpMbEdgeTracker12testTrackingEv@Base 2.7.0
+ _ZTv0_n176_N18vpMbEdgeKltTracker12testTrackingEv@Base 2.7.0
+ _ZTv0_n184_N14vpMbKltTracker5trackERK7vpImageIhE@Base 2.7.0
+ _ZTv0_n184_N15vpMbEdgeTracker5trackERK7vpImageIhE@Base 2.7.0
+ _ZTv0_n184_N18vpMbEdgeKltTracker5trackERK7vpImageIhE@Base 2.7.0
+ _ZTv0_n224_N14vpMbKltTracker12initCylinderERK7vpPointS0_dj@Base 2.7.0
+ _ZTv0_n224_N15vpMbEdgeTracker12initCylinderERK7vpPointS0_dj@Base 2.7.0
+ _ZTv0_n224_N18vpMbEdgeKltTracker12initCylinderERK7vpPointS0_dj@Base 2.7.0
+ _ZTv0_n232_N14vpMbKltTracker19initFaceFromCornersERKSt6vectorI7vpPointSaIS1_EEj@Base 2.7.0
+ _ZTv0_n232_N15vpMbEdgeTracker19initFaceFromCornersERKSt6vectorI7vpPointSaIS1_EEj@Base 2.7.0
+ _ZTv0_n232_N18vpMbEdgeKltTracker19initFaceFromCornersERKSt6vectorI7vpPointSaIS1_EEj@Base 2.7.0
+ _ZTv0_n24_N14vpMbKltTrackerD0Ev@Base 2.7.0
+ _ZTv0_n24_N14vpMbKltTrackerD1Ev@Base 2.7.0
+ _ZTv0_n24_N15vpMbEdgeTrackerD0Ev@Base 2.7.0
+ _ZTv0_n24_N15vpMbEdgeTrackerD1Ev@Base 2.7.0
+ _ZTv0_n24_N18vpMbEdgeKltTrackerD0Ev@Base 2.7.0
+ _ZTv0_n24_N18vpMbEdgeKltTrackerD1Ev@Base 2.7.0
+ _ZTv0_n32_N14vpMbKltTracker7displayERK7vpImageIhERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZTv0_n32_N15vpMbEdgeTracker7displayERK7vpImageIhERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZTv0_n32_N18vpMbEdgeKltTracker7displayERK7vpImageIhERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZTv0_n40_N14vpMbKltTracker7displayERK7vpImageI6vpRGBaERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZTv0_n40_N15vpMbEdgeTracker7displayERK7vpImageI6vpRGBaERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZTv0_n40_N18vpMbEdgeKltTracker7displayERK7vpImageI6vpRGBaERK19vpHomogeneousMatrixRK18vpCameraParametersRK7vpColorjb@Base 2.7.0
+ _ZTv0_n64_N14vpMbKltTracker4initERK7vpImageIhE@Base 2.7.0
+ _ZTv0_n64_N15vpMbEdgeTracker4initERK7vpImageIhE@Base 2.7.0
+ _ZTv0_n64_N18vpMbEdgeKltTracker4initERK7vpImageIhE@Base 2.7.0
  _ZlsRSoR13vpMomentBasic@Base 2.6.2
  _ZlsRSoR16vpMomentCentered@Base 2.6.2
  _ZlsRSoR7vpPoint@Base 2.6.2
