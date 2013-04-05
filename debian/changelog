@@ -1,6 +1,7 @@
 visp (2.7.0-1) unstable; urgency=low
 
   * New upstream release.
+  * Use pkg-kde-tools to handle library symbols.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Thu, 04 Apr 2013 17:28:05 +0900
 
