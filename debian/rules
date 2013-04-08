@@ -6,8 +6,7 @@ export DEB_BUILD_HARDENING_PIE=0
 .PHONY: override_dh_auto_configure	\
 	override_dh_auto_build		\
 	override_dh_strip		\
-	override_dh_auto_test		\
-	override_dh_makeshlibs
+	override_dh_auto_test
 
 %:
 	dh  $@ --parallel --with pkgkde_symbolshelper
@@ -38,6 +37,3 @@ override_dh_strip:
 	dh_strip -a --dbg-package=libvisp2-dbg
 
 override_dh_auto_test:
-
-override_dh_makeshlibs:
-        dh_makeshlibs -V 'libvisp2 (>=2.7.0)'
