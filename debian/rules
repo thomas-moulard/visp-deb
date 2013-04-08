@@ -40,4 +40,4 @@ override_dh_strip:
 override_dh_auto_test:
 
 override_dh_makeshlibs:
-        dh_makeshlibs -V 'libvisp2 (>=2.x.y)'
+        dh_makeshlibs -V 'libvisp2 (>=2.7.0)'
