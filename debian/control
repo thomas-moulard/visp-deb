@@ -59,6 +59,7 @@ Depends: libopencv-dev,
          libvisp2 (= ${binary:Version}),
          ${misc:Depends}
 Suggests: libvisp-doc
+Multi-Arch: same
 Description: visual servoing library - development files
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
@@ -89,6 +90,7 @@ Architecture: any
 Section: debug
 Depends: libvisp2 (= ${binary:Version}),
          ${misc:Depends}
+Multi-Arch: same
 Description: visual servoing library - debugging symbols
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
@@ -103,6 +105,7 @@ Package: libvisp-doc
 Architecture: all
 Section: doc
 Depends: ${misc:Depends}
+Multi-Arch: foreign
 Description: visual servoing library - documentation
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
