@@ -2,9 +2,15 @@ visp (2.7.0-1) unstable; urgency=low
 
   * New upstream release.
   * Use pkg-kde-tools to handle library symbols.
-  * Depend on OGRE v1.8 instead of 1.7.
+  * Depend on OGRE v1.8 instead of 1.7 (Closes: #704783).
+  * Backport pkg-config support from upstream to add multiarch support
+    for development package (libvisp-dev).
+  * Backport from upstream various minors bug fix detected by cppcheck.
+  * Depend on libois-dev on Linux only.
+  * Remove all patches from 2.6.2-1 as the new upstream release fixes these
+    issues.
 
- -- Thomas Moulard <thomas.moulard@gmail.com>  Thu, 04 Apr 2013 17:28:05 +0900
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Thu, 25 Apr 2013 15:03:05 +0900
 
 visp (2.6.2-1) unstable; urgency=low
 
