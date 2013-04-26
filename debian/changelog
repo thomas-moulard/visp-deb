@@ -3,6 +3,9 @@ visp (2.7.0-2) unstable; urgency=low
   * Update symbols file for armel, armhf, i386, ia64, mips, mipsel,
     powerpc, s390, s390x, sparc architectures using pkgkde-getbuildlogs
     (Closes: #704719).
+  * Disable opencv support on sparc64 and x32.
+  * Disable OGRE support on sh4.
+  * Disable libdc1394 support on all non-linux platforms.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Fri, 26 Apr 2013 10:47:10 +0900
 
