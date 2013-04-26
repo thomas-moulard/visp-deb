@@ -1,3 +1,11 @@
+visp (2.7.0-2) unstable; urgency=low
+
+  * Update symbols file for armel, armhf, i386, ia64, mips, mipsel,
+    powerpc, s390, s390x, sparc architectures using pkgkde-getbuildlogs
+    (Closes: #704719).
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Fri, 26 Apr 2013 10:47:10 +0900
+
 visp (2.7.0-1) unstable; urgency=low
 
   * New upstream release.
