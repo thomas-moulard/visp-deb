@@ -1,3 +1,4 @@
 0001-Fix-library-soversion.patch
 0002-Use-pkg-config-to-retrieve-dependencies.patch
 0003-Fix-cppcheck-errors.patch
+0004-Install-vpConfig.h-in-include-architecture-triplet.patch

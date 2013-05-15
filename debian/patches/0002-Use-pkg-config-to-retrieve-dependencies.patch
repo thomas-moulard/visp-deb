@@ -10,11 +10,11 @@ Bug: https://gforge.inria.fr/tracker/index.php?func=detail&aid=15587&group_id=39
 Author: Fabien Spindler
 ---
  CMakeLists.txt                          |   20 ------
- CMakeModules/GenerateConfigScript.cmake |  118 +++++++++++++++++++++++++------
+ CMakeModules/GenerateConfigScript.cmake |  117 +++++++++++++++++++++++++------
  CMakeModules/visp-config.in             |    4 +-
  CMakeModules/visp-config.install.in     |  103 +++++++++++++++++++++++++++
  CMakeModules/visp.pc.in                 |   14 ++++
- 5 files changed, 215 insertions(+), 44 deletions(-)
+ 5 files changed, 214 insertions(+), 44 deletions(-)
  create mode 100644 CMakeModules/visp-config.install.in
  create mode 100644 CMakeModules/visp.pc.in
 
@@ -50,7 +50,7 @@ index e762c6f..fdcb0b0 100644
  #----------------------------------------------------------------------
  INCLUDE(${VISP_CMAKE_MODULE_PATH}/TargetDistclean.cmake)
 diff --git a/CMakeModules/GenerateConfigScript.cmake b/CMakeModules/GenerateConfigScript.cmake
-index cdcdf78..25056c6 100644
+index cdcdf78..6200a06 100644
 --- a/CMakeModules/GenerateConfigScript.cmake
 +++ b/CMakeModules/GenerateConfigScript.cmake
 @@ -31,8 +31,12 @@
