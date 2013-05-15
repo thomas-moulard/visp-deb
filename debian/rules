@@ -9,7 +9,7 @@ export DEB_BUILD_HARDENING_PIE=0
 	override_dh_auto_test
 
 %:
-	dh  $@ --parallel --with pkgkde_symbolshelper
+	dh  $@ --parallel --with pkgkde-symbolshelper
 
 override_dh_auto_clean:
 	dh_auto_clean
