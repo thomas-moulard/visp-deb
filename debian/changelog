@@ -1,3 +1,10 @@
+visp (2.7.0-3) unstable; urgency=low
+
+  * Do not package usr/share/visp/ViSP-third-party.txt (Closes: #707755).
+  * Install vpConfig.h in include/<architecture triplet> (Closes: #707754).
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Wed, 15 May 2013 14:47:32 +0900
+
 visp (2.7.0-2) unstable; urgency=low
 
   * Update symbols file for armel, armhf, i386, ia64, mips, mipsel,
