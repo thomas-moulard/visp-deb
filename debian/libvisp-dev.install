@@ -1,5 +1,6 @@
 usr/bin/visp-config
 usr/include/*
+usr/include/*/visp/*
 usr/lib/*/libvisp.so
 usr/lib/*/pkgconfig/*
 usr/lib/*/visp/*.cmake
