@@ -2,4 +2,4 @@
 0002-Use-pkg-config-to-retrieve-dependencies.patch
 0003-Fix-cppcheck-errors.patch
 0004-Install-vpConfig.h-in-include-architecture-triplet.patch
-0005-Remove-the-need-for-VISPLibraryDepends.cmake.patch
+0005-Fix-CMake-files-to-support-multiarch.patch
