@@ -1,0 +1,83 @@
+From: Thomas Moulard <thomas.moulard@gmail.com>
+Date: Mon, 20 May 2013 15:53:37 +0900
+Subject: Remove the need for VISPLibraryDepends.cmake.
+
+Remove the need for VISPLibraryDepends.cmake.
+
+Origin: upstream
+Author: Fabien Spindler <fabien.spindler@inria.fr>
+---
+ CMakeLists.txt                   |   11 -----------
+ CMakeModules/VISPConfig.cmake.in |    3 ---
+ distclean.sh                     |    1 -
+ 3 files changed, 15 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b6f8ac8..2b12257 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1972,12 +1972,6 @@ CONFIGURE_FILE(
+   ${VISP_BINARY_DIR}/VISPUse.cmake
+   IMMEDIATE @ONLY)
+ 
+-# Export our library dependencies for use by the third party
+-# user projects
+-EXPORT_LIBRARY_DEPENDENCIES(
+-  ${VISP_BINARY_DIR}/VISPLibraryDepends.cmake
+-  )
+-
+ # Generate the package dependent file include/visp/vpConfig.h
+ CONFIGURE_FILE(${VISP_SOURCE_DIR}/ViSP-third-party.txt.cmake
+   ${VISP_BINARY_DIR}/ViSP-third-party.txt
+@@ -2027,9 +2021,6 @@ INCLUDE(${CMAKE_ROOT}/Modules/CMakeExportBuildSettings.cmake)
+ CMAKE_EXPORT_BUILD_SETTINGS(
+   ${VISP_BINARY_DIR}/install/VISPBuildSettings.cmake
+   )
+-EXPORT_LIBRARY_DEPENDENCIES(
+-  ${VISP_BINARY_DIR}/install/VISPLibraryDepends.cmake
+-  )
+ 
+ # Install vpConfig.h that may differ from the one in include/visp
+ INSTALL(FILES ${VISP_BINARY_DIR}/install/vpConfig.h
+@@ -2068,7 +2059,6 @@ IF(UNIX)
+     ${VISP_BINARY_DIR}/install/VISPUse.cmake
+     ${VISP_BINARY_DIR}/install/VISPConfig.cmake
+     ${VISP_BINARY_DIR}/install/VISPBuildSettings.cmake
+-    ${VISP_BINARY_DIR}/install/VISPLibraryDepends.cmake
+     ${VISP_BINARY_DIR}/ViSP-third-party.txt
+     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/visp
+     PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
+@@ -2095,7 +2085,6 @@ ELSE()
+     ${VISP_BINARY_DIR}/install/VISPUse.cmake
+     ${VISP_BINARY_DIR}/install/VISPConfig.cmake
+     ${VISP_BINARY_DIR}/install/VISPBuildSettings.cmake
+-    ${VISP_BINARY_DIR}/install/VISPLibraryDepends.cmake
+     DESTINATION .
+     PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
+     COMPONENT libraries
+diff --git a/CMakeModules/VISPConfig.cmake.in b/CMakeModules/VISPConfig.cmake.in
+index 2030583..1daa493 100644
+--- a/CMakeModules/VISPConfig.cmake.in
++++ b/CMakeModules/VISPConfig.cmake.in
+@@ -103,9 +103,6 @@ FOREACH(val ${VISP_EXTERN_LINK_DIR})
+ ENDFOREACH(val ${VISP_EXTERN_LINK_DIR})
+ #MESSAGE("VISP_LIBRARY_DIRS: ${VISP_LIBRARY_DIRS}")
+ 
+-# Tell the user project where to find ViSP dependencies
+-INCLUDE("${VISP_ROOT_DIR_CMAKE}/VISPLibraryDepends.cmake")
+-
+ # export source dir for doxygen eventually
+ SET(VISP_SOURCE_DIR "@VISP_SOURCE_DIR@")
+ 
+diff --git a/distclean.sh b/distclean.sh
+index 9283449..cf5bc40 100755
+--- a/distclean.sh
++++ b/distclean.sh
+@@ -48,7 +48,6 @@ $RM doc/config-doxygen warning.log cmake_uninstall.cmake
+ $RM include/visp/vpConfig.h
+ $RM VISPBuildSettings.cmake
+ $RM VISPConfig.cmake
+-$RM VISPLibraryDepends.cmake
+ $RM VISPUse.cmake
+ $RM bin/visp-config
+ 

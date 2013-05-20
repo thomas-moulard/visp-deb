@@ -2,11 +2,10 @@ From: Thomas Moulard <thomas.moulard@gmail.com>
 Date: Wed, 15 May 2013 14:18:03 +0900
 Subject: Install vpConfig.h in include/<architecture triplet>.
 
-vpConfig.h is architecture dependent and hence must be installed
-in include/<architecture triplet>.
+Install vpConfig.h in include/<architecture triplet>.
 
-Forwarded: yes
 Author: Thomas Moulard <thomas.moulard@gmail.com>
+Forwarded: no
 ---
  CMakeLists.txt                          |    2 +-
  CMakeModules/GenerateConfigScript.cmake |    2 +-
@@ -21,20 +20,7 @@ index fdcb0b0..b6f8ac8 100644
  # Install vpConfig.h that may differ from the one in include/visp
  INSTALL(FILES ${VISP_BINARY_DIR}/install/vpConfig.h
 -  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/visp
-+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/visp/${CMAKE_LIBRARY_ARCHITECTURE}
++  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_LIBRARY_ARCHITECTURE}/visp
    PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_WRITE
    COMPONENT headers
    )
-diff --git a/CMakeModules/GenerateConfigScript.cmake b/CMakeModules/GenerateConfigScript.cmake
-index 6200a06..73389d6 100644
---- a/CMakeModules/GenerateConfigScript.cmake
-+++ b/CMakeModules/GenerateConfigScript.cmake
-@@ -158,7 +158,7 @@ IF (UNIX)
-   #----------------------------------------------------------------------
- 
-   # prepend with ViSP own include dir
--  set(VISP_CONFIG_CFLAGS_SCRIPT "-I$PREFIX/${CMAKE_INSTALL_INCLUDEDIR} ${VISP_CONFIG_CFLAGS}")
-+  set(VISP_CONFIG_CFLAGS_SCRIPT "-I$PREFIX/${CMAKE_INSTALL_INCLUDEDIR} -I$PREFIX/${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_LIBRARY_ARCHITECTURE} ${VISP_CONFIG_CFLAGS}")
- 
-   # prepend with ViSP own lib dir
-   SET(VISP_CONFIG_LIBS_SCRIPT  "-L$PREFIX/${CMAKE_INSTALL_LIBDIR} -l${VISP_INTERN_LIBRARY} ${VISP_CONFIG_LIBS}")
