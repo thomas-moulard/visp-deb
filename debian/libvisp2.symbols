@@ -607,9 +607,9 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN12vpImagePointD0Ev@Base 2.7.0
  _ZN12vpImagePointD1Ev@Base 2.7.0
  _ZN12vpImagePointD2Ev@Base 2.7.0
- (optional=templinst)_ZN12vpImageTools14createSubImageI6vpRGBaEEvRK7vpImageIT_EjjjjRS4_@Base 2.7.0
+ (optional=templinst|arch=!amd64)_ZN12vpImageTools14createSubImageI6vpRGBaEEvRK7vpImageIT_EjjjjRS4_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZN12vpImageTools14createSubImageIhEEvRK7vpImageIT_ERK6vpRectRS3_@Base 2.7.0
- (optional=templinst|arch=!amd64 !i386)_ZN12vpImageTools14createSubImageIhEEvRK7vpImageIT_EjjjjRS3_@Base 2.7.0
+ (optional=templinst|arch=!i386)_ZN12vpImageTools14createSubImageIhEEvRK7vpImageIT_EjjjjRS3_@Base 2.7.0
  _ZN12vpImageTools15imageDifferenceERK7vpImageIhES3_RS1_@Base 2.7.0
  _ZN12vpImageTools23imageDifferenceAbsoluteERK7vpImageIhES3_RS1_@Base 2.7.0
  _ZN12vpImageTools9changeLUTER7vpImageIhEhhhh@Base 2.7.0
@@ -799,7 +799,7 @@ libvisp.so.2 libvisp2 #MINVER#
  (arch=ia64 mipsel)_ZN13vpTraceOutput7displayEPKcPv@Base 2.7.0
  (arch=armhf)_ZN13vpTraceOutput7displayEPKcSt9__va_list@Base 2.7.0
  _ZN13vpTraceOutputclEPKcz@Base 2.7.0
- (arch=!amd64 !i386)_ZN13vpTraceOutputclEiPKcz@Base 2.7.0
+ (arch=!i386)_ZN13vpTraceOutputclEiPKcz@Base 2.7.0
  _ZN13vpV4l2Grabber10FRAME_SIZEE@Base 2.7.0
  _ZN13vpV4l2Grabber10MAX_FORMATE@Base 2.7.0
  _ZN13vpV4l2Grabber10MAX_INPUTSE@Base 2.7.0
@@ -1277,8 +1277,11 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN15vpMbEdgeTrackerD1Ev@Base 2.7.0
  _ZN15vpMbEdgeTrackerD2Ev@Base 2.7.0
  (optional=templinst)_ZN15vpMbHiddenFacesI12vpMbtPolygonE10addPolygonEPS0_@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN15vpMbHiddenFacesI12vpMbtPolygonE10setVisibleERK19vpHomogeneousMatrix@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN15vpMbHiddenFacesI12vpMbtPolygonE11displayOgreERK19vpHomogeneousMatrix@Base 2.7.0
  (optional=templinst|arch=amd64 armhf i386)_ZN15vpMbHiddenFacesI12vpMbtPolygonE13isVisibleOgreERK19vpTranslationVectorRKj@Base 2.7.0
  (optional=templinst|arch=amd64 armhf i386)_ZN15vpMbHiddenFacesI12vpMbtPolygonE14setVisibleOgreERK19vpHomogeneousMatrixRKdS6_Rb@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN15vpMbHiddenFacesI12vpMbtPolygonE17setVisiblePrivateERK19vpHomogeneousMatrixRKdS6_RbbbRK7vpImageIhERK18vpCameraParameters@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZN15vpMbHiddenFacesI12vpMbtPolygonE5resetEv@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZN15vpMbHiddenFacesI12vpMbtPolygonE8initOgreE18vpCameraParameters@Base 2.7.0
  (optional=templinst)_ZN15vpMbHiddenFacesI12vpMbtPolygonEC1Ev@Base 2.7.0
@@ -1286,7 +1289,9 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst)_ZN15vpMbHiddenFacesI12vpMbtPolygonED1Ev@Base 2.7.0
  (optional=templinst)_ZN15vpMbHiddenFacesI12vpMbtPolygonED2Ev@Base 2.7.0
  (optional=templinst)_ZN15vpMbHiddenFacesI15vpMbtKltPolygonE10addPolygonEPS0_@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN15vpMbHiddenFacesI15vpMbtKltPolygonE11displayOgreERK19vpHomogeneousMatrix@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZN15vpMbHiddenFacesI15vpMbtKltPolygonE13isVisibleOgreERK19vpTranslationVectorRKj@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN15vpMbHiddenFacesI15vpMbtKltPolygonE17setVisiblePrivateERK19vpHomogeneousMatrixRKdS6_RbbbRK7vpImageIhERK18vpCameraParameters@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZN15vpMbHiddenFacesI15vpMbtKltPolygonE5resetEv@Base 2.7.0
  (optional=templinst)_ZN15vpMbHiddenFacesI15vpMbtKltPolygonE8initOgreE18vpCameraParameters@Base 2.7.0
  (optional=templinst)_ZN15vpMbHiddenFacesI15vpMbtKltPolygonEC1Ev@Base 2.7.0
@@ -2337,8 +2342,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN4Ogre13FrameListenerD2Ev@Base 2.7.0
  (arch=amd64 i386)_ZN4Ogre13_ConfigOptionC1ERKS0_@Base 2.7.0
  (arch=amd64 i386)_ZN4Ogre13_ConfigOptionC2ERKS0_@Base 2.7.0
- (arch=!armhf !powerpc !s390)_ZN4Ogre14AxisAlignedBoxD1Ev@Base 2.7.0
- (arch=!armhf !powerpc !s390)_ZN4Ogre14AxisAlignedBoxD2Ev@Base 2.7.0
+ (arch=!amd64 !armhf !powerpc !s390)_ZN4Ogre14AxisAlignedBoxD1Ev@Base 2.7.0
+ (arch=!amd64 !armhf !powerpc !s390)_ZN4Ogre14AxisAlignedBoxD2Ev@Base 2.7.0
  _ZN4Ogre19WindowEventListener11windowMovedEPNS_12RenderWindowE@Base 2.7.0
  _ZN4Ogre19WindowEventListener12windowClosedEPNS_12RenderWindowE@Base 2.7.0
  _ZN4Ogre19WindowEventListener13windowClosingEPNS_12RenderWindowE@Base 2.7.0
@@ -2358,7 +2363,7 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst)_ZN4Ogre9SharedPtrINS_19HardwarePixelBufferEED0Ev@Base 2.7.0
  (optional=templinst)_ZN4Ogre9SharedPtrINS_19HardwarePixelBufferEED1Ev@Base 2.7.0
  (optional=templinst)_ZN4Ogre9SharedPtrINS_19HardwarePixelBufferEED2Ev@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZN4Ogre9SharedPtrINS_19HardwarePixelBufferEEaSERKS2_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZN4Ogre9SharedPtrINS_19HardwarePixelBufferEEaSERKS2_@Base 2.7.0
  (optional=templinst)_ZN4Ogre9SharedPtrINS_7TextureEE4swapERS2_@Base 2.7.0
  (optional=templinst)_ZN4Ogre9SharedPtrINS_7TextureEE7destroyEv@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZN4Ogre9SharedPtrINS_7TextureEE7releaseEv@Base 2.7.0
@@ -2393,12 +2398,13 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN5boost10lock_errorD1Ev@Base 2.7.0
  _ZN5boost10lock_errorD2Ev@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZN5boost11unique_lockINS_15recursive_mutexEE4lockEv@Base 2.7.0
+ (arch=amd64)_ZN5boost15recursive_mutex6unlockEv@Base 2.7.0
  (optional=templinst)_ZN5boost15throw_exceptionINS_10lock_errorEEEvRKT_@Base 2.7.0
  _ZN5boost16exception_detail10clone_baseD0Ev@Base 2.7.0
  _ZN5boost16exception_detail10clone_baseD1Ev@Base 2.7.0
  _ZN5boost16exception_detail10clone_baseD2Ev@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEEC1ERKS4_@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEEC2ERKS4_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEEC1ERKS4_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEEC2ERKS4_@Base 2.7.0
  (optional=templinst)_ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED0Ev@Base 2.7.0
  (optional=templinst)_ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED1Ev@Base 2.7.0
  (optional=templinst)_ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED2Ev@Base 2.7.0
@@ -2508,19 +2514,26 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN6vpLineD1Ev@Base 2.7.0
  _ZN6vpLineD2Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZN6vpListI11vpColVectorE4killEv@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN6vpListI15vpHistogramPeakE4initEv@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN6vpListI15vpHistogramPeakE4killEv@Base 2.7.0
  (optional=templinst)_ZN6vpListI15vpHistogramPeakED0Ev@Base 2.7.0
  (optional=templinst)_ZN6vpListI15vpHistogramPeakED1Ev@Base 2.7.0
  (optional=templinst)_ZN6vpListI15vpHistogramPeakED2Ev@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZN6vpListI15vpHistogramPeakEaSERKS1_@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZN6vpListI16vpRotationMatrixE4killEv@Base 2.7.0
- (optional=templinst|arch=!amd64 !i386)_ZN6vpListI19vpTranslationVectorE4killEv@Base 2.7.0
+ (optional=templinst|arch=!i386)_ZN6vpListI19vpTranslationVectorE4killEv@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN6vpListI6vpDot2E4initEv@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZN6vpListI6vpDot2E4killEv@Base 2.7.0
  (optional=templinst)_ZN6vpListI6vpDot2ED0Ev@Base 2.7.0
  (optional=templinst)_ZN6vpListI6vpDot2ED1Ev@Base 2.7.0
  (optional=templinst)_ZN6vpListI6vpDot2ED2Ev@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN6vpListIP14vpBasicFeatureE4initEv@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN6vpListIP14vpBasicFeatureE4killEv@Base 2.7.0
  (optional=templinst)_ZN6vpListIP14vpBasicFeatureED0Ev@Base 2.7.0
  (optional=templinst)_ZN6vpListIP14vpBasicFeatureED1Ev@Base 2.7.0
  (optional=templinst)_ZN6vpListIP14vpBasicFeatureED2Ev@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN6vpListIjE4initEv@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN6vpListIjE4killEv@Base 2.7.0
  (optional=templinst)_ZN6vpListIjED0Ev@Base 2.7.0
  (optional=templinst)_ZN6vpListIjED1Ev@Base 2.7.0
  (optional=templinst)_ZN6vpListIjED2Ev@Base 2.7.0
@@ -2690,9 +2703,13 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst)_ZN7vpImageI6vpRGBaED2Ev@Base 2.7.0
  (optional=templinst)_ZN7vpImageI6vpRGBaEaSERKS1_@Base 2.7.0
  (optional=templinst)_ZN7vpImageIdE4initEjj@Base 2.7.0
- (optional=templinst|arch=!amd64 !i386)_ZN7vpImageIdE6resizeEjj@Base 2.7.0
+ (optional=templinst|arch=!i386)_ZN7vpImageIdE6resizeEjj@Base 2.7.0
  (optional=templinst)_ZN7vpImageIfE4initEjj@Base 2.7.0
- (optional=templinst|arch=!amd64 !i386)_ZN7vpImageIfE6resizeEjj@Base 2.7.0
+ (optional=templinst|arch=!i386)_ZN7vpImageIfE6resizeEjj@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN7vpImageIfED0Ev@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN7vpImageIfED1Ev@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN7vpImageIfED2Ev@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZN7vpImageIfEaSERKS0_@Base 2.7.0
  (optional=templinst)_ZN7vpImageIhE4initEjj@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZN7vpImageIhE4initEjjh@Base 2.7.0
  (optional=templinst)_ZN7vpImageIhE6resizeEjj@Base 2.7.0
@@ -2854,6 +2871,11 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN7vpViperD0Ev@Base 2.7.0
  _ZN7vpViperD1Ev@Base 2.7.0
  _ZN7vpViperD2Ev@Base 2.7.0
+ (arch=amd64)_ZN8Freenect14FreenectDevice23freenect_depth_callbackEP16_freenect_devicePvj@Base 2.7.0
+ (arch=amd64)_ZN8Freenect14FreenectDevice23freenect_video_callbackEP16_freenect_devicePvj@Base 2.7.0
+ (arch=amd64)_ZN8Freenect14FreenectDeviceD0Ev@Base 2.7.0
+ (arch=amd64)_ZN8Freenect14FreenectDeviceD1Ev@Base 2.7.0
+ (arch=amd64)_ZN8Freenect14FreenectDeviceD2Ev@Base 2.7.0
  _ZN8vpAROgre10frameEndedERKN4Ogre10FrameEventE@Base 2.7.0
  _ZN8vpAROgre10keyPressedERKN3OIS8KeyEventE@Base 2.7.0
  _ZN8vpAROgre11addRotationERKSsRK16vpRotationMatrix@Base 2.7.0
@@ -2944,6 +2966,19 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN8vpFFMPEGC2Ev@Base 2.7.0
  _ZN8vpFFMPEGD1Ev@Base 2.7.0
  _ZN8vpFFMPEGD2Ev@Base 2.7.0
+ (arch=amd64)_ZN8vpKinect11getDepthMapER7vpImageIfE@Base 2.7.0
+ (arch=amd64)_ZN8vpKinect11getDepthMapER7vpImageIfERS0_IhE@Base 2.7.0
+ (arch=amd64)_ZN8vpKinect12warpRGBFrameERK7vpImageI6vpRGBaERKS0_IfERS2_@Base 2.7.0
+ (arch=amd64)_ZN8vpKinect13DepthCallbackEPvj@Base 2.7.0
+ (arch=amd64)_ZN8vpKinect13VideoCallbackEPvj@Base 2.7.0
+ (arch=amd64)_ZN8vpKinect4stopEv@Base 2.7.0
+ (arch=amd64)_ZN8vpKinect5startENS_14vpDMResolutionE@Base 2.7.0
+ (arch=amd64)_ZN8vpKinect6getRGBER7vpImageI6vpRGBaE@Base 2.7.0
+ (arch=amd64)_ZN8vpKinectC1EP17_freenect_contexti@Base 2.7.0
+ (arch=amd64)_ZN8vpKinectC2EP17_freenect_contexti@Base 2.7.0
+ (arch=amd64)_ZN8vpKinectD0Ev@Base 2.7.0
+ (arch=amd64)_ZN8vpKinectD1Ev@Base 2.7.0
+ (arch=amd64)_ZN8vpKinectD2Ev@Base 2.7.0
  _ZN8vpMatrix10loadMatrixEPKcRS_bPc@Base 2.7.0
  _ZN8vpMatrix10maplePrintERSo@Base 2.7.0
  _ZN8vpMatrix10saveMatrixEPKcRKS_bS1_@Base 2.7.0
@@ -3712,8 +3747,10 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst|arch=amd64 i386)_ZNSt10_List_baseI15vpHistogramPeakSaIS0_EE8_M_clearEv@Base 2.7.0
  (optional=templinst)_ZNSt10_List_baseI16vpImageSimulatorSaIS0_EE8_M_clearEv@Base 2.7.0
  (optional=templinst)_ZNSt10_List_baseI19vpHomogeneousMatrixSaIS0_EE8_M_clearEv@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZNSt10_List_baseI6vpDot2SaIS0_EE8_M_clearEv@Base 2.7.0
  (optional=templinst)_ZNSt10_List_baseI7vpPointSaIS0_EE8_M_clearEv@Base 2.7.0
  (optional=templinst)_ZNSt10_List_baseI8vpMeSiteSaIS0_EE8_M_clearEv@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZNSt10_List_baseIP12indexFaceSetSaIS1_EE8_M_clearEv@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt10_List_baseIP17vpMbtDistanceLineSaIS1_EE8_M_clearEv@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt10_List_baseIP17vpMbtDistanceLineSaIS1_EED1Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt10_List_baseIP17vpMbtDistanceLineSaIS1_EED2Ev@Base 2.7.0
@@ -3771,7 +3808,7 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst|arch=!armhf)_ZNSt3mapISsN4Ogre13_ConfigOptionESt4lessISsENS0_12STLAllocatorISt4pairIKSsS1_ENS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEED2Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt3mapISsSsSt4lessISsEN4Ogre12STLAllocatorISt4pairIKSsSsENS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEED1Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt3mapISsSsSt4lessISsEN4Ogre12STLAllocatorISt4pairIKSsSsENS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEED2Ev@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZNSt3mapISsSsSt4lessISsEN4Ogre12STLAllocatorISt4pairIKSsSsENS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEEixERS5_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt3mapISsSsSt4lessISsEN4Ogre12STLAllocatorISt4pairIKSsSsENS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEEixERS5_@Base 2.7.0
  (optional=templinst|arch=amd64)_ZNSt3mapISsiSt4lessISsESaISt4pairIKSsiEEEixERS3_@Base 2.7.0
  (optional=templinst)_ZNSt3mapIi12vpImagePointSt4lessIiESaISt4pairIKiS0_EEED1Ev@Base 2.7.0
  (optional=templinst)_ZNSt3mapIi12vpImagePointSt4lessIiESaISt4pairIKiS0_EEED2Ev@Base 2.7.0
@@ -3781,10 +3818,12 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst|arch=amd64 i386)_ZNSt4listI12vpImagePointSaIS0_EED2Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt4listI12vpImagePointSaIS0_EEaSERKS2_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt4listI15vpHistogramPeakSaIS0_EE4sortIPFbS0_S0_EEEvT_@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZNSt4listI15vpHistogramPeakSaIS0_EE5mergeIPFbS0_S0_EEEvRS2_T_@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt4listI15vpHistogramPeakSaIS0_EED1Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt4listI15vpHistogramPeakSaIS0_EED2Ev@Base 2.7.0
  (optional=templinst)_ZNSt4listI16vpImageSimulatorSaIS0_EEaSERKS2_@Base 2.7.0
  (optional=templinst)_ZNSt4listI8vpMeSiteSaIS0_EE4sortIPFbRKS0_S5_EEEvT_@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZNSt4listI8vpMeSiteSaIS0_EE5mergeIPFbRKS0_S5_EEEvRS2_T_@Base 2.7.0
  (optional=templinst)_ZNSt4listI8vpMeSiteSaIS0_EEaSERKS2_@Base 2.7.0
  (optional=templinst)_ZNSt4listIP17vpMbtDistanceLineSaIS1_EEC1ERKS3_@Base 2.7.0
  (optional=templinst)_ZNSt4listIP17vpMbtDistanceLineSaIS1_EEC2ERKS3_@Base 2.7.0
@@ -3794,18 +3833,18 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst)_ZNSt4listIP21vpMbtDistanceCylinderSaIS1_EEaSERKS3_@Base 2.7.0
  (optional=templinst)_ZNSt4listIdSaIdEED1Ev@Base 2.7.0
  (optional=templinst)_ZNSt4listIdSaIdEED2Ev@Base 2.7.0
- (optional=templinst|arch=!amd64 !i386)_ZNSt4listIdSaIdEEaSERKS1_@Base 2.7.0
+ (optional=templinst|arch=!i386)_ZNSt4listIdSaIdEEaSERKS1_@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt4listIiSaIiEED1Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt4listIiSaIiEED2Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt4listIjSaIjEED1Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt4listIjSaIjEED2Ev@Base 2.7.0
- (optional=templinst|arch=!amd64 !i386)_ZNSt4listIjSaIjEEaSERKS1_@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZNSt4pairIKSsN4Ogre13_ConfigOptionEEC1ERKS3_@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZNSt4pairIKSsN4Ogre13_ConfigOptionEEC2ERKS3_@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZNSt4pairIKSsSsEC1ERKS1_@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZNSt4pairIKSsSsEC1ERS0_S2_@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZNSt4pairIKSsSsEC2ERKS1_@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZNSt4pairIKSsSsEC2ERS0_S2_@Base 2.7.0
+ (optional=templinst|arch=!i386)_ZNSt4listIjSaIjEEaSERKS1_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt4pairIKSsN4Ogre13_ConfigOptionEEC1ERKS3_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt4pairIKSsN4Ogre13_ConfigOptionEEC2ERKS3_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt4pairIKSsSsEC1ERKS1_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt4pairIKSsSsEC1ERS0_S2_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt4pairIKSsSsEC2ERKS1_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt4pairIKSsSsEC2ERS0_S2_@Base 2.7.0
  (optional=templinst)_ZNSt4pairIKSsSsED1Ev@Base 2.7.0
  (optional=templinst)_ZNSt4pairIKSsSsED2Ev@Base 2.7.0
  (optional=templinst|arch=i386)_ZNSt4pairIKSsiED1Ev@Base 2.7.0
@@ -3919,8 +3958,10 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst|arch=!amd64 !ia64)_ZNSt6vectorIxSaIxEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPxS1_EERKx@Base 2.7.0
  (optional=templinst|arch=i386)_ZNSt6vectorIxSaIxEED1Ev@Base 2.7.0
  (optional=templinst|arch=i386)_ZNSt6vectorIxSaIxEED2Ev@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZNSt8_Rb_treeIPKcSt4pairIKS1_P15vpFeatureMomentESt10_Select1stIS6_EN23vpFeatureMomentDatabase7cmp_strESaIS6_EE10_M_insert_EPKSt18_Rb_tree_node_baseSF_RKS6_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeIPKcSt4pairIKS1_P15vpFeatureMomentESt10_Select1stIS6_EN23vpFeatureMomentDatabase7cmp_strESaIS6_EE16_M_insert_uniqueERKS6_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIPKcSt4pairIKS1_P15vpFeatureMomentESt10_Select1stIS6_EN23vpFeatureMomentDatabase7cmp_strESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZNSt8_Rb_treeIPKcSt4pairIKS1_P8vpMomentESt10_Select1stIS6_EN16vpMomentDatabase7cmp_strESaIS6_EE10_M_insert_EPKSt18_Rb_tree_node_baseSF_RKS6_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeIPKcSt4pairIKS1_P8vpMomentESt10_Select1stIS6_EN16vpMomentDatabase7cmp_strESaIS6_EE16_M_insert_uniqueERKS6_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIPKcSt4pairIKS1_P8vpMomentESt10_Select1stIS6_EN16vpMomentDatabase7cmp_strESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EED0Ev@Base 2.7.0
@@ -3940,16 +3981,18 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEED1Ev@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEED2Ev@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE10_M_insert_EPKSt18_Rb_tree_node_baseSB_RKS2_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE10_M_insert_EPKSt18_Rb_tree_node_baseSB_RKS2_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE15_M_insert_equalERKS2_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE10_M_insert_EPKSt18_Rb_tree_node_baseSB_RKS2_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE16_M_insert_uniqueERKS2_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS2_ERKS2_@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE4findERS1_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE7_M_copyEPKSt13_Rb_tree_nodeIS2_EPSA_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EEaSERKS8_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt8_Rb_treeIddSt9_IdentityIdESt4lessIdESaIdEE16_M_insert_uniqueERKd@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZNSt8_Rb_treeIddSt9_IdentityIdESt4lessIdESaIdEE10_M_insert_EPKSt18_Rb_tree_node_baseS8_RKd@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeIddSt9_IdentityIdESt4lessIdESaIdEE16_M_insert_uniqueERKd@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeIddSt9_IdentityIdESt4lessIdESaIdEE8_M_eraseEPSt13_Rb_tree_nodeIdE@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE10_M_insert_EPKSt18_Rb_tree_node_baseSC_RKS3_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE16_M_insert_uniqueERKS3_@Base 2.7.0
@@ -3957,17 +4000,17 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst|arch=!amd64 !i386)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE5eraseERS1_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE7_M_copyEPKSt13_Rb_tree_nodeIS3_EPSB_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE8_M_eraseEPSt13_Rb_tree_nodeIS3_E@Base 2.7.0
- (optional=templinst|arch=armhf mipsel powerpc)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EEaSERKS9_@Base 2.7.0
+ (optional=templinst|arch=amd64 armhf mipsel powerpc)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EEaSERKS9_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE10_M_insert_EPKSt18_Rb_tree_node_baseSB_RKS2_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE16_M_insert_uniqueERKS2_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS2_ERKS2_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE7_M_copyEPKSt13_Rb_tree_nodeIS2_EPSA_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.7.0
- (optional=templinst|arch=armhf mipsel powerpc)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EEaSERKS8_@Base 2.7.0
+ (optional=templinst|arch=amd64 armhf mipsel powerpc)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EEaSERKS8_@Base 2.7.0
  (arch=amd64 i386)_ZNSt8ios_base7failureC1ERKS0_@Base 2.7.0
  (arch=amd64 i386)_ZNSt8ios_base7failureC2ERKS0_@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZNSt8multimapISsSsSt4lessISsESaISt4pairIKSsSsEEED1Ev@Base 2.7.0
- (optional=templinst|arch=amd64 i386)_ZNSt8multimapISsSsSt4lessISsESaISt4pairIKSsSsEEED2Ev@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt8multimapISsSsSt4lessISsESaISt4pairIKSsSsEEED1Ev@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt8multimapISsSsSt4lessISsESaISt4pairIKSsSsEEED2Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZSt13copy_backwardIP7vpPointS1_ET0_T_S3_S2_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZSt13copy_backwardIPP12vpMbtPolygonS2_ET0_T_S4_S3_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZSt13copy_backwardIPP15vpMbtKltPolygonS2_ET0_T_S4_S3_@Base 2.7.0
@@ -3980,12 +4023,13 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZSt4fillSt13_Bit_iteratorS_RKb@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZSt8_DestroyIPSt4listIP17vpMbtDistanceLineSaIS2_EEEvT_S6_@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386)_ZSt8_DestroyIPSt4listIP21vpMbtDistanceCylinderSaIS2_EEEvT_S6_@Base 2.7.0
- (arch=amd64 i386)_ZSt8__fill_aIP7vpPointS0_EN9__gnu_cxx11__enable_ifIXntsrSt11__is_scalarIT0_E7__valueEvE6__typeET_S9_RKS5_@Base 2.7.0
+ (arch=i386)_ZSt8__fill_aIP7vpPointS0_EN9__gnu_cxx11__enable_ifIXntsrSt11__is_scalarIT0_E7__valueEvE6__typeET_S9_RKS5_@Base 2.7.0
  (arch=amd64 i386)_ZSt8__fill_aIPSt4listIP17vpMbtDistanceLineSaIS2_EES4_EN9__gnu_cxx11__enable_ifIXntsrSt11__is_scalarIT0_E7__valueEvE6__typeET_SD_RKS9_@Base 2.7.0
  (arch=amd64 i386)_ZSt8__fill_aIPSt4listIP21vpMbtDistanceCylinderSaIS2_EES4_EN9__gnu_cxx11__enable_ifIXntsrSt11__is_scalarIT0_E7__valueEvE6__typeET_SD_RKS9_@Base 2.7.0
- (optional=templinst|arch=i386)_ZSteqIcEN9__gnu_cxx11__enable_ifIXsrSt9__is_charIT_E7__valueEbE6__typeERKSbIS3_St11char_traitsIS3_ESaIS3_EESC_@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZSteqIcEN9__gnu_cxx11__enable_ifIXsrSt9__is_charIT_E7__valueEbE6__typeERKSbIS3_St11char_traitsIS3_ESaIS3_EESC_@Base 2.7.0
  (optional=templinst)_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_@Base 2.7.0
  (optional=templinst)_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3_@Base 2.7.0
+ (optional=templinst|arch=amd64)_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_S8_@Base 2.7.0
  _ZTI10vpCylinder@Base 2.7.0
  _ZTI10vpDisplayX@Base 2.7.0
  _ZTI10vpTriangle@Base 2.7.0
@@ -4109,6 +4153,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI6vpPose@Base 2.7.0
  _ZTI7vpAfma6@Base 2.7.0
  _ZTI7vpImageI6vpRGBaE@Base 2.7.0
+ (arch=amd64)_ZTI7vpImageIfE@Base 2.7.0
  _ZTI7vpImageIhE@Base 2.7.0
  _ZTI7vpNurbs@Base 2.7.0
  _ZTI7vpPoint@Base 2.7.0
@@ -4119,6 +4164,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI8vpAROgre@Base 2.7.0
  _ZTI8vpCircle@Base 2.7.0
  _ZTI8vpClient@Base 2.7.0
+ (arch=amd64)_ZTI8vpKinect@Base 2.7.0
  _ZTI8vpMatrix@Base 2.7.0
  _ZTI8vpMeLine@Base 2.7.0
  _ZTI8vpMeSite@Base 2.7.0
@@ -4158,6 +4204,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTIN5boost16exception_detail19error_info_injectorINS_10lock_errorEEE@Base 2.7.0
  _ZTIN5boost16thread_exceptionE@Base 2.7.0
  _ZTIN5boost9exceptionE@Base 2.7.0
+ (arch=amd64)_ZTIN8Freenect11NoncopyableE@Base 2.7.0
+ (arch=amd64)_ZTIN8Freenect14FreenectDeviceE@Base 2.7.0
  _ZTINSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implE@Base 2.7.0
  _ZTINSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EEE@Base 2.7.0
  _ZTINSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EEE@Base 2.7.0
@@ -4284,6 +4332,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS6vpPose@Base 2.7.0
  _ZTS7vpAfma6@Base 2.7.0
  _ZTS7vpImageI6vpRGBaE@Base 2.7.0
+ (arch=amd64)_ZTS7vpImageIfE@Base 2.7.0
  _ZTS7vpImageIhE@Base 2.7.0
  _ZTS7vpNurbs@Base 2.7.0
  _ZTS7vpPoint@Base 2.7.0
@@ -4294,6 +4343,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS8vpAROgre@Base 2.7.0
  _ZTS8vpCircle@Base 2.7.0
  _ZTS8vpClient@Base 2.7.0
+ (arch=amd64)_ZTS8vpKinect@Base 2.7.0
  _ZTS8vpMatrix@Base 2.7.0
  _ZTS8vpMeLine@Base 2.7.0
  _ZTS8vpMeSite@Base 2.7.0
@@ -4333,6 +4383,8 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTSN5boost16exception_detail19error_info_injectorINS_10lock_errorEEE@Base 2.7.0
  _ZTSN5boost16thread_exceptionE@Base 2.7.0
  _ZTSN5boost9exceptionE@Base 2.7.0
+ (arch=amd64)_ZTSN8Freenect11NoncopyableE@Base 2.7.0
+ (arch=amd64)_ZTSN8Freenect14FreenectDeviceE@Base 2.7.0
  _ZTSNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implE@Base 2.7.0
  _ZTSNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EEE@Base 2.7.0
  _ZTSNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EEE@Base 2.7.0
@@ -4461,6 +4513,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV6vpListIjE@Base 2.7.0
  _ZTV6vpPose@Base 2.7.0
  _ZTV7vpImageI6vpRGBaE@Base 2.7.0
+ (arch=amd64)_ZTV7vpImageIfE@Base 2.7.0
  _ZTV7vpImageIhE@Base 2.7.0
  _ZTV7vpNurbs@Base 2.7.0
  _ZTV7vpPoint@Base 2.7.0
@@ -4471,6 +4524,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV8vpAROgre@Base 2.7.0
  _ZTV8vpCircle@Base 2.7.0
  _ZTV8vpClient@Base 2.7.0
+ (arch=amd64)_ZTV8vpKinect@Base 2.7.0
  _ZTV8vpMatrix@Base 2.7.0
  _ZTV8vpMeLine@Base 2.7.0
  _ZTV8vpMeSite@Base 2.7.0
@@ -4505,6 +4559,7 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTVN5boost16exception_detail19error_info_injectorINS_10lock_errorEEE@Base 2.7.0
  _ZTVN5boost16thread_exceptionE@Base 2.7.0
  _ZTVN5boost9exceptionE@Base 2.7.0
+ (arch=amd64)_ZTVN8Freenect14FreenectDeviceE@Base 2.7.0
  _ZTVNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implE@Base 2.7.0
  _ZTVNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EEE@Base 2.7.0
  _ZTVNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EEE@Base 2.7.0
