@@ -4,6 +4,7 @@ visp (2.7.0-3) unstable; urgency=low
   * Install vpConfig.h in include/<architecture triplet> (Closes: #707754).
   * Update CMake-related files for multiarch support and install them
     in usr/lib/<arch>/visp.
+  * Update from libcoin60 to libcoin80.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Wed, 15 May 2013 14:47:32 +0900
 
