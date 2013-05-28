@@ -1,7 +1,16 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
 
-export DEB_BUILD_HARDENING=1
-export DEB_BUILD_HARDENING_PIE=0
+# Hardening.
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all,-pie
+
+CPPFLAGS:=$(shell dpkg-buildflags --get CPPFLAGS)
+CFLAGS:=$(shell dpkg-buildflags --get CFLAGS)
+CXXFLAGS:=$(shell dpkg-buildflags --get CXXFLAGS)
+LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
+
+CFLAGS+=$(CPPFLAGS)
+CXXFLAGS+=$(CPPFLAGS)
 
 .PHONY: override_dh_auto_configure	\
 	override_dh_auto_build		\
