@@ -5,6 +5,7 @@ visp (2.7.0-3) unstable; urgency=low
   * Update CMake-related files for multiarch support and install them
     in usr/lib/<arch>/visp.
   * Update from libcoin60 to libcoin80.
+  * debian/control: Refer to git.debian.org repository in Vcs-* fields.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Wed, 15 May 2013 14:47:32 +0900
 
