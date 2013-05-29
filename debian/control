@@ -29,8 +29,8 @@ Build-Depends: debhelper (>= 9),
                libfreenect-dev,
                libois-dev [linux-any]
 Standards-Version: 3.9.4
-Vcs-Browser: https://github.com/thomas-moulard/visp-deb
-Vcs-Git: git://github.com/thomas-moulard/visp-deb.git
+Vcs-Browser: http://git.debian.org/?p=debian-science/packages/visp.git
+Vcs-Git: http://git.debian.org/?p=debian-science/packages/visp.git
 Homepage: http://www.irisa.fr/lagadic/visp/visp.html
 
 Package: libvisp-dev
