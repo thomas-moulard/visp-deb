@@ -2705,10 +2705,6 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst|arch=!i386)_ZN7vpImageIdE6resizeEjj@Base 2.7.0
  (optional=templinst)_ZN7vpImageIfE4initEjj@Base 2.7.0
  (optional=templinst|arch=!i386)_ZN7vpImageIfE6resizeEjj@Base 2.7.0
- (optional=templinst|arch=amd64)_ZN7vpImageIfED0Ev@Base 2.7.0
- (optional=templinst|arch=amd64)_ZN7vpImageIfED1Ev@Base 2.7.0
- (optional=templinst|arch=amd64)_ZN7vpImageIfED2Ev@Base 2.7.0
- (optional=templinst|arch=amd64)_ZN7vpImageIfEaSERKS0_@Base 2.7.0
  (optional=templinst)_ZN7vpImageIhE4initEjj@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZN7vpImageIhE4initEjjh@Base 2.7.0
  (optional=templinst)_ZN7vpImageIhE6resizeEjj@Base 2.7.0
@@ -2870,11 +2866,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN7vpViperD0Ev@Base 2.7.0
  _ZN7vpViperD1Ev@Base 2.7.0
  _ZN7vpViperD2Ev@Base 2.7.0
- (arch=amd64)_ZN8Freenect14FreenectDevice23freenect_depth_callbackEP16_freenect_devicePvj@Base 2.7.0
- (arch=amd64)_ZN8Freenect14FreenectDevice23freenect_video_callbackEP16_freenect_devicePvj@Base 2.7.0
- (arch=amd64)_ZN8Freenect14FreenectDeviceD0Ev@Base 2.7.0
- (arch=amd64)_ZN8Freenect14FreenectDeviceD1Ev@Base 2.7.0
- (arch=amd64)_ZN8Freenect14FreenectDeviceD2Ev@Base 2.7.0
  _ZN8vpAROgre10frameEndedERKN4Ogre10FrameEventE@Base 2.7.0
  _ZN8vpAROgre10keyPressedERKN3OIS8KeyEventE@Base 2.7.0
  _ZN8vpAROgre11addRotationERKSsRK16vpRotationMatrix@Base 2.7.0
@@ -2965,19 +2956,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN8vpFFMPEGC2Ev@Base 2.7.0
  _ZN8vpFFMPEGD1Ev@Base 2.7.0
  _ZN8vpFFMPEGD2Ev@Base 2.7.0
- (arch=amd64)_ZN8vpKinect11getDepthMapER7vpImageIfE@Base 2.7.0
- (arch=amd64)_ZN8vpKinect11getDepthMapER7vpImageIfERS0_IhE@Base 2.7.0
- (arch=amd64)_ZN8vpKinect12warpRGBFrameERK7vpImageI6vpRGBaERKS0_IfERS2_@Base 2.7.0
- (arch=amd64)_ZN8vpKinect13DepthCallbackEPvj@Base 2.7.0
- (arch=amd64)_ZN8vpKinect13VideoCallbackEPvj@Base 2.7.0
- (arch=amd64)_ZN8vpKinect4stopEv@Base 2.7.0
- (arch=amd64)_ZN8vpKinect5startENS_14vpDMResolutionE@Base 2.7.0
- (arch=amd64)_ZN8vpKinect6getRGBER7vpImageI6vpRGBaE@Base 2.7.0
- (arch=amd64)_ZN8vpKinectC1EP17_freenect_contexti@Base 2.7.0
- (arch=amd64)_ZN8vpKinectC2EP17_freenect_contexti@Base 2.7.0
- (arch=amd64)_ZN8vpKinectD0Ev@Base 2.7.0
- (arch=amd64)_ZN8vpKinectD1Ev@Base 2.7.0
- (arch=amd64)_ZN8vpKinectD2Ev@Base 2.7.0
  _ZN8vpMatrix10loadMatrixEPKcRS_bPc@Base 2.7.0
  _ZN8vpMatrix10maplePrintERSo@Base 2.7.0
  _ZN8vpMatrix10saveMatrixEPKcRKS_bS1_@Base 2.7.0
@@ -4152,7 +4130,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI6vpPose@Base 2.7.0
  _ZTI7vpAfma6@Base 2.7.0
  _ZTI7vpImageI6vpRGBaE@Base 2.7.0
- (arch=amd64)_ZTI7vpImageIfE@Base 2.7.0
  _ZTI7vpImageIhE@Base 2.7.0
  _ZTI7vpNurbs@Base 2.7.0
  _ZTI7vpPoint@Base 2.7.0
@@ -4163,7 +4140,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTI8vpAROgre@Base 2.7.0
  _ZTI8vpCircle@Base 2.7.0
  _ZTI8vpClient@Base 2.7.0
- (arch=amd64)_ZTI8vpKinect@Base 2.7.0
  _ZTI8vpMatrix@Base 2.7.0
  _ZTI8vpMeLine@Base 2.7.0
  _ZTI8vpMeSite@Base 2.7.0
@@ -4203,8 +4179,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTIN5boost16exception_detail19error_info_injectorINS_10lock_errorEEE@Base 2.7.0
  _ZTIN5boost16thread_exceptionE@Base 2.7.0
  _ZTIN5boost9exceptionE@Base 2.7.0
- (arch=amd64)_ZTIN8Freenect11NoncopyableE@Base 2.7.0
- (arch=amd64)_ZTIN8Freenect14FreenectDeviceE@Base 2.7.0
  _ZTINSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implE@Base 2.7.0
  _ZTINSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EEE@Base 2.7.0
  _ZTINSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EEE@Base 2.7.0
@@ -4331,7 +4305,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS6vpPose@Base 2.7.0
  _ZTS7vpAfma6@Base 2.7.0
  _ZTS7vpImageI6vpRGBaE@Base 2.7.0
- (arch=amd64)_ZTS7vpImageIfE@Base 2.7.0
  _ZTS7vpImageIhE@Base 2.7.0
  _ZTS7vpNurbs@Base 2.7.0
  _ZTS7vpPoint@Base 2.7.0
@@ -4342,7 +4315,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTS8vpAROgre@Base 2.7.0
  _ZTS8vpCircle@Base 2.7.0
  _ZTS8vpClient@Base 2.7.0
- (arch=amd64)_ZTS8vpKinect@Base 2.7.0
  _ZTS8vpMatrix@Base 2.7.0
  _ZTS8vpMeLine@Base 2.7.0
  _ZTS8vpMeSite@Base 2.7.0
@@ -4382,8 +4354,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTSN5boost16exception_detail19error_info_injectorINS_10lock_errorEEE@Base 2.7.0
  _ZTSN5boost16thread_exceptionE@Base 2.7.0
  _ZTSN5boost9exceptionE@Base 2.7.0
- (arch=amd64)_ZTSN8Freenect11NoncopyableE@Base 2.7.0
- (arch=amd64)_ZTSN8Freenect14FreenectDeviceE@Base 2.7.0
  _ZTSNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implE@Base 2.7.0
  _ZTSNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EEE@Base 2.7.0
  _ZTSNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EEE@Base 2.7.0
@@ -4512,7 +4482,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV6vpListIjE@Base 2.7.0
  _ZTV6vpPose@Base 2.7.0
  _ZTV7vpImageI6vpRGBaE@Base 2.7.0
- (arch=amd64)_ZTV7vpImageIfE@Base 2.7.0
  _ZTV7vpImageIhE@Base 2.7.0
  _ZTV7vpNurbs@Base 2.7.0
  _ZTV7vpPoint@Base 2.7.0
@@ -4523,7 +4492,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTV8vpAROgre@Base 2.7.0
  _ZTV8vpCircle@Base 2.7.0
  _ZTV8vpClient@Base 2.7.0
- (arch=amd64)_ZTV8vpKinect@Base 2.7.0
  _ZTV8vpMatrix@Base 2.7.0
  _ZTV8vpMeLine@Base 2.7.0
  _ZTV8vpMeSite@Base 2.7.0
@@ -4558,7 +4526,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZTVN5boost16exception_detail19error_info_injectorINS_10lock_errorEEE@Base 2.7.0
  _ZTVN5boost16thread_exceptionE@Base 2.7.0
  _ZTVN5boost9exceptionE@Base 2.7.0
- (arch=amd64)_ZTVN8Freenect14FreenectDeviceE@Base 2.7.0
  _ZTVNSt12_Vector_baseISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEE12_Vector_implE@Base 2.7.0
  _ZTVNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS8_Lb0EEE@Base 2.7.0
  _ZTVNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsEN4Ogre12STLAllocatorIS2_NS7_22CategorisedAllocPolicyILNS7_14MemoryCategoryE0EEEEEE13_Rb_tree_implIS6_Lb0EEE@Base 2.7.0
