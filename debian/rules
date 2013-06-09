@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
-# Hardening.
+# Hardening flags.
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all,-pie
 
 CPPFLAGS:=$(shell dpkg-buildflags --get CPPFLAGS)
@@ -9,8 +9,51 @@ CFLAGS:=$(shell dpkg-buildflags --get CFLAGS)
 CXXFLAGS:=$(shell dpkg-buildflags --get CXXFLAGS)
 LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
 
+# Duplicate flags as CMake is ignoring CPPFLAGS.
 CFLAGS+=$(CPPFLAGS)
 CXXFLAGS+=$(CPPFLAGS)
+
+# Retrieve environment information.
+DEB_HOST_ARCH_OS ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+
+# Configura package and enable dependencies available on all platforms.
+# dc1394: off (obsolete)
+# libav (ffmpeg): available on all platforms
+# opencv: available on all platforms
+# coin3: available on all platforms
+# lapack: available on all platforms
+# ogre: available on all platforms
+# xml2: available on all platforms
+# libjpeg6b: available on all platforms
+# libpng: available on all platforms
+# libx11: available on all platforms
+CONFIGURE_ARGS=	\
+ -DCMAKE_INSTALL_LIBDIR:STRING="lib/$(DEB_HOST_MULTIARCH)"	\
+ -DBUILD_DEMOS=ON -DBUILD_TESTING=ON -DBUILD_EXAMPLES=ON	\
+ -DBUILD_SHARED_LIBS=ON						\
+ -DUSE_DC1394_1=OFF -DUSE_FFMPEG=ON				\
+ -DUSE_OPENCV=ON 						\
+ -DUSE_COIN=ON -DUSE_GSL=OFF					\
+ -DUSE_LAPACK=ON -DUSE_OGRE=ON					\
+ -DUSE_XML2=ON -DUSE_GTK2=ON -DUSE_LIBJPEG=ON			\
+ -DUSE_LIBPNG=ON -DUSE_X11=ON
+
+# dc1394, v4l and ois are only available on Linux.
+ifneq ($(DEB_HOST_ARCH_OS),linux)
+  CONFIGURE_ARGS += -DUSE_DC1394_2=OFF -DUSE_V4L2:BOOL=OFF -DUSE_OIS=OFF
+else
+  CONFIGURE_ARGS += -DUSE_DC1394_2=ON -DUSE_V4L2:BOOL=ON -DUSE_OIS=ON
+endif
+
+# freenect is not available on hurd.
+ifeq ($(DEB_HOST_ARCH_OS),hurd)
+  CONFIGURE_ARGS += -DLIBFEENECT=OFF
+else
+  CONFIGURE_ARGS += -DLIBFEENECT=ON
+endif
+
 
 .PHONY: override_dh_auto_configure	\
 	override_dh_auto_build		\
@@ -26,17 +69,7 @@ override_dh_auto_clean:
 	rm -rf .pc
 
 override_dh_auto_configure:
-	dh_auto_configure -- \
-		-DBUILD_DEMOS=ON -DBUILD_TESTING=ON -DBUILD_EXAMPLES=ON \
-		-DBUILD_SHARED_LIBS=ON					\
-		-DUSE_DC1394_1=OFF -DUSE_FFMPEG=ON			\
-		-DUSE_DC1394_2=ON -DUSE_V4L2=ON -DUSE_OPENCV=ON 	\
-		-DUSE_COIN=ON -DUSE_GSL=OFF				\
-		-DUSE_LAPACK=ON -DUSE_OGRE=ON				\
-		-DUSE_XML2=ON -DUSE_GTK2=ON -DUSE_LIBJPEG=ON		\
-		-DUSE_LIBPNG=ON						\
-		-DUSE_LIBFREENECT=ON -DUSE_X11=ON -DUSE_OIS=ON		\
-		-DCMAKE_INSTALL_LIBDIR:STRING="lib/$(DEB_HOST_MULTIARCH)"
+	dh_auto_configure -- $(CONFIGURE_ARGS)
 
 override_dh_auto_build:
 	dh_auto_build -- # Compile the software.
