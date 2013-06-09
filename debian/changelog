@@ -1,3 +1,11 @@
+visp (2.7.0-4) unstable; urgency=low
+
+  * debian/rules: fix compilation on non-linux platforms
+    by disabling optional features which are not available locally.
+  * debian/libvisp2.symbols: update symbols using the Debian buildfarm.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Sun, 09 Jun 2013 20:00:48 +0900
+
 visp (2.7.0-3) unstable; urgency=low
 
   * Do not package usr/share/visp/ViSP-third-party.txt (Closes: #707755).
