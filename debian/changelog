@@ -1,3 +1,9 @@
+visp (2.7.0-5) unstable; urgency=low
+
+  * Look for and compile against Boost.System when Ogre is used.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Thu, 13 Jun 2013 11:47:20 +0900
+
 visp (2.7.0-4) unstable; urgency=low
 
   * debian/rules: fix compilation on non-linux platforms
