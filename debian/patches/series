@@ -3,3 +3,4 @@
 0003-Fix-cppcheck-errors.patch
 0004-Install-vpConfig.h-in-include-architecture-triplet.patch
 0005-Fix-CMake-files-to-support-multiarch.patch
+0006-Look-for-and-compile-against-Boost.System-in-CMakeLi.patch
