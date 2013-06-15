@@ -24,3 +24,11 @@ index a6810c2..e252aa8 100644
      find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
      mark_as_advanced(Boost_LIB_DIAGNOSTIC_DEFINITIONS Boost_DIR)
      if (NOT Boost_FOUND)
+@@ -733,7 +733,6 @@
+       set(Boost_USE_STATIC_LIBS NOT ${Boost_USE_STATIC_LIBS})
+       find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
+     endif()
+-    find_package(Boost QUIET)
+  
+     if (Boost_FOUND)
+       # Set up referencing of Boost
