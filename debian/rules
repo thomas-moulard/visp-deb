@@ -1,9 +1,6 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
-# Test suite fails for this release.
-export DEB_BUILD_OPTIONS=nocheck
-
 # Hardening flags.
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all,-pie
 
@@ -60,7 +57,8 @@ endif
 
 .PHONY: override_dh_auto_configure	\
 	override_dh_auto_build-indep	\
-	override_dh_strip
+	override_dh_strip		\
+	override_dh_auto_test
 
 %:
 	dh  $@ --parallel --with pkgkde-symbolshelper
@@ -78,3 +76,5 @@ override_dh_auto_build-indep:
 
 override_dh_strip:
 	dh_strip -a --dbg-package=libvisp2-dbg
+
+override_dh_auto_test:
