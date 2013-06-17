@@ -2,6 +2,7 @@ visp (2.7.0-5) unstable; urgency=low
 
   * Look for and compile against Boost.System when Ogre is used.
   * Disable libv4l-dev dependecy on hurd-i386.
+  * Run tests but ignore failures for now.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Thu, 13 Jun 2013 11:47:20 +0900
 
