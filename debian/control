@@ -27,11 +27,13 @@ Build-Depends: debhelper (>= 9),
                libv4l-dev [!hurd-any],
                libusb-dev,
                libfreenect-dev,
-               libois-dev [linux-any]
+               libois-dev [linux-any],
+	       visp-images-data
 Standards-Version: 3.9.4
 Vcs-Browser: http://git.debian.org/?p=debian-science/packages/visp.git
 Vcs-Git: git://git.debian.org/debian-science/packages/visp.git
 Homepage: http://www.irisa.fr/lagadic/visp/visp.html
+XS-Testsuite: autopkgtest
 
 Package: libvisp-dev
 Architecture: any

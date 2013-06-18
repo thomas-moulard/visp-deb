@@ -4,6 +4,9 @@ visp (2.7.0-5) unstable; urgency=low
   * Disable libv4l-dev dependecy on hurd-i386.
   * Build documentation in override_dh_auto_build-indep.
   * Run tests but ignore failures for now.
+  * Enable test suite, make package depend on visp-images-data.
+  * Add autopkgtest support.
+  * Add autopkgtest "build" test: compile a minimal test.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Thu, 13 Jun 2013 11:47:20 +0900
 
