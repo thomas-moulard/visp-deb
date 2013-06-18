@@ -78,4 +78,4 @@ override_dh_strip:
 	dh_strip -a --dbg-package=libvisp2-dbg
 
 override_dh_auto_test:
-	export VISP_INPUT_PATH=/usr/share/visp-images && dh_auto_test
+	export VISP_INPUT_IMAGE_PATH=/usr/share/visp-images-data/ && dh_auto_test
