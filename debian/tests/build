@@ -9,7 +9,7 @@ set -e
 WORKDIR=$(mktemp -d)
 trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
 cd $WORKDIR
-cat <<EOF > glibtest.cpp
+cat <<EOF > visptest.cpp
 #include <visp/vpColor.h>
 
 int main()
@@ -19,7 +19,7 @@ int main()
 }
 EOF
 
-gcc -o visptest visptest.cpp `pkg-config --cflags --libs visp`
+g++ -o visptest visptest.cpp `pkg-config --cflags --libs visp`
 echo "build: OK"
 [ -x visptest ]
 ./visptest
