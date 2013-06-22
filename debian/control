@@ -30,8 +30,8 @@ Build-Depends: debhelper (>= 9),
                libois-dev [linux-any],
 	       visp-images-data
 Standards-Version: 3.9.4
-Vcs-Browser: http://git.debian.org/?p=debian-science/packages/visp.git
-Vcs-Git: git://git.debian.org/debian-science/packages/visp.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-science/packages/visp.git
+Vcs-Git: git://anonscm.debian.org/debian-science/packages/visp.git
 Homepage: http://www.irisa.fr/lagadic/visp/visp.html
 XS-Testsuite: autopkgtest
 
