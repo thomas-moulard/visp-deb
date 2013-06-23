@@ -2336,8 +2336,6 @@ libvisp.so.2 libvisp2 #MINVER#
  _ZN4Ogre13FrameListenerD2Ev@Base 2.7.0
  (arch=i386)_ZN4Ogre13_ConfigOptionC1ERKS0_@Base 2.7.0
  (arch=i386)_ZN4Ogre13_ConfigOptionC2ERKS0_@Base 2.7.0
-#MISSING: 2.7.0# (arch=!armhf !i386 !ia64 !mips !mipsel !powerpc !s390)_ZN4Ogre14AxisAlignedBoxD1Ev@Base 2.7.0
-#MISSING: 2.7.0# (arch=!armhf !i386 !ia64 !mips !mipsel !powerpc !s390)_ZN4Ogre14AxisAlignedBoxD2Ev@Base 2.7.0
  _ZN4Ogre19WindowEventListener11windowMovedEPNS_12RenderWindowE@Base 2.7.0
  _ZN4Ogre19WindowEventListener12windowClosedEPNS_12RenderWindowE@Base 2.7.0
  _ZN4Ogre19WindowEventListener13windowClosingEPNS_12RenderWindowE@Base 2.7.0
@@ -3937,8 +3935,6 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst|arch=i386)_ZNSt6vectorIjSaIjEED2Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIjSaIjEEaSERKS1_@Base 2.7.0
  (optional=templinst|arch=amd64 ia64)_ZNSt6vectorIlSaIlEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPlS1_EERKl@Base 2.7.0
-#MISSING: 2.7.0# (optional=templinst|arch=amd64)_ZNSt6vectorIlSaIlEED1Ev@Base 2.7.0
-#MISSING: 2.7.0# (optional=templinst|arch=amd64)_ZNSt6vectorIlSaIlEED2Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !ia64)_ZNSt6vectorIxSaIxEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPxS1_EERKx@Base 2.7.0
  (optional=templinst|arch=i386)_ZNSt6vectorIxSaIxEED1Ev@Base 2.7.0
  (optional=templinst|arch=i386)_ZNSt6vectorIxSaIxEED2Ev@Base 2.7.0
