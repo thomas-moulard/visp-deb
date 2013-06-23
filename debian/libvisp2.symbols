@@ -4001,8 +4001,6 @@ libvisp.so.2 libvisp2 #MINVER#
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EEaSERKS8_@Base 2.7.0
  (arch=amd64 i386)_ZNSt8ios_base7failureC1ERKS0_@Base 2.7.0
  (arch=amd64 i386)_ZNSt8ios_base7failureC2ERKS0_@Base 2.7.0
-#MISSING: 2.7.0# (optional=templinst|arch=amd64)_ZNSt8multimapISsSsSt4lessISsESaISt4pairIKSsSsEEED1Ev@Base 2.7.0
-#MISSING: 2.7.0# (optional=templinst|arch=amd64)_ZNSt8multimapISsSsSt4lessISsESaISt4pairIKSsSsEEED2Ev@Base 2.7.0
  (optional=templinst|arch=!amd64 !i386 !ia64 !mips !mipsel !powerpc !s390)_ZSt13copy_backwardIP7vpPointS1_ET0_T_S3_S2_@Base 2.7.0
  (optional=templinst|arch=i386)_ZSt13copy_backwardIPP12vpMbtPolygonS2_ET0_T_S4_S3_@Base 2.7.0
  (optional=templinst|arch=i386)_ZSt13copy_backwardIPP15vpMbtKltPolygonS2_ET0_T_S4_S3_@Base 2.7.0
