@@ -43,6 +43,8 @@ CONFIGURE_ARGS=	\
 # dc1394, v4l and ois are only available on Linux.
 ifneq ($(DEB_HOST_ARCH_OS),linux)
   CONFIGURE_ARGS += -DUSE_DC1394_2=OFF -DUSE_V4L2:BOOL=OFF -DUSE_OIS=OFF
+# OGRE support triggers ICE on FreeBSD, disable for now.
+  CONFIGURE_ARGS += -DUSE_OGRE=OFF
 else
   CONFIGURE_ARGS += -DUSE_DC1394_2=ON -DUSE_V4L2:BOOL=ON -DUSE_OIS=ON
 endif
