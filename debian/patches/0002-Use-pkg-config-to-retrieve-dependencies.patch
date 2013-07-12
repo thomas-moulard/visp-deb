@@ -9,12 +9,12 @@ Origin: upstream, https://gforge.inria.fr/scm/viewvc.php?view=rev&root=visp&revi
 Bug: https://gforge.inria.fr/tracker/index.php?func=detail&aid=15587&group_id=397&atid=1867
 Author: Fabien Spindler
 ---
- CMakeLists.txt                          |   20 ------
- CMakeModules/GenerateConfigScript.cmake |  117 +++++++++++++++++++++++++------
- CMakeModules/visp-config.in             |    4 +-
- CMakeModules/visp-config.install.in     |  103 +++++++++++++++++++++++++++
- CMakeModules/visp.pc.in                 |   14 ++++
- 5 files changed, 214 insertions(+), 44 deletions(-)
+ CMakeLists.txt                          |  20 ------
+ CMakeModules/GenerateConfigScript.cmake | 115 ++++++++++++++++++++++++++------
+ CMakeModules/visp-config.in             |   4 +-
+ CMakeModules/visp-config.install.in     | 103 ++++++++++++++++++++++++++++
+ CMakeModules/visp.pc.in                 |  14 ++++
+ 5 files changed, 212 insertions(+), 44 deletions(-)
  create mode 100644 CMakeModules/visp-config.install.in
  create mode 100644 CMakeModules/visp.pc.in
 
@@ -50,7 +50,7 @@ index e762c6f..fdcb0b0 100644
  #----------------------------------------------------------------------
  INCLUDE(${VISP_CMAKE_MODULE_PATH}/TargetDistclean.cmake)
 diff --git a/CMakeModules/GenerateConfigScript.cmake b/CMakeModules/GenerateConfigScript.cmake
-index cdcdf78..6200a06 100644
+index cdcdf78..d30fe33 100644
 --- a/CMakeModules/GenerateConfigScript.cmake
 +++ b/CMakeModules/GenerateConfigScript.cmake
 @@ -31,8 +31,12 @@
@@ -59,7 +59,7 @@ index cdcdf78..6200a06 100644
  # Description:
 -# This file generates the ViSP library config shell script: "visp-config"
 -# from visp-config.in (in VISP_SOURCE_DIR).
-+# This file generates the ViSP library config shell scripts: 
++# This file generates the ViSP library config shell scripts:
 +# - visp-config in <build dir>/bin from visp-config.in
 +# - visp-config in <build dir>/install from visp-config.install.in
 +#   When make install, this file is copied in <install dir>/bin
@@ -194,7 +194,7 @@ index cdcdf78..6200a06 100644
 +  set(exec_prefix "\${prefix}")
 +  set(includedir  "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
 +  set(libdir  "\${prefix}/${CMAKE_INSTALL_LIBDIR}")
-+ 
++
 +  # prepend with ViSP own include dir
 +  set(VISP_CONFIG_CFLAGS_PC "-I\${includedir} ${VISP_CONFIG_CFLAGS}")
 +
@@ -209,7 +209,7 @@ index cdcdf78..6200a06 100644
  
  ELSE(UNIX)
    #######################################################################
-@@ -309,3 +351,34 @@ ELSE(UNIX)
+@@ -309,3 +351,32 @@ ELSE(UNIX)
    CONFIGURE_FILE(${FILE_VISP_CONFIG_SCRIPT_IN} ${FILE_VISP_CONFIG_SCRIPT})
  ENDIF(UNIX)
  
@@ -242,8 +242,6 @@ index cdcdf78..6200a06 100644
 +ELSE(UNIX)
 +  # not implemented yet
 +ENDIF (UNIX)
-+
-+
 diff --git a/CMakeModules/visp-config.in b/CMakeModules/visp-config.in
 index 8a54027..3a45e08 100755
 --- a/CMakeModules/visp-config.in
@@ -262,7 +260,7 @@ index 8a54027..3a45e08 100755
  
 diff --git a/CMakeModules/visp-config.install.in b/CMakeModules/visp-config.install.in
 new file mode 100644
-index 0000000..88504df
+index 0000000..6ec1106
 --- /dev/null
 +++ b/CMakeModules/visp-config.install.in
 @@ -0,0 +1,103 @@
@@ -274,7 +272,7 @@ index 0000000..88504df
 +#
 +# This file is part of the ViSP software.
 +# Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
-+# 
++#
 +# This software is free software; you can redistribute it and/or
 +# modify it under the terms of the GNU General Public License
 +# ("GPL") version 2 as published by the Free Software Foundation.
@@ -282,11 +280,11 @@ index 0000000..88504df
 +# distribution for additional information about the GNU GPL.
 +#
 +# For using ViSP with software that can not be combined with the GNU
-+# GPL, please contact INRIA about acquiring a ViSP Professional 
++# GPL, please contact INRIA about acquiring a ViSP Professional
 +# Edition License.
 +#
 +# See http://www.irisa.fr/lagadic/visp/visp.html for more information.
-+# 
++#
 +# This software was developed at:
 +# INRIA Rennes - Bretagne Atlantique
 +# Campus Universitaire de Beaulieu
@@ -296,13 +294,13 @@ index 0000000..88504df
 +#
 +# If you have questions regarding the use of this file, please contact
 +# INRIA at visp@inria.fr
-+# 
++#
 +# This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 +# WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 +#
 +# Description:
 +# visp-config shell script.
-+# Auto-generated from visp-config.install.in by cmake. For backward 
++# Auto-generated from visp-config.install.in by cmake. For backward
 +# compatibility used visp.pc.
 +#
 +# Authors:
@@ -360,7 +358,7 @@ index 0000000..88504df
 +	--prefix) echo $NO_NEWLINE_OPTION "$PREFIX$NO_NEWLINE_CHARACTER";;
 +	--cflags) echo $NO_NEWLINE_OPTION "$CFLAGS$NO_NEWLINE_CHARACTER";;
 +	--libs) echo $NO_NEWLINE_OPTION "$LIBS$NO_NEWLINE_CHARACTER";;
-+	--version) 
++	--version)
 +	    echo "ViSP $VERSION (Visual Servoing Platform)"
 +	    echo ""
 +	    echo "Copyright (C) 2005 - 2013 Inria. All rights reserved.";;

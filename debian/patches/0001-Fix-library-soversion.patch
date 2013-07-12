@@ -7,7 +7,7 @@ Remove minor version number from library soversion.
 Forwarded: no
 Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
- src/CMakeLists.txt |    2 +-
+ src/CMakeLists.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt

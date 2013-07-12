@@ -7,13 +7,13 @@ Fix CMake files to support multiarch.
 Origin: upstream, private communication.
 Author: Fabien Spindler <fabien.spindler@inria.fr>
 ---
- CMakeLists.txt                   |   31 +++++++++++--------------------
- CMakeModules/VISPConfig.cmake.in |    3 ---
- distclean.sh                     |    1 -
+ CMakeLists.txt                   | 31 +++++++++++--------------------
+ CMakeModules/VISPConfig.cmake.in |  3 ---
+ distclean.sh                     |  1 -
  3 files changed, 11 insertions(+), 24 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b6f8ac8..a6810c2 100644
+index 78f649b..591470e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1952,9 +1952,10 @@ ADD_CUSTOM_TARGET(uninstall

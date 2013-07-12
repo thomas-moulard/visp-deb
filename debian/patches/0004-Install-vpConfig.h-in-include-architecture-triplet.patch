@@ -7,12 +7,11 @@ Install vpConfig.h in include/<architecture triplet>.
 Author: Thomas Moulard <thomas.moulard@gmail.com>
 Forwarded: no (not relevant)
 ---
- CMakeLists.txt                          |    2 +-
- CMakeModules/GenerateConfigScript.cmake |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index fdcb0b0..b6f8ac8 100644
+index fdcb0b0..78f649b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2033,7 +2033,7 @@ EXPORT_LIBRARY_DEPENDENCIES(

@@ -8,11 +8,11 @@ Author: Thomas Moulard <thomas.moulard@gmail.com>
 Bug: https://gforge.inria.fr/tracker/index.php?func=detail&aid=15896&group_id=397&atid=1867
 Forwarded: yes
 ---
- CMakeLists.txt |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ CMakeLists.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a6810c2..e252aa8 100644
+index 591470e..aaa4c8d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -725,7 +725,7 @@ IF(USE_OGRE)
@@ -24,7 +24,7 @@ index a6810c2..e252aa8 100644
      find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
      mark_as_advanced(Boost_LIB_DIAGNOSTIC_DEFINITIONS Boost_DIR)
      if (NOT Boost_FOUND)
-@@ -733,7 +733,6 @@
+@@ -733,7 +733,6 @@ IF(USE_OGRE)
        set(Boost_USE_STATIC_LIBS NOT ${Boost_USE_STATIC_LIBS})
        find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
      endif()
