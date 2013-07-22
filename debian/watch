@@ -1,8 +1,6 @@
-# Watch control file for uscan
-# Rename this file to "watch" and then you can run the "uscan" command
-# to check for upstream updates and more.
-# See uscan(1) for format
-
 version=3
-
-http://www.irisa.fr/lagadic/visp/download.html http://gforge.inria.fr/frs/download.php/.*/ViSP-(.*).tar.gz
+# Mangle upstream pre-releases to make sure they are ordered before
+# the final release.
+opts=uversionmangle=s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/ \
+http://www.irisa.fr/lagadic/visp/download.html \
+(?:.*/|)ViSP-(\d\S*)\.(?:tar\.(?:gz|bz2|xz)|tgz|tbz2|txz|zip)(?:|\?\S+)
