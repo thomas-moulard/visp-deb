@@ -77,7 +77,7 @@ override_dh_auto_build-indep:
 	dh_auto_build -- html-doc # Generate Doxygen HTML documentation.
 
 override_dh_strip:
-	dh_strip -a --dbg-package=libvisp2-dbg
+	dh_strip -a --dbg-package=libvisp2.8-dbg
 
 override_dh_auto_test:
 	export VISP_INPUT_IMAGE_PATH=/usr/share/visp-images-data/ && dh_auto_test

@@ -1,3 +1,9 @@
+visp (2.8.0-1) unstable; urgency=low
+
+  * Import new upstream release 2.8.0.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Thu, 25 Jul 2013 11:24:53 +0900
+
 visp (2.7.0-5) unstable; urgency=low
 
   * Look for and compile against Boost.System when Ogre is used.

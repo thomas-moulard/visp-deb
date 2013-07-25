@@ -57,7 +57,7 @@ Depends: libopencv-dev [!any-sparc64 !x32],
          libusb-dev,
          libfreenect-dev,
          libois-dev [linux-any],
-         libvisp2 (= ${binary:Version}),
+         libvisp2.8 (= ${binary:Version}),
          ${misc:Depends}
 Suggests: libvisp-doc
 Multi-Arch: same
@@ -72,7 +72,7 @@ Description: visual servoing library - development files
  This package contains development files (headers and shared library
  symbolic link).
 
-Package: libvisp2
+Package: libvisp2.8
 Architecture: any
 Multi-Arch: same
 Depends: ${shlibs:Depends},
@@ -86,10 +86,10 @@ Description: visual servoing library
  ViSP can be useful in robotics, computer vision, augmented reality and
  computer animation.
 
-Package: libvisp2-dbg
+Package: libvisp2.8-dbg
 Architecture: any
 Section: debug
-Depends: libvisp2 (= ${binary:Version}),
+Depends: libvisp2.8 (= ${binary:Version}),
          ${misc:Depends}
 Multi-Arch: same
 Description: visual servoing library - debugging symbols
