@@ -1,31 +1,34 @@
 /****************************************************************************
  *
- * $Id: vpMbKltTracker.cpp 4122 2013-02-08 10:45:54Z ayol $
+ * $Id: vpMbKltTracker.cpp 4337 2013-07-23 13:57:53Z ayol $
  *
- * Copyright (C) 2005 - 2013 Inria. All rights reserved.
+ * This file is part of the ViSP software.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
+ *
+ * This software is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * ("GPL") version 2 as published by the Free Software Foundation.
+ * See the file LICENSE.txt at the root directory of this source
+ * distribution for additional information about the GNU GPL.
+ *
+ * For using ViSP with software that can not be combined with the GNU
+ * GPL, please contact INRIA about acquiring a ViSP Professional
+ * Edition License.
+ *
+ * See http://www.irisa.fr/lagadic/visp/visp.html for more information.
  *
  * This software was developed at:
- * IRISA/INRIA Rennes
- * Projet Lagadic
+ * INRIA Rennes - Bretagne Atlantique
  * Campus Universitaire de Beaulieu
  * 35042 Rennes Cedex
+ * France
  * http://www.irisa.fr/lagadic
  *
- * This file is part of the ViSP toolkit
- *
- * This file may be distributed under the terms of the Q Public License
- * as defined by Trolltech AS of Norway and appearing in the file
- * LICENSE included in the packaging of this file.
- *
- * Licensees holding valid ViSP Professional Edition licenses may
- * use this file in accordance with the ViSP Commercial License
- * Agreement provided with the Software.
+ * If you have questions regarding the use of this file, please contact
+ * INRIA at visp@inria.fr
  *
  * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * Contact visp@irisa.fr if any conditions of this licensing are
- * not clear to you.
  *
  * Description:
  * Model based tracker using only KLT
@@ -42,6 +45,7 @@
 
 vpMbKltTracker::vpMbKltTracker()
 {
+  
   cur = NULL;
   compute_interaction = true;
   firstInitialisation = true;
@@ -61,6 +65,8 @@ vpMbKltTracker::vpMbKltTracker()
   
   angleAppears = vpMath::rad(65);
   angleDisappears = vpMath::rad(75);
+  
+  clippingFlag = vpMbtPolygon::NO_CLIPPING;
   
   maskBorder = 5;
   threshold_outlier = 0.5;
@@ -92,7 +98,7 @@ void
 vpMbKltTracker::init(const vpImage<unsigned char>& I)
 {
   if(!modelInitialised){
-    throw vpException(vpException::fatalError, "model not initialised");
+    throw vpException(vpException::fatalError, "model not initialized");
   }
   
  bool reInitialisation = false;
@@ -100,8 +106,10 @@ vpMbKltTracker::init(const vpImage<unsigned char>& I)
     faces.setVisible(I, cam, cMo, angleAppears, angleDisappears, reInitialisation);
   else{
 #ifdef VISP_HAVE_OGRE   
-    if(!faces.isOgreInitialised())
+    if(!faces.isOgreInitialised()){
+      faces.setBackgroundSizeOgre(I.getHeight(), I.getWidth());
       faces.initOgre(cam);
+    }
     
     faces.setVisibleOgre(I, cam, cMo, angleAppears, angleDisappears, reInitialisation);
     
@@ -128,7 +136,7 @@ vpMbKltTracker::reinit(const vpImage<unsigned char>& I)
   
   for (unsigned int i = 0; i < faces.size(); i += 1){
     if(faces[i]->isVisible())
-        faces[i]->updateMask(mask, 255 - i*15, maskBorder);
+      faces[i]->updateMask(mask, 255/* - i*15*/, maskBorder);
   }
   
   tracker.initTracking(cur, mask);
@@ -175,6 +183,8 @@ vpMbKltTracker::resetTracker()
   angleAppears = vpMath::rad(65);
   angleDisappears = vpMath::rad(75);
   
+  clippingFlag = vpMbtPolygon::NO_CLIPPING;
+  
   maskBorder = 5;
   threshold_outlier = 0.5;
   percentGood = 0.7;
@@ -197,7 +207,7 @@ vpMbKltTracker::resetTracker()
   \return the list of KLT points through vpKltOpencv.
 */
 std::vector<vpImagePoint> 
-vpMbKltTracker::getKltImagePoints()
+vpMbKltTracker::getKltImagePoints() const
 {
   std::vector<vpImagePoint> kltPoints;
   for (unsigned int i = 0; i < static_cast<unsigned int>(tracker.getNbFeatures()); i ++){
@@ -218,7 +228,7 @@ vpMbKltTracker::getKltImagePoints()
   \return the list of KLT points and their id through vpKltOpencv.
 */
 std::map<int, vpImagePoint> 
-vpMbKltTracker::getKltImagePointsWithId()
+vpMbKltTracker::getKltImagePointsWithId() const
 {
   std::map<int, vpImagePoint> kltPoints;
   for (unsigned int i = 0; i < static_cast<unsigned int>(tracker.getNbFeatures()); i ++){
@@ -264,7 +274,7 @@ vpMbKltTracker::setCameraParameters(const vpCameraParameters& cam)
 /*!
   Use Ogre3D for visibility tests
   
-  \warning This function has to be called before the initialisation of the tracker.
+  \warning This function has to be called before the initialization of the tracker.
   
   \param v : True to use it, False otherwise
 */
@@ -275,7 +285,7 @@ vpMbKltTracker::setOgreVisibilityTest(const bool &v)
   if(useOgre){
 #ifndef VISP_HAVE_OGRE     
     useOgre = false;
-    std::cout << "WARNING: ViSP dosen't have Ogre3D, basic visibility test will be used. setOgreVisibilityTest() set to false." << std::endl;
+    std::cout << "WARNING: ViSP doesn't have Ogre3D, basic visibility test will be used. setOgreVisibilityTest() set to false." << std::endl;
 #endif
   }
 }
@@ -284,7 +294,7 @@ vpMbKltTracker::setOgreVisibilityTest(const bool &v)
   Set the pose to be used in entry of the next call to the track() function.
   This pose will be just used once.
   
-  \warning This function has to be called after the initialisation of the tracker.
+  \warning This function has to be called after the initialization of the tracker.
   
   \param I : image corresponding to the desired pose.
   \param cdMo : Pose to affect.
@@ -305,7 +315,7 @@ vpMbKltTracker::setPose(const vpImage<unsigned char> &I, const vpHomogeneousMatr
     }
     
     if(reInitialisation){
-      std::cout << "WARNING: Visibility changed, must reinitialise to update pose" << std::endl;
+      std::cout << "WARNING: Visibility changed, must reinitialize to update pose" << std::endl;
       cMo = cdMo;
       reinit(I);
     }
@@ -331,7 +341,7 @@ vpMbKltTracker::setPose(const vpImage<unsigned char> &I, const vpHomogeneousMatr
           vpColVector Nc = plan.getNormal(); 
           Nc.normalize();
           
-          float invDc = 1.0f / plan.getD();
+          double invDc = 1.0 / plan.getD();
           
           //Create the homography
           vpHomography cdHc;
@@ -374,12 +384,69 @@ vpMbKltTracker::setPose(const vpImage<unsigned char> &I, const vpHomogeneousMatr
     }
   }
 }
+
+/*!
+  Set the far distance for clipping.
+  
+  \param dist : Far clipping value.
+*/
+void            
+vpMbKltTracker::setFarClippingDistance(const double &dist) 
+{ 
+  if( (clippingFlag & vpMbtPolygon::NEAR_CLIPPING) == vpMbtPolygon::NEAR_CLIPPING && dist <= distNearClip)
+    vpTRACE("Far clipping value cannot be inferior than near clipping value. Far clipping won't be considered.");
+  else if ( dist < 0 ) 
+    vpTRACE("Far clipping value cannot be inferior than 0. Far clipping won't be considered.");
+  else{   
+    clippingFlag = (clippingFlag | vpMbtPolygon::FAR_CLIPPING);
+    distFarClip = dist; 
+    for (unsigned int i = 0; i < faces.size(); i ++){
+      faces[i]->setFarClippingDistance(distFarClip);
+    }  
+  }
+}
+
+/*!
+  Set the near distance for clipping.
+  
+  \param dist : Near clipping value.
+*/
+void           
+vpMbKltTracker::setNearClippingDistance(const double &dist) 
+{ 
+  if( (clippingFlag & vpMbtPolygon::FAR_CLIPPING) == vpMbtPolygon::FAR_CLIPPING && dist >= distFarClip)
+    vpTRACE("Near clipping value cannot be superior than far clipping value. Near clipping won't be considered.");
+  else if ( dist < 0 ) 
+    vpTRACE("Near clipping value cannot be inferior than 0. Near clipping won't be considered.");
+  else{
+    clippingFlag = (clippingFlag | vpMbtPolygon::NEAR_CLIPPING);
+    distNearClip = dist; 
+    for (unsigned int i = 0; i < faces.size(); i ++){
+      faces[i]->setNearClippingDistance(distNearClip);
+    } 
+  }
+}
+
+/*!
+  Specify which clipping to use.
+  
+  \sa vpMbtPolygonClipping
+  
+  \param flags : New clipping flags.
+*/
+void            
+vpMbKltTracker::setClipping(const unsigned int &flags) 
+{ 
+  clippingFlag = flags;
+  for (unsigned int i = 0; i < faces.size(); i ++)
+    faces[i]->setClipping(clippingFlag);
+}
           
 /*!
   Initialise a new face from the coordinates given in parameter.
 
   \param corners : Coordinates of the corners of the face in the object frame.
-  \param indexFace : index of the face (depends on the vrml file organisation).
+  \param indexFace : index of the face (depends on the vrml file organization).
 */
 void
 vpMbKltTracker::initFaceFromCorners(const std::vector<vpPoint>& corners, const unsigned int indexFace)
@@ -387,13 +454,22 @@ vpMbKltTracker::initFaceFromCorners(const std::vector<vpPoint>& corners, const u
   if( corners.size() > 2){ // This tracker can't handle lignes
     vpMbtKltPolygon *polygon = new vpMbtKltPolygon;
   //   polygon->setCameraParameters(cam);
-    polygon->setNbPoint(corners.size());
+    polygon->setNbPoint((unsigned int)corners.size());
     polygon->setIndex((int)indexFace);
     for(unsigned int j = 0; j < corners.size(); j++) {
       polygon->addPoint(j, corners[j]);
     }
     faces.addPolygon(polygon);
     faces.getPolygon().back()->setCameraParameters(cam);
+    
+    if(clippingFlag != vpMbtPolygon::NO_CLIPPING)
+      faces.getPolygon().back()->setClipping(clippingFlag);
+    
+    if((clippingFlag & vpMbtPolygon::NEAR_CLIPPING) == vpMbtPolygon::NEAR_CLIPPING)
+      faces.getPolygon().back()->setNearClippingDistance(distNearClip);
+    
+    if((clippingFlag & vpMbtPolygon::FAR_CLIPPING) == vpMbtPolygon::FAR_CLIPPING)
+      faces.getPolygon().back()->setFarClippingDistance(distFarClip);
 
     delete polygon;
     polygon = NULL;
@@ -401,7 +477,7 @@ vpMbKltTracker::initFaceFromCorners(const std::vector<vpPoint>& corners, const u
 }
 
 /*!
-  Realise the pre tracking operations
+  Realize the pre tracking operations
 
   \param I : The input image.
   \param nbInfos : Size of the features.
@@ -427,17 +503,17 @@ vpMbKltTracker::preTracking(const vpImage<unsigned char>& I, unsigned int &nbInf
         nbFaceUsed++;
       }
     }
-  }
+  } 
 }
 
 /*!
-  Realise the post tracking operations. Mostly visibility tests
+  Realize the post tracking operations. Mostly visibility tests
 */
 bool
 vpMbKltTracker::postTracking(const vpImage<unsigned char>& I, vpColVector &w)
 {
-  // # For a better Post Tracking, tracker should reinitialise if so faces don't have enough points but are visible.
-  // # Here we are not doing it for more spee performance.
+  // # For a better Post Tracking, tracker should reinitialize if so faces don't have enough points but are visible.
+  // # Here we are not doing it for more speed performance.
   bool reInitialisation = false;
   
   unsigned int initialNumber = 0;
@@ -486,7 +562,7 @@ vpMbKltTracker::postTracking(const vpImage<unsigned char>& I, vpColVector &w)
 }
 
 /*!
-  Realise the VVS loop for the tracking
+  Realize the VVS loop for the tracking
 
   \param nbInfos : Size of the features
   \param w : weight of the features after M-Estimation.
@@ -581,7 +657,7 @@ vpMbKltTracker::computeVVS(const unsigned int &nbInfos, vpColVector &w)
 }
 
 /*!
-  Realise the tracking of the object in the image
+  Realize the tracking of the object in the image
 
   \throw vpException : if the tracking is supposed to have failed
 
@@ -650,6 +726,9 @@ vpMbKltTracker::loadConfigFile(const std::string& configFile)
   <face>
     <angle_appear>65</angle_appear>
     <angle_disappear>85</angle_disappear>
+    <near_clipping>0.01</near_clipping>
+    <far_clipping>0.90</far_clipping>
+    <fov_clipping>1</fov_clipping>
   </face>
   <klt>
     <mask_border>10</mask_border>
@@ -707,6 +786,15 @@ vpMbKltTracker::loadConfigFile(const char* configFile)
   maskBorder = xmlp.getMaskBorder();
   angleAppears = vpMath::rad(xmlp.getAngleAppear());
   angleDisappears = vpMath::rad(xmlp.getAngleDisappear());
+  
+  if(xmlp.hasNearClippingDistance())
+    setNearClippingDistance(xmlp.getNearClippingDistance());
+  
+  if(xmlp.hasFarClippingDistance())
+    setFarClippingDistance(xmlp.getFarClippingDistance());
+  
+  if(xmlp.getFovClipping())
+    clippingFlag = clippingFlag | vpMbtPolygon::FOV_CLIPPING;
 #else
   vpTRACE("You need the libXML2 to read the config file %s", configFile);
 #endif
@@ -726,22 +814,36 @@ void
 vpMbKltTracker::display(const vpImage<unsigned char>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters & cam,
                         const vpColor& col , const unsigned int thickness, const bool displayFullModel)
 {
+  vpCameraParameters c = cam;
+  
+  if(clippingFlag > 3) // Contains at least one FOV constraint
+    c.computeFov(I.getWidth(), I.getHeight());
+  
   for (unsigned int i = 0; i < faces.size(); i += 1){
     if(displayFullModel || faces[i]->isVisible())
     {
       faces[i]->changeFrame(cMo);
-      std::vector<vpImagePoint> roi = faces[i]->getRoi(cam);
-      for (unsigned int j = 0; j < faces[i]->getNbPoint(); j += 1){
-        vpImagePoint ip1, ip2;
-        ip1 = roi[j];
-        ip2 = roi[(j+1)%faces[i]->getNbPoint()];
-        vpDisplay::displayLine (I, ip1, ip2, col, thickness);
+      faces[i]->computeRoiClipped(c);
+      std::vector<std::pair<vpImagePoint,unsigned int> > roi;
+      faces[i]->getRoiClipped(c, roi);
+      
+      for (unsigned int j = 0; j < roi.size(); j += 1){
+        if(((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::NEAR_CLIPPING) == 0) && 
+           ((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::FAR_CLIPPING) == 0) && 
+           ((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::DOWN_CLIPPING) == 0) && 
+           ((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::UP_CLIPPING) == 0) && 
+           ((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::LEFT_CLIPPING) == 0) && 
+           ((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::RIGHT_CLIPPING) == 0)){
+          vpImagePoint ip1, ip2;
+          ip1 = roi[j].first;
+          ip2 = roi[(j+1)%roi.size()].first;
+          
+          vpDisplay::displayLine (I, ip1, ip2, col, thickness);
+        }
       }
-      
-      if(displayFeatures && faces[i]->hasEnoughPoints())
+    }
+    if(displayFeatures && faces[i]->hasEnoughPoints() && faces[i]->isVisible()) {
         faces[i]->displayPrimitive(I);
-      
-//       if(facesTracker[i].hasEnoughPoints())
 //         faces[i]->displayNormal(I);
     }
   }
@@ -766,26 +868,40 @@ void
 vpMbKltTracker::display(const vpImage<vpRGBa>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters & cam,
                         const vpColor& col , const unsigned int thickness, const bool displayFullModel)
 {
+  vpCameraParameters c = cam;
+  
+  if(clippingFlag > 3) // Contains at least one FOV constraint
+    c.computeFov(I.getWidth(), I.getHeight());
+  
   for (unsigned int i = 0; i < faces.size(); i += 1){
     if(displayFullModel || faces[i]->isVisible())
     {
       faces[i]->changeFrame(cMo);
-      std::vector<vpImagePoint> roi = faces[i]->getRoi(cam);
-      for (unsigned int j = 0; j < faces[i]->getNbPoint(); j += 1){
-        vpImagePoint ip1, ip2;
-        ip1 = roi[j];
-        ip2 = roi[(j+1)%faces[i]->getNbPoint()];
-        vpDisplay::displayLine (I, ip1, ip2, col, thickness);
+      faces[i]->computeRoiClipped(c);      
+      std::vector<std::pair<vpImagePoint,unsigned int> > roi;
+      faces[i]->getRoiClipped(c, roi);
+      
+      for (unsigned int j = 0; j < roi.size(); j += 1){
+        if(((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::NEAR_CLIPPING) == 0) && 
+           ((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::FAR_CLIPPING) == 0) && 
+           ((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::DOWN_CLIPPING) == 0) && 
+           ((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::UP_CLIPPING) == 0) && 
+           ((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::LEFT_CLIPPING) == 0) && 
+           ((roi[(j+1)%roi.size()].second & roi[j].second & vpMbtPolygon::RIGHT_CLIPPING) == 0)){
+          vpImagePoint ip1, ip2;
+          ip1 = roi[j].first;
+          ip2 = roi[(j+1)%roi.size()].first;
+          
+          vpDisplay::displayLine (I, ip1, ip2, col, thickness);
+        }
       }
-      
-      if(displayFeatures && faces[i]->hasEnoughPoints())
+    }
+    if(displayFeatures && faces[i]->hasEnoughPoints() && faces[i]->isVisible()) {
         faces[i]->displayPrimitive(I);
-      
-//       if(facesTracker[i].hasEnoughPoints())
 //         faces[i]->displayNormal(I);
     }
   }
-  
+
 #ifdef VISP_HAVE_OGRE
   if(useOgre)
     faces.displayOgre(cMo);
@@ -811,9 +927,9 @@ vpMbKltTracker::testTracking()
   }
 
   if(nbTotalPoints < 10){
-    std::cerr << "test tracking failed (too few points to realise a good tracking)." << std::endl;
+    std::cerr << "test tracking failed (too few points to realize a good tracking)." << std::endl;
     throw vpTrackingException(vpTrackingException::fatalError,
-          "test tracking failed (too few points to realise a good tracking).");
+          "test tracking failed (too few points to realize a good tracking).");
   }
 }
 

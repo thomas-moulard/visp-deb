@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMatrixException.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpMatrixException.h 4195 2013-04-05 08:28:41Z marchand $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -88,7 +88,8 @@ public:
       incorrectMatrixSizeError,
       forbiddenOperatorError,
       subMatrixError,
-      matrixError
+      matrixError,
+      rankDeficient
     } ;
 
 public:

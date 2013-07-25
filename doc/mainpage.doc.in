@@ -1,13 +1,15 @@
 /*! 
 
 \mainpage Online documentation for ViSP @VISP_VERSION@
- 
+
+\tableofcontents
+
 \section intro_sec Introduction
 
-<p>ViSP is a modular C++ library that allows fast development of visual
-servoing applications. ViSP is developed and maintained by the INRIA
+<p>ViSP \cite Marchand05b is a modular C++ library that allows fast development of visual
+servoing applications. ViSP is developed and maintained by the Inria
 <a href="http://www.irisa.fr/lagadic" target="_parent">Lagadic</a> team located at <a
-href="http://www.inria.fr/rennes" target="_parent">INRIA Rennes</a>.</p>
+href="http://www.inria.fr/rennes" target="_parent">Inria Rennes</a>.</p>
 
 <p>ViSP official site is <a
 href="http://www.irisa.fr/lagadic/visp/visp.html" target="_parent">http://www.irisa.fr/lagadic/visp/visp.html</a></p>
@@ -38,6 +40,27 @@ href="http://www.irisa.fr/lagadic/visp/libraries.html" target="_parent">http://w
 <p>ViSP full installation procedure using CMake is explained in the getting started documents available from <a
 href="http://www.irisa.fr/lagadic/visp/publication.html" target="_parent">http://www.irisa.fr/lagadic/visp/publication.html</a>.</p>
  
+\section Tutorial_sec Tutorials
+
+<p>Here after you will find a list of tutorials that shows the basic use of <a href="classes.html">ViSP classes</a> with a small first code.
+- \ref tutorial-install-ubuntu <br>In this first tutorial you will learn how to install ViSP from source on Linux Ubuntu.
+- \ref tutorial-install-win <br>In this tutorial you will learn how to install ViSP from source on Windows.
+- \ref tutorial-install-iOS <br>In this tutorial you will learn how to install ViSP from source on OSX for iOS project.
+- \ref tutorial-getting-started <br>This tutorial shows how to build a project that uses ViSP to read and display an image.
+- \ref tutorial-getting-started-iOS <br>This tutorial shows how to build a project that uses ViSP on iOS devices.
+- \ref tutorial-grabber <br>This tutorial shows how to acquire images from a camera.
+- \ref tutorial-calibration <br>This tutorial explains how to calibrate a camera.
+- \ref tutorial-tracking-blob <br>This tutorial introduces blob tracking and detection.
+- \ref tutorial-tracking-keypoint <br>This tutorial focuses on keypoint tracking using Kanade-Lucas-Tomasi feature tracker.
+- \ref tutorial-tracking-me <br>This tutorial focuses on line and ellipse tracking using moving-edges. 
+- \ref tutorial-tracking-mb <br>This tutorial focuses on model-based trackers using either edges, keypoints or and hybrid scheme that uses edges and keypoints. 
+- \ref tutorial-simu-image <br>This tutorial shows how to project the image of a planar scene to a given camera position. 
+- \ref tutorial-pose-estimation <br>This tutorial focuses on pose estimation from planar or non planar points.
+- \ref tutorial-ibvs <br>This tutorial explains how to simulate an IBVS.
+- \ref tutorial-simu-robot-pioneer <br>This tutorial focuses on visual servoing simulation on a unicycle robot. The study case is a Pioneer P3-DX mobile robot equipped with a camera.
+- \ref tutorial-plotter <br>This tutorial explains how to plot curves in real-time during a visual servo.
+
+
 \section Examples_sec Using ViSP
 
 <p>ViSP C++ classes are organized in <a href="modules.html">modules</a> that may help the user during his project implementation.</p>
@@ -48,16 +71,64 @@ image, compute a camera pose, estimate an homography, servo a real
 robot or a simulated one using a 2D, 2D half or 3D visual servoing
 scheme, ...</p>
 
+\section Howto_sec How to help ?
+
+<p>ViSP library is an open source C++ library which is developed at <a href="http://www.inria.fr/en/centre/rennes">Inria</a> by <a href="http://team.inria.fr/lagadic/welcome-eng.html">Lagadic team</a>. If you enjoy using ViSP, you may contribute to the project in different ways. This will motivate us to continue the efforts.
+
+- You can help VISP to be more widely known, by displaying a <a href="http://www.irisa.fr/lagadic/visp/documentation/visp-flyers.pdf">ViSP flyer</a> at work, in your lab or school.
+- You can submit a <a href="https://gforge.inria.fr/tracker/?atid=1867&group_id=397&func=browse">bug report using the tracker</a>.
+- You can submit <a href="https://gforge.inria.fr/tracker/?func=browse&group_id=397&atid=1660">patches or new functionalities here</a>.
+- You can write new tutorials, new documentations or simply improve the existing documentation.
+- If you just want to say you've been happy with the library, you can send us a postcard from your place, to the following address: <em>Inria Rennes Bretagne Atlantique, Lagadic team, Campus de Beaulieu, 35042 Rennes Cedex, FRANCE.</em>
+
+<p>You can also ask for help using either <a href="https://gforge.inria.fr/forum/?group_id=397">the french or the english forum</a>, or <a href="https://gforge.inria.fr/mail/?group_id=397">ViSP users mailing list</a>. 
+
 */
 
 
+/*
+ ******************************************
+ * Tutorial list
+ ******************************************
+ */
+/*!
+  \defgroup Tutorial ViSP tutorials
 
+Here after you will find a list of tutorials that shows the basic use of <a href="classes.html">ViSP classes</a> with a small first code.
+- \ref tutorial-install-ubuntu <br>In this first tutorial you will learn how to install ViSP from source on Linux Ubuntu.
+- \ref tutorial-install-win <br>In this tutorial you will learn how to install ViSP from source on Windows.
+- \ref tutorial-install-iOS <br>In this tutorial you will learn how to install ViSP from source on OSX for iOS project.
+- \ref tutorial-getting-started <br>This tutorial shows how to build a project that uses ViSP to read and display an image.
+- \ref tutorial-getting-started-iOS <br>This tutorial shows how to build a project that uses ViSP on iOS devices.
+- \ref tutorial-grabber <br>This tutorial shows how to acquire images from a camera.
+- \ref tutorial-calibration <br>This tutorial explains how to calibrate a camera.
+- \ref tutorial-tracking-blob <br>This tutorial focuses on blob tracking and detection.
+- \ref tutorial-tracking-keypoint <br>This tutorial focuses on keypoint tracking using Kanade-Lucas-Tomasi feature tracker.
+- \ref tutorial-tracking-me <br>This tutorial focuses on line and ellipse tracking using moving-edges. 
+- \ref tutorial-tracking-mb <br>This tutorial focuses on model-based trackers using either edges, keypoints or and hybrid scheme that uses edges and keypoints. 
+- \ref tutorial-simu-image <br>This tutorial shows how to project the image of a planar scene to a given camera position. 
+- \ref tutorial-pose-estimation <br>This tutorial focuses on pose estimation from planar or non planar points.
+- \ref tutorial-ibvs <br>This tutorial explains how to simulate an IBVS.
+- \ref tutorial-simu-robot-pioneer <br>This tutorial focuses on visual servoing simulation on a unicycle robot. The study case is a Pioneer P3-DX mobile robot equipped with a camera.
+- \ref tutorial-plotter <br>This tutorial explains how to plot curves in real-time during a visual servo.
+
+*/
+
+/*
+ ******************************************
+ * ViSP capabilities
+ ******************************************
+ */
+/*!
+  \defgroup Capabilities ViSP capabilities
+*/
 /*
  ******************************************
  * Data representation
  ******************************************
  */
 /*!
+  \ingroup Capabilities
   \defgroup DataRepresentation Data representation
 */
 /*!
@@ -74,6 +145,7 @@ scheme, ...</p>
  ******************************************
  */
 /*!
+  \ingroup Capabilities
   \defgroup Math Mathematics
 */
 /*!
@@ -156,6 +228,7 @@ scheme, ...</p>
  ******************************************
  */
 /*!
+  \ingroup Capabilities
   \defgroup Image Image
 */
 /*!
@@ -211,6 +284,7 @@ scheme, ...</p>
  ******************************************
  */
 /*!
+  \ingroup Capabilities
   \defgroup Tracking Tracking
 */
 /*!
@@ -248,6 +322,7 @@ scheme, ...</p>
  ******************************************
  */
 /*!
+  \ingroup Capabilities
   \defgroup ComputerVision Computer Vision
 */
 /*!
@@ -276,6 +351,7 @@ scheme, ...</p>
  ******************************************
  */
 /*!
+  \ingroup Capabilities
   \defgroup Vs Building a visual servoing task
 */
 /*!
@@ -313,6 +389,7 @@ scheme, ...</p>
  ******************************************
  */
 /*!
+  \ingroup Capabilities
   \defgroup Robot Working with robots
 */
 /*!
@@ -366,6 +443,7 @@ scheme, ...</p>
  ******************************************
  */
 /*!
+  \ingroup Capabilities
   \defgroup Tool Tools
 */
 /*!
@@ -427,6 +505,7 @@ scheme, ...</p>
  ******************************************
  */
 /*!
+  \ingroup Capabilities
   \defgroup Driver Drivers
 */
 /*!

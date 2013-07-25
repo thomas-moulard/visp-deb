@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpColor.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpColor.h 4243 2013-05-07 07:58:55Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -98,7 +98,9 @@ int main()
 
   // Initialize the display with the image I. Display and image are
   // now link together.
+#ifdef VISP_HAVE_DISPLAY
   d->init(I);
+#endif
 
   // Set the display background with image I content
   vpDisplay::display(I);

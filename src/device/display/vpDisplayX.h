@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpDisplayX.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpDisplayX.h 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -43,6 +43,7 @@
 #define vpDisplayX_h
 
 #include <visp/vpConfig.h>
+#include <visp/vpDisplay.h>
 #ifdef VISP_HAVE_X11
 
 //namespace X11name
@@ -56,7 +57,6 @@
 //using namespace X11name ;
 
 #include <visp/vpImage.h>
-#include <visp/vpDisplay.h>
 #include <visp/vpRect.h>
 
 
@@ -89,17 +89,18 @@
 
 int main() 
 {
-#if defined(VISP_HAVE_X11)
   vpImage<unsigned char> I; // Grey level image
 
   // Read an image in PGM P5 format
-  vpImageIo::readPGM(I, "/local/soft/ViSP/ViSP-images/Klimt/Klimt.pgm");
+  vpImageIo::read(I, "/local/soft/ViSP/ViSP-images/Klimt/Klimt.pgm");
 
-  vpDisplayX d; 
+#if defined(VISP_HAVE_X11)
+  vpDisplayX d;
 
   // Initialize the display with the image I. Display and image are
   // now link together.
   d.init(I);
+#endif
 
   // Specify the window location
   vpDisplay::setWindowPosition(I, 400, 100);
@@ -143,7 +144,6 @@ int main()
   // Wait for a click in the display window
   std::cout << "Wait for a button click..." << std::endl;
   vpDisplay::getClick(I);
-#endif
 }
   \endcode
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpPoseRansac.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpPoseRansac.cpp 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -73,7 +73,7 @@ void vpPose::poseRansac(vpHomogeneousMatrix & cMo)
   std::vector<unsigned int> cur_consensus;
   std::vector<unsigned int> cur_outliers;
   std::vector<unsigned int> cur_randoms;
-  unsigned int size = listP.size();
+  unsigned int size = (unsigned int)listP.size();
   int nbTrials = 0;
   unsigned int nbMinRandom = 4 ;
   unsigned int nbInliers = 0;
@@ -674,8 +674,8 @@ vpPose::ransac(std::list<vpPoint> &lp,
                const int maxNbTrials)
 {
   unsigned int i;
-  unsigned int n = lp.size() ;
-  unsigned int m = lP.size() ;
+  unsigned int n = (unsigned int)lp.size() ;
+  unsigned int m = (unsigned int)lP.size() ;
 
   double *x, *y;
   x = new double [n];

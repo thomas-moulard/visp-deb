@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: CPackConfig.cmake 4056 2013-01-05 13:04:42Z fspindle $
+# $Id: CPackConfig.cmake 4335 2013-07-23 09:53:54Z fspindle $
 #
 # This file is part of the ViSP software.
 # Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -86,6 +86,7 @@ SET(CPACK_PACKAGE_INSTALL_DIRECTORY "${PROJECT_NAME} ${VISP_VERSION}")
 SET(BUILD_DEMOS OFF CACHE BOOL "Build ViSP demos." FORCE )
 SET(BUILD_EXAMPLES OFF CACHE BOOL "Build ViSP examples." FORCE)
 SET(BUILD_TESTING OFF CACHE BOOL "Build ViSP tests." FORCE)
+SET(BUILD_TUTORIAL OFF CACHE BOOL "Build ViSP tutorials." FORCE)
 
 
 if(UNIX)

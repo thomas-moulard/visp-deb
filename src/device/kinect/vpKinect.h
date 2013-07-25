@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpKinect.h 4134 2013-02-13 09:27:36Z fspindle $
+ * $Id: vpKinect.h 4131 2013-02-11 20:45:31Z fspindle $
  *
  *
  * This file is part of the ViSP software.

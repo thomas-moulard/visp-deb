@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: planarObjectDetector.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: planarObjectDetector.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -270,7 +270,7 @@ main(int argc, const char** argv)
   try{
     if(useSequence){
       vpCTRACE << "Load: " << filename << std::endl;
-      vpImageIo::readPGM(Iref, filename) ;
+      vpImageIo::read(Iref, filename) ;
       I = Iref;
     }
   }
@@ -410,7 +410,7 @@ main(int argc, const char** argv)
       s << "image." << std::setw(4) << std::setfill('0') << iter << ".pgm";
       filename = dirname + s.str();
       // read the image
-      vpImageIo::readPGM(I, filename);
+      vpImageIo::read(I, filename);
     }
     else{
       g.acquire(I);

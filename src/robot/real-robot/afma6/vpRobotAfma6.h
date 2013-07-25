@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpRobotAfma6.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpRobotAfma6.h 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -118,14 +118,14 @@ int main() {}
   \endcode
 
   This initialize the robot kinematics with the eMc extrinsic camera
-  parameters obtained with a projection model without distorsion. To
+  parameters obtained with a projection model without distortion. To
   set the robot kinematics with the eMc matrix obtained with a camera
-  perspective model including distorsion you need to initialize the
+  perspective model including distortion you need to initialize the
   robot with:
 
   \code
   // Set the extrinsic camera parameters obtained with a perpective 
-  // projection model including a distorsion parameter
+  // projection model including a distortion parameter
   robot.init(vpAfma6::TOOL_CCMOP, vpCameraParameters::perspectiveProjWithDistortion);
   \endcode
  
@@ -136,7 +136,7 @@ int main() {}
   vpCameraParameters cam;
   robot.getCameraParameters(cam, I);
   // In cam, you get the intrinsic parameters of the projection model 
-  // with distorsion.  
+  // with distortion.
   \endcode
 
   To control the robot in position, you may set the controller
@@ -220,7 +220,7 @@ class VISP_EXPORT vpRobotAfma6
 private: /* Not allowed functions. */
 
   /*!
-    Copy contructor not allowed.
+    Copy constructor not allowed.
    */
   vpRobotAfma6 (const vpRobotAfma6 & robot);
 

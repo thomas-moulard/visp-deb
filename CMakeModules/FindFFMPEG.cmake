@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: FindFFMPEG.cmake 4056 2013-01-05 13:04:42Z fspindle $
+# $Id: FindFFMPEG.cmake 4160 2013-03-12 08:34:49Z fspindle $
 #
 # This file is part of the ViSP software.
 # Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -46,20 +46,6 @@
 # detection of the FFMPEG headers location
   FIND_PATH(FFMPEG_INCLUDE_DIR_AVCODEC
     NAMES
-      avcodec.h
-    PATHS
-    "/usr/include"
-    "/usr/local/include"
-    $ENV{FFMPEG_DIR}/include
-    $ENV{FFMPEG_DIR}
-    PATH_SUFFIXES
-      ffmpeg
-      libavcodec
-      ffmpeg/libavcodec
-  )
-
-  FIND_PATH(FFMPEG_INCLUDE_DIR
-    NAMES
       libavcodec/avcodec.h
     PATHS
     "/usr/include"
@@ -72,7 +58,7 @@
 
   FIND_PATH(FFMPEG_INCLUDE_DIR_AVFORMAT
     NAMES
-      avformat.h
+      libavformat/avformat.h
     PATHS
     "/usr/include"
     "/usr/local/include"
@@ -80,27 +66,23 @@
     $ENV{FFMPEG_DIR}
     PATH_SUFFIXES
       ffmpeg
-      libavformat
-      ffmpeg/libavformat
-      )
+  )
 
   FIND_PATH(FFMPEG_INCLUDE_DIR_AVUTIL
     NAMES
-      avutil.h
+      libavutil/avutil.h
     PATHS
     "/usr/include"
     "/usr/local/include"
     $ENV{FFMPEG_DIR}/include
     $ENV{FFMPEG_DIR}
     PATH_SUFFIXES
-      libavutil
       ffmpeg
-      ffmpeg/libavutil
   )
 
   FIND_PATH(FFMPEG_INCLUDE_DIR_SWSCALE
     NAMES
-      swscale.h
+      libswscale/swscale.h
     PATHS
     "/usr/include"
     "/usr/local/include"
@@ -109,7 +91,6 @@
     PATH_SUFFIXES
       libswscale
       ffmpeg
-      ffmpeg/libswscale
   )
 
   # Detection of the FFMPEG library on Unix
@@ -188,10 +169,14 @@
     # MESSAGE("BZIP2_FOUND: ${BZIP2_FOUND}")
   endif()
 
-IF(FFMPEG_INCLUDE_DIR AND FFMPEG_INCLUDE_DIR_AVCODEC AND FFMPEG_INCLUDE_DIR_AVFORMAT AND FFMPEG_INCLUDE_DIR_AVUTIL AND FFMPEG_INCLUDE_DIR_SWSCALE AND FFMPEG_SWSCALE_LIBRARY AND FFMPEG_AVFORMAT_LIBRARY AND FFMPEG_AVCODEC_LIBRARY AND FFMPEG_AVUTIL_LIBRARY AND ZLIB_LIBRARIES AND BZIP2_LIBRARIES)
+  # FFMpeg may depend also on iconv since probably version 1.1.3 where if detected,
+  # iconv usage is enabled by default
+  find_package(ICONV QUIET)
+  #message("ICONV_FOUND: ${ICONV_FOUND}")
+
+IF(FFMPEG_INCLUDE_DIR_AVCODEC AND FFMPEG_INCLUDE_DIR_AVFORMAT AND FFMPEG_INCLUDE_DIR_AVUTIL AND FFMPEG_INCLUDE_DIR_SWSCALE AND FFMPEG_SWSCALE_LIBRARY AND FFMPEG_AVFORMAT_LIBRARY AND FFMPEG_AVCODEC_LIBRARY AND FFMPEG_AVUTIL_LIBRARY AND ZLIB_LIBRARIES AND BZIP2_LIBRARIES)
   SET(FFMPEG_FOUND TRUE)
   SET(FFMPEG_INCLUDE_DIRS
-    ${FFMPEG_INCLUDE_DIR}
     ${FFMPEG_INCLUDE_DIR_AVCODEC}
     ${FFMPEG_INCLUDE_DIR_AVFORMAT}
     ${FFMPEG_INCLUDE_DIR_AVUTIL}
@@ -206,7 +191,10 @@ IF(FFMPEG_INCLUDE_DIR AND FFMPEG_INCLUDE_DIR_AVCODEC AND FFMPEG_INCLUDE_DIR_AVFO
   if(FFMPEG_AVCORE_LIBRARY)
     LIST(APPEND FFMPEG_LIBRARIES ${FFMPEG_AVCORE_LIBRARY})
   endif()
-  LIST(APPEND FFMPEG_LIBRARIES ${ZLIB_LIBRARIES} ${BZIP2_LIBRARIES})
+  list(APPEND FFMPEG_LIBRARIES ${ZLIB_LIBRARIES} ${BZIP2_LIBRARIES})
+  if(ICONV_FOUND)
+    list(APPEND FFMPEG_LIBRARIES ${ICONV_LIBRARIES})
+  endif()
 
 ELSE()
   SET(FFMPEG_FOUND FALSE)
@@ -214,7 +202,6 @@ ENDIF ()
 
 MARK_AS_ADVANCED(
   BZIP2_DIR
-  FFMPEG_INCLUDE_DIR
   FFMPEG_INCLUDE_DIR_AVCODEC
   FFMPEG_INCLUDE_DIR_AVFORMAT
   FFMPEG_INCLUDE_DIR_AVUTIL

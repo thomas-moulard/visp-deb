@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpBiclops.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpBiclops.cpp 4321 2013-07-17 19:26:03Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -57,7 +57,7 @@
 /* ------------------------------------------------------------------------ */
 const unsigned int vpBiclops::ndof = 2; /*<! Only pan and tilt are considered. */
 const float vpBiclops::h    = 0.048f; /*<! Vertical offset from last joint to camera frame. */
-const float vpBiclops::panJointLimit  = (float)(M_PI/2.0); /*!< Pan range (in rad): from -panJointLimit to + panJointLimit */
+const float vpBiclops::panJointLimit  = (float)(M_PI); /*!< Pan range (in rad): from -panJointLimit to + panJointLimit */
 const float vpBiclops::tiltJointLimit = (float)(M_PI/4.5); /*!< Tilt range (in rad): from -tiltJointLimit to + tiltJointLimit */
 
 const float vpBiclops::speedLimit = (float)(M_PI/3.0); /*!< Maximum speed (in rad/s) to perform a displacement */

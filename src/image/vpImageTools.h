@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpImageTools.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpImageTools.h 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -209,12 +209,12 @@ void vpImageTools::createSubImage(const vpImage<Type> &I,
 
   Binarise an image.
 
-  - Pixels whose walues are less than \e threshold1 are set to \e value1
+  - Pixels whose values are less than \e threshold1 are set to \e value1
 
-  - Pixels whose walues are greater then or equal to \e threshold1 and
+  - Pixels whose values are greater then or equal to \e threshold1 and
     less then or equal to \e threshold2 are set to \e value2
 
-  - Pixels whose walues are greater than \e threshold2 are set to \e value3
+  - Pixels whose values are greater than \e threshold2 are set to \e value3
 
 */
 template<class Type>
@@ -343,7 +343,7 @@ void *vpUndistortInternalType<Type>::vpUndistort_threaded(void *arg)
   \param cam : Parameters of the camera causing distortion.
 
   \param undistI : Undistorted output image. The size of this image
-  will be the same than the input image \e I. If the distorsion
+  will be the same than the input image \e I. If the distortion
   parameter \f$K_d\f$ is null (see cam.get_kd_mp()), \e undistI is
   just a copy of \e I.
 

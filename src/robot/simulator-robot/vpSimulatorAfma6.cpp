@@ -100,8 +100,11 @@ vpSimulatorAfma6::vpSimulatorAfma6():vpRobotWireFrameSimulator(), vpAfma6()
 
 /*!
   Constructor used to enable or disable the external view of the robot.
+
+  \param display : When true, enables the display of the external view.
+
 */
-vpSimulatorAfma6::vpSimulatorAfma6(bool disp):vpRobotWireFrameSimulator(disp)
+vpSimulatorAfma6::vpSimulatorAfma6(bool display):vpRobotWireFrameSimulator(display)
 {
   init();
   initDisplay();
@@ -269,7 +272,7 @@ vpSimulatorAfma6::initDisplay()
 
   The eMc parameters depend on the camera.
   
-  \warning Only perspective projection without distorsion is available!
+  \warning Only perspective projection without distortion is available!
 
   \param tool : Tool to use. Note that the generic camera is not handled.
 
@@ -457,7 +460,7 @@ vpSimulatorAfma6::getCameraParameters (vpCameraParameters &cam,
   \param cam : The desired camera parameters.
 */
 void
-vpSimulatorAfma6::setCameraParameters(const vpCameraParameters cam) 
+vpSimulatorAfma6::setCameraParameters(const vpCameraParameters &cam)
 {
   px_int = cam.get_px();
   py_int = cam.get_py();
@@ -496,8 +499,15 @@ vpSimulatorAfma6::updateArticularPosition()
       if (jointLimit)
       {
         double art = articularCoordinates[jointLimitArt-1] + ellapsedTime*articularVelocities[jointLimitArt-1];
-        if (art <= _joint_min[jointLimitArt-1] || art >= _joint_max[jointLimitArt-1])
+        if (art <= _joint_min[jointLimitArt-1] || art >= _joint_max[jointLimitArt-1]) {
+          if (verbose_) {
+            std::cout << "Joint " << jointLimitArt-1
+                    << " reaches a limit: " << vpMath::deg(_joint_min[jointLimitArt-1]) << " < "
+                    << vpMath::deg(art) << " < " << vpMath::deg(_joint_max[jointLimitArt-1]) << std::endl;
+          }
+
           articularVelocities = 0.0;
+        }
         else
           jointLimit = false;
       }
@@ -533,8 +543,8 @@ vpSimulatorAfma6::updateArticularPosition()
       if (displayAllowed)
       {
         vpDisplay::display(I);
-        vpDisplay::displayFrame(I,getExternalCameraPosition (),cameraParam,0.2,vpColor::none);
-        vpDisplay::displayFrame(I,getExternalCameraPosition ()*fMi[7],cameraParam,0.1,vpColor::none);
+        vpDisplay::displayFrame(I,getExternalCameraPosition (),cameraParam,0.2,vpColor::none, thickness_);
+        vpDisplay::displayFrame(I,getExternalCameraPosition ()*fMi[7],cameraParam,0.1,vpColor::none, thickness_);
       }
     
       if (displayType == MODEL_3D && displayAllowed)
@@ -560,7 +570,7 @@ vpSimulatorAfma6::updateArticularPosition()
         vpMeterPixelConversion::convertPoint (cameraParam, pt.get_x(), pt.get_y(), iP_1);
         pt.track(getExternalCameraPosition ()*fMit[0]);
         vpMeterPixelConversion::convertPoint (cameraParam, pt.get_x(), pt.get_y(), iP);
-        vpDisplay::displayLine(I,iP_1,iP,vpColor::green);
+        vpDisplay::displayLine(I,iP_1,iP,vpColor::green, thickness_);
         for (unsigned int k = 1; k < 7; k++)
         {
           pt.track(getExternalCameraPosition ()*fMit[k-1]);
@@ -569,9 +579,9 @@ vpSimulatorAfma6::updateArticularPosition()
           pt.track(getExternalCameraPosition ()*fMit[k]);
           vpMeterPixelConversion::convertPoint (cameraParam, pt.get_x(), pt.get_y(), iP);
         
-          vpDisplay::displayLine(I,iP_1,iP,vpColor::green);
+          vpDisplay::displayLine(I,iP_1,iP,vpColor::green, thickness_);
         }
-        vpDisplay::displayCamera(I,getExternalCameraPosition ()*fMit[7],cameraParam,0.1,vpColor::green);
+        vpDisplay::displayCamera(I,getExternalCameraPosition ()*fMit[7],cameraParam,0.1,vpColor::green, thickness_);
       }
     
       vpDisplay::flush(I);
@@ -1298,7 +1308,7 @@ vpSimulatorAfma6::setPosition(const vpRobot::vpControlFrameType frame,const vpCo
       {
         articularCoordinates = get_artCoord();
         qdes = articularCoordinates;
-        nbSol = getInverseKinematics(fMc2, qdes);
+        nbSol = getInverseKinematics(fMc2, qdes, true, verbose_);
         setVelocityCalled = true;
         if (nbSol > 0)
         {
@@ -1368,7 +1378,7 @@ vpSimulatorAfma6::setPosition(const vpRobot::vpControlFrameType frame,const vpCo
       {
         articularCoordinates = get_artCoord();
         qdes = articularCoordinates;
-        nbSol = getInverseKinematics(fMc, qdes);
+        nbSol = getInverseKinematics(fMc, qdes, true, verbose_);
         setVelocityCalled = true;
         if (nbSol > 0)
         {
@@ -1687,7 +1697,7 @@ vpSimulatorAfma6::getPosition (const vpRobot::vpControlFrameType frame,
   \param limitMax : The maximum joint limits are given in a vector of size 6. The three first values have to be given in meter and the others in radian.
 */
 void 
-vpSimulatorAfma6::setJointLimit(vpColVector limitMin, vpColVector limitMax)
+vpSimulatorAfma6::setJointLimit(const vpColVector &limitMin, const vpColVector &limitMax)
 {
   if (limitMin.getRows() != 6 || limitMax.getRows() != 6)
   {
@@ -2325,16 +2335,26 @@ vpSimulatorAfma6::getExternalImage(vpImage<vpRGBa> &I)
 }
 
 /*!
-  This method enables to initialise the articular coordinates of the robot in order to position the camera relative to the object.
+  This method enables to initialise the joint coordinates of the robot in order
+  to position the camera relative to the object.
   
-  Before using this method it is advised to set the position of the object thanks to the set_fMo() method.
+  Before using this method it is advised to set the position of the object thanks
+  to the set_fMo() method.
   
+  In other terms, set the world to camera transformation
+  \f${^f}{\bf M}_c = {^f}{\bf M}_o \; ({^c}{\bf M}_o)^{-1}\f$, and from the inverse kinematics
+  set the joint positions \f${\bf q}\f$ that corresponds to the \f${^f}{\bf M}_c\f$ transformation.
+
   \param cMo : the desired pose of the camera.
+
+  \return false if the robot kinematics is not able to reach the cMo position.
+
 */
-void 
-vpSimulatorAfma6::initialiseCameraRelativeToObject(vpHomogeneousMatrix cMo)
+bool
+vpSimulatorAfma6::initialiseCameraRelativeToObject(const vpHomogeneousMatrix &cMo)
 {
   vpColVector stop(6);
+  bool status = true;
   stop = 0;
   set_artVel(stop);
   set_velocity(stop);
@@ -2342,25 +2362,37 @@ vpSimulatorAfma6::initialiseCameraRelativeToObject(vpHomogeneousMatrix cMo)
   fMc = fMo * cMo.inverse();
   
   vpColVector articularCoordinates = get_artCoord();
-  int nbSol = getInverseKinematics(fMc, articularCoordinates);
+  int nbSol = getInverseKinematics(fMc, articularCoordinates, true, verbose_);
   
-  if (nbSol == 0)
+  if (nbSol == 0) {
+    status = false;
     vpERROR_TRACE ("Positionning error. Position unreachable");
+  }
   
+  if (verbose_)
+    std::cout << "Used joint coordinates (rad): " << articularCoordinates.t() << std::endl;
+
   set_artCoord(articularCoordinates);
   
   compute_fMi();
+
+  return status;
 }
 
 /*!
-  This method enables to initialise the pose between the object and the refrence frame, in order to position the object relative to the camera.
+  This method enables to initialise the pose between the object and the reference frame,
+  in order to position the object relative to the camera.
   
   Before using this method it is advised to set the articular coordinates of the robot.
-  
+
+  In other terms, set the world to object transformation
+  \f${^f}{\bf M}_o = {^f}{\bf M}_c \; {^c}{\bf M}_o\f$ where \f$ {^f}{\bf M}_c = f({\bf q})\f$
+  with \f${\bf q}\f$ the robot joint position
+
   \param cMo : the desired pose of the camera.
 */
 void 
-vpSimulatorAfma6::initialiseObjectRelativeToCamera(vpHomogeneousMatrix cMo)
+vpSimulatorAfma6::initialiseObjectRelativeToCamera(const vpHomogeneousMatrix &cMo)
 {
   vpColVector stop(6);
   stop = 0;

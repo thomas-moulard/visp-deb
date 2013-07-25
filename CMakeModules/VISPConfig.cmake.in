@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: VISPConfig.cmake.in 4137 2013-02-14 06:56:53Z fspindle $
+# $Id: VISPConfig.cmake.in 4221 2013-04-17 10:13:34Z fspindle $
 #
 # This file is part of the ViSP software.
 # Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -102,9 +102,6 @@ FOREACH(val ${VISP_EXTERN_LINK_DIR})
   LIST(APPEND VISP_LIBRARY_DIRS "${val}")
 ENDFOREACH(val ${VISP_EXTERN_LINK_DIR})
 #MESSAGE("VISP_LIBRARY_DIRS: ${VISP_LIBRARY_DIRS}")
-
-# Tell the user project where to find ViSP dependencies
-INCLUDE("${VISP_ROOT_DIR_CMAKE}/VISPLibraryDepends.cmake")
 
 # export source dir for doxygen eventually
 SET(VISP_SOURCE_DIR "@VISP_SOURCE_DIR@")

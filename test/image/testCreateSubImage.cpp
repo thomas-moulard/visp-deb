@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: testCreateSubImage.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: testCreateSubImage.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -242,7 +242,7 @@ main(int argc, const char ** argv)
   // Read the input grey image from the disk
   filename = ipath +  vpIoTools::path("/ViSP-images/Klimt/Klimt.pgm");
   std::cout << "Read image: " << filename << std::endl;
-  vpImageIo::readPGM(I, filename) ;
+  vpImageIo::read(I, filename) ;
 
   // Specify the cropping area
   vpRect crop;
@@ -257,6 +257,6 @@ main(int argc, const char ** argv)
   // Write the cropped image on the disk
   filename = opath +  vpIoTools::path("/Klimt_crop.pgm");
   std::cout << "Write cropped image: " << filename << std::endl;
-  vpImageIo::writePGM(C, filename) ;
+  vpImageIo::write(C, filename) ;
 
 }

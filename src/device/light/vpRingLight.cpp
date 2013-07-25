@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpRingLight.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpRingLight.cpp 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -63,7 +63,7 @@
 
 /*!
 
-  Contructor to acces to the ring light device connected to the parallel port.
+  Constructor to acces to the ring light device connected to the parallel port.
 
   Open and initialise the default parallel port device "/dev/parport0" to
   communicate with the ring light.

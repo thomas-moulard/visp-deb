@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpBasicKeyPoint.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpBasicKeyPoint.h 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -127,7 +127,7 @@ class VISP_EXPORT vpBasicKeyPoint
      if (index >= referenceImagePointsList.size())
      {
        vpTRACE("Index of the reference point out of range");
-       throw(vpException(vpException::fatalError,"Index of the refrence point out of range"));
+       throw(vpException(vpException::fatalError,"Index of the reference point out of range"));
      }
 
      referencePoint.set_ij(referenceImagePointsList[index].get_i(), referenceImagePointsList[index].get_j());
@@ -184,14 +184,14 @@ class VISP_EXPORT vpBasicKeyPoint
 
      \return the number of reference points.
     */
-    inline unsigned int getReferencePointNumber() const {return referenceImagePointsList.size();};
+    inline unsigned int getReferencePointNumber() const {return (unsigned int)referenceImagePointsList.size();};
 
     /*!
      Get the number of matched points.
 
      \return the number of matched points.
     */
-    inline unsigned int getMatchedPointNumber() const {return matchedReferencePoints.size();};
+    inline unsigned int getMatchedPointNumber() const {return (unsigned int)matchedReferencePoints.size();};
 
     /*!
       Return the vector of reference image point.
@@ -227,7 +227,7 @@ class VISP_EXPORT vpBasicKeyPoint
 
   protected:
     /*!
-      List of the points which define the refrence.
+      List of the points which define the reference.
     */
     std::vector<vpImagePoint> referenceImagePointsList;
 

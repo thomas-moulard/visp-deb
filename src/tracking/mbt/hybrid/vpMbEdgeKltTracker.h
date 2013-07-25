@@ -1,31 +1,34 @@
 /****************************************************************************
  *
- * $Id: vpMbEdgeKltTracker.h 4119 2013-02-08 10:30:53Z fspindle $
+ * $Id: vpMbEdgeKltTracker.h 4338 2013-07-23 14:29:30Z fspindle $
  *
- * Copyright (C) 2005 - 2013 Inria. All rights reserved.
+ * This file is part of the ViSP software.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
+ *
+ * This software is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * ("GPL") version 2 as published by the Free Software Foundation.
+ * See the file LICENSE.txt at the root directory of this source
+ * distribution for additional information about the GNU GPL.
+ *
+ * For using ViSP with software that can not be combined with the GNU
+ * GPL, please contact INRIA about acquiring a ViSP Professional
+ * Edition License.
+ *
+ * See http://www.irisa.fr/lagadic/visp/visp.html for more information.
  *
  * This software was developed at:
- * IRISA/INRIA Rennes
- * Projet Lagadic
+ * INRIA Rennes - Bretagne Atlantique
  * Campus Universitaire de Beaulieu
  * 35042 Rennes Cedex
+ * France
  * http://www.irisa.fr/lagadic
  *
- * This file is part of the ViSP toolkit
- *
- * This file may be distributed under the terms of the Q Public License
- * as defined by Trolltech AS of Norway and appearing in the file
- * LICENSE included in the packaging of this file.
- *
- * Licensees holding valid ViSP Professional Edition licenses may
- * use this file in accordance with the ViSP Commercial License
- * Agreement provided with the Software.
+ * If you have questions regarding the use of this file, please contact
+ * INRIA at visp@inria.fr
  *
  * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * Contact visp@irisa.fr if any conditions of this licensing are
- * not clear to you.
  *
  * Description:
  * Hybrid tracker based on edges (vpMbt) and points of interests (KLT)
@@ -64,14 +67,15 @@
   \ingroup ModelBasedTracking
   \warning This class is only available if OpenCV is installed, and used.
   
-  \brief Hybrid tracker based on edges (vpMbt) and points of interests (KLT)
+  \brief Hybrid tracker based on moving-edges and keypoints tracked using KLT 
+  tracker.
   
   The tracker requires the knowledge of the 3D model that could be provided in a vrml
   or in a cao file. The cao format is described in loadCAOModel().
   It may also use an xml file used to tune the behavior of the tracker and an
   init file used to compute the pose at the very first image.
 
-  The following code shows the simplest way to use the tracker.
+  The following code shows the simplest way to use the tracker. The \ref tutorial-tracking-mb is also a good starting point to use this class.
   
 \code
 #include <visp/vpMbEdgeKltTracker.h>
@@ -84,14 +88,15 @@
 
 int main()
 {
+#if defined VISP_HAVE_OPENCV
   vpMbEdgeKltTracker tracker; // Create an hybrid model based tracker.
   vpImage<unsigned char> I;
-  vpHomogeneousMatrix cMo; // Pose computed using the tracker. 
+  vpHomogeneousMatrix cMo; // Pose computed using the tracker.
   vpCameraParameters cam;
-  
+
   // Acquire an image
-  vpImageIo::readPGM(I, "cube.pgm");
-  
+  vpImageIo::read(I, "cube.pgm");
+
 #if defined VISP_HAVE_X11
   vpDisplayX display;
   display.init(I,100,100,"Mb Hybrid Tracker");
@@ -102,22 +107,25 @@ int main()
 #endif
   tracker.getCameraParameters(cam);   // Get the camera parameters used by the tracker (from the configuration file).
   tracker.loadModel("cube.cao");      // Load the 3d model in cao format. No 3rd party library is required
-  tracker.initClick(I, "cube.init");  // Initialise manually the pose by clicking on the image points associated to the 3d points containned in the cube.init file.
+  tracker.initClick(I, "cube.init");  // Initialise manually the pose by clicking on the image points associated to the 3d points contained in the cube.init file.
 
   while(true){
     // Acquire a new image
     vpDisplay::display(I);
     tracker.track(I);     // Track the object on this image
     tracker.getPose(cMo); // Get the pose
-    
+
     tracker.display(I, cMo, cam, vpColor::darkRed, 1); // Display the model at the computed pose.
     vpDisplay::flush(I);
   }
 
+#if defined VISP_HAVE_XML2
   // Cleanup memory allocated by xml library used to parse the xml config file in vpMbEdgeKltTracker::loadConfigFile()
   vpXmlParser::cleanup();
+#endif
 
   return 0;
+#endif
 }
 \endcode  
 
@@ -134,17 +142,18 @@ int main()
 
 int main()
 {
+#if defined VISP_HAVE_OPENCV
   vpMbEdgeKltTracker tracker; // Create an hybrid model based tracker.
   vpImage<unsigned char> I;
   vpHomogeneousMatrix cMo; // Pose used in entry (has to be defined), then computed using the tracker. 
   
   //acquire an image
-  vpImageIo::readPGM(I, "cube.pgm"); // Example of acquisition
+  vpImageIo::read(I, "cube.pgm"); // Example of acquisition
 
 #if defined VISP_HAVE_XML2
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
 #endif
-  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
+  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coin is required, if coin is not installed .cao file can be used.
   tracker.initFromPose(I, cMo); // initialise the tracker with the given pose.
 
   while(true){
@@ -153,10 +162,13 @@ int main()
     tracker.getPose(cMo); // get the pose 
   }
   
+#if defined VISP_HAVE_XML2
   // Cleanup memory allocated by xml library used to parse the xml config file in vpMbEdgeKltTracker::loadConfigFile()
   vpXmlParser::cleanup();
+#endif
 
   return 0;
+#endif
 }
 \endcode
 
@@ -173,13 +185,14 @@ int main()
 
 int main()
 {
+#if defined VISP_HAVE_OPENCV
   vpMbEdgeKltTracker tracker; // Create an hybrid model based tracker.
   vpImage<unsigned char> I;
   vpHomogeneousMatrix cMo; // Pose used to display the model. 
   vpCameraParameters cam;
   
   // Acquire an image
-  vpImageIo::readPGM(I, "cube.pgm");
+  vpImageIo::read(I, "cube.pgm");
   
 #if defined VISP_HAVE_X11
   vpDisplayX display;
@@ -190,7 +203,7 @@ int main()
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
 #endif
   tracker.getCameraParameters(cam); // Get the camera parameters used by the tracker (from the configuration file).
-  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
+  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coin is required, if coin is not installed .cao file can be used.
 
   while(true){
     // acquire a new image
@@ -200,17 +213,20 @@ int main()
     vpDisplay::flush(I);
   }
   
+#endif
   // Cleanup memory allocated by xml library used to parse the xml config file in vpMbEdgeKltTracker::loadConfigFile()
   vpXmlParser::cleanup();
+#endif
 
   return 0;
+#endif
 }
 \endcode
 */
 class VISP_EXPORT vpMbEdgeKltTracker: public vpMbKltTracker, public vpMbEdgeTracker
 {
 protected:
-  //! If true, compute the interaction matrix at each iteration of the minimisation. Otherwise, compute it only on the first iteration.
+  //! If true, compute the interaction matrix at each iteration of the minimization. Otherwise, compute it only on the first iteration.
   bool compute_interaction;
   //! The gain of the virtual visual servoing stage.
   double lambda;
@@ -231,28 +247,51 @@ public:
   virtual void    display(const vpImage<vpRGBa>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters &cam,
                           const vpColor& col , const unsigned int thickness=1, const bool displayFullModel = false);
   
-  /*! Return the angle used to test polygons apparition. */
-  virtual inline  double  getAngleAppear() { return vpMbKltTracker::getAngleAppear(); }   
+  /*! Return the angle used to test polygons appearance. */
+  virtual inline  double  getAngleAppear() const { return vpMbKltTracker::getAngleAppear(); }   
   
-          /*! Return the angle used to test polygons disparition. */
-  virtual inline  double  getAngleDisappear() { return vpMbKltTracker::getAngleDisappear(); } 
+          /*! Return the angle used to test polygons disappearance. */
+  virtual inline  double  getAngleDisappear() const { return vpMbKltTracker::getAngleDisappear(); } 
   
-  /*! Return a reference to the faces structure. */
-  vpMbHiddenFaces<vpMbtKltPolygon> & getFaces() { return vpMbKltTracker::faces;}
+          /*!
+            Get the clipping used.
+            
+            \sa vpMbtPolygonClipping
+            
+            \return Clipping flags.
+          */          
+  virtual inline  unsigned int getClipping() const { return vpMbKltTracker::clippingFlag; } 
+  
+          /*! Return a reference to the faces structure. */
+  inline  vpMbHiddenFaces<vpMbtKltPolygon>& getFaces() { return vpMbKltTracker::faces;}
 
-  /*!
+          /*!
+            Get the far distance for clipping.
+
+            \return Far clipping value.
+          */
+  virtual inline  double  getFarClippingDistance() const { return vpMbKltTracker::getFarClippingDistance(); }
+
+          /*!
             Get the value of the gain used to compute the control law.
 
             \return the value for the gain.
           */
-  inline  double  getLambda() {return lambda;}
+  virtual inline  double  getLambda() const {return lambda;}
 
-  /*!
+          /*!
             Get the maximum iteration of the virtual visual servoing stage.
 
             \return the number of iteration
           */
-  inline  unsigned int getMaxIter() {return maxIter;}
+  virtual inline  unsigned int getMaxIter() const {return maxIter;}
+  
+          /*!
+            Get the near distance for clipping.
+            
+            \return Near clipping value.
+          */
+  virtual inline  double  getNearClippingDistance() const { return vpMbKltTracker::getNearClippingDistance(); }
 
           void    loadConfigFile(const char* configFile);
   virtual void    loadConfigFile(const std::string& configFile);
@@ -261,7 +300,7 @@ public:
           void    resetTracker();
           
           /*!
-            Set the angle used to test polygons apparition.
+            Set the angle used to test polygons appearance.
             If the angle between the normal of the polygon and the line going
             from the camera to the polygon center has a value lower than
             this parameter, the polygon is considered as appearing.
@@ -272,7 +311,7 @@ public:
   virtual inline  void setAngleAppear(const double &a) { vpMbKltTracker::setAngleAppear(a); }
   
           /*!
-            Set the angle used to test polygons disparition.
+            Set the angle used to test polygons disappearance.
             If the angle between the normal of the polygon and the line going
             from the camera to the polygon center has a value greater than
             this parameter, the polygon is considered as disappearing.
@@ -283,25 +322,48 @@ public:
   virtual inline  void setAngleDisappear(const double &a) { vpMbKltTracker::setAngleDisappear(a); }
 
   virtual void    setCameraParameters(const vpCameraParameters& cam);
+  
+          /*!
+            Specify which clipping to use.
+            
+            \sa vpMbtPolygonClipping
+            
+            \param flags : New clipping flags.
+          */
+  virtual void    setClipping(const unsigned int &flags) {vpMbEdgeTracker::setClipping(flags); vpMbKltTracker::setClipping(flags);}
 
-  /*!
+          /*!
+            Set the far distance for clipping.
+
+            \param dist : Far clipping value.
+          */
+  virtual void   setFarClippingDistance(const double &dist) { vpMbEdgeTracker::setFarClippingDistance(dist); vpMbKltTracker::setFarClippingDistance(dist); }
+
+          /*!
             Set the value of the gain used to compute the control law.
 
             \param lambda : the desired value for the gain.
           */
-  inline  void    setLambda(const double lambda) {this->lambda = lambda; vpMbEdgeTracker::setLambda(lambda); vpMbKltTracker::setLambda(lambda);}
+  virtual inline  void setLambda(const double lambda) {this->lambda = lambda; vpMbEdgeTracker::setLambda(lambda); vpMbKltTracker::setLambda(lambda);}
 
-  /*!
+          /*!
             Set the maximum iteration of the virtual visual servoing stage.
 
             \param max : the desired number of iteration
           */
-  inline  void    setMaxIter(const unsigned int max) {maxIter = max;}
+  virtual inline  void setMaxIter(const unsigned int max) {maxIter = max;}
+  
+          /*!
+            Set the near distance for clipping.
+            
+            \param dist : Near clipping value.
+          */
+  virtual void   setNearClippingDistance(const double &dist) { vpMbEdgeTracker::setNearClippingDistance(dist); vpMbKltTracker::setNearClippingDistance(dist); }
           
           /*!
             Use Ogre3D for visibility tests
             
-            \warning This function has to be called before the initialisation of the tracker.
+            \warning This function has to be called before the initialization of the tracker.
             
             \param v : True to use it, False otherwise
           */

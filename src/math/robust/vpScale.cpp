@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpScale.cpp 4137 2013-02-14 06:56:53Z fspindle $
+ * $Id: vpScale.cpp 4312 2013-07-16 15:12:42Z ayol $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -83,7 +83,7 @@ vpScale::vpScale(double kernel_bandwidth,
 #endif
 
   bandwidth = kernel_bandwidth;
-  this->dimension = dimension;
+  this->dimension = (unsigned)dimension;
   this->kernel_type = kernel_type;
 
 #if (DEBUG_LEVEL2)

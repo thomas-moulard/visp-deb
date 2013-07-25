@@ -52,7 +52,7 @@
 */
 vpRobotWireFrameSimulator::vpRobotWireFrameSimulator():vpWireFrameSimulator(), vpRobotSimulator()
 {
-  setSamplingTime(10);
+  setSamplingTime(0.010);
   velocity.resize(6);
   I.resize(480,640);
   I = 255;
@@ -70,11 +70,15 @@ vpRobotWireFrameSimulator::vpRobotWireFrameSimulator():vpWireFrameSimulator(), v
   constantSamplingTimeMode = false;
   setVelocityCalled = false;
   
+  verbose_ = false;
  //pid_t pid = getpid();
  // setpriority (PRIO_PROCESS, pid, 19);
 }
 
-
+/*!
+  Default constructor.
+  \param display : When true, enables the display of the external view.
+  */
 vpRobotWireFrameSimulator::vpRobotWireFrameSimulator(bool display) : vpWireFrameSimulator(), vpRobotSimulator()
 {
   setSamplingTime(0.010);
@@ -120,7 +124,7 @@ vpRobotWireFrameSimulator::~vpRobotWireFrameSimulator()
   \param desiredObject : Type of scene used to display the object at the desired pose (in the internal view).
 */
 void
-vpRobotWireFrameSimulator::initScene(vpSceneObject obj, vpSceneDesiredObject desiredObject)
+vpRobotWireFrameSimulator::initScene(const vpSceneObject &obj, const vpSceneDesiredObject &desiredObject)
 {
   if(displayCamera){
     free_Bound_scene (&(this->camera));
@@ -164,7 +168,7 @@ vpRobotWireFrameSimulator::initScene(const char* obj, const char* desiredObject)
   \param obj : Type of scene used to display the object at the current position.
 */
 void
-vpRobotWireFrameSimulator::initScene(vpSceneObject obj)
+vpRobotWireFrameSimulator::initScene(const vpSceneObject &obj)
 {
   if(displayCamera){
     free_Bound_scene (&(this->camera));

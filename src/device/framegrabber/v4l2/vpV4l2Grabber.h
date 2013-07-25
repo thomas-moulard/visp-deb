@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpV4l2Grabber.h 4107 2013-02-06 10:04:49Z fspindle $
+ * $Id: vpV4l2Grabber.h 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -100,7 +100,12 @@
   - /etc/modules.conf
   - or /etc/modprobe.conf
 
-  The example below shows how to use this grabber.
+  This first example available in tutorial-grabber-v4l2.cpp shows how to grab
+  and display images from an usb camera.
+  \include tutorial-grabber-v4l2.cpp
+
+  This other example shows how to use this grabber with an analogic camera
+  attached to a bttv PCI card.
   \code
 #include <visp/vpConfig.h>
 #include <visp/vpImage.h>
@@ -120,7 +125,7 @@ int main()
   g.open(I);        // Open the grabber
 
   g.acquire(I);     // Acquire a 768x576 grey image
-  vpImageIo::writePGM(I, "image.pgm"); // Save the image on the disk
+  vpImageIo::write(I, "image.pgm"); // Save the image on the disk
 #endif
 }
   \endcode

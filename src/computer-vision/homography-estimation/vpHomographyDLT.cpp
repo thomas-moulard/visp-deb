@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpHomographyDLT.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpHomographyDLT.cpp 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -48,6 +48,7 @@
 */
 
 #include <visp/vpHomography.h>
+#include <visp/vpMatrixException.h>
 
 #include <cmath>    // std::fabs
 #include <limits>   // numeric_limits
@@ -149,6 +150,10 @@ vpHomography::HartleyDenormalization(vpHomography &aHbn,
   At least 4 correspondant points couples are needed.
 
   \sa DLT()
+
+  \exception vpMatrixException::rankDeficient : When the rank of the matrix
+  that should be 8 is deficient.
+
 */
 void
 vpHomography::HartleyDLT(unsigned int n,
@@ -258,6 +263,8 @@ vpHomography::HartleyDLT(unsigned int n,
   <b>h</b> is the column of <b>V</b> associated with the smalest singular value of <b>A
   </b>
 
+  \exception vpMatrixException::rankDeficient : When the rank of the matrix
+  that should be 8 is deficient.
 */
 void vpHomography::DLT(unsigned int n,
 		       double *xb, double *yb,
@@ -329,8 +336,9 @@ void vpHomography::DLT(unsigned int n,
     for(i = 0; i<9;i++) if(D[i]>1e-7) rank++;
     if(rank <7)
     {
-      vpTRACE(" le rang est de : %d, shoud be 8", rank);
-      throw ;
+      vpTRACE(" Rank is : %d, should be 8", rank);
+      throw(vpMatrixException(vpMatrixException::rankDeficient,
+			      "\n\t\t Matrix rank is deficient")) ;
     }
     //h = is the column of V associated with the smallest singular value of A
 
@@ -352,9 +360,16 @@ void vpHomography::DLT(unsigned int n,
     }
 
   }
-  catch(...)
+  catch(vpMatrixException me)
   {
-    vpTRACE(" ") ;
-    throw ;
+    vpTRACE("Matrix Exception ") ;
+    throw(me) ;
   }
+  catch(vpException me)
+  {
+    vpERROR_TRACE("caught another error") ;
+    std::cout <<std::endl << me << std::endl ;
+    throw(me) ;
+  }
+
 }

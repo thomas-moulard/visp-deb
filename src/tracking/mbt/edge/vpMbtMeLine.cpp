@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMbtMeLine.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpMbtMeLine.cpp 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -404,7 +404,7 @@ vpMbtMeLine::reSample(const vpImage<unsigned char> &I, vpImagePoint ip1, vpImage
 {
   double d = sqrt(vpMath::sqr(ip1.get_i()-ip2.get_i())+vpMath::sqr(ip1.get_j()-ip2.get_j())) ;
 
-  unsigned int n = list.size();//numberOfSignal() ;
+  size_t n = list.size();
   expecteddensity = d / (double)me->getSampleStep();
 
   if ((double)n<0.5*expecteddensity && n > 0)

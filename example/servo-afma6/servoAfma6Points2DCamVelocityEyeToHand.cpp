@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: servoAfma6Points2DCamVelocityEyeToHand.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: servoAfma6Points2DCamVelocityEyeToHand.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -394,7 +394,7 @@ int main()
 
 	      vpDisplay::getImage(I,Ic) ;
 	      sprintf(name,"/tmp/marchand/image.%04d.ppm",it++) ;
-	      vpImageIo::writePPM(Ic,name) ;
+        vpImageIo::write(Ic,name) ;
 	    }
     }
     v = 0 ;

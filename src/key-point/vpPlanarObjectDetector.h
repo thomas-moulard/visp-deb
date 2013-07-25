@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpPlanarObjectDetector.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpPlanarObjectDetector.h 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -98,7 +98,7 @@ int main()
   vpImage<unsigned char> Icurrent;
   vpPlanarObjectDetector planar;
 
-  //First grab the reference image Irefrence
+  //First grab the reference image Ireference
 
   //Select a part of the image by clincking on two points which define a rectangle
   vpImagePoint corners[2];
@@ -229,7 +229,7 @@ public:
     
     \return Number of reference points.
   */
-  inline unsigned int getNbRefPoints() {return currentImagePoints.size() ;}
+  inline unsigned int getNbRefPoints() {return (unsigned int)currentImagePoints.size() ;}
   
   /*!
     Get the i-th reference point.

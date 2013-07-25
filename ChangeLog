@@ -6,6 +6,48 @@
                     http://www.irisa.fr/lagadic
 
 
+ViSP 2.8.0 (released July 24th, 2013)
+  - New features
+    . New camera calibration tool: example/camera_calibration.cpp
+  - Improvements
+    . vpV4l2Grabber and vp1394CMUGrabber does no more require a call to
+      open(I).
+    . In vp1394CMUGrabber new getters/setters for the framerate, shutter, gain.
+      It is now possible to change the settings in the acquisition loop.
+    . An exceptions is throwned when moving-edges are not initialized
+      (vpMeTracker, vpMeLine, vpMeEllipse)
+    . In model-based trackers, improve face visibility test using Ogre ray
+      tracing when faces are concave or not oriented counter clockwise.
+    . Still in model-based trackers, add functionalities to use clipping planes.
+    . ViSP can now be used with pkg-config
+    . New fonctions in vp1394TwoGrabber to turn auto shutter and auto gain
+      on. Also new getter for auto shutter and auto gain min/max values.
+    . Support Visual Studio 2012 (MSVC11)
+    . Introduce C++ visibility support as described here
+      http://gcc.gnu.org/wiki/Visibility
+    . Better support of image formats: *.tiff, *.jpeg, *.bmp, *.pbm, ...
+  - Examples
+    . Introduction of tutorials as minimalist line by line illustrated examples.
+  - Bug fixed
+    . [15404] Segfault in vpMbTracker derived classes around Coin SoDB::init()
+      and SoDB::finish() usage
+    . [15410] Robot wireframe simulator hangs
+    . [15422] Build issues with ffmpeg 1.0.1 third party
+    . [15475] Segfault in cv::Mat(BGR) to vpImage(grey) conversion
+    . [15522] Visibility tests issues in Model-Based Tracker using Ogre3D
+    . [15566] Bad mask orientation when using model-based tracker with
+      cylinders
+    . [15587] visp-config conflicts with multiarch support on Debian
+    . [15623] Possible ViSP-2.7.0 bugs detected by cppcheck
+    . [15644] crash with vpRobotWireFrameSimulator::initScene()
+    . [15679] vpDot and vpDot2 copy operator are incomplete
+    . [15680] Bad pixel to meter conversion in vpFeatureLuminance
+    . [15697] False positive exception in vpDisplay when vpDisplay::close()
+      is used
+    . [15730] ViSP-third-party.txt is installed in a wrong location
+    . [15896] Ogre Boost components miss Boost.Filesystem
+    . [15895] ViSP does not compile on FreeBSD (amd64 / i386)
+----------------------------------------------
 ViSP 2.7.0 (released February 11th, 2013)
   - New features
     - New vpViper650 and vpRobotViper650 classes to interface Inria's new

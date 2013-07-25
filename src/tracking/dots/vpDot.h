@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpDot.h 4092 2013-02-04 10:36:30Z fspindle $
+ * $Id: vpDot.h 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -68,10 +68,10 @@
 
   \ingroup TrackingImageBasic
 
-  \brief This tracker is meant to track a dot (connex pixels with same
+  \brief This tracker is meant to track a dot (connected pixels with same
   gray level) on a vpImage.
 
-  The underground algorithm is based on a binarisation of the image
+  The underground algorithm is based on a binarization of the image
   and a connex component segmentation to determine the dot
   characteristics (location, moments, size...).
 
@@ -87,12 +87,14 @@
 
 int main()
 {
-#if defined(VISP_HAVE_DC1394_2) && defined(VISP_HAVE_X11)
+#if defined(VISP_HAVE_DC1394_2)
   vpImage<unsigned char> I; // Create a gray level image container
   vp1394TwoGrabber g(false); // Create a grabber based on libdc1394-2.x third party lib
   g.acquire(I); // Acquire an image
 
+#if defined(VISP_HAVE_X11)
   vpDisplayX d(I, 0, 0, "Camera view");
+#endif
   vpDisplay::display(I);
   vpDisplay::flush(I);
 
@@ -428,7 +430,7 @@ public:
   */
   /*!
 
-    \deprecated This method is deprecated since the naming is not representative regarding to its funtionnality. \n
+    \deprecated This method is deprecated since the naming is not representative regarding to its functionality. \n
     Previously it returned all the points inside the dot. To get the equivalent, use getConnexities(). \n \n
     If you rather want to get the points on the dot border use getEdges(). 
 
@@ -442,7 +444,7 @@ public:
   
   /*!
 
-    \deprecated This method is deprecated. You shoud use
+    \deprecated This method is deprecated. You should use
     getEdges(std::list<vpImagePoint> &) instead.\n \n
     Return the list of all the image points on the dot
     border.

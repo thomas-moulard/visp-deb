@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: displayXMulti.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: displayXMulti.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -277,7 +277,7 @@ main(int argc, const char ** argv)
   try {
     // Load a grey image from the disk
     filename = ipath +  vpIoTools::path("/ViSP-images/Klimt/Klimt.pgm");
-    vpImageIo::readPGM(I1, filename) ;
+    vpImageIo::read(I1, filename) ;
   }
   catch(...)
   {
@@ -292,7 +292,7 @@ main(int argc, const char ** argv)
   try {
     // Load a color image from the disk
     filename = ipath +  vpIoTools::path("/ViSP-images/Klimt/Klimt.ppm");
-    vpImageIo::readPPM(I2, filename) ;
+    vpImageIo::read(I2, filename) ;
   }
   catch(...)
   {
@@ -392,7 +392,7 @@ main(int argc, const char ** argv)
 
     // Write the color image on the disk
     filename = odirname +  vpIoTools::path("/Klimt_grey.overlay.ppm");
-    vpImageIo::writePPM(Ioverlay, filename) ;
+    vpImageIo::write(Ioverlay, filename) ;
 
     // If click is allowed, wait for a mouse click to close the display
     if (opt_click_allowed) {

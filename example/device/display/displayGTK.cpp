@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: displayGTK.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: displayGTK.cpp 4294 2013-07-01 16:05:49Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -273,7 +273,12 @@ main(int argc, const char ** argv)
 
   // Load a grey image from the disk
   filename = ipath +  vpIoTools::path("/ViSP-images/Klimt/Klimt.png");
-  vpImageIo::read(I, filename) ;
+  try {
+    vpImageIo::read(I, filename) ;
+  }
+  catch (...) {
+    return -1;
+  }
 
   // Create a display using GTK
   vpDisplayGTK display;

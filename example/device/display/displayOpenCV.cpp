@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: displayOpenCV.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: displayOpenCV.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -275,7 +275,12 @@ main(int argc, const char ** argv)
 
   // Load a grey image from the disk
   filename = ipath +  vpIoTools::path("/ViSP-images/Klimt/Klimt.pgm");
-  vpImageIo::readPGM(I, filename) ;
+  try {
+    vpImageIo::read(I, filename) ;
+  }
+  catch (...) {
+    return -1;
+  }
 
   // Create a display using OpenCV
   vpDisplayOpenCV display;
@@ -283,7 +288,7 @@ main(int argc, const char ** argv)
   if (opt_display) {
     // For this grey level image, open a X11 display at position 100,100
     // in the screen, and with title "X11 display"
-    display.init(I, 100, 100, "X11 display") ;
+    display.init(I, 100, 100, "OpenCV display") ;
 
     // Display the image
     vpDisplay::display(I) ;
@@ -362,7 +367,7 @@ main(int argc, const char ** argv)
 
     // Write the color image on the disk
     filename = odirname +  vpIoTools::path("/Klimt_grey.overlay.ppm");
-    vpImageIo::writePPM(Ioverlay, filename) ;
+    vpImageIo::write(Ioverlay, filename) ;
 
     // If click is allowed, wait for a mouse click to close the display
     if (opt_click_allowed) {
@@ -380,15 +385,20 @@ main(int argc, const char ** argv)
 
   // Load a grey image from the disk and convert it to a color image
   filename = ipath +  vpIoTools::path("/ViSP-images/Klimt/Klimt.pgm");
-  vpImageIo::readPGM(Irgba, filename) ;
+  try {
+    vpImageIo::read(Irgba, filename) ;
+  }
+  catch (...) {
+    return -1;
+  }
 
   // Create a new display
   vpDisplayOpenCV displayRGBa;
 
   if (opt_display) {
-    // For this color image, open a X11 display at position 100,100
-    // in the screen, and with title "X11 color display"
-    displayRGBa.init(Irgba, 100, 100, "X11 color display");
+    // For this color image, open a display at position 100,100
+    // in the screen, and with title "OpenCV color display"
+    displayRGBa.init(Irgba, 100, 100, "OpenCV color display");
 
     // Display the color image
     vpDisplay::display(Irgba) ;
@@ -430,7 +440,7 @@ main(int argc, const char ** argv)
 int
 main()
 {
-  vpERROR_TRACE("You do not have X11 functionalities to display images...");
+  vpERROR_TRACE("You do not have OpenCV functionalities to display images...");
 }
 
 #endif

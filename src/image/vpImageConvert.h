@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-* $Id: vpImageConvert.h 4056 2013-01-05 13:04:42Z fspindle $
+* $Id: vpImageConvert.h 4216 2013-04-17 09:06:18Z fspindle $
 *
 * This file is part of the ViSP software.
 * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -89,7 +89,12 @@
 
   \ingroup ImageConversion
 
-  \brief Convert image types.
+  Convert image types.
+
+  The following example available in tutorial-image-converter.cpp shows how to
+  convert an OpenCV cv::Mat image into a vpImage:
+
+  \include tutorial-image-converter.cpp
 
 */
 class VISP_EXPORT vpImageConvert

@@ -65,6 +65,8 @@ vpVideoReader::vpVideoReader()
   firstFrame = 0;
   frameCount = 0;
   lastFrame = 0;
+  firstFrameIndexIsSet = false;
+  lastFrameIndexIsSet = false;
 }
 
 
@@ -142,11 +144,18 @@ void vpVideoReader::open(vpImage< vpRGBa > &I)
   if (formatType == FORMAT_PGM ||
       formatType == FORMAT_PPM ||
       formatType == FORMAT_JPEG ||
-      formatType == FORMAT_PNG)
+      formatType == FORMAT_PNG ||
+      formatType == FORMAT_TIFF ||
+      formatType == FORMAT_BMP ||
+      formatType == FORMAT_DIB ||
+      formatType == FORMAT_PBM ||
+      formatType == FORMAT_RASTER ||
+      formatType == FORMAT_JPEG2000)
   {
     imSequence = new vpDiskGrabber;
     imSequence->setGenericName(fileName);
-    imSequence->setImageNumber((int)firstFrame);
+    if (firstFrameIndexIsSet)
+      imSequence->setImageNumber(firstFrame);
   }
   #ifdef VISP_HAVE_FFMPEG
   else if (formatType == FORMAT_AVI ||
@@ -176,6 +185,7 @@ void vpVideoReader::open(vpImage< vpRGBa > &I)
     throw (vpException(vpException::fatalError ,"The format of the file does not correpsond to a readable format."));
   }
   
+  findFirstFrameIndex();
   frameCount = firstFrame;
   if(!getFrame(I,firstFrame))
   {
@@ -209,11 +219,18 @@ void vpVideoReader::open(vpImage<unsigned char> &I)
   if (formatType == FORMAT_PGM ||
       formatType == FORMAT_PPM ||
       formatType == FORMAT_JPEG ||
-      formatType == FORMAT_PNG)
+      formatType == FORMAT_PNG ||
+      formatType == FORMAT_TIFF ||
+      formatType == FORMAT_BMP ||
+      formatType == FORMAT_DIB ||
+      formatType == FORMAT_PBM ||
+      formatType == FORMAT_RASTER ||
+      formatType == FORMAT_JPEG2000)
   {
     imSequence = new vpDiskGrabber;
     imSequence->setGenericName(fileName);
-    imSequence->setImageNumber((int)firstFrame);
+    if (firstFrameIndexIsSet)
+      imSequence->setImageNumber(firstFrame);
   }
   #ifdef VISP_HAVE_FFMPEG
   else if (formatType == FORMAT_AVI ||
@@ -242,6 +259,7 @@ void vpVideoReader::open(vpImage<unsigned char> &I)
     throw (vpException(vpException::fatalError ,"The format of the file does not correpsond to a readable format."));
   }
   
+  findFirstFrameIndex();
   frameCount = firstFrame;
   if(!getFrame(I,firstFrame))
   {
@@ -258,7 +276,9 @@ void vpVideoReader::open(vpImage<unsigned char> &I)
 
 
 /*!
-  Grabs the kth image in the stack of frames and increments the frame counter in order to grab the next image (k+1) during the next use of the method.
+  Grabs the current (k) image in the stack of frames and increments the frame counter
+  in order to grab the next image (k+1) during the next use of the method. If open()
+  was not called priviously, this method opens the video reader.
   
   This method enables to use the class as frame grabber.
   
@@ -266,10 +286,8 @@ void vpVideoReader::open(vpImage<unsigned char> &I)
 */
 void vpVideoReader::acquire(vpImage< vpRGBa > &I)
 {
-  if (!isOpen)
-  {
-    vpERROR_TRACE("Use the open method before");
-    throw (vpException(vpException::notInitialized,"file not yet opened"));
+  if (!isOpen) {
+    open(I);
   }
   
   //getFrame(I,frameCount);
@@ -293,13 +311,10 @@ void vpVideoReader::acquire(vpImage< vpRGBa > &I)
 */
 void vpVideoReader::acquire(vpImage< unsigned char > &I)
 {
-  if (!isOpen)
-  {
-    vpERROR_TRACE("Use the open method before");
-    throw (vpException(vpException::notInitialized,"file not yet opened"));
+  if (!isOpen) {
+    open(I);
   }
   
-  //getFrame(I,frameCount);
   if (imSequence != NULL)
     imSequence->acquire(I);
   #ifdef VISP_HAVE_FFMPEG
@@ -315,7 +330,7 @@ void vpVideoReader::acquire(vpImage< unsigned char > &I)
   Gets the \f$ frame \f$ th frame and stores it in the image  \f$ I \f$.
   
   \warning For the video files this method is not precise, and returns the nearest key frame from the expected frame.
-  But this method enables to postion the reader where you want. Then, use the acquire method to grab the following images
+  But this method enables to position the reader where you want. Then, use the acquire method to grab the following images
   one after one.
   
   \param I : The vpImage used to stored the frame.
@@ -356,7 +371,7 @@ bool vpVideoReader::getFrame(vpImage<vpRGBa> &I, long frame)
   Gets the \f$ frame \f$ th frame and stores it in the image  \f$ I \f$.
   
   \warning For the video files this method is not precise, and returns the nearest key frame from the expected frame.
-  But this method enables to postion the reader where you want. Then, use the acquire method to grab the following images
+  But this method enables to position the reader where you want. Then, use the acquire method to grab the following images
   one after one.
   
   \param I : The vpImage used to stored the frame.
@@ -484,12 +499,62 @@ vpVideoReader::findLastFrameIndex()
       if (!failed) file.close();
       image_number++;
     }while(!failed);
-      
+
     lastFrame = image_number - 2;
-  }  
-    
+  }
+
   #ifdef VISP_HAVE_FFMPEG
   else if (ffmpeg != NULL)
     lastFrame = (long)(ffmpeg->getFrameNumber() - 1);
   #endif
+}
+/*!
+  Get the first frame index (update the firstFrame attribute).
+*/
+void
+vpVideoReader::findFirstFrameIndex()
+{
+  if (imSequence != NULL)
+  {
+    if (! firstFrameIndexIsSet) {
+      char name[FILENAME_MAX];
+      int image_number = 0;
+      std::fstream file;
+      bool failed;
+      do {
+        sprintf(name, fileName, image_number) ;
+        file.open(name, std::fstream::in);
+        failed = file.fail();
+        if (!failed) file.close();
+        image_number++;
+      } while(failed);
+
+      firstFrame = image_number - 1;
+      imSequence->setImageNumber(firstFrame);
+    }
+  }
+
+  #ifdef VISP_HAVE_FFMPEG
+  else if (ffmpeg != NULL) {
+    if (! firstFrameIndexIsSet) {
+      firstFrame = (long)(0);
+    }
+  }
+  #endif
+}
+
+/*!
+  Return the framerate in Hz used to encode the video stream.
+
+  If the video is a sequence of images, return -1.
+  */
+double vpVideoReader::getFramerate() const
+{
+  double framerate = -1.;
+
+#ifdef VISP_HAVE_FFMPEG
+  if (ffmpeg != NULL)
+    framerate = ffmpeg->getFramerate();
+#endif
+  return framerate;
 }

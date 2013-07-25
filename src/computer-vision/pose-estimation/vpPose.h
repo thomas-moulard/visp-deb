@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpPose.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpPose.h 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -71,9 +71,7 @@
 
   \note It is also possible to estimate a pose from other features using vpPoseFeatures class.
 
-  \author Eric Marchand (INRIA) using code from Francois Chaumette (INRIA)
-
-  \date   April, 6 1999 (first issue)
+  To see how to use this class you can follow the \ref tutorial-pose-estimation.
 */
 
 
@@ -171,7 +169,7 @@ public:
   void setRansacNbInliersToReachConsensus(const unsigned int &nbC){ ransacNbInlierConsensus = nbC; }
   void setRansacThreshold(const double &t){ ransacThreshold = t; }
   void setRansacMaxTrials(const int &rM){ ransacMaxTrials = rM; }
-  unsigned int getRansacNbInliers(){ return ransacInliers.size(); }
+  unsigned int getRansacNbInliers(){ return (unsigned int) ransacInliers.size(); }
   std::vector<vpPoint> getRansacInliers(){ return ransacInliers; }
   
   /*!

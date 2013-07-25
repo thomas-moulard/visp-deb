@@ -171,6 +171,10 @@ int main()
   For convenience, there is also the ability to read/write joint
   positions from a position file with readPosFile() and savePosFile()
   methods.
+
+  To know how this class can be used to achieve a visual servoing simulation,
+  you can follow the \ref tutorial-ibvs.
+
 */
 
 
@@ -217,15 +221,15 @@ public:
     void get_fJe(vpMatrix &fJe);
 
     void init (vpAfma6::vpAfma6ToolType tool, vpCameraParameters::vpCameraParametersProjType projModel=vpCameraParameters::perspectiveProjWithoutDistortion);
-    void initialiseCameraRelativeToObject(vpHomogeneousMatrix cMo);
-    void initialiseObjectRelativeToCamera(vpHomogeneousMatrix cMo);
+    bool initialiseCameraRelativeToObject(const vpHomogeneousMatrix &cMo);
+    void initialiseObjectRelativeToCamera(const vpHomogeneousMatrix &cMo);
 
     void move(const char *filename) ;
 
     static bool readPosFile(const char *filename, vpColVector &q);
     static bool savePosFile(const char *filename, const vpColVector &q);
-    void setCameraParameters(const vpCameraParameters cam) ;
-    void setJointLimit(vpColVector limitMin, vpColVector limitMax);
+    void setCameraParameters(const vpCameraParameters &cam) ;
+    void setJointLimit(const vpColVector &limitMin, const vpColVector &limitMax);
 
     void setPosition(const vpRobot::vpControlFrameType frame,const vpColVector &q);
     void setPosition (const vpRobot::vpControlFrameType frame,

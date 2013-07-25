@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: CPackConfigDeb.cmake 4133 2013-02-13 09:27:05Z fspindle $
+# $Id: CPackConfigDeb.cmake 4132 2013-02-11 21:04:12Z fspindle $
 #
 # This file is part of the ViSP software.
 # Copyright (C) 2005 - 2013 by INRIA. All rights reserved.

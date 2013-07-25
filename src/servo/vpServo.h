@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpServo.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpServo.h 4276 2013-06-25 12:36:48Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -63,12 +63,15 @@
   \class vpServo
 
   \ingroup VsTask
-  \brief Class required to compute the visual servoing control law.
+  \brief Class required to compute the visual servoing control law descbribed
+  in \cite Chaumette06a and \cite Chaumette07a.
 
   \warning To avoid potential memory leaks, it is mendatory to call
   explicitly the kill() function to destroy the task. Otherwise, the
   destructor ~vpServo() launch an exception
   vpServoException::notKilledProperly.
+
+  To learn how to use this class, we suggest first to follow the \ref tutorial-ibvs.
 
   The example below shows how to build a position-based visual servo
   from 3D visual features \f$s=({^{c^*}}t_c,\theta u)\f$. In that

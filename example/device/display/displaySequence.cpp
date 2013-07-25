@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: displaySequence.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: displaySequence.cpp 4294 2013-07-01 16:05:49Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -325,7 +325,7 @@ main(int argc, const char ** argv)
   // exception readPGM may throw various exception if, for example,
   // the file does not exist, or if the memory cannot be allocated
   try{
-    vpImageIo::readPGM(I, filename) ;
+    vpImageIo::read(I, filename) ;
   }
   catch(...)
   {
@@ -391,7 +391,7 @@ main(int argc, const char ** argv)
 
       std::cout << "read : " << filename << std::endl;
       // read the image
-      vpImageIo::readPGM(I, filename);
+      vpImageIo::read(I, filename);
       if (opt_display) {
         // Display the image
         vpDisplay::display(I) ;

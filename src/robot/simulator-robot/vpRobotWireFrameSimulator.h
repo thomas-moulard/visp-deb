@@ -172,6 +172,8 @@ class VISP_EXPORT vpRobotWireFrameSimulator : protected vpWireFrameSimulator, pu
 
     //! Flag used to specify to the thread managing the robot displacements that the setVelocity() method has been called.
     bool setVelocityCalled;
+
+    bool verbose_;
     
   public:
     vpRobotWireFrameSimulator();
@@ -217,9 +219,9 @@ class VISP_EXPORT vpRobotWireFrameSimulator : protected vpWireFrameSimulator, pu
     vpHomogeneousMatrix get_fMo() const {return fMo;}
 
     /* Display functions */
-    void initScene(vpSceneObject obj, vpSceneDesiredObject desiredObject);
+    void initScene(const vpSceneObject &obj, const vpSceneDesiredObject &desiredObject);
     void initScene(const char* obj, const char* desiredObject);
-    void initScene (vpSceneObject obj);
+    void initScene (const vpSceneObject &obj);
     void initScene(const char* obj);
 
     /*!
@@ -280,6 +282,13 @@ class VISP_EXPORT vpRobotWireFrameSimulator : protected vpWireFrameSimulator, pu
     {
       this->vpWireFrameSimulator::setExternalCameraPosition(camMf);
     }
+    /*!
+      Specify the thickness of the graphics drawings.
+      */
+    void setGraphicsThickness(unsigned int thickness)
+    {
+      this->thickness_ = thickness;
+    }
 
     /*!
       Set the sampling time.
@@ -301,6 +310,14 @@ class VISP_EXPORT vpRobotWireFrameSimulator : protected vpWireFrameSimulator, pu
     /*! Set the parameter which enable or disable the singularity mangement */
     void setSingularityManagement (const bool sm) {singularityManagement = sm;}
               
+    /*!
+      Activates extra printings when the robot reaches joint limits...
+      */
+    void setVerbose(bool verbose)
+    {
+      this->verbose_ = verbose;
+    }
+
     /*!
       Set the pose between the object and the fixed world frame.
       

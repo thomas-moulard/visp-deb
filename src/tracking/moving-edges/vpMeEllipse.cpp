@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMeEllipse.cpp 4062 2013-01-09 10:30:06Z fspindle $
+ * $Id: vpMeEllipse.cpp 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -150,17 +150,26 @@ vpMeEllipse::~vpMeEllipse()
 }
 
 
-  /*!
-    Construct a list of vpMeSite moving edges at a particular sampling
-    step between the two extremities. The two extremities are defined by
-    the points with the smallest and the biggest \f$ alpha \f$ angle.
+/*!
+  Construct a list of vpMeSite moving edges at a particular sampling
+  step between the two extremities. The two extremities are defined by
+  the points with the smallest and the biggest \f$ alpha \f$ angle.
 
-    \param I : Image in which the ellipse appears.
-  */
+  \param I : Image in which the ellipse appears.
+
+  \exception vpTrackingException::initializationError : Moving edges not initialized.
+
+*/
 void
 vpMeEllipse::sample(const vpImage<unsigned char> & I)
 {
   vpCDEBUG(1) <<"begin vpMeEllipse::sample() : "<<std::endl ;
+
+  if (!me) {
+    vpDERROR_TRACE(2, "Tracking error: Moving edges not initialized");
+    throw(vpTrackingException(vpTrackingException::initializationError,
+      "Moving edges not initialized")) ;
+  }
 
   int height = (int)I.getHeight() ;
   int width = (int)I.getWidth() ;
@@ -183,18 +192,15 @@ vpMeEllipse::sample(const vpImage<unsigned char> & I)
   vpColor col = vpColor::red ;
   getParameters() ;
 
-
   // Delete old list
   list.clear();
 
   angle.clear();
 
   // sample positions
-
   double k = alpha1 ;
   while (k<alpha2)
   {
-
 //     j = a *cos(k) ; // equation of an ellipse
 //     i = b *sin(k) ; // equation of an ellipse
 
@@ -235,7 +241,7 @@ vpMeEllipse::sample(const vpImage<unsigned char> & I)
   }
   vpMeTracker::initTracking(I) ;
 
-  n_sample = list.size() ;
+  n_sample = (unsigned int)list.size() ;
 
   vpCDEBUG(1) << "end vpMeEllipse::sample() : " ;
   vpCDEBUG(1) << n_sample << " point inserted in the list " << std::endl  ;
@@ -252,10 +258,19 @@ vpMeEllipse::sample(const vpImage<unsigned char> & I)
   two points (vpMe::sample_step).
 
   \param I : Image in which the ellipse appears.
+
+  \exception vpTrackingException::initializationError : Moving edges not initialized.
+
 */
 void
 vpMeEllipse::reSample(const vpImage<unsigned char>  &I)
 {
+  if (!me) {
+    vpDERROR_TRACE(2, "Tracking error: Moving edges not initialized");
+    throw(vpTrackingException(vpTrackingException::initializationError,
+      "Moving edges not initialized")) ;
+  }
+
   unsigned int n = numberOfSignal() ;
   double expecteddensity = (alpha2-alpha1) / vpMath::rad((double)me->getSampleStep());
   if ((double)n<0.9*expecteddensity){
@@ -443,10 +458,19 @@ vpMeEllipse::suppressPoints()
   the ellipse (ie the two points with the smallest and the biggest \f$ \alpha \f$ angle.
 
   \param I : Image in which the ellipse appears.
+
+  \exception vpTrackingException::initializationError : Moving edges not initialized.
+
 */
 void
 vpMeEllipse::seekExtremities(const vpImage<unsigned char>  &I)
 {
+  if (!me) {
+    vpDERROR_TRACE(2, "Tracking error: Moving edges not initialized");
+    throw(vpTrackingException(vpTrackingException::initializationError,
+      "Moving edges not initialized")) ;
+  }
+
   int rows = (int)I.getHeight() ;
   int cols = (int)I.getWidth() ;
 
@@ -785,6 +809,8 @@ vpMeEllipse::initTracking(const vpImage<unsigned char> &I)
       std::cout << "Click points "<< k+1 <<"/" << n ;
       std::cout << " on the ellipse in the trigonometric order" <<std::endl ;
       vpDisplay::getClick(I, iP[k], true);
+      vpDisplay::displayCross(I, iP[k], 7, vpColor::red);
+      vpDisplay::flush(I);
       std::cout << iP[k] << std::endl;
     }
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMatrix_svd.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpMatrix_svd.cpp 4210 2013-04-16 08:57:46Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -128,6 +128,9 @@ void vpMatrix::svdNr(vpColVector& W, vpMatrix& V)
 
   if (m < n)
   {
+    delete[] w;
+    delete[] a;
+    delete[] v;
     vpERROR_TRACE("\n\t\tSVDcmp: You must augment A with extra zero rows") ;
     throw(vpMatrixException(vpMatrixException::matrixError,
 			    "\n\t\tSVDcmp: You must augment A with "

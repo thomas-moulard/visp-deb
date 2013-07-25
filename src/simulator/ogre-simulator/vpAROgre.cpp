@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpAROgre.cpp 4093 2013-02-04 17:49:56Z fspindle $
+ * $Id: vpAROgre.cpp 4251 2013-05-14 12:19:56Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -354,6 +354,7 @@ void vpAROgre::init(bool
     it++;
   }
   
+  // With Ogre version >= 1.8.1 we hide the window
   if( hidden && ((OGRE_VERSION_MAJOR << 16 | OGRE_VERSION_MINOR << 8 | OGRE_VERSION_PATCH) >= (1 << 16 | 8 << 8 | 1)) ){
     misc["hidden"] = "true";
     windowHidden = true;
@@ -1013,22 +1014,34 @@ void vpAROgre::updateCameraParameters (const vpHomogeneousMatrix &cMw)
   \param I : The image on which to copy the result of the rendering loop.
   \param cMo : The desired camera pose.
 */
-void vpAROgre::getRenderingOutput(vpImage<vpRGBa> &I, vpHomogeneousMatrix &cMo)
+void vpAROgre::getRenderingOutput(vpImage<vpRGBa> &I, const vpHomogeneousMatrix &cMo)
 {
     updateCameraParameters(cMo);
     Ogre::TexturePtr dynTexPtr = Ogre::TextureManager::getSingleton().getByName("rtf");
     Ogre::RenderTexture* RTarget = dynTexPtr->getBuffer()->getRenderTarget();
     mWindow->update();
     RTarget->update();
+    if(I.getHeight() != mWindow->getHeight() || I.getWidth() != mWindow->getWidth()){
+       I.resize(mWindow->getHeight(), mWindow->getWidth());
+    }
     Ogre::HardwarePixelBufferSharedPtr mPixelBuffer = dynTexPtr->getBuffer();
     mPixelBuffer->lock(Ogre::HardwareBuffer::HBL_DISCARD);
     const Ogre::PixelBox& pixelBox = mPixelBuffer->getCurrentLock();
     dynTexPtr->getBuffer()->blitToMemory(pixelBox);
     Ogre::uint8* pDest = static_cast<Ogre::uint8*>(pixelBox.data);
-    if(I.getHeight() != mWindow->getHeight() || I.getWidth() != mWindow->getWidth()){
-            I.resize(mWindow->getHeight(), mWindow->getWidth());
+#if 1 // if texture in BGRa format
+    for(unsigned int i=0; i<I.getHeight(); i++){
+      for(unsigned int j=0; j<I.getWidth(); j++){
+	// Color Image	
+	I[i][j].B = *pDest++; // Blue component
+	I[i][j].G = *pDest++; // Green component
+	I[i][j].R = *pDest++; // Red component
+	I[i][j].A = *pDest++; // Alpha component
+      }
     }
-    memcpy(I.bitmap, pDest, 640*480*sizeof(vpRGBa));
+#else // if texture in RGBa format which is the format of the input image
+    memcpy(I.bitmap, pDest, I.getHeight()*I.getWidth()*sizeof(vpRGBa));
+#endif
 
     // Unlock the pixel buffer
     mPixelBuffer->unlock();

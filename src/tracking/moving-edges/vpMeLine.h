@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMeLine.h 4062 2013-01-09 10:30:06Z fspindle $
+ * $Id: vpMeLine.h 4231 2013-04-29 16:26:28Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -93,6 +93,13 @@
   The angle \f$\theta\f$ is computed thanks to the direction of the
   arrow. The arrow points to the side of the line which is darker.
 
+  The example below available in tutorial-me-line-tracker.cpp and described
+  in \ref tutorial-tracking-me shows how to use this class.
+
+  \include tutorial-me-line-tracker.cpp
+*/
+
+/*
   The code below shows how to use this class.
 \code
 #include <visp/vpConfig.h>

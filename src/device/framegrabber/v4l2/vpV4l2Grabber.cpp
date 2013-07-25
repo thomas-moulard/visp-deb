@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpV4l2Grabber.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpV4l2Grabber.cpp 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -417,7 +417,7 @@ vpV4l2Grabber::setInput(unsigned input)
 /*!
   Set the decimation factor applied to full resolution images (768x576).
 
-  \exception vpFrameGrabberException::settingError : Wrong scale (shoud be
+  \exception vpFrameGrabberException::settingError : Wrong scale (should be
   between 1 and 16).
 
   \param scale : Decimation factor. If scale is set to 2, 384x288 images will
@@ -433,7 +433,7 @@ vpV4l2Grabber::setScale(unsigned scale)
   {
     close();
 
-    vpERROR_TRACE("Wrong scale %d, scale shoud be between 1 and 16",scale) ;
+    vpERROR_TRACE("Wrong scale %d, scale should be between 1 and 16",scale) ;
     throw (vpFrameGrabberException(vpFrameGrabberException::settingError,
 				   "Wrong scale") );
   }
@@ -609,6 +609,10 @@ vpV4l2Grabber::acquire(vpImage<unsigned char> &I)
 void
 vpV4l2Grabber::acquire(vpImage<unsigned char> &I, struct timeval &timestamp)
 {
+  if (init==false)
+  {
+    open(I);
+  }
 
   if (init==false)
   {
@@ -686,6 +690,10 @@ vpV4l2Grabber::acquire(vpImage<vpRGBa> &I)
 void
 vpV4l2Grabber::acquire(vpImage<vpRGBa> &I, struct timeval &timestamp)
 {
+  if (init==false)
+  {
+    open(I);
+  }
 
   if (init==false)
   {

@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpKeyboard.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpKeyboard.cpp 4267 2013-06-14 18:07:13Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -136,10 +136,10 @@ vpKeyboard::setRawMode(bool active)
     new_settings.c_lflag &= (unsigned int)~ICANON;
     new_settings.c_lflag &= (unsigned int)~ECHO;
     new_settings.c_lflag &= (unsigned int)~ISIG;
-    new_settings.c_oflag &= (unsigned int)~NL0;
-    new_settings.c_oflag &= (unsigned int)~CR0;
+    //new_settings.c_oflag &= (unsigned int)~NL0;
+    //new_settings.c_oflag &= (unsigned int)~CR0;
     new_settings.c_oflag &= (unsigned int)~TAB0;
-    new_settings.c_oflag &= (unsigned int)~BS0;
+    //new_settings.c_oflag &= (unsigned int)~BS0;
     new_settings.c_cc[VMIN] = 1;
     new_settings.c_cc[VTIME] = 0;
     tcsetattr(STDIN_FILENO, TCSANOW, &new_settings);

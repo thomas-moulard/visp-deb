@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: test1394TwoResetBus.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: test1394TwoResetBus.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -85,7 +85,7 @@ main()
     vpImage<unsigned char> I;
     g.acquire(I);    
     //     std::cout << "write /tmp/test.pgm" << std::endl;
-    //     vpImageIo::writePGM(I, "/tmp/test.pgm");
+    //     vpImageIo::write(I, "/tmp/test.pgm");
   }
   catch (...) {
     vpCERROR << "Failure: exit" << std::endl;

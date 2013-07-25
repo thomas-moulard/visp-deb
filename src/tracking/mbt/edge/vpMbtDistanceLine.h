@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMbtDistanceLine.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpMbtDistanceLine.h 4337 2013-07-23 13:57:53Z ayol $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -76,6 +76,8 @@ class VISP_EXPORT vpMbtDistanceLine
     double alpha;
     double wmean;
     vpFeatureLine featureline ;
+    //! Polygon describing the line
+    vpMbtPolygon poly;
     
   public: 
     //! The moving edge container
@@ -119,14 +121,14 @@ class VISP_EXPORT vpMbtDistanceLine
    
      \param cam : The vpCameraParameters used to store the camera parameters.
     */
-    inline void getCameraParameters(vpCameraParameters& cam) {cam = this->cam;}
+    inline void getCameraParameters(vpCameraParameters& cam) const {cam = this->cam;}
     
     /*!
       Get the index of the line.
       
       \return Return the index of the line.
     */
-    inline unsigned int getIndex() {return index ;}
+    inline unsigned int getIndex() const {return index ;}
     
     /*!
      Get the mean weight of the line. The mean weight is computed thanks to the weight of each moving edge.
@@ -142,6 +144,13 @@ class VISP_EXPORT vpMbtDistanceLine
       \return Return the name of the line
     */
     inline std::string getName() const {return name;}
+    
+    /*!
+     Get the polygon associated to the line.
+   
+     \return poly.
+    */
+    inline vpMbtPolygon& getPolygon() {return poly;}
     
     void initInteractionMatrixError();
     

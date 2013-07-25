@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: CMakeLists.txt 4056 2013-01-05 13:04:42Z fspindle $
+# $Id: CMakeLists.txt 4277 2013-06-25 13:09:01Z fspindle $
 #
 # This file is part of the ViSP software.
 # Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -44,7 +44,7 @@
 #
 # If you want to add/remove a source, modify here
 SET (SOURCE
-  calibrate2dGrid.cpp
+  camera_calibration.cpp
   calibrateTsai.cpp
 )
 
@@ -65,7 +65,3 @@ ENDFOREACH(source)
 # of acquired images
 ADD_TEST(calibrateTsai calibrateTsai)
 
-# customize clean target 
-SET_DIRECTORY_PROPERTIES(PROPERTIES 
-  ADDITIONAL_MAKE_CLEAN_FILES "core*;*~;gmon.out;DartTestfile.txt"
-)

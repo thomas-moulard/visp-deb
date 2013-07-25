@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpServer.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpServer.h 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -115,9 +115,9 @@ int main(int argc,const char** argv)
   vpServer serv(port);
   serv.start();
 
-#ifdef UNIX
+#if defined(VISP_HAVE_X11)
   vpDisplayX display;
-#else //Win32
+#elif defined(VISP_HAVE_GDI) //Win32
   vpDisplayGDI display;
 #endif
 
@@ -138,8 +138,10 @@ int main(int argc,const char** argv)
         
       if(id == reqImage.getId())
       {
+#if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI)
         if (! display.isInitialised() )
           display.init(I, -1, -1, "Remote display");
+#endif
         
         vpDisplay::display(I) ;
         vpDisplay::flush(I);
@@ -204,7 +206,7 @@ public:
 
     \return Number of clients connected.
   */
-  unsigned int  getNumberOfClients(){ return receptor_list.size(); }
+  unsigned int  getNumberOfClients(){ return (unsigned int)receptor_list.size(); }
   
   void          print();
   

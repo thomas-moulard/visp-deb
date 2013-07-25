@@ -2,7 +2,7 @@
 
 #############################################################################
 #
-# $Id: visp-config.in 4057 2013-01-05 13:10:29Z fspindle $
+# $Id: visp-config.in 4203 2013-04-08 16:56:12Z fspindle $
 #
 # This file is part of the ViSP software.
 # Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -47,9 +47,9 @@ relpath=`(cd $relpath/..; pwd)`
 
 PREFIX=$relpath
 
-CFLAGS="${VISP_CONFIG_SCRIPT_CFLAGS}"
+CFLAGS="${VISP_CONFIG_CFLAGS_SCRIPT}"
 
-LIBS="${VISP_CONFIG_SCRIPT_EXTERN_LIBS}"
+LIBS="${VISP_CONFIG_LIBS_SCRIPT}"
 
 VERSION="${VISP_VERSION}"
 

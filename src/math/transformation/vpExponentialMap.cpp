@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpExponentialMap.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpExponentialMap.cpp 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -46,7 +46,7 @@
 /*!
 
   Compute the exponential map. The inverse function is inverse().  The sampling
-  time is here set to 1 second. To use an other value you shoud use
+  time is here set to 1 second. To use an other value you should use
   direct(const vpColVector &, const float &).
 
   \param v : Instantaneous velocity represented by a 6 dimension

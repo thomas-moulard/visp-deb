@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpAROgre.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpAROgre.h 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -143,7 +143,7 @@ class VISP_EXPORT vpAROgre : public Ogre::FrameListener, public Ogre::WindowEven
   
   vpTranslationVector getPosition(const std::string &name)const;
   
-  void getRenderingOutput(vpImage<vpRGBa> &I, vpHomogeneousMatrix &cMo);
+  void getRenderingOutput(vpImage<vpRGBa> &I, const vpHomogeneousMatrix &cMo);
   
   inline Ogre::SceneManager* getSceneManager(){ return mSceneMgr; }
   
@@ -211,7 +211,7 @@ class VISP_EXPORT vpAROgre : public Ogre::FrameListener, public Ogre::WindowEven
   void setScale(const std::string &name, const float factorx, const float factory, const float factorz);
   
   /*!
-    Enable/Disable the apparition of the config dialog on startup.
+    Enable/Disable the appearance of the config dialog on startup.
   
     \warning To be effective, this method must be called before the init() one. 
   

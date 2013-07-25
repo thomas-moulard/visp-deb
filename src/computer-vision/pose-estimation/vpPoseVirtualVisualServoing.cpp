@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpPoseVirtualVisualServoing.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpPoseVirtualVisualServoing.cpp 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -54,12 +54,7 @@
 /*!
   \brief Compute the pose using virtual visual servoing approach
 
-  This approach is described in
-
-  E. Marchand, F. Chaumette. Virtual Visual Servoing: a framework for real-time
-  augmented reality. In EUROGRAPHICS 2002 Conference Proceeding, G. Drettakis,
-  H.-P. Seidel (eds.), Computer Graphics Forum, Volume 21(3), Pages 289-298,
-  Sarrebruck, Allemagne, 2002.
+  This approach is described in \cite Marchand02c.
 
 */
 
@@ -76,7 +71,7 @@ vpPose::poseVirtualVS(vpHomogeneousMatrix & cMo)
 
     int iter = 0 ;
 
-    unsigned int nb = listP.size() ;
+    unsigned int nb = (unsigned int)listP.size() ;
     vpMatrix L(2*nb,6) ;
     vpColVector err(2*nb) ;
     vpColVector sd(2*nb),s(2*nb) ;
@@ -163,12 +158,8 @@ vpPose::poseVirtualVS(vpHomogeneousMatrix & cMo)
   \brief Compute the pose using virtual visual servoing approach and
   a robust cotrol law
 
-  This approach is described in
+  This approach is described in \cite Comport06b.
 
-  A.I. Comport, E. Marchand, M. Pressigout, F. Chaumette. Real-time
-  markerless tracking for augmented reality: the virtual visual servoing
-  framework. IEEE Trans. on Visualization and Computer Graphics,
-  12(4):615-628, Juillet 2006.
 */
 void
 vpPose::poseVirtualVSrobust(vpHomogeneousMatrix & cMo)
@@ -180,11 +171,11 @@ vpPose::poseVirtualVSrobust(vpHomogeneousMatrix & cMo)
 
     // we stop the minimization when the error is bellow 1e-8
     vpMatrix W ;
-    vpRobust robust(2*listP.size()) ;
+    vpRobust robust((unsigned int)(2*listP.size())) ;
     robust.setThreshold(0.0000) ;
     vpColVector w,res ;
 
-    unsigned int nb = listP.size() ;
+    unsigned int nb = (unsigned int)listP.size() ;
     vpMatrix L(2*nb,6) ;
     vpColVector error(2*nb) ;
     vpColVector sd(2*nb),s(2*nb) ;

@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpFernClassifier.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpFernClassifier.cpp 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -175,7 +175,7 @@ vpFernClassifier::train()
   \warning thie method can take up to several minutes depending on the 
   parameters of the classifier and on the size of the image.
 
-  \param _I : The gray scaled image where the refrence points are computed.
+  \param _I : The gray scaled image where the reference points are computed.
 
   \return the number of reference points.
 */
@@ -187,8 +187,7 @@ vpFernClassifier::buildReference(const vpImage<unsigned char> &_I)
   train();
 
   _reference_computed = true;
-  return objKeypoints.size();
-
+  return (unsigned int)objKeypoints.size();
 }
 
 /*!
@@ -202,7 +201,7 @@ vpFernClassifier::buildReference(const vpImage<unsigned char> &_I)
   \warning the method can take up to several minutes depending on the 
   parameters of the classifier and on the size of the image.
 
-  \param _I : The gray scaled image where the refrence points are computed.
+  \param _I : The gray scaled image where the reference points are computed.
   \param _iP : The top left corner of the rectangle.
   \param _height : height of the rectangle (in pixel).
   \param _width : width of the rectangle (in pixel).
@@ -237,7 +236,7 @@ vpFernClassifier::buildReference(const vpImage<unsigned char> &_I,
   
   train();
 
-  return objKeypoints.size(); 
+  return (unsigned int)objKeypoints.size(); 
 }
 
 /*!
@@ -250,7 +249,7 @@ vpFernClassifier::buildReference(const vpImage<unsigned char> &_I,
   \warning the method can take up to several minutes depending on the 
   parameters of the classifier and on the size of the image.
 
-  \param _I : The gray scaled image where the refrence points are computed.
+  \param _I : The gray scaled image where the reference points are computed.
   \param _rectangle : The rectangle which defines the interesting part
   of the image.
 
@@ -302,8 +301,8 @@ vpFernClassifier::matchPoint(const vpImage<unsigned char> &_I)
   
   ldetector(imgPyr, imgKeypoints, 500);
 
-  unsigned int m = modelPoints.size();
-  unsigned int n = imgKeypoints.size();
+  unsigned int m = (unsigned int)modelPoints.size();
+  unsigned int n = (unsigned int)imgKeypoints.size();
   std::vector<int> bestMatches(m, -1);
   std::vector<float> maxLogProb(m, -FLT_MAX);
   std::vector<float> signature;
@@ -413,7 +412,7 @@ vpFernClassifier::matchPoint(const vpImage<unsigned char> &_I,
   possible to set Ireference and Icurrent with the same image when
   calling the method.
 
-  \param _Iref : The image where the matched refrence points are
+  \param _Iref : The image where the matched reference points are
   displayed.
 
   \param _Icurrent : The image where the matched points computed in the

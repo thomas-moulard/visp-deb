@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpRobotBiclops.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpRobotBiclops.h 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -109,7 +109,7 @@ class VISP_EXPORT vpRobotBiclops
 
 private:
 
-  /*! \brief No copy contructor allowed.   */
+  /*! \brief No copy constructor allowed.   */
   vpRobotBiclops (const vpRobotBiclops & ass);
   void getCameraDisplacement(vpColVector &d);
   void getArticularDisplacement(vpColVector &d);

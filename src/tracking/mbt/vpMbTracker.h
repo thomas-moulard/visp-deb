@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMbTracker.h 4122 2013-02-08 10:45:54Z ayol $
+ * $Id: vpMbTracker.h 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -59,7 +59,7 @@
 #include <visp/vpMbHiddenFaces.h>
 
 #ifdef VISP_HAVE_COIN
-//Work arround to avoid type redefinition int8_t with Coin
+//Work around to avoid type redefinition int8_t with Coin
 // #if defined(WIN32) && defined(VISP_HAVE_OGRE) && (_MSC_VER >= 1600) // Visual Studio 2010
 //   #define HAVE_INT8_T 1
 // #endif
@@ -110,9 +110,7 @@ protected:
   std::string modelFileName;
   //! Flag used to ensure that the CAD model is loaded before the initialisation.
   bool modelInitialised;   
-  //! Flag used to specify that the Coin library has been loaded in order to load a vrml model (used to free the memory).
-  bool coinUsed;
-  //! Filename used to save the initial pose computed using the initClick() method. It is also used to read a previous pose in the same method. 
+  //! Filename used to save the initial pose computed using the initClick() method. It is also used to read a previous pose in the same method.
   std::string poseSavingFilename;
   //! Flag used to specify if the covariance matrix has to be computed or not.
   bool computeCovariance;

@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpArit.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpArit.h 4310 2013-07-08 08:48:34Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -109,7 +109,7 @@
 #define	M_POLY3(x,a,b,c,d)	(M_POLY2((x),(a),(b),(c)) * (x) + (d))
 
 
-VISP_EXPORT typedef	struct	{
+typedef	struct	{
 	int	x, y;
 } Point2i;
 

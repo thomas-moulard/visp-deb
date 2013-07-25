@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: keyPointSurf.cpp 4137 2013-02-14 06:56:53Z fspindle $
+ * $Id: keyPointSurf.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -241,7 +241,7 @@ main(int argc, const char ** argv)
   try{
     vpCTRACE << "Load: " << filename << std::endl;
 
-    vpImageIo::readPGM(Iref, filename) ;
+    vpImageIo::read(Iref, filename) ;
   }
   catch(...)
   {
@@ -321,7 +321,7 @@ main(int argc, const char ** argv)
 
   unsigned int nbrPair = 0;
 
-  vpImageIo::readPGM(Icur, filename);
+  vpImageIo::read(Icur, filename);
 
   if (opt_display) {
     try{
@@ -345,7 +345,7 @@ main(int argc, const char ** argv)
     s << "image." << std::setw(4) << std::setfill('0') << iter << ".pgm";
     filename = dirname + s.str();
     // read the image
-    vpImageIo::readPGM(Icur, filename);
+    vpImageIo::read(Icur, filename);
     if (opt_display) {
       // Display the image
       vpDisplay::display(Iref) ;

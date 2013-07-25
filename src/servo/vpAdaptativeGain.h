@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpAdaptativeGain.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpAdaptativeGain.h 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -61,7 +61,7 @@ class vpColVector;
   
   \brief Adaptative gain computation.
 
-  \deprecated This class is deprecated. You shoud use
+  \deprecated This class is deprecated. You should use
   vpAdaptive class instead.
 
   The formula used to compute the gain is the following :
