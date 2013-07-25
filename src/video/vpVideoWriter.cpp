@@ -59,8 +59,13 @@ vpVideoWriter::vpVideoWriter()
   
   #ifdef VISP_HAVE_FFMPEG
   ffmpeg = NULL;
+#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(54,51,110) // libavcodec 54.51.100
   codec = CODEC_ID_MPEG1VIDEO;
+#else
+  codec = AV_CODEC_ID_MPEG1VIDEO;
+#endif
   bit_rate = 500000;
+  framerate = 25;
   #endif
 }
 
@@ -138,6 +143,7 @@ void vpVideoWriter::open(vpImage< vpRGBa > &I)
            formatType == FORMAT_MOV)
   {
     ffmpeg = new vpFFMPEG;
+    ffmpeg->setFramerate(framerate);
     ffmpeg->setBitRate(bit_rate);
     if(!ffmpeg->openEncoder(fileName, I.getWidth(), I.getHeight(), codec))
       throw (vpException(vpException::ioError ,"Could not open the video"));
@@ -186,6 +192,7 @@ void vpVideoWriter::open(vpImage< unsigned char > &I)
            formatType == FORMAT_MOV)
   {
     ffmpeg = new vpFFMPEG;
+    ffmpeg->setFramerate(framerate);
     ffmpeg->setBitRate(bit_rate);
     if(!ffmpeg->openEncoder(fileName, I.getWidth(), I.getHeight(), codec))
       throw (vpException(vpException::ioError ,"Could not open the video"));

@@ -1,31 +1,34 @@
 /****************************************************************************
  *
- * $Id: vpMbtKltPolygon.h 4084 2013-02-01 14:17:58Z ayol $
+ * $Id: vpMbtKltPolygon.h 4339 2013-07-23 15:24:42Z ayol $
  *
- * Copyright (C) 2005 - 2013 Inria. All rights reserved.
+ * This file is part of the ViSP software.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
+ *
+ * This software is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * ("GPL") version 2 as published by the Free Software Foundation.
+ * See the file LICENSE.txt at the root directory of this source
+ * distribution for additional information about the GNU GPL.
+ *
+ * For using ViSP with software that can not be combined with the GNU
+ * GPL, please contact INRIA about acquiring a ViSP Professional
+ * Edition License.
+ *
+ * See http://www.irisa.fr/lagadic/visp/visp.html for more information.
  *
  * This software was developed at:
- * IRISA/INRIA Rennes
- * Projet Lagadic
+ * INRIA Rennes - Bretagne Atlantique
  * Campus Universitaire de Beaulieu
  * 35042 Rennes Cedex
+ * France
  * http://www.irisa.fr/lagadic
  *
- * This file is part of the ViSP toolkit
- *
- * This file may be distributed under the terms of the Q Public License
- * as defined by Trolltech AS of Norway and appearing in the file
- * LICENSE included in the packaging of this file.
- *
- * Licensees holding valid ViSP Professional Edition licenses may
- * use this file in accordance with the ViSP Commercial License
- * Agreement provided with the Software.
+ * If you have questions regarding the use of this file, please contact
+ * INRIA at visp@inria.fr
  *
  * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * Contact visp@irisa.fr if any conditions of this licensing are
- * not clear to you.
  *
  * Description:
  * Generic model polygon, containing points of interest.
@@ -36,8 +39,8 @@
  *
  *****************************************************************************/
 
-#ifndef vpMbtKltHiddenFace_h
-#define vpMbtKltHiddenFace_h
+#ifndef vpMbtKltPolygon_h
+#define vpMbtKltPolygon_h
 
 #include <visp/vpConfig.h>
 
@@ -124,7 +127,6 @@ public:
   
   inline std::map<int, int>& getCurrentPointsInd() {return curPointsInd; }
   
-  vpImagePoint&       getImagePoint(const unsigned int _index);
   /*!
     Get the number of point that was belonging to the face at the initialisation
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpWin32Window.cpp 4073 2013-01-22 09:58:17Z fspindle $
+ * $Id: vpWin32Window.cpp 4304 2013-07-04 14:29:24Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -185,7 +185,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_KEYDOWN: 
       //case WM_KEYUP: 
       {
-	GetKeyNameText(lParam, window->lpString, 10); // 10 is the size of lpString
+    GetKeyNameText((LONG)lParam, window->lpString, 10); // 10 is the size of lpString
 	//window->key = MapVirtualKey(wParam, MAPVK_VK_TO_CHAR);
 	vpReleaseSemaphore(window->semaKey,1,NULL);
 	break;

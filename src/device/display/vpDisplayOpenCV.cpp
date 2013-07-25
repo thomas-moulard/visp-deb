@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpDisplayOpenCV.cpp 4137 2013-02-14 06:56:53Z fspindle $
+ * $Id: vpDisplayOpenCV.cpp 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -67,7 +67,6 @@
 #include <visp/vpDebug.h>
 #include <visp/vpDisplayException.h>
 
-int vpDisplayOpenCV::count = 1;
 /*!
 
   Constructor. Initialize a display to visualize a gray level image
@@ -84,8 +83,6 @@ vpDisplayOpenCV::vpDisplayOpenCV(vpImage<unsigned char> &I,
                                  const char *title) : vpDisplay()
 {
   col = NULL;
-  title = NULL ;
-  window = 0 ;
   background = NULL;
   font = NULL;
   init(I, x, y, title) ;
@@ -103,11 +100,9 @@ vpDisplayOpenCV::vpDisplayOpenCV(vpImage<unsigned char> &I,
 vpDisplayOpenCV::vpDisplayOpenCV(vpImage<vpRGBa> &I,
                                  int x,
                                  int y,
-                                 const char *title)
+                                 const char *title) : vpDisplay()
 {
   col = NULL;
-  title = NULL ;
-  window = 0 ;
   background = NULL;
   font = NULL;
   init(I, x, y, title) ;
@@ -135,14 +130,16 @@ int main()
 }
   \endcode
 */
-vpDisplayOpenCV::vpDisplayOpenCV ( int x, int y, const char *title )
+vpDisplayOpenCV::vpDisplayOpenCV ( int x, int y, const char *title ) : vpDisplay()
 {
   col = NULL;
-  title = NULL ;
-  window = 0 ;
   background = NULL;
   font = NULL;
-  init(0, 0, x, y, title) ;
+  windowXPosition = x;
+  windowYPosition = y;
+
+  if (title != NULL)
+    strcpy (this->title, title);
 }
 
 /*!
@@ -164,21 +161,11 @@ int main()
 }
   \endcode
 */
-vpDisplayOpenCV::vpDisplayOpenCV()
+vpDisplayOpenCV::vpDisplayOpenCV() : vpDisplay()
 {
-  windowXPosition = windowYPosition = -1 ;
-
   col = NULL;
-  title = NULL ;
-  window = 0 ;
   background = NULL;
-  if (title != NULL)
-  {
-    delete [] title ;
-    title = NULL ;
-  }
   font = NULL;
-  displayHasBeenInitialized = false ;
 }
 
 /*!
@@ -250,6 +237,8 @@ vpDisplayOpenCV::init(vpImage<vpRGBa> &I,
   \param x, y : The window is set at position x,y (column index, row index).
   \param title : Window title.
 
+  \exception vpDisplayException::notInitializedError If OpenCV was not build
+  with an available display device suach as Gtk, Cocoa, Carbon, Qt.
 */
 void
 vpDisplayOpenCV::init(unsigned int width, unsigned int height,
@@ -258,32 +247,23 @@ vpDisplayOpenCV::init(unsigned int width, unsigned int height,
 {
   this->width  = width;
   this->height = height;
-  this->windowXPosition = x;
-  this->windowYPosition = y;
+
+  if (x != -1)
+    this->windowXPosition = x;
+  if (y != -1)
+    this->windowYPosition = y;
   int flags = CV_WINDOW_AUTOSIZE;
+
   if (title != NULL)
-  {
-    if (this->title != NULL)
-    {
-      delete [] this->title ;
-      this->title = NULL ;
-    }
-    this->title = new char[strlen(title) + 1] ;
     strcpy(this->title, title) ;
-  }
-  else{
-    if (this->title != NULL)
-    {
-      delete [] this->title ;
-      this->title = NULL ;
-    }
-    this->title = new char[50] ;
-    sprintf(this->title,"Unnamed ViSP display <%02d>",count) ;
-  }
-  count++;
+
   /* Create the window*/
-  window = cvNamedWindow( this->title, flags );
-  cvMoveWindow( this->title, x, y );
+  if (cvNamedWindow( this->title, flags ) < 0) {
+    vpERROR_TRACE("OpenCV was not built with a display device");
+    throw(vpDisplayException(vpDisplayException::notInitializedError,
+                             "OpenCV was not built with a display device")) ;
+  }
+  cvMoveWindow( this->title, this->windowXPosition, this->windowYPosition );
   move = false;
   lbuttondown = false;
   mbuttondown = false;
@@ -385,27 +365,6 @@ vpDisplayOpenCV::setTitle(const char * /* title */)
     vpTRACE("Not implemented");
     warn_displayed = true;
   }
-#if 0
-  if (displayHasBeenInitialized)
-  {
-    if (this->title != NULL) {
-      delete [] this->title ;
-      this->title = NULL ;
-    }
-    //    fprintf(stdout, "len: %d\n",  strlen(windowtitle)); fflush(stdout);
-    this->title = new char[strlen(windowtitle) + 1] ;
-    strcpy(this->title, windowtitle) ;
-    //cvMoveWindow( this->title, windowXPosition,  windowYPosition);
-    cvMoveWindow(windowtitle , windowXPosition,  windowYPosition);
-
-  }
-  else
-  {
-    vpERROR_TRACE("OpenCV not initialized " ) ;
-    throw(vpDisplayException(vpDisplayException::notInitializedError,
-                             "OpenCV not initialized")) ;
-  }
-#endif
 }
 
 
@@ -675,19 +634,11 @@ void vpDisplayOpenCV::closeDisplay()
     font = NULL ;
   }
 
-  if (window != 0)
-  {
-    cvDestroyWindow( title );
-    count--;
-    window = 0;
-  }
-  if (title != NULL)
-  {
-    delete [] title ;
-    title = NULL ;
-  }
+  if (displayHasBeenInitialized) {
+    cvDestroyWindow( this->title );
 
-  displayHasBeenInitialized= false;
+    displayHasBeenInitialized= false;
+  }
 }
 
 
@@ -700,7 +651,7 @@ void vpDisplayOpenCV::flushDisplay()
 {
   if (displayHasBeenInitialized)
   {
-    cvShowImage(title, background );
+    cvShowImage(this->title, background );
     cvWaitKey(5);
   }
   else
@@ -720,7 +671,7 @@ void vpDisplayOpenCV::flushDisplayROI(const vpImagePoint &/*iP*/, const unsigned
 {
   if (displayHasBeenInitialized)
   {
-    cvShowImage(title, background );
+    cvShowImage(this->title, background );
     cvWaitKey(5);
   }
   else
@@ -1559,7 +1510,7 @@ vpDisplayOpenCV::getClickUp(vpImagePoint &ip,
 void vpDisplayOpenCV::getImage(vpImage<vpRGBa> &I)
 {
   vpImageConvert::convert(background,I);
-  // shoudl certainly be optimized.
+  // should certainly be optimized.
 }
 
 void vpDisplayOpenCV::on_mouse( int event, int x, int y, int /*flags*/, void* display )

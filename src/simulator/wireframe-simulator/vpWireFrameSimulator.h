@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpWireFrameSimulator.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpWireFrameSimulator.h 4334 2013-07-22 19:13:05Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -63,6 +63,8 @@ extern "C" {
 #include <visp/vpToken.h>
 #include <visp/vpTmstack.h>
 #include <visp/vpVwstack.h>
+#include <visp/vpRfstack.h>
+#include <visp/vpArit.h>
 
 int open_display();
 int close_display();
@@ -77,18 +79,11 @@ int parser (Bound_scene *bsp);
 int close_source (void);
 int close_lex (void);
 int close_keyword (void);
-void add_rfstack (int i);
-void load_rfstack (int i);
-void add_vwstack (const char* path, ... );
 void display_scene(Matrix mat, Bound_scene sc);
-int * get_rfstack (void);
-Matrix	* get_tmstack (void);
 int View_to_Matrix (View_parameters *vp, Matrix m);
-void postmult_matrix (Matrix a, Matrix b);
 Bound *clipping_Bound (Bound *bp, Matrix m);
 int set_Bound_face_display (Bound *bp, Byte b);
 int point_3D_2D (Point3f *p3, Index size, unsigned int xsize, unsigned int ysize, Point2i *p2);
-void point_3D_4D (Point3f *p3, int size, Matrix m, Point4f *p4);
 int wireframe_Face (Face *fp, Point2i *pp);
 }
 
@@ -192,23 +187,23 @@ public:
     */
   typedef enum
   {
-    THREE_PTS,
-    CUBE,
-    PLATE,
-    SMALL_PLATE,
-    RECTANGLE,
-    SQUARE_10CM,
-    DIAMOND,
-    TRAPEZOID,
-    THREE_LINES,
-    ROAD,
-    TIRE,
-    PIPE,
-    CIRCLE,
-    SPHERE,
-    CYLINDER,
-    PLAN,
-    POINT_CLOUD,
+    THREE_PTS, //!< A 40cm by 40cm plate with 3 points at coordinates (0,0,0), (0.1,0,0), (0,0.1,0). Each point is represented by a circle with 2cm radius.
+    CUBE, //!< A 12.5cm size cube.
+    PLATE, //!< A 40cm by 40cm plate with 4 points at coordinates (-0.1,-0.1,0), (0.1,-0.1,0), (0.1,0.1,0), (0.1,0.1,0). Each point is represented by a circle with 2cm radius.
+    SMALL_PLATE, //!< 4 points at coordinates (-0.03,-0.03,0), (0.03,-0.03,0), (0.03,0.03,0), (0.03,0.03,0). Each point is represented by a circle with 1cm radius.
+    RECTANGLE, //!< A 40cm by 40cm plate with 4 points at coordinates (-0.07,-0.05,0), (0.07,0.05,0), (0.07,-0.05,0), (-0.07,-0.05,0). Each point is represented by a circle with 2cm radius.
+    SQUARE_10CM, //!< A 40cm by 40cm plate with 4 points at coordinates (-0.05,0.05,0), (0.05,0.05,0), (0.05,-0.05,0), (-0.05,-0.05,0). Each point is represented by a circle with 2cm radius.
+    DIAMOND, //!< A 40cm by 40cm plate with 4 points at coordinates (0,-0.1,0), (0.1,0,0), (0,0.1,0), (-0.1,0,0). Each point is represented by a circle with 2cm radius.
+    TRAPEZOID, //!< A 40cm by 40cm plate with 4 points at coordinates (-0.025,-0.05,0), (-0.075,0.05,0), (0.075,0.05,0), (0.025,-0.05,0). Each point is represented by a circle with 2cm radius.
+    THREE_LINES, //!< Three parallel lines with equation y=-5, y=0, y=5.
+    ROAD, //!< Three parallel lines representing a road.
+    TIRE, //!< A tire represented by 2 circles with radius 10cm and 15cm.
+    PIPE, //!< A pipe represented by a cylinder of 25 cm length and 15cm radius.
+    CIRCLE, //!< A 10cm radius circle.
+    SPHERE, //!< A 15cm radius sphere.
+    CYLINDER, //!< A cylinder of 80cm length and 10cm radius.
+    PLAN, //!< A plane represented by a 56cm by 56cm plate with a grid of 49 squares inside.
+    POINT_CLOUD, //!< A plate with 8 points at coordinates (0.05,0,0), (0.15,0.05,0), (0.2,0.2,0), (-0.05,0.2,0), (-0.15,-0.1,0), (-0.1,-0.1,0), (-0.05,0.05,0) and (0.5,0,0). ach point is represented by a circle with 2cm radius.
   } vpSceneObject;
 
   /*!
@@ -219,9 +214,9 @@ public:
     */
   typedef enum
   {
-    D_STANDARD,
-    D_CIRCLE,
-    D_TOOL
+    D_STANDARD, //!<  The object displayed at the desired position is the same than the scene object defined in vpSceneObject.
+    D_CIRCLE, //!<  The object displayed at the desired position is a circle.
+    D_TOOL //!< A cylindrical tool is attached to the camera.
   } vpSceneDesiredObject;
 
   typedef enum
@@ -287,6 +282,8 @@ protected:
   bool extCamChanged;
 
   vpHomogeneousMatrix rotz;
+
+  unsigned int thickness_;
 
 private:
   std::string scene_dir;
@@ -531,6 +528,14 @@ public:
     this->camMf2.buildFrom(0,0,T[2],0,0,0);
     f2Mf = camMf2.inverse()*this->camMf;
     extCamChanged = true;
+  }
+
+  /*!
+    Specify the thickness of the graphics drawings.
+    */
+  void setGraphicsThickness(unsigned int thickness)
+  {
+    this->thickness_ = thickness;
   }
 
   /*!

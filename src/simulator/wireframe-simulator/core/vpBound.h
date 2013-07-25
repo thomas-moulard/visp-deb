@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpBound.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpBound.h 4332 2013-07-22 14:23:46Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -44,8 +44,10 @@
 #define vpBound_H
  
 #include <visp/vpConfig.h>
+#include <visp/vpMy.h>
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 
 #define	START_ARG	0
 #define	NEXT_ARG	1

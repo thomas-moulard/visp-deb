@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: AddExtraCompilationFlags.cmake 4056 2013-01-05 13:04:42Z fspindle $
+# $Id: AddExtraCompilationFlags.cmake 4308 2013-07-08 08:47:09Z fspindle $
 #
 # This file is part of the ViSP software.
 # Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -132,13 +132,18 @@ MACRO(ADD_EXTRA_COMPILATION_FLAGS)
     else()
       string(REPLACE ${WARNING_ALL} "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     endif()
-    if(MSVC80 OR MSVC90 OR MSVC10)
+    if(MSVC80 OR MSVC90 OR MSVC10 OR MSVC11)
       # To avoid compiler warning (level 4) C4571, compile with /EHa if you still want 
   # your catch(...) blocks to catch structured exceptions.
       list(APPEND CMAKE_CXX_FLAGS "/EHa") 
     endif()
+  endif()
 
-
+  # If compiler support symbol visibility, enable it.
+  include(CheckCCompilerFlag)
+  check_c_compiler_flag(-fvisibility=hidden HAS_VISIBILITY)
+  if (HAS_VISIBILITY)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
   endif()
 
   # Remove duplicates compilation flags

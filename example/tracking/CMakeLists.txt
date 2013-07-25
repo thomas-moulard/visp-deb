@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: CMakeLists.txt 4082 2013-01-30 10:56:55Z ayol $
+# $Id: CMakeLists.txt 4156 2013-03-11 16:12:24Z ayol $
 #
 # This file is part of the ViSP software.
 # Copyright (C) 2005 - 2013 by INRIA. All rights reserved.

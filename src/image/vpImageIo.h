@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpImageIo.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpImageIo.h 4314 2013-07-16 17:41:21Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -99,6 +99,10 @@ int main()
   vpImageIo::write(I, "Klimt.pgm"); // Write the image in a PGM P5 image file format 
 }
   \endcode
+
+  This other example available in tutorial-image-reader.cpp shows how to read/write
+  jpeg images. It supposes that \c libjpeg is installed.
+  \include tutorial-image-reader.cpp
 */
 
 class VISP_EXPORT vpImageIo
@@ -112,6 +116,13 @@ private:
     FORMAT_PPM,
     FORMAT_JPEG,
     FORMAT_PNG,
+    // Formats supported by opencv
+    FORMAT_TIFF,
+    FORMAT_BMP,
+    FORMAT_DIB,
+    FORMAT_PBM,
+    FORMAT_RASTER,
+    FORMAT_JPEG2000,
     FORMAT_UNKNOWN
   } vpImageFormatType;
   

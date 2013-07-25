@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: grab1394CMU.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: grab1394CMU.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -192,8 +192,15 @@ main(int argc, const char ** argv)
 
   // Create the grabber
   vp1394CMUGrabber g;
-
-  g.open(I);
+  unsigned short gain_min, gain_max;
+  g.getGainMinMax(gain_min, gain_max);
+  std::cout << "Gain range [" <<  gain_min << ", " << gain_max << "]" << std::endl;
+  unsigned short shutter_min, shutter_max;
+  g.getShutterMinMax(shutter_min, shutter_max);
+  std::cout << "Shutter range [" <<  shutter_min << ", " << shutter_max << "]" << std::endl;
+  g.setFramerate(4); // 30 fps
+  std::cout << "Actual framerate: " << g.getFramerate() << std::endl;
+  g.setVideoMode(0,0);
 	g.acquire(I);
 
   std::cout << "Image size: width : " << I.getWidth() <<  " height: "
@@ -237,11 +244,7 @@ main(int argc, const char ** argv)
         sprintf(buf, opath.c_str(), i);
         std::string filename(buf);
         std::cout << "Write: " << filename << std::endl;
-#ifdef GRAB_COLOR
-        vpImageIo::writePPM(I, filename);
-#else
-        vpImageIo::writePGM(I, filename);
-#endif
+        vpImageIo::write(I, filename);
       }
       tend = vpTime::measureTimeMs();
       tloop = tend - tbegin;

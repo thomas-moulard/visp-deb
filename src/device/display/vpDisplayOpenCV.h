@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpDisplayOpenCV.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpDisplayOpenCV.h 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -44,11 +44,11 @@
 #define vpDisplayOpenCV_h
 
 #include <visp/vpConfig.h>
+#include <visp/vpDisplay.h>
 #if ( defined(VISP_HAVE_OPENCV) )
 
 #include <visp/vpImage.h>
 #include <visp/vpImageConvert.h>
-#include <visp/vpDisplay.h>
 
 #if VISP_HAVE_OPENCV_VERSION >= 0x020101
 #  include <opencv2/core/core.hpp>
@@ -86,7 +86,7 @@ int main()
   vpImage<unsigned char> I; // Grey level image
 
   // Read an image in PGM P5 format
-  vpImageIo::readPGM(I, "/local/soft/ViSP/ViSP-images/Klimt/Klimt.pgm");
+  vpImageIo::read(I, "/local/soft/ViSP/ViSP-images/Klimt/Klimt.pgm");
 
   vpDisplayOpenCV d; 
 
@@ -146,9 +146,6 @@ class VISP_EXPORT vpDisplayOpenCV: public vpDisplay
 private:
   //! true if OpenCV display is ready to use
   IplImage* background;
-  int window;
-  int windowXPosition ; int  windowYPosition ;
-  static int count; 
   CvScalar *col ;
   CvScalar cvcolor;
   CvFont *font;

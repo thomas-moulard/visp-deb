@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpDisplayGDI.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpDisplayGDI.h 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -40,6 +40,7 @@
  *
  *****************************************************************************/
 #include <visp/vpConfig.h>
+#include <visp/vpDisplay.h>
 
 #if ( defined(VISP_HAVE_GDI) )
 
@@ -71,10 +72,10 @@ int main()
 
   // Read an image in PGM P5 format
 #ifdef UNIX
-  //vpImageIo::readPGM(I, "/local/soft/ViSP/ViSP-images/Klimt/Klimt.pgm");
-  vpImageIo::readPGM(I, "/tmp/Klimt.pgm");
+  //vpImageIo::read(I, "/local/soft/ViSP/ViSP-images/Klimt/Klimt.pgm");
+  vpImageIo::read(I, "/tmp/Klimt.pgm");
 #elif WIN32
-  vpImageIo::readPGM(I, "C:/temp/ViSP-images/Klimt/Klimt.pgm");
+  vpImageIo::read(I, "C:/temp/ViSP-images/Klimt/Klimt.pgm");
 #endif
 
   vpDisplayGDI d;
@@ -132,21 +133,12 @@ int main()
 class VISP_EXPORT vpDisplayGDI : public vpDisplayWin32
 {
 public:
-
-
   vpDisplayGDI();
-
-  vpDisplayGDI(vpImage<vpRGBa> &I,
-	       int winx=-1, int winy=-1,
-	       const char *_title=NULL);
-
-
-  vpDisplayGDI(vpImage<unsigned char> &I,
-	       int winx=-1, int winy=-1,
-	       const char *_title=NULL);
+  vpDisplayGDI(int winx, int winy, const char *_title=NULL);
+  vpDisplayGDI(vpImage<vpRGBa> &I,int winx=-1, int winy=-1, const char *_title=NULL);
+  vpDisplayGDI(vpImage<unsigned char> &I, int winx=-1, int winy=-1, const char *_title=NULL);
 
   virtual ~vpDisplayGDI();
-
 };
 
 #endif

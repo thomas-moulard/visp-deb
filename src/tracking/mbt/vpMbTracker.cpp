@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMbTracker.cpp 4122 2013-02-08 10:45:54Z ayol $
+ * $Id: vpMbTracker.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -95,31 +95,15 @@
 vpMbTracker::vpMbTracker()
 {
   modelInitialised = false;
-  coinUsed = false;
   computeCovariance = false;
   displayFeatures = false;
 }
 
 /*!
-  Basic destructor.
-
+  Basic destructor that doest nothing.
 */
 vpMbTracker::~vpMbTracker()
 {
-#ifdef VISP_HAVE_COIN
-  if(coinUsed){
-    std::string version = COIN_VERSION;
-    unsigned int major, minor, patch;
-    vpIoTools::getVersion(version, major, minor, patch);
-
-    if ( (major << 16 | minor << 8 | patch) >= (2 << 16 | 4 << 8 | 0) )
-      SoDB::finish();
-    else if ( (major << 16 | minor << 8 | patch) >= (2 << 16 | 0 << 8 | 0) )
-       SoDB::cleanup();
-   
-    coinUsed = false;
-  }
-#endif
 }
 
 
@@ -154,7 +138,7 @@ vpMbTracker::initClick(const vpImage<unsigned char>& I, const std::string& initF
   
 	std::string ext = ".init";
 	std::string str_pose = "";
-  unsigned int pos =  initFile.rfind(ext);
+  size_t pos =  (unsigned int)initFile.rfind(ext);
 
   // Load the last poses from files
   std::fstream finitpos ;
@@ -254,7 +238,7 @@ vpMbTracker::initClick(const vpImage<unsigned char>& I, const std::string& initF
 #endif
     try{
       if(displayHelp){
-        vpImageIo::readPPM(Iref,s) ;
+        vpImageIo::read(Iref,s) ;
 #if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV)
         d.init(Iref,10,500, "Where to initialize...")  ;
     	  vpDisplay::display(Iref) ;
@@ -385,7 +369,7 @@ void vpMbTracker::initClick(const vpImage<unsigned char>& I, const std::vector<v
 	if(displayFile != ""){	
 		try{
 			std::cout << displayFile.c_str() << std::endl;
-			vpImageIo::readPPM(Iref,displayFile.c_str()) ;
+      vpImageIo::read(Iref,displayFile.c_str()) ;
 			#if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_OPENCV)
 				d.init(Iref,10,500, "Where to initialize...")  ;
 				vpDisplay::display(Iref) ;
@@ -484,7 +468,7 @@ void vpMbTracker::initFromPoints( const vpImage<unsigned char>& I, const std::st
 	std::fstream finit ;
 	
 	std::string ext = ".init";
-  unsigned int pos =  initFile.rfind(ext);
+  size_t pos = initFile.rfind(ext);
 	
   if( pos == initFile.size()-ext.size() && pos != 0)
     sprintf(s,"%s", initFile.c_str());
@@ -563,11 +547,11 @@ void vpMbTracker::initFromPoints( const vpImage<unsigned char>& I, const std::ve
 	if(points2D_list.size() != points3D_list.size())
 		vpERROR_TRACE( "vpMbTracker::initFromPoints(), Number of 2D points different to the number of 3D points." );
 	
-	unsigned int size = points3D_list.size();
+	size_t size = points3D_list.size();
 	vpPoint *P = new vpPoint [size]; 
 	vpPose pose ;
 	
-	for(unsigned int i=0 ; i< size ; i++)
+	for(size_t i=0 ; i< size ; i++)
 	{
 		P[i].setWorldCoordinates(points3D_list[i].get_oX(),points3D_list[i].get_oY(),points3D_list[i].get_oZ()) ;
 		double x=0,y=0;
@@ -619,7 +603,7 @@ void vpMbTracker::initFromPose(const vpImage<unsigned char>& I, const std::strin
 	vpPoseVector init_pos;
 	
 	std::string ext = ".pos";
-  unsigned int pos =  initFile.rfind(ext);
+  size_t pos =  initFile.rfind(ext);
 	
   if( pos == initFile.size()-ext.size() && pos != 0)
     sprintf(s,"%s", initFile.c_str());
@@ -689,6 +673,19 @@ void vpMbTracker::savePose(const std::string &filename)
   file (.wrl) or a CAO file (.cao). CAO format is described in the 
   loadCAOModel() method. 
 
+  \warning When this class is called to load a vrml model, remember that you
+  have to call Call SoDD::finish() before ending the program.
+  \code
+int main()
+{
+    ...
+#ifdef VISP_HAVE_COIN
+  SoDB::finish();
+#endif
+}
+  \endcode
+
+
   \throw vpException::ioError if the file cannot be open, or if its extension is
   not wrl or cao. 
 
@@ -726,6 +723,18 @@ vpMbTracker::loadModel(const std::string& modelFile)
   Load the 3D model of the object from a vrml file. Only LineSet and FaceSet are
   extracted from the vrml file. 
 
+  \warning When this class is called, remember that you have to call Call
+  SoDD::finish() before ending the program.
+  \code
+int main()
+{
+    ...
+#ifdef VISP_HAVE_COIN
+  SoDB::finish();
+#endif
+}
+  \endcode
+
   \warning The cylinders extracted using this method do not use the Cylinder
   keyword of vrml since vrml exporter such as Blender or AC3D consider a
   cylinder as an IndexedFaceSet. To test whether an indexedFaceSet is a cylinder
@@ -736,7 +745,6 @@ geometry DEF cyl_cylinder1 IndexedFaceSet
   \endcode
   defines a cylinder named cyl_cylinder1.
 
-
   \throw vpException::fatalError if the file cannot be open. 
   
   \param modelFile : The full name of the file containing the 3D model.
@@ -745,10 +753,8 @@ void
 vpMbTracker::loadVRMLModel(const std::string& modelFile)
 {
 #ifdef VISP_HAVE_COIN
-  if(!coinUsed){
-    SoDB::init();
-    coinUsed = true;
-  }
+  SoDB::init(); // Call SoDD::finish() before ending the program.
+
   SoInput in;
   SbBool ok = in.openFile(modelFile.c_str());
   SoSeparator  *sceneGraph;

@@ -1,0 +1,16 @@
+project(ViSP-tutorial)
+
+cmake_minimum_required(VERSION 2.6)
+
+subdirs(computer-vision)
+subdirs(grabber)
+subdirs(image)
+subdirs(robot/pioneer)
+subdirs(simulator/image)
+subdirs(tracking/blob)
+subdirs(tracking/keypoint)
+subdirs(tracking/model-based/edges)
+subdirs(tracking/model-based/hybrid)
+subdirs(tracking/model-based/keypoint)
+subdirs(tracking/moving-edges)
+subdirs(visual-servo/ibvs)

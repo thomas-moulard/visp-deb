@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: mbtEdgeTracking.cpp 4121 2013-02-08 10:32:20Z fspindle $
+ * $Id: mbtEdgeTracking.cpp 4330 2013-07-20 11:04:19Z ayol $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -340,6 +340,12 @@ main(int argc, const char ** argv)
 
   tracker.setCameraParameters(cam);
   tracker.setMovingEdge(me);
+  
+  // Specify the clipping to use
+  tracker.setNearClippingDistance(0.01);
+  tracker.setFarClippingDistance(0.90);
+  tracker.setClipping(tracker.getClipping() | vpMbtPolygon::FOV_CLIPPING);
+//   tracker.setClipping(tracker.getClipping() | vpMbtPolygon::LEFT_CLIPPING | vpMbtPolygon::RIGHT_CLIPPING | vpMbtPolygon::UP_CLIPPING | vpMbtPolygon::DOWN_CLIPPING); // Equivalent to FOV_CLIPPING
 #endif
 
   // Display the moving edges, see documentation for the significations of the colour
@@ -398,8 +404,7 @@ main(int argc, const char ** argv)
   // Uncomment if you want to compute the covariance matrix.
   // tracker.setCovarianceComputation(true); //Important if you want tracker.getCovarianceMatrix() to work.  
   
-  int iter  = 0;
-  while (iter < 200)
+  while (!reader.end())
   {
     try
     {
@@ -430,13 +435,17 @@ main(int argc, const char ** argv)
       break;
     }
     vpDisplay::flush(I) ;
-    iter++;
   }
   reader.close();
 
-  // Cleanup memory allocated by xml library used to parse the xml config file in vpMbEdgeTracker::loadConfigFile()
 #if defined (VISP_HAVE_XML2)
+  // Cleanup memory allocated by xml library used to parse the xml config file in vpMbEdgeTracker::loadConfigFile()
   vpXmlParser::cleanup();
+#endif
+
+#ifdef VISP_HAVE_COIN
+  // Cleanup memory allocated by Coin library used to load a vrml model in vpMbEdgeTracker::loadModel()
+  SoDB::finish();
 #endif
   
   return 0;

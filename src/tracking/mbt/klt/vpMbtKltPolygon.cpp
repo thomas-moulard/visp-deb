@@ -1,31 +1,34 @@
 /****************************************************************************
  *
- * $Id: vpMbtKltPolygon.cpp 4107 2013-02-06 10:04:49Z fspindle $
+ * $Id: vpMbtKltPolygon.cpp 4318 2013-07-17 09:47:51Z fspindle $
  *
- * Copyright (C) 2005 - 2013 Inria. All rights reserved.
+ * This file is part of the ViSP software.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
+ *
+ * This software is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * ("GPL") version 2 as published by the Free Software Foundation.
+ * See the file LICENSE.txt at the root directory of this source
+ * distribution for additional information about the GNU GPL.
+ *
+ * For using ViSP with software that can not be combined with the GNU
+ * GPL, please contact INRIA about acquiring a ViSP Professional
+ * Edition License.
+ *
+ * See http://www.irisa.fr/lagadic/visp/visp.html for more information.
  *
  * This software was developed at:
- * IRISA/INRIA Rennes
- * Projet Lagadic
+ * INRIA Rennes - Bretagne Atlantique
  * Campus Universitaire de Beaulieu
  * 35042 Rennes Cedex
+ * France
  * http://www.irisa.fr/lagadic
  *
- * This file is part of the ViSP toolkit
- *
- * This file may be distributed under the terms of the Q Public License
- * as defined by Trolltech AS of Norway and appearing in the file
- * LICENSE included in the packaging of this file.
- *
- * Licensees holding valid ViSP Professional Edition licenses may
- * use this file in accordance with the ViSP Commercial License
- * Agreement provided with the Software.
+ * If you have questions regarding the use of this file, please contact
+ * INRIA at visp@inria.fr
  *
  * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * Contact visp@irisa.fr if any conditions of this licensing are
- * not clear to you.
  *
  * Description:
  * Generic model polygon, containing points of interest.
@@ -82,13 +85,15 @@ vpMbtKltPolygon::init(const vpKltOpencv& _tracker)
   initPoints = std::map<int, vpImagePoint>();
   curPoints = std::map<int, vpImagePoint>();
   curPointsInd = std::map<int, int>();
+  std::vector<vpImagePoint> roi;
+  getRoiClipped(cam, roi);
   
   for (unsigned int i = 0; i < static_cast<unsigned int>(_tracker.getNbFeatures()); i ++){
     int id;
     float x_tmp, y_tmp;
     _tracker.getFeature((int)i, id, x_tmp, y_tmp);
 
-    if(isInside(getRoi(cam), y_tmp, x_tmp)){
+    if(isInside(roi, y_tmp, x_tmp)){
       initPoints[id] = vpImagePoint(y_tmp, x_tmp);
       curPoints[id] = vpImagePoint(y_tmp, x_tmp);
       curPointsInd[id] = (int)i;
@@ -297,6 +302,7 @@ vpMbtKltPolygon::isTrackedFeature(const int _id)
   std::map<int, vpImagePoint>::iterator iter = initPoints.find(_id);
   if(iter != initPoints.end())
     return true;
+  
   return false;
 }
 
@@ -313,7 +319,10 @@ vpMbtKltPolygon::updateMask(IplImage* _mask, unsigned int _nb, unsigned int _shi
 {
   int width = _mask->width;
   int i_min, i_max, j_min, j_max;
-  std::vector<vpImagePoint> roi = getRoi(cam);
+  cam.computeFov((unsigned)_mask->width, (unsigned)_mask->height);
+  computeRoiClipped(cam);
+  std::vector<vpImagePoint> roi;
+  getRoiClipped(cam, roi);
   vpMbtPolygon::getMinMaxRoi(roi, i_min, i_max, j_min,j_max);
 
   /* check image boundaries */
@@ -329,6 +338,7 @@ vpMbtKltPolygon::updateMask(IplImage* _mask, unsigned int _nb, unsigned int _shi
   if(j_max > _mask->width){
     j_max = _mask->width;
   }
+  
   double shiftBorder_d = (double) _shiftBorder;
   char* ptrData = _mask->imageData + i_min*width+j_min;
   for(int i=i_min; i< i_max; i++){
@@ -358,6 +368,7 @@ vpMbtKltPolygon::updateMask(IplImage* _mask, unsigned int _nb, unsigned int _shi
     }
     ptrData += width - j_max + j_min;
   }
+  
 }
 
 /*!
@@ -459,29 +470,27 @@ vpMbtKltPolygon::displayPrimitive(const vpImage<vpRGBa>& _I)
 
 bool vpMbtKltPolygon::intersect(const vpImagePoint& p1, const vpImagePoint& p2, const double i_test, const double j_test, const double i, const double j)
 {
-  /* denominator */
   double dx = p2.get_j() - p1.get_j();
   double dy = p2.get_i() - p1.get_i();
   double ex = j - j_test;
   double ey = i - i_test;
 
-
-  int den = (int)(dx * ey - dy * ex) ;
+  double den = dx * ey - dy * ex;
   double t = 0, u = 0;
   if(den != 0){
-    t = -( p1.get_j() * ey - j_test*ey - ex * p1.get_i() + ex * i_test ) / den;
-    u = -( -dx*p1.get_i() + dx * i_test + dy * p1.get_j() - dy * j_test ) / den;
+    t = -( ey * ( p1.get_j() - j_test ) + ex * ( -p1.get_i() + i_test ) ) / den;
+    u = -( dx * ( -p1.get_i() + i_test ) + dy * ( p1.get_j() - j_test ) ) / den;
   }
   else{
     throw vpException(vpException::divideByZeroError, "denominator null");
   }
-  return ( t >=0 && t < 1 && u >= 0 && u < 1);
+  return ( t >= std::numeric_limits<double>::epsilon() && t < 1.0 && u >= std::numeric_limits<double>::epsilon() && u < 1.0);
 }
 
 bool vpMbtKltPolygon::isInside(const std::vector<vpImagePoint>& roi, const double i, const double j)
 {
-  double i_test = 1000000.;
-  double j_test = 1000000.;
+  double i_test = 100000.;
+  double j_test = 100000.;
   unsigned int nbInter = 0;
   bool computeAgain = true;
 

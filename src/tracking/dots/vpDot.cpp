@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpDot.cpp 4092 2013-02-04 10:36:30Z fspindle $
+ * $Id: vpDot.cpp 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -135,36 +135,38 @@ vpDot::~vpDot()
 vpDot&
 vpDot::operator=(const vpDot& d)
 {
+  ip_edges_list = d.ip_edges_list;
+  ip_connexities_list = d.ip_connexities_list;
+  connexityType = d.connexityType;
   cog = d.getCog();
-
-  graphics = d.graphics ;
-  thickness = d.thickness;
-  mean_gray_level = d.mean_gray_level ;
-  gray_level_min = d.gray_level_min ;
-  gray_level_max = d.gray_level_max ;
-  grayLevelPrecision = d.grayLevelPrecision;
-  compute_moment = d.compute_moment ;
-
-  maxDotSizePercentage = d.maxDotSizePercentage;
-
-  m00 = d.m00;
-  m01 = d.m01;
-  m10 = d.m10;
-  m02 = d.m02;
-  m20 = d.m20;
-  mu11 = d.mu11;
-  mu20 = d.mu20;
-  mu02 = d.mu02;
 
   u_min = d.u_min;
   v_min = d.v_min;
   u_max = d.u_max;
   v_max = d.v_max;
 
+  graphics = d.graphics ;
+  thickness = d.thickness;
+  maxDotSizePercentage = d.maxDotSizePercentage;
   gray_level_out = d.gray_level_out;
+  mean_gray_level = d.mean_gray_level ;
+  gray_level_min = d.gray_level_min ;
+  gray_level_max = d.gray_level_max ;
+  grayLevelPrecision = d.grayLevelPrecision;
   gamma = d.gamma;
-
+  compute_moment = d.compute_moment ;
   nbMaxPoint = d.nbMaxPoint;
+
+  m00 = d.m00;
+  m01 = d.m01;
+  m10 = d.m10;
+  m11 = d.m11;
+  m02 = d.m02;
+  m20 = d.m20;
+
+  mu11 = d.mu11;
+  mu20 = d.mu20;
+  mu02 = d.mu02;
 
   return *this ;
 }
@@ -377,7 +379,7 @@ bool vpDot::connexe(const vpImage<unsigned char>& I,unsigned int u,unsigned int 
 
   Compute the center of gravity (COG) of the dot using connex
   components.  We assume the origin pixel (u, v) is in the dot. If
-  not, the dot is seach arround this origin using a spiral search.
+  not, the dot is seach around this origin using a spiral search.
 
   \param I : Image to process.
   \param u : Starting pixel coordinate along the columns from where the
@@ -874,7 +876,7 @@ void vpDot::display(const vpImage<unsigned char>& I, vpColor color,
   \f$Imax=255*\big((\frac{I}{255})^{{\gamma}^{-1}}+(1-grayLevelPrecision)\big)^{\gamma}\f$
   with \f$\gamma=1.5\f$ .
 
-  \sa setWidth(), setHeight(), setSurface(), setInLevel(), setOutLevel()
+  \sa setWidth(), setHeight(), setGrayLevelMin(), setGrayLevelMax()
 */
 void vpDot::setGrayLevelPrecision( const double & grayLevelPrecision )
 {

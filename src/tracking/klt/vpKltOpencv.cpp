@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpKltOpencv.cpp 4097 2013-02-05 09:32:17Z ayol $
+ * $Id: vpKltOpencv.cpp 4198 2013-04-05 12:13:23Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -288,7 +288,17 @@ void vpKltOpencv::setMaxFeatures(const int input) {
   prev_featuresid = (long*)cvAlloc((unsigned int)maxFeatures*sizeof(long));
 }
 
-void vpKltOpencv::initTracking(const IplImage *I, const IplImage *masque)
+/*!
+  Initialise the tracking by extracting KLT keypoints on the provided image.
+
+  \param I : Grey level image used as input. This image should have only 1 channel.
+  \param mask : Image mask used to restrict the keypoint detection area.
+  If mask is NULL, all the image will be considered.
+
+  \exception vpTrackingException::initializationError : If the image I is not
+  initialized, or if the image or the mask have bad coding format.
+*/
+void vpKltOpencv::initTracking(const IplImage *I, const IplImage *mask)
 {
   if (!I) {
     throw(vpException(vpTrackingException::initializationError,  "Image Not initialized")) ;
@@ -298,12 +308,11 @@ void vpKltOpencv::initTracking(const IplImage *I, const IplImage *masque)
     throw(vpException(vpTrackingException::initializationError,  "Bad Image format")) ;
   }
 
-  if (masque) {
-    if (masque->depth != IPL_DEPTH_8U || I->nChannels != 1) 	{
+  if (mask) {
+    if (mask->depth != IPL_DEPTH_8U || I->nChannels != 1) 	{
       throw(vpException(vpTrackingException::initializationError,  "Bad Image format")) ;
     }
   }
-
 
   //Creation des buffers
   CvSize Sizeim, SizeI;
@@ -340,7 +349,7 @@ void vpKltOpencv::initTracking(const IplImage *I, const IplImage *masque)
   IplImage* temp = cvCreateImage(cvGetSize(image), 32, 1);
   cvGoodFeaturesToTrack(image, eig, temp, features,
 			&countFeatures, quality, min_distance,
-			masque, block_size, use_harris, harris_free_parameter);
+      mask, block_size, use_harris, harris_free_parameter);
   cvFindCornerSubPix(image, features, countFeatures, cvSize(win_size, win_size),
 		     cvSize(-1,-1),cvTermCriteria(CV_TERMCRIT_ITER|
 						  CV_TERMCRIT_EPS,20,0.03));
@@ -444,8 +453,15 @@ void vpKltOpencv::track(const IplImage *I)
   countFeatures = k;
 }
 
+/*!
+  Display features position and id.
+
+  \param I : Image used as background. Display should be initialized on it.
+  \param color : Color used to display the features.
+  \param thickness : Thickness of the drawings.
+  */
 void vpKltOpencv::display(const vpImage<unsigned char> &I,
-			  vpColor color)
+                          vpColor color, unsigned int thickness)
 {
   if ((features == 0) || (I.bitmap==0) || (!initialized))
     {
@@ -453,7 +469,7 @@ void vpKltOpencv::display(const vpImage<unsigned char> &I,
       throw(vpException(vpException::memoryAllocationError," Memory problem"));
     }
 
-  vpKltOpencv::display(I,features,featuresid,countFeatures,color);  
+  vpKltOpencv::display(I, features, featuresid, countFeatures, color, thickness);
 }
 
 /*!
@@ -591,7 +607,7 @@ void vpKltOpencv::display(const vpImage<unsigned char>& I,const CvPoint2D32f* fe
   {
     ip.set_u( vpMath::round(features_list[i].x ) );
     ip.set_v( vpMath::round(features_list[i].y ) );
-    vpDisplay::displayCross(I, ip, 10, color, thickness) ;
+    vpDisplay::displayCross(I, ip, 10+thickness, color, thickness) ;
   }
 }
 /*!
@@ -616,7 +632,7 @@ void vpKltOpencv::display(const vpImage<vpRGBa>& I,const CvPoint2D32f* features_
   {
     ip.set_u( vpMath::round(features_list[i].x ) );
     ip.set_v( vpMath::round(features_list[i].y ) );
-    vpDisplay::displayCross(I, ip, 10, color, thickness) ;
+    vpDisplay::displayCross(I, ip, 10+thickness, color, thickness) ;
   }
 }
 
@@ -645,7 +661,7 @@ void vpKltOpencv::display(const vpImage<unsigned char>& I,const CvPoint2D32f* fe
   {
     ip.set_u( vpMath::round(features_list[i].x ) );
     ip.set_v( vpMath::round(features_list[i].y ) );
-    vpDisplay::displayCross(I, ip, 10, color, thickness) ;
+    vpDisplay::displayCross(I, ip, 10+thickness, color, thickness) ;
 
     char id[10];
     sprintf(id, "%ld", featuresid_list[i]);

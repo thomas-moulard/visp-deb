@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMbEdgeTracker.h 4122 2013-02-08 10:45:54Z ayol $
+ * $Id: vpMbEdgeTracker.h 4338 2013-07-23 14:29:30Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -97,9 +97,9 @@
   \ingroup ModelBasedTracking 
   \brief Make the complete tracking of an object by using its CAD model.
 
-  This class realise the tracking of an object or a scene given its 3D model. A
-  video example can be found in the \e http://www.irisa.fr/lagadic/visp/computer-vision.html
-  webpage.
+  This class allows to track an object or a scene given its 3D model. A
+  video can be found in the \e http://www.irisa.fr/lagadic/visp/computer-vision.html  web page. The \ref tutorial-tracking-mb is also a good starting point to use this class.
+
   The tracker requires the knowledge of the 3D model that could be provided in a vrml
   or in a cao file. The cao format is described in loadCAOModel().
   It may also use an xml file used to tune the behavior of the tracker and an
@@ -124,7 +124,7 @@ int main()
   vpCameraParameters cam;
   
   // Acquire an image
-  vpImageIo::readPGM(I, "cube.pgm");
+  vpImageIo::read(I, "cube.pgm");
   
 #if defined VISP_HAVE_X11
   vpDisplayX display;
@@ -136,7 +136,7 @@ int main()
 #endif
   tracker.getCameraParameters(cam);   // Get the camera parameters used by the tracker (from the configuration file).
   tracker.loadModel("cube.cao");      // Load the 3d model in cao format. No 3rd party library is required
-  tracker.initClick(I, "cube.init");  // Initialise manually the pose by clicking on the image points associated to the 3d points containned in the cube.init file.
+  tracker.initClick(I, "cube.init");  // Initialise manually the pose by clicking on the image points associated to the 3d points contained in the cube.init file.
 
   while(true){
     // Acquire a new image
@@ -194,13 +194,13 @@ int main()
   vpHomogeneousMatrix cMo; // Pose used in entry (has to be defined), then computed using the tracker. 
   
   //acquire an image
-  vpImageIo::readPGM(I, "cube.pgm"); // Example of acquisition
+  vpImageIo::read(I, "cube.pgm"); // Example of acquisition
 
 #if defined VISP_HAVE_XML2
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
 #endif
-  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
-  tracker.initFromPose(I, cMo); // initialise the tracker with the given pose.
+  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coin is required, if coin is not installed .cao file can be used.
+  tracker.initFromPose(I, cMo); // initialize the tracker with the given pose.
 
   while(true){
     // acquire a new image
@@ -234,7 +234,7 @@ int main()
   vpCameraParameters cam;
   
   // Acquire an image
-  vpImageIo::readPGM(I, "cube.pgm");
+  vpImageIo::read(I, "cube.pgm");
   
 #if defined VISP_HAVE_X11
   vpDisplayX display;
@@ -245,7 +245,7 @@ int main()
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
 #endif
   tracker.getCameraParameters(cam); // Get the camera parameters used by the tracker (from the configuration file).
-  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
+  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coin is required, if coin is not installed .cao file can be used.
 
   while(true){
     // acquire a new image
@@ -269,7 +269,7 @@ class VISP_EXPORT vpMbEdgeTracker: virtual public vpMbTracker
   protected :
     
     /*! If this flag is true, the interaction matrix
-     extracted from the FeatureSet is computed at each
+     extracted from the feature set is computed at each
      iteration in the visual servoing loop.
     */
     int compute_interaction;
@@ -304,20 +304,29 @@ class VISP_EXPORT vpMbEdgeTracker: virtual public vpMbTracker
     //! Vector of scale level to use for the multi-scale tracking.
     std::vector<bool> scales;
     
-    //! Pyramid of image associated to the current image. This pyramid is compted in the init() and in the track() methods.
+    //! Pyramid of image associated to the current image. This pyramid is computed in the init() and in the track() methods.
     std::vector< const vpImage<unsigned char>* > Ipyramid;
     
-    //! Current scale level used. This attribute must not be modified outsied of the downScale() and upScale() methods, as it used to specify to some methods which set of distanceLine use. 
+    //! Current scale level used. This attribute must not be modified outside of the downScale() and upScale() methods, as it used to specify to some methods which set of distanceLine use. 
     unsigned int scaleLevel;
     
     //! Use Ogre3d for visibility tests
     bool useOgre;
   
-    //! Angle used to detect a face apparition
+    //! Angle used to detect a face appearance
     double angleAppears;
   
-    //! Angle used to detect a face disparition
+    //! Angle used to detect a face disappearance
     double angleDisappears;
+    
+    //! Distance for near clipping
+    double distNearClip;
+    
+    //! Distance for near clipping
+    double distFarClip;
+    
+    //! Flags specifying which clipping to used
+    unsigned int clippingFlag;
   
 public:
   
@@ -329,15 +338,39 @@ public:
   void display(const vpImage<vpRGBa>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters &cam,
                const vpColor& col , const unsigned int thickness=1, const bool displayFullModel = false);
   
-  /*! Return the angle used to test polygons apparition. */
-  virtual inline double getAngleAppear() { return angleAppears; }   
+  /*! Return the angle used to test polygons appearance. */
+  virtual inline double getAngleAppear() const { return angleAppears; }   
   
-  /*! Return the angle used to test polygons disparition. */
-  virtual inline double getAngleDisappear() { return angleDisappears; } 
+  /*! Return the angle used to test polygons disappearance. */
+  virtual inline double getAngleDisappear() const { return angleDisappears; } 
+  
+  /*!
+    Get the clipping used.
+    
+    \sa vpMbtPolygonClipping
+    
+    \return Clipping flags.
+  */          
+  virtual inline  unsigned int getClipping() const { return clippingFlag; } 
   
   /*! Return a reference to the faces structure. */
-  vpMbHiddenFaces<vpMbtPolygon> & getFaces() { return faces;}
-  double getFirstThreshold() { return percentageGdPt;}
+  inline vpMbHiddenFaces<vpMbtPolygon>& getFaces() { return faces; }
+  
+  /*!
+    Get the far distance for clipping.
+    
+    \return Far clipping value.
+  */
+  virtual inline double getFarClippingDistance() const { return distFarClip; }
+  
+  inline double getFirstThreshold() const { return percentageGdPt;}
+  
+  /*!
+    Get the value of the gain used to compute the control law.
+    
+    \return the value for the gain.
+  */
+  virtual inline double getLambda() const {return lambda;}
   
   void getLline(std::list<vpMbtDistanceLine *>& linesList, const unsigned int level = 0);
   void getLcylinder(std::list<vpMbtDistanceCylinder *>& cylindersList, const unsigned int level = 0);
@@ -347,10 +380,17 @@ public:
     
     \return an instance of the moving edge parameters used by the tracker.
   */
-  inline void getMovingEdge(vpMe &me ) { me = this->me;}
+  inline void getMovingEdge(vpMe &me ) const { me = this->me;}
   
-  unsigned int getNbPoints(const unsigned int level=0);
-  unsigned int getNbPolygon();
+  /*!
+    Get the near distance for clipping.
+    
+    \return Near clipping value.
+  */
+  virtual inline double getNearClippingDistance() const { return distNearClip; }
+  
+  unsigned int getNbPoints(const unsigned int level=0) const;
+  unsigned int getNbPolygon() const ;
   vpMbtPolygon* getPolygon(const unsigned int index);
   
   /*!
@@ -369,7 +409,7 @@ public:
   void resetTracker();
   
   /*!
-    Set the angle used to test polygons apparition.
+    Set the angle used to test polygons appearance.
     If the angle between the normal of the polygon and the line going
     from the camera to the polygon center has a value lower than
     this parameter, the polygon is considered as appearing.
@@ -383,7 +423,7 @@ public:
   virtual inline  void setAngleAppear(const double &a) { angleAppears = a; }   
   
   /*!
-    Set the angle used to test polygons disparition.
+    Set the angle used to test polygons disappearance.
     If the angle between the normal of the polygon and the line going
     from the camera to the polygon center has a value greater than
     this parameter, the polygon is considered as disappearing.
@@ -417,17 +457,21 @@ public:
     }
   }
   
+  virtual void  setClipping(const unsigned int &flags);
+  
   /*!
     Enable to display the points along the line with a color corresponding to their state.
     
     - If green : The vpMeSite is a good point.
-    - If blue : The point is removed because of the vpMeSite tracking phase (constrast problem).
+    - If blue : The point is removed because of the vpMeSite tracking phase (contrast problem).
     - If purple : The point is removed because of the vpMeSite tracking phase (threshold problem).
     - If red : The point is removed because of the robust method in the virtual visual servoing.
     
     \param displayMe : set it to true to display the points.
   */
   void setDisplayMovingEdges(const bool displayMe) {displayFeatures = displayMe;}
+  
+  virtual void setFarClippingDistance(const double &dist);
   
   /*!
     Set the first threshold used to check if the tracking failed. It corresponds to the percentage of good point which is necessary.
@@ -445,9 +489,11 @@ public:
     
     \param lambda : the desired value for the gain.
   */
-  inline void setLambda(const double lambda) {this->lambda = lambda;}
+  virtual inline void setLambda(const double lambda) {this->lambda = lambda;}
   
   void setMovingEdge(const vpMe &me);
+  
+  virtual void setNearClippingDistance(const double &dist);
   
   virtual void setOgreVisibilityTest(const bool &v);
   
@@ -477,8 +523,14 @@ protected:
   void trackMovingEdge(const vpImage<unsigned char> &I) ;
   void updateMovingEdge(const vpImage<unsigned char> &I) ;
   void upScale(const unsigned int _scale); 
-  void visibleFace(const vpHomogeneousMatrix &_cMo, bool &newvisibleline) ;
   void visibleFace(const vpImage<unsigned char> &_I, const vpHomogeneousMatrix &_cMo, bool &newvisibleline) ; 
+  
+#ifdef VISP_BUILD_DEPRECATED_FUNCTIONS
+  /*!
+    @name Deprecated functions
+  */
+  vp_deprecated void visibleFace(const vpHomogeneousMatrix &_cMo, bool &newvisibleline);
+#endif
 };
 
 #endif

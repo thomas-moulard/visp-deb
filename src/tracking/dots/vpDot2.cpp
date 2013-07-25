@@ -102,7 +102,7 @@ void vpDot2::init()
 }
 
 /*!
-  Default contructor. Just do basic default initialisation.
+  Default constructor. Just do basic default initialization.
 */
 vpDot2::vpDot2() : vpTracker()
 {
@@ -111,7 +111,7 @@ vpDot2::vpDot2() : vpTracker()
 
 /*!
 
-  Constructor initialise the coordinates of the gravity center of the dot to
+  Constructor initialize the coordinates of the gravity center of the dot to
   the image point \e ip.  Rest is the same as the default constructor.
 
   \param ip : An image point with sub-pixel coordinates.
@@ -125,7 +125,7 @@ vpDot2::vpDot2(const vpImagePoint &ip) : vpTracker()
 }
 
 /*!
-  Copy contructor.
+  Copy constructor.
 */
 vpDot2::vpDot2(const vpDot2& twinDot ) : vpTracker()
 {
@@ -136,15 +136,15 @@ vpDot2::vpDot2(const vpDot2& twinDot ) : vpTracker()
   = operator.
 */
 void vpDot2::operator=(const vpDot2& twinDot )
-                      {
+{
   cog = twinDot.cog;
 
   width    = twinDot.width;
   height   = twinDot.height;
   surface  = twinDot.surface;
-  mean_gray_level = twinDot.mean_gray_level;
   gray_level_min = twinDot.gray_level_min;
   gray_level_max = twinDot.gray_level_max;
+  mean_gray_level = twinDot.mean_gray_level;
   grayLevelPrecision = twinDot.grayLevelPrecision;
   gamma = twinDot.gamma; ;
   sizePrecision = twinDot.sizePrecision;
@@ -153,12 +153,12 @@ void vpDot2::operator=(const vpDot2& twinDot )
   allowedBadPointsPercentage_ = twinDot.allowedBadPointsPercentage_;
   area = twinDot.area;
 
-  m00 = twinDot.m00;
-  m01 = twinDot.m01;
-  m11 = twinDot.m11;
-  m10 = twinDot.m10;
-  m02 = twinDot.m02;
-  m20 = twinDot.m20;
+  direction_list = twinDot.direction_list;
+  ip_edges_list =  twinDot.ip_edges_list;
+
+  compute_moment = twinDot.compute_moment;
+  graphics = twinDot.graphics;
+  thickness = twinDot.thickness;
 
   bbox_u_min = twinDot.bbox_u_min;
   bbox_u_max = twinDot.bbox_u_max;
@@ -168,12 +168,16 @@ void vpDot2::operator=(const vpDot2& twinDot )
   firstBorder_u = twinDot.firstBorder_u;
   firstBorder_v = twinDot.firstBorder_v;
 
-  compute_moment = twinDot.compute_moment;
-  graphics = twinDot.graphics;
-  thickness = twinDot.thickness;
+  m00 = twinDot.m00;
+  m01 = twinDot.m01;
+  m11 = twinDot.m11;
+  m10 = twinDot.m10;
+  m02 = twinDot.m02;
+  m20 = twinDot.m20;
 
-  direction_list = twinDot.direction_list;
-  ip_edges_list =  twinDot.ip_edges_list;
+  mu11 = twinDot.mu11;
+  mu20 = twinDot.mu20;
+  mu02 = twinDot.mu02;
 }
 
 /*!
@@ -217,16 +221,16 @@ void vpDot2::display(const vpImage<unsigned char>& I, vpColor color,
 
   To get center of gravity of the dot, see getCog(). To compute the
   moments see setComputeMoments(). To get the width or height of the
-  dot, call getWidth() and getHeight(). The surface of the dot is
-  given by getSurface().
+  dot, call getWidth() and getHeight(). The area of the dot is
+  given by getArea().
 
   \param I : Image.
   \param size : Size of the dot to track.
 
   If no valid dot was found in the window, return an exception.
 
-  \exception vpTrackingException::featureLostError : If the dot initialisation
-  failed. The initialisation can fail if the following characteristics are
+  \exception vpTrackingException::featureLostError : If the dot initialization
+  failed. The initialization can fail if the following characteristics are
   not valid;
   - The gray level is between gray level min and gray level max.
 
@@ -289,8 +293,8 @@ void vpDot2::initTracking(const vpImage<unsigned char>& I, unsigned int size)
 
   If no valid dot was found in the window, return an exception.
 
-  \exception vpTrackingException::featureLostError : If the dot initialisation
-  failed. The initialisation can fail if the following characteristics are
+  \exception vpTrackingException::featureLostError : If the dot initialization
+  failed. The initialization can fail if the following characteristics are
   not valid;
   - The gray level is between gray level min and gray level max.
 
@@ -360,8 +364,8 @@ void vpDot2::initTracking(const vpImage<unsigned char>& I,
 
   If no valid dot was found in the window, return an exception.
 
-  \exception vpTrackingException::featureLostError : If the dot initialisation
-  failed. The initialisation can fail if the following characteristics are
+  \exception vpTrackingException::featureLostError : If the dot initialization
+  failed. The initialization can fail if the following characteristics are
   not valid;
   - The gray level is between gray level min and gray level max.
 
@@ -426,8 +430,8 @@ void vpDot2::initTracking(const vpImage<unsigned char>& I,
     setEllipsoidShapePrecision(0).
 
   To get the center of gravity of the dot, call getCog(). To get the
-  width or height of the dot, call getWidth() and getHeight(). The surface of the
-  dot is given by getSurface().
+  width or height of the dot, call getWidth() and getHeight(). The area of the
+  dot is given by getArea().
 
   To compute all the inertia moments associated to the dot see
   setComputeMoments().
@@ -470,14 +474,14 @@ void vpDot2::track(const vpImage<unsigned char> &I)
   }
 
   if (! found) {
-    //     vpDEBUG_TRACE(0, "Search the dot in a bigest window around the last position");
+    //     vpDEBUG_TRACE(0, "Search the dot in a biggest window around the last position");
     //     vpDEBUG_TRACE(0, "Bad computed dot: ");
     //     vpDEBUG_TRACE(0, "u: %f v: %f", get_u(), get_v());
     //     vpDEBUG_TRACE(0, "w: %f h: %f", getWidth(), getHeight());
 
     // if estimation was wrong (get an error tracking), look for the dot
     // closest from the estimation,
-    // i.e. search for dots in an area arround the this dot and get the first
+    // i.e. search for dots in an a region of interest around the this dot and get the first
     // element in the area.
 
     // first get the size of the search window from the dot size
@@ -514,7 +518,7 @@ void vpDot2::track(const vpImage<unsigned char> &I)
     vpDot2 movingDot = candidates.front();
 
     setCog( movingDot.getCog() );
-    setSurface( movingDot.getSurface() );
+    setArea( movingDot.getArea() );
     setWidth( movingDot.getWidth() );
     setHeight( movingDot.getHeight() );
 
@@ -636,11 +640,25 @@ double vpDot2::getHeight() const
 }
 
 /*!
-  Return the surface of the dot.
+  Return the area of the dot.
 
-  The surface of the dot is also given by \f$|m00|\f$. 
+  \warning This function is deprecated since it is mis named. Surface means here area.
+  You should rather use getArea().
+
+  The area of the dot is also given by \f$|m00|\f$.
+
+  \sa getArea()
 */
 double vpDot2::getSurface() const
+{
+  return fabs(surface);
+}
+/*!
+  Return the area of the dot.
+
+  The area of the dot is also given by \f$|m00|\f$.
+*/
+double vpDot2::getArea() const
 {
   return fabs(surface);
 }
@@ -706,9 +724,9 @@ double vpDot2::getDistance( const vpDot2& distantDot ) const
   Set the width of the dot. This is meant to be used to search a dot in an
   area.
 
-  \param width : Width of a dot to search in an area.
+  \param width : Width of a dot to search in a region of interest.
 
-  \sa setHeight(), setSurface(), setSizePrecision()
+  \sa setHeight(), setArea(), setSizePrecision()
 */
 void vpDot2::setWidth( const double & width )
 {
@@ -720,9 +738,9 @@ void vpDot2::setWidth( const double & width )
   Set the height of the dot. This is meant to be used to search a dot in an
   area.
 
-  \param height : Height of a dot to search in an area.
+  \param height : Height of a dot to search in a region of interest.
 
-  \sa setWidth(), setSurface(), , setSizePrecision()
+  \sa setWidth(), setArea(), setSizePrecision()
 
 */
 void vpDot2::setHeight( const double & height )
@@ -732,17 +750,31 @@ void vpDot2::setHeight( const double & height )
 
 /*!
 
-  Set the surface of the dot. This is meant to be used to search a dot in an
-  area.
+  Set the surface of the dot. This is meant to be used to search a dot in a region of interest.
 
-  \param surface : Surface of a dot to search in an area.
+  \warning This function is deprecated since it is mis named. You should rather use setArea()
 
-  \sa setWidth(), setHeight(), setSizePrecision()
+  \param surface : Here surface means area. Area of a dot to search in a region of interest.
+
+  \sa setWidth(), setHeight(), setArea(), setSizePrecision()
 
 */
 void vpDot2::setSurface( const double & surface )
 {
   this->surface = surface;
+}
+/*!
+
+  Set the area of the dot. This is meant to be used to search a dot in a region of interest.
+
+  \param area : Area of a dot to search in a region of interest.
+
+  \sa setWidth(), setHeight(), setSizePrecision()
+
+*/
+void vpDot2::setArea( const double & area )
+{
+  this->surface = area;
 }
 
 /*!
@@ -751,7 +783,7 @@ void vpDot2::setSurface( const double & surface )
 
   \param grayLevelPrecision : It is a double precision float which value is in ]0,1]:
   - 1 means full precision, whereas values close to 0 show a very bad accuracy.
-  - Values lower or equal to 0 are brought back to an epsion>0
+  - Values lower or equal to 0 are brought back to an epsilon>0
   - Values higher than  1 are brought back to 1
   If the initial gray level is I, the gray levels of the dot will be between :
   \f$Imin=255*\big((\frac{I}{255})^{{\gamma}^{-1}}-(1-grayLevelPrecision)\big)^{\gamma}\f$
@@ -789,7 +821,7 @@ void vpDot2::setGrayLevelPrecision( const double & grayLevelPrecision )
   - Values higher than 1 are brought back to 1.
   - To desactivate validity test set sizePrecision to 0
 
-  \sa setWidth(), setHeight(), setSurface()
+  \sa setWidth(), setHeight(), setArea()
 */
 void vpDot2::setSizePrecision( const double & sizePrecision )
 {
@@ -816,11 +848,11 @@ void vpDot2::setSizePrecision( const double & sizePrecision )
   - Values higher than  1 are brought back to 1.
   To track a non ellipsoid shape use setEllipsoidShapePrecision(0).
 
-  The following example show how to track a blob with a hight constaint on an ellipsoid shape.
+  The following example show how to track a blob with a height constraint on an ellipsoid shape.
   The tracking will fail if the shape is not ellipsoid.
   \code
   vpDot2 dot;
-  dot.setEllipsoidShapePrecision(0.9); // to track a blob with a hight constraint attendee on a circle shape
+  dot.setEllipsoidShapePrecision(0.9); // to track a blob with a height constraint attendee on a circle shape
   ...
   dot.track();
   \endcode
@@ -964,9 +996,9 @@ void
   // Set dot characteristics for the auto detection
   d.setWidth(15.0);
   d.setHeight(12.0);
-  d.setSurface(124);
-  d.setInLevel(164);
-  d.setOutLevel(164);
+  d.setArea(124);
+  d.setGrayLevelMin(164);
+  d.setGrayLevelMax(255);
   d.setAccuracy(0.65);
   \endcode
 
@@ -1053,7 +1085,7 @@ vpList<vpDot2>* vpDot2::searchDotsInArea(const vpImage<unsigned char>& I)
         // next grid intersection.
         if( !hasGoodLevel(I, u, v) ) continue;
 
-        // Test if an other germ is inside the bounding box of a dot previoulsy
+        // Test if an other germ is inside the bounding box of a dot previously
         // detected
         bool good_germ = true;
         niceDotsVector->front();
@@ -1527,12 +1559,14 @@ vpDot2::searchDotsInArea(const vpImage<unsigned char>& I,
   vpDot2 d;
 
   // Set dot characteristics for the auto detection
-  d.setWidth(15.0);
-  d.setHeight(12.0);
-  d.setSurface(124);
-  d.setInLevel(164);
-  d.setOutLevel(164);
-  d.setAccuracy(0.65);
+  d.setWidth(24);
+  d.setHeight(23);
+  d.setArea(412);
+  d.setGrayLevelMin(160);
+  d.setGrayLevelMax(255);
+  d.setGrayLevelPrecision(0.8);
+  d.setSizePrecision(0.65);
+  d.setEllipsoidShapePrecision(0.65);
   \endcode
 
   To search dots in the whole image:
@@ -1563,8 +1597,8 @@ void vpDot2::searchDotsInArea(const vpImage<unsigned char>& I, std::list<vpDot2>
 
 /*!
 
-  Look for a list of dot matching this dot parameters within a rectangle
-  search area in the image. The rectangle upper-left coordinates are given by
+  Look for a list of dot matching this dot parameters within a region of interest
+  defined by a rectangle in the image. The rectangle upper-left coordinates are given by
   (\e area_u, \e area_v). The size of the rectangle is given by \e area_w and
   \e area_h.
 
@@ -1635,11 +1669,11 @@ void vpDot2::searchDotsInArea(const vpImage<unsigned char>& I,
     for( u=area_u_min ; u<area_u_max ; u=u+gridWidth )
     {
       // if the pixel we're in doesn't have the right color (outside the
-      // graylevel interval), no need to check futher, just get to the
+      // graylevel interval), no need to check further, just get to the
       // next grid intersection.
       if( !hasGoodLevel(I, u, v) ) continue;
 
-      // Test if an other germ is inside the bounding box of a dot previoulsy
+      // Test if an other germ is inside the bounding box of a dot previously
       // detected
       bool good_germ = true;
 
@@ -1850,24 +1884,24 @@ bool vpDot2::isValid(const vpImage<unsigned char>& I, const vpDot2& wantedDot )
   //
   //if (   (wantedDot.getWidth()   != 0)
   //  && (wantedDot.getHeight()  != 0)
-  //  && (wantedDot.getSurface() != 0) )
+  //  && (wantedDot.getArea() != 0) )
   if (   (std::fabs(wantedDot.getWidth()) > std::numeric_limits<double>::epsilon())
     &&
         (std::fabs(wantedDot.getHeight())  > std::numeric_limits<double>::epsilon())
     &&
-        (std::fabs(wantedDot.getSurface()) > std::numeric_limits<double>::epsilon()) )
+        (std::fabs(wantedDot.getArea()) > std::numeric_limits<double>::epsilon()) )
     // if (sizePrecision!=0){
     if (std::fabs(sizePrecision) > std::numeric_limits<double>::epsilon()){
 #ifdef DEBUG
          std::cout << "test size precision......................\n";
          std::cout << "wanted dot: " << "w=" << wantedDot.getWidth()
               << " h=" << wantedDot.getHeight()
-              << " s=" << wantedDot.getSurface()
+              << " s=" << wantedDot.getArea()
               << " precision=" << sizePrecision
               << " epsilon=" << epsilon << std::endl;
          std::cout << "dot found: " << "w=" << getWidth()
               << " h=" << getHeight()
-              << " s=" << getSurface() << std::endl;
+              << " s=" << getArea() << std::endl;
 #endif
     if( ( wantedDot.getWidth()*sizePrecision-epsilon < getWidth() ) == false )
     {
@@ -1915,26 +1949,26 @@ bool vpDot2::isValid(const vpImage<unsigned char>& I, const vpDot2& wantedDot )
       return false;
     }
 
-    if( ( wantedDot.getSurface()*(sizePrecision*sizePrecision)-epsilon < getSurface() ) == false )
+    if( ( wantedDot.getArea()*(sizePrecision*sizePrecision)-epsilon < getArea() ) == false )
     {
       vpDEBUG_TRACE(3, "Bad surface > for dot (%g, %g)",
                     cog.get_u(), cog.get_v());
 #ifdef DEBUG
       printf("Bad surface %g > %g for dot (%g, %g)\n",
-             wantedDot.getSurface()*(sizePrecision*sizePrecision)-epsilon,
-             getSurface(),
+             wantedDot.getArea()*(sizePrecision*sizePrecision)-epsilon,
+             getArea(),
              cog.get_u(), cog.get_v());
 #endif
       return false;
     }
 
-    if( ( getSurface() < wantedDot.getSurface()/(sizePrecision*sizePrecision+epsilon )) == false )
+    if( ( getArea() < wantedDot.getArea()/(sizePrecision*sizePrecision+epsilon )) == false )
     {
       vpDEBUG_TRACE(3, "Bad surface > for dot (%g, %g)",
                     cog.get_u(), cog.get_v());
 #ifdef DEBUG
       printf("Bad surface %g < %g for dot (%g, %g)\n",
-             getSurface(), wantedDot.getSurface()/(sizePrecision*sizePrecision+epsilon),
+             getArea(), wantedDot.getArea()/(sizePrecision*sizePrecision+epsilon),
                                                    cog.get_u(), cog.get_v());
 #endif
       return false;
@@ -1943,7 +1977,7 @@ bool vpDot2::isValid(const vpImage<unsigned char>& I, const vpDot2& wantedDot )
   //
   // Now we can proceed to more advanced (and costy) checks.
   // First check there is a white (>level) elipse within dot
-  // Then check the dot is surrounded by a black elipse.
+  // Then check the dot is surrounded by a black ellipse.
   //
   int nb_point_to_test = 20; // Nb points to test on inner and outside ellipsoid
   int nb_bad_points = 0;
@@ -2085,11 +2119,11 @@ bool vpDot2::isValid(const vpImage<unsigned char>& I, const vpDot2& wantedDot )
   \param v : Pixel to test.
 
   \return true : If the pixel of coordinates (u, v) is in the area and
-  has a value greater than the in level fixed by setInLevel().
+  has a value between the min and max levels fixed by setGrayLevelMin() and setGrayLevelMax().
 
   \return false : Otherwise
 
-  \sa setInLevel()
+  \sa setGrayLevelMin(), setGrayLevelMax()
 
 */
 bool vpDot2::hasGoodLevel(const vpImage<unsigned char>& I,
@@ -2113,7 +2147,7 @@ bool vpDot2::hasGoodLevel(const vpImage<unsigned char>& I,
 /*!
 
   Check if a the pixel of coordinates (u, v) in the image has a good level to
-  be a dark zone arround the dot.
+  be a dark zone around the dot.
 
   \param I : Image.
   \param u : Pixel to test.
@@ -2158,7 +2192,7 @@ vpDot2* vpDot2::getInstance()
 #ifdef VISP_BUILD_DEPRECATED_FUNCTIONS
 /*!
 
-  \deprecated This method is deprecated. You shoud use
+  \deprecated This method is deprecated. You should use
   getFreemanChain(std::list<unsigned int> &) instead.\n \n
   Returns the list of Freeman chain code used to turn around the dot
   counterclockwise.
@@ -2218,7 +2252,7 @@ void vpDot2::getFreemanChain(std::list<unsigned int> &freeman_chain)
   Compute all the parameters of the dot (center, width, height, surface,
   inertia moments...).
 
-  This is done the followin way:
+  This is done the following way:
 
   - First, we check the point (_u, _v) passed in has the right level in the
     image
@@ -2860,7 +2894,7 @@ bool vpDot2::isInImage(const vpImage<unsigned char> &I,
 
 /*!
 
-  Test if a pixel is in an area. Points of the border are not considered to
+  Test if a pixel is in a region of interest. Points of the border are not considered to
   be in the area.
 
   \param u : The column coordinate of the pixel.
@@ -2884,7 +2918,7 @@ bool vpDot2::isInArea( const unsigned int &u, const unsigned int &v) const
 
 /*!
 
-  Get the search grid size used to found a dot in an area. This grid is used to
+  Get the search grid size used to found a dot in a region of interest. This grid is used to
   parse only some pixels of the search area.
 
   \param gridWidth : Number of pixels between to vertical lines of the grid

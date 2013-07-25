@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpDisplay.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpDisplay.h 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -70,6 +70,9 @@
 
   \brief Class that defines generic functionnalities for display.
 
+  The \ref tutorial-getting-started is a good starting point to know
+  how to use this class to display an image in a window.
+
   The example below shows how to use this class.
 
   \code
@@ -87,10 +90,10 @@ int main()
 
   // Read an image in PGM P5 format
 #ifdef UNIX
-  //vpImageIo::readPGM(I, "/local/soft/ViSP/ViSP-images/Klimt/Klimt.pgm");
-  vpImageIo::readPGM(I, "/tmp/Klimt.pgm");
+  //vpImageIo::read(I, "/local/soft/ViSP/ViSP-images/Klimt/Klimt.pgm");
+  vpImageIo::read(I, "/tmp/Klimt.pgm");
 #elif WIN32
-  vpImageIo::readPGM(I, "C:/temp/ViSP-images/Klimt/Klimt.pgm");
+  vpImageIo::read(I, "C:/temp/ViSP-images/Klimt/Klimt.pgm");
 #endif
 
   vpDisplay *d;
@@ -111,7 +114,9 @@ int main()
 
   // Initialize the display with the image I. Display and image are
   // now link together.
+#ifdef VISP_HAVE_DISPLAY
   d->init(I);
+#endif
 
   // Specify the window location
   vpDisplay::setWindowPosition(I, 400, 100);
@@ -163,6 +168,9 @@ int main()
   delete d;
 }
   \endcode
+
+  Other examples are available in tutorial-image-viewer.cpp and
+  tutorial-viewer.cpp.
 */
 class VISP_EXPORT vpDisplay
 {
@@ -308,10 +316,7 @@ class VISP_EXPORT vpDisplay
 				unsigned int thickness=1)=0 ;
 
  public:
-  /*!
-    Destructor.
-  */
-  virtual ~vpDisplay() {;} ;
+  virtual ~vpDisplay();
 
   /*!
     Set the window backgroud to \e color.
@@ -590,7 +595,7 @@ class VISP_EXPORT vpDisplay
   /*!
     @name Display functionalities on gray level images.
   */
-  static void close(const vpImage<unsigned char> &I) ;
+  static void close(vpImage<unsigned char> &I) ;
   static void display(const vpImage<unsigned char> &I) ;
   static void displayArrow(const vpImage<unsigned char> &I,
 			   const vpImagePoint &ip1, const vpImagePoint &ip2,
@@ -603,9 +608,10 @@ class VISP_EXPORT vpDisplay
 			   unsigned int w=4, unsigned int h=2,
 			   unsigned int thickness=1) ;
   static void displayCamera(const vpImage<unsigned char> &I,
-                           const vpHomogeneousMatrix &cMo,
-                           const vpCameraParameters &cam,
-                           double size, const vpColor &color)  ;
+                            const vpHomogeneousMatrix &cMo,
+                            const vpCameraParameters &cam,
+                            double size, const vpColor &color,
+                            unsigned int thickness)  ;
   static void displayCharString(const vpImage<unsigned char> &I,
 				const vpImagePoint &ip, const char *string,
 				const vpColor &color) ;
@@ -725,7 +731,7 @@ class VISP_EXPORT vpDisplay
   /*!
     @name Display functionalities on color images.
   */
-  static void close(const vpImage<vpRGBa> &I) ;
+  static void close(vpImage<vpRGBa> &I) ;
 
   static void display(const vpImage<vpRGBa> &I) ;
   static void displayArrow(const vpImage<vpRGBa> &I,
@@ -739,9 +745,10 @@ class VISP_EXPORT vpDisplay
 			   unsigned int w=4, unsigned int h=2,
 			   unsigned int thickness=1) ;
   static void displayCamera(const vpImage<vpRGBa> &I,
-                           const vpHomogeneousMatrix &cMo,
-                           const vpCameraParameters &cam,
-                           double size, const vpColor &color)  ;
+                            const vpHomogeneousMatrix &cMo,
+                            const vpCameraParameters &cam,
+                            double size, const vpColor &color,
+                            unsigned int thickness)  ;
   static void displayCharString(const vpImage<vpRGBa> &I,
 				const vpImagePoint &ip, const char *string,
 				const vpColor &color) ;

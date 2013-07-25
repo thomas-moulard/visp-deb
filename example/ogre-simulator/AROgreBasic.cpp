@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: AROgreBasic.cpp 4111 2013-02-06 17:27:14Z fspindle $
+ * $Id: AROgreBasic.cpp 4305 2013-07-05 13:23:47Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -49,7 +49,8 @@
 
 #include <visp/vpConfig.h>
 #include <iostream>
-#if defined(VISP_HAVE_OGRE) && defined(VISP_HAVE_DISPLAY)
+//#if defined(VISP_HAVE_OGRE) && defined(VISP_HAVE_DISPLAY)
+#if defined(VISP_HAVE_OGRE) && (defined(VISP_HAVE_OPENCV) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_D3D9) || defined(VISP_HAVE_GTK))
 
 #if defined(VISP_HAVE_X11) && ! defined(APPLE)
 // produce an error on OSX: ‘typedef int Cursor’
@@ -529,7 +530,7 @@ int main(int argc, const char **argv)
   try
   {
     // Rendering loop
-    while(ogre.continueRendering()){
+    while(ogre.continueRendering() && !grabber.end()){
       // Acquire a frame
       grabber.acquire(IC);
 

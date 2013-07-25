@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpPolygon.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpPolygon.cpp 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -402,7 +402,7 @@ vpPolygon::updateBoundingBox()
 void
 vpPolygon::display(const vpImage<unsigned char>& I, const vpColor& color, unsigned int thickness)
 {
-  const unsigned int N = _corners.size();
+  const unsigned int N = (unsigned int)_corners.size();
   for(unsigned int i=0; i<N; ++i){
     vpDisplay::displayLine(I, _corners[i], _corners[(i+1)%N], color, thickness);
   }

@@ -1,0 +1,184 @@
+
+/**
+  \page tutorial-getting-started Tutorial: Getting started
+  \tableofcontents
+
+\note We assume in this tutorial that you have successfully installed ViSP. Information on ViSP installation is provided in:
+ - \ref tutorial-install-ubuntu
+ - \ref tutorial-install-win
+ - or on <a href="http://www.irisa.fr/lagadic/visp/install.html">Install from source page</a>
+
+In this tutorial you will learn how to use ViSP either on Unix-like systems (including OSX, Fedora, Ubuntu, Debian, ...) or on Windows.
+
+The easiest way of using ViSP in your project is to use <a href="http://www.cmake.org/">CMake</a>. If you are not familiar with CMake, you can check the <a href="http://www.cmake.org/cmake/help/cmake_tutorial.html">tutorial</a>.
+
+Note also that all the material (source code and images) described in this tutorial is available in ViSP source code, in \c tutorial/image folder.
+ 
+\section image_code Create a program using ViSP
+Let's start to write our first program to see how to read an image and
+  open a  window to display the image. This simple program is provided in tutorial-viewer.cpp example and given below:
+
+\include tutorial-viewer.cpp
+
+Here is the detailed explanation of the source, line by line :
+\code
+#include <visp/vpDisplayD3D.h>
+#include <visp/vpDisplayGDI.h>
+#include <visp/vpDisplayGTk.h>
+#include <visp/vpDisplayX.h>
+#include <visp/vpDisplayOpenCV.h>
+\endcode
+  Include all the headers for image viewers. The two first one are for Windows systems. They require that Direct 3D or the \e Graphical \e Device \e Interface (\e GDI) coming with the installation of Visual Studio are available. The third one needs GTK that is cross-platform. The fourth is for unix-like systems and requires that \e libX11 is available. The last one is also cross-platform and requires that OpenCV is available. 
+
+\code
+#include <visp/vpImageIo.h>
+\endcode
+Include the header that allows to read/write PGM, PPM, PNG and JPEG images from the disk using vpImageIo class.
+
+\code
+vpImage<vpRGBa> I;
+\endcode
+Create an instance of a color image where each pixel is coded in RGBa.
+
+\code
+try {
+  vpImageIo::read(I, argv[1]);
+}
+catch(...) {
+  std::cout << "Cannot read image \"" << argv[1] << "\"" << std::endl;
+  return -1;
+}
+\endcode
+The image \c I is initialized by reading an image file from the disk. If the image format is not supported we throw an exception.
+
+\code
+#if defined(VISP_HAVE_X11)
+vpDisplayX d(I);
+#elif defined(VISP_HAVE_OPENCV)
+vpDisplayOpenCV d(I);
+#elif defined(VISP_HAVE_GTK)
+vpDisplayGTK d(I);
+#elif defined(VISP_HAVE_GDI)
+vpDisplayGDI d(I);
+#elif defined(VISP_HAVE_D3D9)
+vpDisplayD3d d(I);
+#else
+std::cout << "No image viewer is available..." << std::endl;
+#endif
+\endcode
+Create an instance of an image display window for image \c I. The first viewer that is available is used. Here we create the link between the image \c I and the display \c d. Note that an image can only have one display. 
+
+\code
+ vpDisplay::setTitle(I, "My image");
+\endcode
+The title of the display is then set to \c "My image".  
+
+\code
+  vpDisplay::display(I);
+  vpDisplay::flush(I);
+\endcode
+  First we display the content of the image \c I, then we flush the display to render the image.
+
+\code
+  vpDisplay::getClick(I);
+\endcode
+  Here we handle mouse events. We are waiting for a blocking mouse click to end the program.
+
+\section image_cmake Create a CMake file
+
+Now you have to create your CMakeLists.txt file. It should look like this:
+
+\code
+project(tutorial-image)
+
+cmake_minimum_required(VERSION 2.6)
+
+find_package(VISP REQUIRED)
+if(VISP_FOUND)
+  include(${VISP_USE_FILE})
+endif(VISP_FOUND)
+
+add_executable(tutorial-viewer tutorial-viewer.cpp)
+\endcode
+
+\section image_unix On Unix-like systems
+
+\subsection image_unix_config Configure your project
+
+Proceed as with any other project using CMake:
+
+\code
+cmake .
+\endcode
+
+\subsection image_unix_build Generate the executable
+
+Just run:
+\code
+make
+\endcode
+
+\subsection image_unix_output Run the executable
+
+By now you should have an executable called \c tutorial-viewer. You just have to run it giving an image location as an argument:
+
+\code
+./tutorial_viewer lena.ppm
+\endcode
+
+
+Here is a screen shot of the resulting output window :
+
+  \image html img-lena.png
+
+\section image_win On Windows
+
+We suppose from now, that you have created a folder (let say \c C:/ViSP/ViSP-started) that contains the following files: CMakeLists.txt, tutorial_viewer.cpp and lena.ppm. These files are also provider in ViSP source code, in \c tutorial/image folder.
+
+
+\subsection image_win_config Configure your project
+
+- Launch CMake (cmake-gui) from Windows "Start" menu. Set the source code location as \c C:/ViSP/ViSP-started. Here we set the build location to the same folder.
+
+\image html img-started-win-cmake-1.jpg
+
+- Press "Configure" button, and select your compiler. In our case we will use Visual Studio 11 Win64. Press then "Finish". The configuration is now under progress and should lead to the following image.
+
+\image html img-started-win-cmake-2.jpg
+
+- Note here that CMake has automatically found the location of ViSP install folder; \c C:/ViSP/ViSP-install.
+
+- Press then "Configure" button to remove the red lines, and then "Generate" button. As presented in the following image, all the red lines should disappear.
+
+\image html img-started-win-cmake-3.jpg
+
+- From now, in \c C:/ViSP/ViSP-started you should have \c tutorial-image.sln Visual Studio solution file.
+
+\subsection image_win_build Generate the executable
+
+- To open the project in Visual Studio C++ just double click on \c C:/ViSP/ViSP-started/tutorial-image.sln solution file. 
+
+\image html img-started-win-msvc-1.jpg
+
+- Now to build the solution, enter "BUILD/Build Solution" menu.
+
+\image html img-started-win-msvc-2.jpg
+
+- In \c C:/ViSP/ViSP-started/Debug folder you have now \c tutorial-image.exe executable.
+
+
+\subsection image_win_output Run the executable
+
+- In your "Start" menu click on "Run" and type in \c cmd.exe to run a terminal.
+- Enter in \c C:/ViSP/ViSP-started/Debug folder, and run \c tutorial-viewer.exe with an image location as argument:
+
+\image html img-started-win-run.jpg
+
+
+- Here is a screen shot of the resulting output window :
+
+  \image html img-lena-win.jpg
+
+
+You are now ready to see the next \ref tutorial-grabber.
+*/

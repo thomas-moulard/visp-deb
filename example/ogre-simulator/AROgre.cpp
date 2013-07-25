@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: AROgre.cpp 4111 2013-02-06 17:27:14Z fspindle $
+ * $Id: AROgre.cpp 4305 2013-07-05 13:23:47Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -50,7 +50,8 @@
 #include <visp/vpConfig.h>
 #include <iostream>
 
-#if defined(VISP_HAVE_OGRE) && defined(VISP_HAVE_DISPLAY)
+//#if defined(VISP_HAVE_OGRE) && defined(VISP_HAVE_DISPLAY)
+#if defined(VISP_HAVE_OGRE) && (defined(VISP_HAVE_OPENCV) || defined(VISP_HAVE_GDI) || defined(VISP_HAVE_D3D9) || defined(VISP_HAVE_GTK))
 
 #if defined(VISP_HAVE_X11) && ! defined(APPLE)
 // produce an error on OSX: ‘typedef int Cursor’
@@ -324,7 +325,7 @@ void computeInitialPose(vpCameraParameters *mcam, vpImage<unsigned char> &I,
   // /usr/X11R6/include/X11/X.h:108: error: ‘Cursor’ has a previous
   // declaration as ‘typedef XID Cursor’. That's why it should not be
   // used on APPLE platforms
-  vpDisplayX display; 
+  vpDisplayX display;
 #elif defined VISP_HAVE_GTK
   vpDisplayGTK display;
 #elif defined VISP_HAVE_GDI
@@ -648,9 +649,11 @@ int main(int argc, const char **argv)
 
   try
   {
+      double t0 = vpTime::measureTimeMs();
+
     // Rendering loop
-    while(ogre.continueRendering()){
-      // Acquire a frame
+      while(ogre.continueRendering() && !grabber.end()){
+     // Acquire a frame
       grabber.acquire(IC);
 
       // Convert it to a grey level image for tracking purpose
@@ -694,7 +697,9 @@ int main(int argc, const char **argv)
       ogre.display(IC,cmo);
 
       // Wait so that the video does not go too fast
-      vpTime::wait(15);
+      double t1 = vpTime::measureTimeMs();
+      std::cout << "\r> " << 1000 / (t1 - t0) << " fps" ;
+      t0 = t1;
     }
     // Close the grabber
     grabber.close();

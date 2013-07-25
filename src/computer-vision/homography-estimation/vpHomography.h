@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpHomography.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpHomography.h 4276 2013-06-25 12:36:48Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -70,10 +70,9 @@ tools for homography computation.
   the corresponding point (image of the same 3D point) in the other image
   points set.  These 2 sets are the only data needed to compute the
   homography.  One method used is the one introduced by Ezio Malis during his
-  PhD. A normalization is carried out on this points in order to improve the
+  PhD \cite TheseMalis. A normalization is carried out on this points in order to improve the
   conditioning of the problem, what leads to improve the stability of the
   result.
-
 
   Store and compute the homography such that
   \f[
@@ -196,6 +195,12 @@ private:
   //! insert a translation vector
   void insert(const vpPlane &bP) ;
 
+  static void  initRansac(unsigned int n,
+                          double *xb, double *yb,
+                          double *xa, double *ya,
+                          vpColVector &x) ;
+
+public:
   static void HartleyNormalization(unsigned int n,
                                    double *x, double *y,
                                    double *xn, double *yn,
@@ -206,13 +211,7 @@ private:
                                      double xg1, double yg1, double coef1,
                                      double xg2, double yg2, double coef2 ) ;
 
-  static void  initRansac(unsigned int n,
-                          double *xb, double *yb,
-                          double *xa, double *ya,
-                          vpColVector &x
-                          ) ;
 
-public:
   vpHomography() ;
 
   //! copy constructor

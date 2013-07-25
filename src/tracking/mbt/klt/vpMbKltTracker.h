@@ -1,31 +1,34 @@
 /****************************************************************************
  *
- * $Id: vpMbKltTracker.h 4119 2013-02-08 10:30:53Z fspindle $
+ * $Id: vpMbKltTracker.h 4338 2013-07-23 14:29:30Z fspindle $
  *
- * Copyright (C) 2005 - 2013 Inria. All rights reserved.
+ * This file is part of the ViSP software.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
+ *
+ * This software is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * ("GPL") version 2 as published by the Free Software Foundation.
+ * See the file LICENSE.txt at the root directory of this source
+ * distribution for additional information about the GNU GPL.
+ *
+ * For using ViSP with software that can not be combined with the GNU
+ * GPL, please contact INRIA about acquiring a ViSP Professional
+ * Edition License.
+ *
+ * See http://www.irisa.fr/lagadic/visp/visp.html for more information.
  *
  * This software was developed at:
- * IRISA/INRIA Rennes
- * Projet Lagadic
+ * INRIA Rennes - Bretagne Atlantique
  * Campus Universitaire de Beaulieu
  * 35042 Rennes Cedex
+ * France
  * http://www.irisa.fr/lagadic
  *
- * This file is part of the ViSP toolkit
- *
- * This file may be distributed under the terms of the Q Public License
- * as defined by Trolltech AS of Norway and appearing in the file
- * LICENSE included in the packaging of this file.
- *
- * Licensees holding valid ViSP Professional Edition licenses may
- * use this file in accordance with the ViSP Commercial License
- * Agreement provided with the Software.
+ * If you have questions regarding the use of this file, please contact
+ * INRIA at visp@inria.fr
  *
  * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * Contact visp@irisa.fr if any conditions of this licensing are
- * not clear to you.
  *
  * Description:
  * Model based tracker using only KLT
@@ -73,7 +76,7 @@
   It may also use an xml file used to tune the behavior of the tracker and an
   init file used to compute the pose at the very first image.
 
-  The following code shows the simplest way to use the tracker.
+  The following code shows the simplest way to use the tracker. The \ref tutorial-tracking-mb is also a good starting point to use this class.
   
 \code
 #include <visp/vpMbKltTracker.h>
@@ -86,13 +89,14 @@
 
 int main()
 {
+#if defined VISP_HAVE_OPENCV
   vpMbKltTracker tracker; // Create a model based tracker via KLT points.
   vpImage<unsigned char> I;
   vpHomogeneousMatrix cMo; // Pose computed using the tracker. 
   vpCameraParameters cam;
   
   // Acquire an image
-  vpImageIo::readPGM(I, "cube.pgm");
+  vpImageIo::read(I, "cube.pgm");
   
 #if defined VISP_HAVE_X11
   vpDisplayX display;
@@ -104,7 +108,7 @@ int main()
 #endif
   tracker.getCameraParameters(cam);   // Get the camera parameters used by the tracker (from the configuration file).
   tracker.loadModel("cube.cao");      // Load the 3d model in cao format. No 3rd party library is required
-  tracker.initClick(I, "cube.init");  // Initialise manually the pose by clicking on the image points associated to the 3d points containned in the cube.init file.
+  tracker.initClick(I, "cube.init");  // Initialise manually the pose by clicking on the image points associated to the 3d points contained in the cube.init file.
 
   while(true){
     // Acquire a new image
@@ -116,10 +120,13 @@ int main()
     vpDisplay::flush(I);
   }
 
+#if defined VISP_HAVE_XML2
   // Cleanup memory allocated by xml library used to parse the xml config file in vpMbKltTracker::loadConfigFile()
   vpXmlParser::cleanup();
+#endif
 
   return 0;
+#endif
 }
 \endcode  
 
@@ -136,18 +143,19 @@ int main()
 
 int main()
 {
+#if defined VISP_HAVE_OPENCV
   vpMbKltTracker tracker; // Create a model based tracker via Klt Points.
   vpImage<unsigned char> I;
   vpHomogeneousMatrix cMo; // Pose used in entry (has to be defined), then computed using the tracker. 
   
   //acquire an image
-  vpImageIo::readPGM(I, "cube.pgm"); // Example of acquisition
+  vpImageIo::read(I, "cube.pgm"); // Example of acquisition
 
 #if defined VISP_HAVE_XML2
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
 #endif
-  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
-  tracker.initFromPose(I, cMo); // initialise the tracker with the given pose.
+  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coin is required, if coin is not installed .cao file can be used.
+  tracker.initFromPose(I, cMo); // initialize the tracker with the given pose.
 
   while(true){
     // acquire a new image
@@ -155,10 +163,13 @@ int main()
     tracker.getPose(cMo); // get the pose 
   }
   
+#if defined VISP_HAVE_XML2
   // Cleanup memory allocated by xml library used to parse the xml config file in vpMbKltTracker::loadConfigFile()
   vpXmlParser::cleanup();
+#endif
 
   return 0;
+#endif
 }
 \endcode
 
@@ -175,13 +186,14 @@ int main()
 
 int main()
 {
+#if defined VISP_HAVE_OPENCV
   vpMbKltTracker tracker; // Create a model based tracker via Klt Points.
   vpImage<unsigned char> I;
   vpHomogeneousMatrix cMo; // Pose used to display the model. 
   vpCameraParameters cam;
   
   // Acquire an image
-  vpImageIo::readPGM(I, "cube.pgm");
+  vpImageIo::read(I, "cube.pgm");
   
 #if defined VISP_HAVE_X11
   vpDisplayX display;
@@ -192,7 +204,7 @@ int main()
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
 #endif
   tracker.getCameraParameters(cam); // Get the camera parameters used by the tracker (from the configuration file).
-  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
+  tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coin is required, if coin is not installed .cao file can be used.
 
   while(true){
     // acquire a new image
@@ -202,10 +214,13 @@ int main()
     vpDisplay::flush(I);
   }
   
+#if defined VISP_HAVE_XML2
   // Cleanup memory allocated by xml library used to parse the xml config file in vpMbKltTracker::loadConfigFile()
   vpXmlParser::cleanup();
+#endif
 
   return 0;
+#endif
 }
 \endcode
 */
@@ -216,13 +231,13 @@ protected:
   IplImage* cur;
   //! Initial pose.
   vpHomogeneousMatrix c0Mo;
-  //! Angle used to detect a face apparition
+  //! Angle used to detect a face appearance
   double angleAppears;
-  //! Angle used to detect a face disparition
+  //! Angle used to detect a face disappearance
   double angleDisappears;
-  //! If true, compute the interaction matrix at each iteration of the minimisation. Otherwise, compute it only on the first iteration.
+  //! If true, compute the interaction matrix at each iteration of the minimization. Otherwise, compute it only on the first iteration.
   bool compute_interaction;
-  //! Flag to specify whether the init method is called the first or not (specific calls to realise in this case).
+  //! Flag to specify whether the init method is called the first or not (specific calls to realize in this case).
   bool firstInitialisation;
   //! Erosion of the mask
   unsigned int maskBorder;
@@ -244,6 +259,12 @@ protected:
   vpMbHiddenFaces<vpMbtKltPolygon> faces;
   //! First track() called
   bool firstTrack;
+  //! Distance for near clipping
+  double distNearClip;
+  //! Distance for near clipping
+  double distFarClip;
+  //! Flags specifying which clipping to used
+  unsigned int clippingFlag;
   
 public:
   
@@ -264,14 +285,30 @@ public:
   virtual void            loadConfigFile(const std::string& configFile);
           void            loadConfigFile(const char* configFile);
           
-          /*! Return the angle used to test polygons apparition. */
-  virtual inline  double  getAngleAppear() { return angleAppears; }   
+          /*! Return the angle used to test polygons appearance. */
+  virtual inline  double  getAngleAppear() const { return angleAppears; }   
   
-          /*! Return the angle used to test polygons disparition. */
-  virtual inline  double  getAngleDisappear() { return angleDisappears; } 
+          /*! Return the angle used to test polygons disappearance. */
+  virtual inline  double  getAngleDisappear() const { return angleDisappears; } 
+  
+          /*!
+            Get the clipping used.
+            
+            \sa vpMbtPolygonClipping
+            
+            \return Clipping flags.
+          */          
+  virtual inline  unsigned int getClipping() const { return clippingFlag; } 
     
           /*! Return a reference to the faces structure. */
-          vpMbHiddenFaces<vpMbtKltPolygon> & getFaces() { return faces;}
+  inline  vpMbHiddenFaces<vpMbtKltPolygon>& getFaces() { return faces;}
+          
+          /*!
+            Get the far distance for clipping.
+            
+            \return Far clipping value.
+          */
+  virtual inline  double  getFarClippingDistance() const { return distFarClip; }
 
           /*!
             Get the current list of KLT points.
@@ -280,56 +317,63 @@ public:
           */
   inline  CvPoint2D32f*   getKltPoints() {return tracker.getFeatures();}
   
-          std::vector<vpImagePoint> getKltImagePoints();
+          std::vector<vpImagePoint> getKltImagePoints() const;
           
-          std::map<int, vpImagePoint> getKltImagePointsWithId();
+          std::map<int, vpImagePoint> getKltImagePointsWithId() const;
           
           /*!
             Get the klt tracker at the current state.
             
             \return klt tracker.
           */
-  inline  vpKltOpencv     getKltOpencv() { return tracker; }
+  inline  vpKltOpencv     getKltOpencv() const { return tracker; }
           
           /*!
             Get the value of the gain used to compute the control law.
             
             \return the value for the gain.
           */
-  inline  double          getLambda() {return lambda;}
+  virtual inline  double  getLambda() const {return lambda;}
   
           /*!
             Get the erosion of the mask used on the Model faces.
 
             \return The erosion.
           */
-  inline  unsigned int    getMaskBorder() { return maskBorder; }
+  inline  unsigned int    getMaskBorder() const { return maskBorder; }
   
           /*!
             Get the maximum iteration of the virtual visual servoing stage.
             
             \return the number of iteration
           */
-  inline  unsigned int    getMaxIter() {return maxIter;}
+  virtual inline unsigned int getMaxIter() const {return maxIter;}
   
           /*!
             Get the current number of klt points.
             
             \return the number of features
           */
-  inline  int             getNbKltPoints() {return tracker.getNbFeatures();}
+  inline  int             getNbKltPoints() const {return tracker.getNbFeatures();}
        
+          /*!
+            Get the near distance for clipping.
+            
+            \return Near clipping value.
+          */
+  virtual inline double   getNearClippingDistance() const { return distNearClip; }
+  
           /*!
             Get the threshold for the acceptation of a point.
 
             \return threshold_outlier : Threshold for the weight below which a point is rejected.
           */
-  inline  double          getThresholdAcceptation() { return threshold_outlier;}
+  inline  double          getThresholdAcceptation() const { return threshold_outlier;}
   
           void            resetTracker();
           
           /*! 
-            Set the angle used to test polygons apparition. 
+            Set the angle used to test polygons appearance.
             If the angle between the normal of the polygon and the line going
             from the camera to the polygon center has a value lower than
             this parameter, the polygon is considered as appearing.
@@ -340,7 +384,7 @@ public:
   virtual inline  void    setAngleAppear(const double &a) { angleAppears = a; }   
   
           /*! 
-            Set the angle used to test polygons disparition. 
+            Set the angle used to test polygons disappearance.
             If the angle between the normal of the polygon and the line going
             from the camera to the polygon center has a value greater than
             this parameter, the polygon is considered as disappearing.
@@ -352,6 +396,10 @@ public:
   
           void            setCameraParameters(const vpCameraParameters& cam);
           
+  virtual void            setClipping(const unsigned int &flags);
+          
+  virtual void            setFarClippingDistance(const double &dist);
+          
           void            setKltOpencv(const vpKltOpencv& t);
           
           /*!
@@ -359,21 +407,23 @@ public:
             
             \param lambda : the desired value for the gain.
           */
-  inline  void            setLambda(const double lambda) {this->lambda = lambda;}
+  virtual inline  void    setLambda(const double lambda) {this->lambda = lambda;}
   
           /*!
             Set the erosion of the mask used on the Model faces.
 
             \param  e : The desired erosion.
           */
-          void            setMaskBorder(const unsigned int &e){ maskBorder = e; }
+  inline  void            setMaskBorder(const unsigned int &e){ maskBorder = e; }
   
           /*!
             Set the maximum iteration of the virtual visual servoing stage.
             
             \param max : the desired number of iteration
           */
-  inline  void            setMaxIter(const unsigned int max) {maxIter = max;}
+  virtual inline  void    setMaxIter(const unsigned int max) {maxIter = max;}
+  
+  virtual void            setNearClippingDistance(const double &dist);
   
   virtual void            setOgreVisibilityTest(const bool &v);
   

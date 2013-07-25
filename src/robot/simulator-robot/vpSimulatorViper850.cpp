@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpSimulatorViper850.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpSimulatorViper850.cpp 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -54,7 +54,6 @@
 
 const double vpSimulatorViper850::defaultPositioningVelocity = 25.0;
 
-
 /*!
   Basic constructor
 */
@@ -99,8 +98,11 @@ vpSimulatorViper850::vpSimulatorViper850():vpRobotWireFrameSimulator(), vpViper8
 
 /*!
   Constructor used to enable or disable the external view of the robot.
+
+  \param display : When true, enables the display of the external view.
+
 */
-vpSimulatorViper850::vpSimulatorViper850(bool disp):vpRobotWireFrameSimulator(disp)
+vpSimulatorViper850::vpSimulatorViper850(bool display):vpRobotWireFrameSimulator(display)
 {
   init();
   initDisplay();
@@ -270,7 +272,7 @@ vpSimulatorViper850::initDisplay()
 
   The eMc parameters depend on the camera.
   
-  \warning Only perspective projection without distorsion is available!
+  \warning Only perspective projection without distortion is available!
 
   \param tool : Tool to use.
 
@@ -414,7 +416,7 @@ vpSimulatorViper850::getCameraParameters (vpCameraParameters &cam,
   \param cam : The desired camera parameters.
 */
 void
-vpSimulatorViper850::setCameraParameters(const vpCameraParameters cam) 
+vpSimulatorViper850::setCameraParameters(const vpCameraParameters &cam)
 {
   px_int = cam.get_px();
   py_int = cam.get_py();
@@ -453,8 +455,13 @@ vpSimulatorViper850::updateArticularPosition()
       if (jointLimit)
       {
         double art = articularCoordinates[jointLimitArt-1] + ellapsedTime*articularVelocities[jointLimitArt-1];
-        if (art <= joint_min[jointLimitArt-1] || art >= joint_max[jointLimitArt-1])
+        if (art <= joint_min[jointLimitArt-1] || art >= joint_max[jointLimitArt-1]) {
+          if (verbose_) {
+            std::cout << "Joint " << jointLimitArt-1
+                    << " reaches a limit: " << vpMath::deg(joint_min[jointLimitArt-1]) << " < " << vpMath::deg(art) << " < " << vpMath::deg(joint_max[jointLimitArt-1]) << std::endl;
+          }
           articularVelocities = 0.0;
+        }
         else
           jointLimit = false;
       }
@@ -490,8 +497,8 @@ vpSimulatorViper850::updateArticularPosition()
       if (displayAllowed)
       {
         vpDisplay::display(I);
-        vpDisplay::displayFrame(I,getExternalCameraPosition (),cameraParam,0.2,vpColor::none);
-        vpDisplay::displayFrame(I,getExternalCameraPosition ()*fMi[7],cameraParam,0.1,vpColor::none);
+        vpDisplay::displayFrame(I,getExternalCameraPosition (),cameraParam,0.2,vpColor::none, thickness_);
+        vpDisplay::displayFrame(I,getExternalCameraPosition ()*fMi[7],cameraParam,0.1,vpColor::none, thickness_);
       }
       
       if (displayType == MODEL_3D && displayAllowed)
@@ -517,7 +524,7 @@ vpSimulatorViper850::updateArticularPosition()
         vpMeterPixelConversion::convertPoint (cameraParam, pt.get_x(), pt.get_y(), iP_1);
         pt.track(getExternalCameraPosition ()*fMit[0]);
         vpMeterPixelConversion::convertPoint (cameraParam, pt.get_x(), pt.get_y(), iP);
-        vpDisplay::displayLine(I,iP_1,iP,vpColor::green);
+        vpDisplay::displayLine(I, iP_1, iP, vpColor::green, thickness_);
         for (int k = 1; k < 7; k++)
         {
           pt.track(getExternalCameraPosition ()*fMit[k-1]);
@@ -526,13 +533,12 @@ vpSimulatorViper850::updateArticularPosition()
           pt.track(getExternalCameraPosition ()*fMit[k]);
           vpMeterPixelConversion::convertPoint (cameraParam, pt.get_x(), pt.get_y(), iP);
         
-          vpDisplay::displayLine(I,iP_1,iP,vpColor::green);
+          vpDisplay::displayLine(I,iP_1,iP,vpColor::green, thickness_);
         }
-        vpDisplay::displayCamera(I,getExternalCameraPosition ()*fMit[7],cameraParam,0.1,vpColor::green);
+        vpDisplay::displayCamera(I,getExternalCameraPosition ()*fMit[7],cameraParam,0.1,vpColor::green, thickness_);
       }
       
-      vpDisplay::flush(I);
-      
+      vpDisplay::flush(I);      
       
       vpTime::wait( tcur, 1000 * getSamplingTime() );
       tcur_1 = tcur;
@@ -543,11 +549,14 @@ vpSimulatorViper850::updateArticularPosition()
 }
 
 /*!
-  Compute the pose between the robot reference frame and the frames used used to compute the Denavit-Hartenberg representation. The last element of the table corresponds to the pose between the reference frame and the camera frame.
+  Compute the pose between the robot reference frame and the frames used to compute the Denavit-Hartenberg
+  representation. The last element of the table corresponds to the pose between the reference frame and
+  the camera frame.
   
-  To compute the diferent homogeneous matrices, this function needs the articular coordinates as input.
+  To compute the different homogeneous matrices, this function needs the articular coordinates as input.
   
-  Finally the output is a table of 8 elements : \f$ fM1 \f$,\f$ fM2 \f$,\f$ fM3 \f$,\f$ fM4 \f$,\f$ fM5 \f$,\f$ fM6 = fMw \f$,\f$ fM7 = fMe \f$ and \f$ fMc \f$ - where w is for wrist and e for effector-.
+  Finally the output is a table of 8 elements : \f$ fM1 \f$,\f$ fM2 \f$,\f$ fM3 \f$,\f$ fM4 \f$,\f$ fM5 \f$,
+  \f$ fM6 = fMw \f$,\f$ fM7 = fMe \f$ and \f$ fMc \f$ - where w is for wrist and e for effector-.
 */
 void 
 vpSimulatorViper850::compute_fMi()
@@ -1266,7 +1275,7 @@ vpSimulatorViper850::setPosition(const vpRobot::vpControlFrameType frame,const v
       {
         articularCoordinates = get_artCoord();
         qdes = articularCoordinates;
-        nbSol = getInverseKinematics(fMc2, qdes);
+        nbSol = getInverseKinematics(fMc2, qdes, verbose_);
         setVelocityCalled = true;
         if (nbSol > 0)
         {
@@ -1336,7 +1345,7 @@ vpSimulatorViper850::setPosition(const vpRobot::vpControlFrameType frame,const v
       {
         articularCoordinates = get_artCoord();
         qdes = articularCoordinates;
-        nbSol = getInverseKinematics(fMc, qdes);
+        nbSol = getInverseKinematics(fMc, qdes, verbose_);
         if (nbSol > 0)
         {
           error = qdes - articularCoordinates;
@@ -1655,7 +1664,7 @@ vpSimulatorViper850::getPosition (const vpRobot::vpControlFrameType frame,
   \param limitMax : The maximum joint limits are given in a vector of size 6. All the value must be in radian.
 */
 void 
-vpSimulatorViper850::setJointLimit(vpColVector limitMin, vpColVector limitMax)
+vpSimulatorViper850::setJointLimit(const vpColVector &limitMin, const vpColVector &limitMax)
 {
   if (limitMin.getRows() != 6 || limitMax.getRows() != 6)
   {
@@ -2317,16 +2326,25 @@ vpSimulatorViper850::getExternalImage(vpImage<vpRGBa> &I)
 }
 
 /*!
-  This method enables to initialise the articular coordinates of the robot in order to position the camera relative to the object.
+  This method enables to initialise the joint coordinates of the robot in order to
+  position the camera relative to the object.
   
-  Before using this method it is advised to set the position of the object thanks to the set_fMo() method.
+  Before using this method it is advised to set the position of the object thanks
+  to the set_fMo() method.
+
+  In other terms, set the world to camera transformation
+  \f${^f}{\bf M}_c = {^f}{\bf M}_o \; ({^c}{\bf M}{_o})^{-1}\f$, and from the inverse kinematics
+  set the joint positions \f${\bf q}\f$ that corresponds to the \f${^f}{\bf M}_c\f$ transformation.
   
   \param cMo : the desired pose of the camera.
+
+  \return false if the robot kinematics is not able to reach the cMo position.
 */
-void 
-vpSimulatorViper850::initialiseCameraRelativeToObject(vpHomogeneousMatrix cMo)
+bool
+vpSimulatorViper850::initialiseCameraRelativeToObject(const vpHomogeneousMatrix &cMo)
 {
   vpColVector stop(6);
+  bool status = true;
   stop = 0;
   set_artVel(stop);
   set_velocity(stop);
@@ -2334,25 +2352,37 @@ vpSimulatorViper850::initialiseCameraRelativeToObject(vpHomogeneousMatrix cMo)
   fMc = fMo * cMo.inverse();
   
   vpColVector articularCoordinates = get_artCoord();
-  unsigned int nbSol = getInverseKinematics(fMc, articularCoordinates);
+  unsigned int nbSol = getInverseKinematics(fMc, articularCoordinates, verbose_);
   
-  if (nbSol == 0)
+  if (nbSol == 0) {
+    status = false;
     vpERROR_TRACE ("Positionning error. Position unreachable");
-  
+  }
+
+  if (verbose_)
+    std::cout << "Used joint coordinates (rad): " << articularCoordinates.t() << std::endl;
+
   set_artCoord(articularCoordinates);
   
   compute_fMi();
+
+  return status;
 }
 
 /*!
-  This method enables to initialise the pose between the object and the refrence frame, in order to position the object relative to the camera.
+  This method enables to initialise the pose between the object and the reference frame,
+  in order to position the object relative to the camera.
   
   Before using this method it is advised to set the articular coordinates of the robot.
+
+  In other terms, set the world to object transformation
+  \f${^f}{\bf M}_o = {^f}{\bf M}_c \; {^c}{\bf M}_o\f$ where \f$ {^f}{\bf M}_c = f({\bf q})\f$
+  with \f${\bf q}\f$ the robot joint position
   
   \param cMo : the desired pose of the camera.
 */
 void 
-vpSimulatorViper850::initialiseObjectRelativeToCamera(vpHomogeneousMatrix cMo)
+vpSimulatorViper850::initialiseObjectRelativeToCamera(const vpHomogeneousMatrix &cMo)
 {
   vpColVector stop(6);
   stop = 0;

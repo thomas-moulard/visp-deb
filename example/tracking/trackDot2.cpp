@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: trackDot2.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: trackDot2.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -309,7 +309,7 @@ main(int argc, const char ** argv)
   try{
     vpCTRACE << "Load: " << filename << std::endl;
 
-    vpImageIo::readPGM(I, filename) ;
+    vpImageIo::read(I, filename) ;
   }
   catch(...)
   {
@@ -414,11 +414,15 @@ main(int argc, const char ** argv)
       std::cout << "Surface: " << d.getSurface() << std::endl;
       std::cout << "Moments:" << std::endl;
       std::cout << "  m00: " << d.m00 << std::endl;
+      std::cout << "  m10: " << d.m10 << std::endl;
+      std::cout << "  m01: " << d.m01 << std::endl;
       std::cout << "  m11: " << d.m11 << std::endl;
       std::cout << "  m02: " << d.m02 << std::endl;
       std::cout << "  m20: " << d.m20 << std::endl;
-      std::cout << "  m10: " << d.m10 << std::endl;
-      std::cout << "  m01: " << d.m01 << std::endl;
+      std::cout << "Centered moments:" << std::endl;
+      std::cout << "  mu11: " << d.mu11 << std::endl;
+      std::cout << "  mu02: " << d.mu02 << std::endl;
+      std::cout << "  mu20: " << d.mu20 << std::endl;
       std::cout << "Settings:" << std::endl;
       std::cout << "  gray level min: " << d.getGrayLevelMin() << std::endl;
       std::cout << "  gray level max: " << d.getGrayLevelMax() << std::endl;
@@ -446,7 +450,7 @@ main(int argc, const char ** argv)
       }
       // read the image
       std::cout << "read : " << filename << std::endl;
-      vpImageIo::readPGM(I, filename);
+      vpImageIo::read(I, filename);
 
       // track the dot and returns its coordinates in the image
       // results are given in float since many many are usually considered
@@ -474,11 +478,15 @@ main(int argc, const char ** argv)
       std::cout << "Surface: " << d.getSurface() << std::endl;
       std::cout << "Moments:" << std::endl;
       std::cout << "  m00: " << d.m00 << std::endl;
+      std::cout << "  m10: " << d.m10 << std::endl;
+      std::cout << "  m01: " << d.m01 << std::endl;
       std::cout << "  m11: " << d.m11 << std::endl;
       std::cout << "  m02: " << d.m02 << std::endl;
       std::cout << "  m20: " << d.m20 << std::endl;
-      std::cout << "  m10: " << d.m10 << std::endl;
-      std::cout << "  m01: " << d.m01 << std::endl;
+      std::cout << "Centered moments:" << std::endl;
+      std::cout << "  mu11: " << d.mu11 << std::endl;
+      std::cout << "  mu02: " << d.mu02 << std::endl;
+      std::cout << "  mu20: " << d.mu20 << std::endl;
       std::cout << "Settings:" << std::endl;
       std::cout << "  gray level min: " << d.getGrayLevelMin() << std::endl;
       std::cout << "  gray level max: " << d.getGrayLevelMax() << std::endl;

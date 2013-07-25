@@ -58,65 +58,94 @@
 
   \ingroup Video
 
-  \brief Class that enables to manipulate easily a video file or a sequence of images. As it inherits from the vpFrameGrabber Class, it can be used like an other frame grabber class.
+  \brief Class that enables to manipulate easily a video file or a sequence of
+  images. As it inherits from the vpFrameGrabber Class, it can be used like an
+  other frame grabber class.
   
-  The following example shows how this class is really easy to use. It enable to read a video file named video.mpeg and located in the folder "./video".
-  
-  But be careful, for video files, the getFrame method is not precise and returns the nearest key frame from the expected frame. You can use the getFrame method to
-  position the reader in the video and then use the acquire method to get the following frames one by one.
+  The following example available in tutorial-grabber-video.cpp shows how this
+  class is really easy to use. It enables to read a video file named video.mpeg.
+  \include tutorial-grabber-video.cpp
+
+  As shown in the next example, this class allows also to access to a specific
+  frame. But be careful, for video files, the getFrame() method is not precise
+  and returns the nearest intra key frame from the expected frame. You can use
+  the getFrame() method to position the reader in the video and then use the
+  acquire() method to get the following frames one by one.
   \code
-  #include <visp/vpConfig.h>
-  #include <visp/vpImage.h>
-  #include <visp/vpRGBa.h>
-  #include <visp/vpVideoReader.h>
-  
-  #ifdef VISP_HAVE_FFMPEG
-  int main()
-  {
+#include <visp/vpImage.h>
+#include <visp/vpRGBa.h>
+#include <visp/vpVideoReader.h>
+
+int main()
+{
+#ifdef VISP_HAVE_FFMPEG
   vpImage<vpRGBa> I;
 
   vpVideoReader reader;
-  
-  //Initialize the reader.
-  reader.setFileName("./video/video.mpeg");
+
+  // Initialize the reader.
+  reader.setFileName("video.mpeg");
   reader.open(I);
-  
-  //Read the nearest key frame from the 3th frame
+
+  // Read the nearest key frame from the 3th frame
   reader.getFrame(I,2);
-  
-  //After positionning the video reader use acquire to read the video frame by frame
+
+  // After positionning the video reader use acquire to read the video frame by frame
   reader.acquire(I);
 
   return 0;
-  }
-  #else
-  int main() {}
-  #endif
+#endif
+}
   \endcode
   
-  The other following example explains how to use the class to manipulate a sequence of images. The images are stored in the folder "./image" and are named "image0000.jpeg", "image0001.jpeg", "image0002.jpeg", ...
-  
+  The other following example explains how to use the class to read a
+  sequence of images. The images are stored in the folder "./image" and are
+  named "image0000.jpeg", "image0001.jpeg", "image0002.jpeg", ... As explained
+  in setFirstFrameIndex() it is also possible to set the first and last image numbers.
+
   \code
-  #include <visp/vpConfig.h>
-  #include <visp/vpImage.h>
-  #include <visp/vpRGBa.h>
-  #include <visp/vpVideoReader.h>
-  
-  int main()
-  {
+#include <visp/vpImage.h>
+#include <visp/vpRGBa.h>
+#include <visp/vpVideoReader.h>
+
+int main()
+{
   vpImage<vpRGBa> I;
 
   vpVideoReader reader;
-  
-  //Initialize the reader.
+
+  // Initialize the reader.
   reader.setFileName("./image/image%04d.jpeg");
   reader.open(I);
+
+  while (! reader.end() )
+    reader.acquire(I);
+
+  return 0;
+}
+  \endcode
   
-  //Read the 3th frame
+  Note that it is also possible to access to a specific frame using getFrame().
+  \code
+#include <visp/vpImage.h>
+#include <visp/vpRGBa.h>
+#include <visp/vpVideoReader.h>
+
+int main()
+{
+  vpImage<vpRGBa> I;
+
+  vpVideoReader reader;
+
+  // Initialize the reader.
+  reader.setFileName("./image/image%04d.jpeg");
+  reader.open(I);
+
+  // Read the 3th frame
   reader.getFrame(I,2);
 
   return 0;
-  }
+}
   \endcode
 */
 
@@ -136,6 +165,14 @@ class VISP_EXPORT vpVideoReader : public vpFrameGrabber
       FORMAT_PPM,
       FORMAT_JPEG,
       FORMAT_PNG,
+      // Formats supported by opencv
+      FORMAT_TIFF,
+      FORMAT_BMP,
+      FORMAT_DIB,
+      FORMAT_PBM,
+      FORMAT_RASTER,
+      FORMAT_JPEG2000,
+      // Video format
       FORMAT_AVI,
       FORMAT_MPEG,
       FORMAT_MOV,
@@ -158,6 +195,8 @@ class VISP_EXPORT vpVideoReader : public vpFrameGrabber
     long firstFrame;
     //!The last frame index
     long lastFrame;
+    bool firstFrameIndexIsSet;
+    bool lastFrameIndexIsSet;
 
   public:
     vpVideoReader();
@@ -167,8 +206,18 @@ class VISP_EXPORT vpVideoReader : public vpFrameGrabber
     void acquire(vpImage< unsigned char > &I);
     void close(){;}
 
+    /*!
+      \return true if the end of the sequence is reached.
+    */
+    inline bool end() {
+      if (frameCount > lastFrame )
+        return true;
+      return false;
+    }
     bool getFrame(vpImage<vpRGBa> &I, long frame);
     bool getFrame(vpImage<unsigned char> &I, long frame);
+    double getFramerate() const;
+
     /*!
       Get the current frame index. This index is updated at each call of the
       acquire method. It can be used to detect the end of a file (comparison
@@ -200,14 +249,31 @@ class VISP_EXPORT vpVideoReader : public vpFrameGrabber
     /*!
       Enables to set the first frame index if you want to use the class like a grabber (ie with the
       acquire method).
-      
+
       \param firstFrame : The first frame index.
+
+      \sa setLastFrameIndex()
     */
-    inline void setFirstFrameIndex(const long firstFrame) {this->firstFrame = firstFrame;}    
-    
+    inline void setFirstFrameIndex(const long firstFrame) {
+      this->firstFrameIndexIsSet = true;
+      this->firstFrame = firstFrame;
+    }
+    /*!
+      Enables to set the last frame index.
+
+      \param lastFrame : The last frame index.
+
+      \sa setFirstFrameIndex()
+    */
+    inline void setLastFrameIndex(const long lastFrame) {
+      this->lastFrameIndexIsSet = true;
+      this->lastFrame = lastFrame;
+    }
+
   private:
     vpVideoFormatType getFormat(const char *filename);
     static std::string getExtension(const std::string &filename);
+    void findFirstFrameIndex();
     void findLastFrameIndex();
 };
 

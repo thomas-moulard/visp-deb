@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpAfma6.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpAfma6.h 4191 2013-04-01 07:46:05Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -129,7 +129,7 @@ class VISP_EXPORT vpAfma6
 
   vpHomogeneousMatrix getForwardKinematics(const vpColVector & q);
   int getInverseKinematics(const vpHomogeneousMatrix & fMc,
-			   vpColVector & q, const bool &nearest=true);
+         vpColVector & q, const bool &nearest=true, const bool &verbose=false);
   vpHomogeneousMatrix get_fMc (const vpColVector & q);
   void get_fMe(const vpColVector & q, vpHomogeneousMatrix & fMe);
   void get_fMc(const vpColVector & q, vpHomogeneousMatrix & fMc);

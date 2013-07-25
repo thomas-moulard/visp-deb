@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpDisplay.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpDisplay.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -42,6 +42,7 @@
 
 #include <visp/vpDisplay.h>
 #include <visp/vpDisplayException.h>
+#include <visp/vpImageConvert.h>
 
 #include <visp/vpPoint.h>
 #include <visp/vpMeterPixelConversion.h>
@@ -58,8 +59,24 @@
 */
 vpDisplay::vpDisplay()
 {
-  title = NULL ;
+  displayHasBeenInitialized = false;
+  windowXPosition = 0;
+  windowYPosition = 0;
+
+  title = new char[1024];
+  strcpy (title, "" );
+}
+/*!
+  Destructor that desallocates memory.
+*/
+vpDisplay::~vpDisplay()
+{
   displayHasBeenInitialized = false ;
+
+  if (title != NULL) {
+    delete [] title;
+    title = NULL;
+  }
 }
 
 /*!
@@ -270,7 +287,9 @@ int main()
 
   // Initialize the display with the image I. Display and image are
   // now link together.
+#ifdef VISP_HAVE_DISPLAY
   d->init(I);
+#endif
 
   // Set the display background with image I content
   vpDisplay::display(I);
@@ -286,12 +305,14 @@ int main()
 
   // Write the color image on the disk
   std::string ofilename("overlay.ppm");
-  vpImageIo::writePPM(Ioverlay, ofilename) ;
+  vpImageIo::write(Ioverlay, ofilename) ;
 
   // Wait for a click in the display window
   vpDisplay::getClick(I);
 
+#ifdef VISP_HAVE_DISPLAY
   delete d;
+#endif
 }
   \endcode
   
@@ -309,9 +330,10 @@ vpDisplay::getImage ( const vpImage<unsigned  char> &Isrc,
     }
     else
     {
-      vpERROR_TRACE ( "Display not initialized" ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                   "Display not initialized" ) ) ;
+      vpImageConvert::convert(Isrc, Idest);
+//      vpERROR_TRACE ( "Display not initialized" ) ;
+//      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
+//                                   "Display not initialized" ) ) ;
     }
   }
   catch ( ... )
@@ -476,14 +498,16 @@ vpDisplay::displayFrame ( const vpImage<vpRGBa> &I,
   \param size : Size of the object camera.
 
   \param color : Color used to display the camera in the image.
+
+  \param thickness : Thickness of the graphics drawing.
   
 */
 void
 vpDisplay::displayCamera ( const vpImage<unsigned char> &I,
-                          const vpHomogeneousMatrix &cMo,
-                          const vpCameraParameters &cam,
-                          double size, 
-			  const vpColor &color)
+                           const vpHomogeneousMatrix &cMo,
+                           const vpCameraParameters &cam,
+                           double size, const vpColor &color,
+                           unsigned int thickness)
 {
   // used by display
   double halfSize = size/2.0;
@@ -504,8 +528,8 @@ vpDisplay::displayCamera ( const vpImage<unsigned char> &I,
   {
     vpMeterPixelConversion::convertPoint ( cam, pt[i].p[0], pt[i].p[1], ip_1);
     vpMeterPixelConversion::convertPoint ( cam, pt[(i+1)%4].p[0], pt[(i+1)%4].p[1], ip);
-    vpDisplay::displayLine ( I, ip_1, ip, color, 1);
-    vpDisplay::displayLine ( I, ip0, ip_1, color, 1);
+    vpDisplay::displayLine ( I, ip_1, ip, color, thickness);
+    vpDisplay::displayLine ( I, ip0, ip_1, color, thickness);
   }
 }
 
@@ -526,13 +550,16 @@ vpDisplay::displayCamera ( const vpImage<unsigned char> &I,
   \param size : Size of the object camera.
 
   \param color : Color used to display the camera in the image.
+
+  \param thickness : Thickness of the graphics drawing.
   
 */
 void
 vpDisplay::displayCamera( const vpImage<vpRGBa> &I,
                           const vpHomogeneousMatrix &cMo,
                           const vpCameraParameters &cam,
-                          double size, const vpColor &color)
+                          double size, const vpColor &color,
+                          unsigned int thickness)
 {
   // used by display
   double halfSize = size/2.0;
@@ -553,8 +580,8 @@ vpDisplay::displayCamera( const vpImage<vpRGBa> &I,
   {
     vpMeterPixelConversion::convertPoint ( cam, pt[i].p[0], pt[i].p[1], ip_1);
     vpMeterPixelConversion::convertPoint ( cam, pt[(i+1)%4].p[0], pt[(i+1)%4].p[1], ip);
-    vpDisplay::displayLine ( I, ip_1, ip, color, 1);
-    vpDisplay::displayLine ( I, ip0, ip_1, color, 1);
+    vpDisplay::displayLine ( I, ip_1, ip, color, thickness);
+    vpDisplay::displayLine ( I, ip0, ip_1, color, thickness);
   }
 }
 
@@ -1998,7 +2025,7 @@ void vpDisplay::flushROI ( const vpImage<unsigned char> &I, const vpRect &roi )
 /*!
   Close the display attached to I.
 */
-void vpDisplay::close ( const vpImage<unsigned char> &I )
+void vpDisplay::close ( vpImage<unsigned char> &I )
 {
 
   try
@@ -2006,6 +2033,7 @@ void vpDisplay::close ( const vpImage<unsigned char> &I )
     if ( I.display != NULL )
     {
       ( I.display )->closeDisplay() ;
+      I.display = NULL;
     }
   }
   catch ( ... )
@@ -2144,12 +2172,6 @@ vpDisplay::display ( const vpImage<vpRGBa> &I )
     {
       ( I.display )->displayImage ( I ) ;
     }
-    else
-    {
-      vpERROR_TRACE ( "Display not initialized" ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                   "Display not initialized" ) ) ;
-    }
   }
   catch ( ... )
   {
@@ -2227,7 +2249,9 @@ int main()
 
   // Initialize the display with the image I. Display and image are
   // now link together.
+#ifdef VISP_HAVE_DISPLAY
   d->init(I);
+#endif
 
   // Set the display background with image I content
   vpDisplay::display(I);
@@ -2243,12 +2267,14 @@ int main()
 
   // Write the color image on the disk
   std::string ofilename("overlay.ppm");
-  vpImageIo::writePPM(Ioverlay, ofilename) ;
+  vpImageIo::write(Ioverlay, ofilename) ;
 
   // Wait for a click in the display window
   vpDisplay::getClick(I);
 
+#ifdef VISP_HAVE_DISPLAY
   delete d;
+#endif
 }
   \endcode
 
@@ -2263,11 +2289,8 @@ vpDisplay::getImage ( const vpImage<vpRGBa> &Isrc, vpImage<vpRGBa> &Idest )
     {
       ( Isrc.display )->getImage ( Idest ) ;
     }
-    else
-    {
-      vpERROR_TRACE ( "Display not initialized" ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                   "Display not initialized" ) ) ;
+    else {
+      Idest = Isrc;
     }
   }
   catch ( ... )
@@ -2343,7 +2366,7 @@ void vpDisplay::flushROI ( const vpImage<vpRGBa> &I, const vpRect &roi )
 /*!
   Close the display attached to I.
 */
-void vpDisplay::close ( const vpImage<vpRGBa> &I )
+void vpDisplay::close ( vpImage<vpRGBa> &I )
 {
 
   try
@@ -2351,6 +2374,7 @@ void vpDisplay::close ( const vpImage<vpRGBa> &I )
     if ( I.display != NULL )
     {
       ( I.display )->closeDisplay() ;
+      I.display = NULL;
     }
   }
   catch ( ... )
@@ -2384,11 +2408,6 @@ bool  vpDisplay::getClick ( const vpImage<unsigned char> &I, bool blocking )
     if ( I.display != NULL )
     {
       return ( I.display )->getClick(blocking) ;
-    }
-    else {
-      vpERROR_TRACE ( "Display not initialized " ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                 "Display not initialized" ) ) ;
     }
   }
   catch ( ... )
@@ -2427,11 +2446,6 @@ bool vpDisplay::getClick ( const vpImage<unsigned char> &I,
     if ( I.display != NULL )
     {
       return ( I.display )->getClick ( ip, blocking ) ;
-    }
-    else {
-      vpERROR_TRACE ( "Display not initialized " ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                 "Display not initialized" ) ) ;
     }
   }
   catch ( ... )
@@ -2474,11 +2488,6 @@ bool  vpDisplay::getClick ( const vpImage<unsigned char> &I,
     {
       return ( I.display )->getClick ( ip, button, blocking ) ;
     }
-    else {
-      vpERROR_TRACE ( "Display not initialized " ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                 "Display not initialized" ) ) ;
-    }
   }
   catch ( ... )
   {
@@ -2520,11 +2529,6 @@ vpDisplay::getClickUp ( const vpImage<unsigned char> &I,
     if ( I.display != NULL )
     {
       return ( I.display )->getClickUp ( ip, button, blocking ) ;
-    }
-    else {
-      vpERROR_TRACE ( "Display not initialized " ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                 "Display not initialized" ) ) ;
     }
   }
   catch ( ... )
@@ -2583,7 +2587,9 @@ int main()
 
   // Initialize the display with the image I. Display and image are
   // now link together.
+#ifdef VISP_HAVE_DISPLAY
   d->init(I);
+#endif
 
   // Set the display background with image I content
   vpDisplay::display(I);
@@ -2611,7 +2617,9 @@ int main()
     vpTime::wait(5); // wait 5 ms
   } while(cpt_event < 5);
 
+#ifdef VISP_HAVE_DISPLAY
   delete d;
+#endif
 }
 \endcode
 */
@@ -2686,7 +2694,9 @@ int main()
 
   // Initialize the display with the image I. Display and image are
   // now link together.
+#ifdef VISP_HAVE_DISPLAY
   d->init(I);
+#endif
 
   // Set the display background with image I content
   vpDisplay::display(I);
@@ -2714,7 +2724,9 @@ int main()
     vpTime::wait(5); // wait 5 ms
   } while(cpt_event < 5);
 
+#ifdef VISP_HAVE_DISPLAY
   delete d;
+#endif
 }
 \endcode
 */
@@ -2815,11 +2827,6 @@ bool  vpDisplay::getClick ( const vpImage<vpRGBa> &I, bool blocking )
     {
       return ( I.display )->getClick(blocking) ;
     }
-    else {
-      vpERROR_TRACE ( "Display not initialized " ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                 "Display not initialized" ) ) ;
-    }
   }
   catch ( ... )
   {
@@ -2856,11 +2863,6 @@ bool  vpDisplay::getClick ( const vpImage<vpRGBa> &I,
     if ( I.display != NULL )
     {
       return ( I.display )->getClick ( ip, blocking ) ;
-    }
-    else {
-      vpERROR_TRACE ( "Display not initialized " ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                 "Display not initialized" ) ) ;
     }
   }
   catch ( ... )
@@ -2902,11 +2904,6 @@ bool  vpDisplay::getClick ( const vpImage<vpRGBa> &I,
     {
       return ( I.display )->getClick ( ip, button, blocking ) ;
     }
-    else {
-      vpERROR_TRACE ( "Display not initialized " ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                 "Display not initialized" ) ) ;
-    }
   }
   catch ( ... )
   {
@@ -2947,11 +2944,6 @@ vpDisplay::getClickUp ( const vpImage<vpRGBa> &I,
     if ( I.display != NULL )
     {
       return ( I.display )->getClickUp ( ip, button, blocking ) ;
-    }
-    else {
-      vpERROR_TRACE ( "Display not initialized " ) ;
-      throw ( vpDisplayException ( vpDisplayException::notInitializedError,
-                                 "Display not initialized" ) ) ;
     }
   }
   catch ( ... )
@@ -3011,7 +3003,9 @@ int main()
 
   // Initialize the display with the image I. Display and image are
   // now link together.
+#ifdef VISP_HAVE_DISPLAY
   d->init(I);
+#endif
 
   // Set the display background with image I content
   vpDisplay::display(I);
@@ -3038,7 +3032,9 @@ int main()
     vpTime::wait(5); // wait 5 ms
   } while(cpt_event < 5);
 
+#ifdef VISP_HAVE_DISPLAY
   delete d;
+#endif
 }
 \endcode
 */
@@ -3113,7 +3109,9 @@ int main()
 
   // Initialize the display with the image I. Display and image are
   // now link together.
+#ifdef VISP_HAVE_DISPLAY
   d->init(I);
+#endif
 
   // Set the display background with image I content
   vpDisplay::display(I);

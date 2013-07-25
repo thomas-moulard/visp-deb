@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpSimulatorViper850.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpSimulatorViper850.h 4252 2013-05-14 13:44:49Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -196,6 +196,10 @@ int main()
   For convenience, there is also the ability to read/write joint
   positions from a position file with readPosFile() and savePosFile()
   methods.
+
+  To know how this class can be used to achieve a visual servoing simulation,
+  you can follow the \ref tutorial-ibvs.
+
 */
 
 
@@ -246,16 +250,16 @@ class VISP_EXPORT vpSimulatorViper850 : public vpRobotWireFrameSimulator, public
     void get_fJe(vpMatrix &fJe);
 
     void init (vpViper850::vpToolType tool, vpCameraParameters::vpCameraParametersProjType projModel=vpCameraParameters::perspectiveProjWithoutDistortion);
-    void initialiseCameraRelativeToObject(vpHomogeneousMatrix cMo);
-    void initialiseObjectRelativeToCamera(vpHomogeneousMatrix cMo);
+    bool initialiseCameraRelativeToObject(const vpHomogeneousMatrix &cMo);
+    void initialiseObjectRelativeToCamera(const vpHomogeneousMatrix &cMo);
 
     void move(const char *filename) ;
 
     static bool readPosFile(const char *filename, vpColVector &q);
     static bool savePosFile(const char *filename, const vpColVector &q);
 
-    void setCameraParameters(const vpCameraParameters cam) ;
-    void setJointLimit(vpColVector limitMin, vpColVector limitMax);
+    void setCameraParameters(const vpCameraParameters &cam) ;
+    void setJointLimit(const vpColVector &limitMin, const vpColVector &limitMax);
     void setPosition(const vpRobot::vpControlFrameType frame,const vpColVector &q);
     void setPosition (const vpRobot::vpControlFrameType frame,
                       const double pos1,

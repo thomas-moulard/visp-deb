@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: servoViper850Point2DCamVelocityKalman.cpp 4065 2013-01-11 13:32:47Z fspindle $
+ * $Id: servoViper850Point2DCamVelocityKalman.cpp 4300 2013-07-04 09:21:07Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -217,6 +217,7 @@ main()
     // - we want an eye-in-hand control law
     // - robot is controlled in the camera frame
     task.setServo(vpServo::EYEINHAND_CAMERA) ;
+    task.setInteractionMatrixType(vpServo::DESIRED, vpServo::PSEUDO_INVERSE) ;
 
     // - we want to see a point on a point
     task.addFeature(p,pd) ;
@@ -285,9 +286,9 @@ main()
           dedt_mes = 0;
         }
         else{
-          err_1 = err;
           vpMatrix J1 = task.getTaskJacobian();
-          dedt_mes = (err_1 - err)/(Tv) - J1 *vm;
+          dedt_mes = (err - err_1)/(Tv) - J1 *vm;
+          err_1 = err;
         }
 
         // Filter de/dt

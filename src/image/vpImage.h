@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpImage.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpImage.h 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -85,6 +85,11 @@ class vpDisplay;
   Such a structure allows a fast acces to each element of the image.
   if i is the ith rows and j the jth columns the value of this pixel
   is given by I[i][j] (that is equivalent to row[i][j]).
+
+  <h3>Example</h3>
+  The following example available in tutorial-image-manipulation.cpp shows how
+  to create gray level and color images and how to access to the pixels.
+  \include tutorial-image-manipulation.cpp
 
   <h3>Important remark</h3> To provide high-performance access there
   is no verification to ensure that 0 \f$\le\f$ i < height and 0
@@ -882,16 +887,16 @@ void vpImage<Type>::insert(const vpImage<Type> &src,
   The example below shows how to use this method:
   \code
   vpImage<unsigned char> I; // original image
-  vpImageIo::readPGM(I, "myImage.pgm");
+  vpImageIo::read(I, "myImage.pgm");
   vpImage<unsigned char> I2; // half size image
   I.halfSizeImage(I2);
-  vpImageIo::writePGM(I2, "myHalfSizeImage.pgm");
+  vpImageIo::write(I2, "myHalfSizeImage.pgm");
   \endcode
 
   This other example shows how to construct a pyramid of the image:
   \code
   vpImage<unsigned char> I[4];   // pyramid with 4 levels
-  vpImageIo::readPGM(I[1], "myImage.pgm"); // Original image at level 1
+  vpImageIo::read(I[1], "myImage.pgm"); // Original image at level 1
   // compute the other levels
   I5[1].doubleSizeImage(I5[0]);  // double size image at level 0
   I5[1].halfSizeImage(I5[2]);    // half size image at level 2
@@ -923,10 +928,10 @@ vpImage<Type>::halfSizeImage(vpImage<Type> &res)
   The example below shows how to use this method:
   \code
   vpImage<unsigned char> I; // original image
-  vpImageIo::readPGM(I, "myImage.pgm");
+  vpImageIo::read(I, "myImage.pgm");
   vpImage<unsigned char> I4; // quarter size image
   I.halfSizeImage(I4);
-  vpImageIo::writePGM(I4, "myQuarterSizeImage.pgm");
+  vpImageIo::write(I4, "myQuarterSizeImage.pgm");
   \endcode
 
   See halfSizeImage(vpImage<Type> &) for an example of pyramid construction.
@@ -969,10 +974,10 @@ vpImage<Type>::quarterSizeImage(vpImage<Type> &res)
   The example below shows how to use this method:
   \code
   vpImage<unsigned char> I; // original image
-  vpImageIo::readPGM(I, "myImage.pgm");
+  vpImageIo::read(I, "myImage.pgm");
   vpImage<unsigned char> I2; // double size image
   I.doubleSizeImage(I2);
-  vpImageIo::writePGM(I2, "myDoubleSizeImage.pgm");
+  vpImageIo::write(I2, "myDoubleSizeImage.pgm");
   \endcode
  
   See halfSizeImage(vpImage<Type> &) for an example of pyramid construction.
@@ -1418,7 +1423,7 @@ void vpImage<Type>::sub(const vpImage<Type> &A, const vpImage<Type> &B,
 }
 #ifdef VISP_BUILD_DEPRECATED_FUNCTIONS
 /*!
-  \deprecated This method is deprecated. You shoud use vpImage<Type>::sub(const vpImage<Type> &, vpImage<Type> &) instead.
+  \deprecated This method is deprecated. You should use vpImage<Type>::sub(const vpImage<Type> &, vpImage<Type> &) instead.
 
   Operation C = *this - B.
 

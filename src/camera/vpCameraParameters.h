@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpCameraParameters.h 4114 2013-02-07 13:26:03Z fspindle $
+ * $Id: vpCameraParameters.h 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -49,10 +49,15 @@
 
 */
 
-#ifndef vpCAMERA_H
-#define vpCAMERA_H
+#ifndef vpCameraParameters_H
+#define vpCameraParameters_H
 
+#include <vector>
+
+#include <visp/vpConfig.h>
 #include <visp/vpMatrix.h>
+#include <visp/vpColVector.h>
+#include <visp/vpDebug.h>
 
 /*!
   \class vpCameraParameters
@@ -68,7 +73,7 @@
   The main intrinsic camera parameters are \f$(p_x, p_y)\f$ the ratio
   between the focal length and the size of a pixel, and \f$(u_0,
   v_0)\f$ the coordinates of the principal point in pixel. The lens
-  distorsion can also be considered by two additional parameters
+  distortion can also be considered by two additional parameters
   \f$(k_{ud}, k_{du})\f$.
 
   <b>1. Camera parameters for a perspective projection without distortion model</b>
@@ -225,6 +230,57 @@ public :
                                       const double u0, const double v0) ;
   void initPersProjWithDistortion(const double px, const double py,
      const double u0, const double v0, const double kud,const double kdu) ;
+     
+  /*!
+    Specify if the fov has been computed.
+    
+    \sa computeFov()
+    
+    \return True if the fov has been computed, False otherwise.
+  */
+  inline bool isFovComputed() const { return isFov; }
+     
+  void computeFov(const unsigned int &w, const unsigned int &h);
+  
+  /*!
+    Get the horizontal angle of the field of view.
+    
+    \sa computeFov()
+    
+    \return AngleX computed with px and width.
+  */
+  inline double getFovAngleX() const { 
+    if(!isFov) vpTRACE("Warning: The FOV is not computed, getFovAngleX() won't be significant.");
+    return fovAngleX; 
+  }
+  
+  /*!
+    Get the vertical angle of the field of view.
+    
+    \sa computeFov()
+    
+    \return AngleY computed with py and height.
+  */
+  inline double getFovAngleY() const { 
+    if(!isFov) vpTRACE("Warning: The FOV is not computed, getFovAngleY() won't be significant.");
+    return fovAngleY; 
+  }
+  
+  /*!
+    Get the list of the normals corresponding to planes describing the field of view.
+      - vector[0] : Left Normal.
+      - vector[1] : Right Normal.
+      - vector[2] : Up Normal.
+      - vector[3] : Down Normal.
+      
+    \sa computeFov()
+    
+    \return List of the normals.
+  */
+  inline std::vector<vpColVector> getFovNormals() const { 
+    if(!isFov) vpTRACE("Warning: The FOV is not computed, getFovNormals() won't be significant.");
+    return fovNormals; 
+  }
   
   inline double get_px() const { return px; }
   inline double get_px_inverse() const {return inv_px; }
@@ -261,6 +317,13 @@ private:
   double kud ; //!< radial distortion (from undistorted to distorted)
   double kdu ; //!< radial distortion (from distorted to undistorted)
   
+  unsigned int width ; //!< Width of the image used for the fov computation
+  unsigned int height ; //!< Height of the image used for the fov computation
+  bool isFov ; //!< Boolean to specify if the fov has been computed
+  double fovAngleX ; //!< AngleX/2.0 of the fov
+  double fovAngleY ; //!< AngleY/2.0 of the fov
+  std::vector<vpColVector> fovNormals ; //!< Normals of the planes describing the fov
+  
   double inv_px, inv_py; 
    
   vpCameraParametersProjType projModel ; //!< used projection model
@@ -268,9 +331,3 @@ private:
 } ;
 
 #endif
-
-/*
- * Local variables:
- * c-basic-offset: 2
- * End:
- */

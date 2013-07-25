@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMbtXmlParser.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpMbtXmlParser.cpp 4320 2013-07-17 15:37:27Z ayol $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -59,6 +59,9 @@
 */
 vpMbtXmlParser::vpMbtXmlParser()
 {
+  hasNearClipping = false;
+  hasFarClipping = false;
+  fovClipping = false;
   init();
 }
 
@@ -94,6 +97,9 @@ vpMbtXmlParser::init()
   nodeMap["face"] = face;
   nodeMap["angle_appear"] = angle_appear;
   nodeMap["angle_disappear"] = angle_disappear;
+  nodeMap["near_clipping"] = near_clipping;
+  nodeMap["far_clipping"] = far_clipping;
+  nodeMap["fov_clipping"] = fov_clipping;
   nodeMap["camera"] = camera;
   nodeMap["height"] = height;
   nodeMap["width"] = width;
@@ -394,6 +400,9 @@ vpMbtXmlParser::read_face(xmlDocPtr doc, xmlNodePtr node)
 {
   bool angle_appear_node = false;
   bool angle_disappear_node = false;
+  bool near_clipping_node = false;
+  bool far_clipping_node = false;
+  bool fov_clipping_node = false;
   
   for(xmlNodePtr dataNode = node->xmlChildrenNode; dataNode != NULL;  dataNode = dataNode->next)  {
     if(dataNode->type == XML_ELEMENT_NODE){
@@ -407,6 +416,20 @@ vpMbtXmlParser::read_face(xmlDocPtr doc, xmlNodePtr node)
         case angle_disappear:{
           angleDisappear = xmlReadDoubleChild(doc, dataNode);
           angle_disappear_node = true;
+          }break;
+        case near_clipping:{
+          nearClipping = xmlReadDoubleChild(doc, dataNode);
+          near_clipping_node = true;
+          hasNearClipping = true;
+          }break;
+        case far_clipping:{
+          farClipping = xmlReadDoubleChild(doc, dataNode);
+          far_clipping_node = true;
+          hasFarClipping = true;
+          }break;
+        case fov_clipping:{
+          fovClipping = (bool)xmlReadIntChild(doc, dataNode);
+          fov_clipping_node = true;
           }break;
         default:{
 //          vpTRACE("unknown tag in read_camera : %d, %s", iter_data->second, (iter_data->first).c_str());
@@ -425,6 +448,25 @@ vpMbtXmlParser::read_face(xmlDocPtr doc, xmlNodePtr node)
     std::cout << "WARNING: In FACE Node, ANGLE_DESAPPEAR Node not specified, default value used : " << angleDisappear << std::endl;
   else
     std::cout << "face : Angle Disappear : "<< angleDisappear <<std::endl;
+  
+  if(!near_clipping_node)
+    std::cout << "WARNING: In FACE Node, NEAR_CLIPPING Node not specified, no near clipping used" << std::endl;
+  else
+    std::cout << "face : Near Clipping : "<< nearClipping <<std::endl;
+  
+  if(!far_clipping_node)
+    std::cout << "WARNING: In FACE Node, FAR_CLIPPING Node not specified, no far clipping used" << std::endl;
+  else
+    std::cout << "face : Far Clipping : "<< farClipping <<std::endl;
+  
+  if(!fov_clipping_node)
+    std::cout << "WARNING: In FACE Node, FOV_CLIPPING Node not specified, no fov clipping used" << std::endl;
+  else{
+    if(fovClipping)
+      std::cout << "face : Fov Clipping : True" <<std::endl;
+    else
+      std::cout << "face : Fov Clipping : False" <<std::endl;
+  }
 }
 
 /*!

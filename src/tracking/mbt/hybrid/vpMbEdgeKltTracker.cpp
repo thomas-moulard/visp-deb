@@ -1,31 +1,34 @@
 /****************************************************************************
  *
- * $Id: vpMbEdgeKltTracker.cpp 4122 2013-02-08 10:45:54Z ayol $
+ * $Id: vpMbEdgeKltTracker.cpp 4327 2013-07-19 14:08:01Z fspindle $
  *
- * Copyright (C) 2005 - 2013 Inria. All rights reserved.
+ * This file is part of the ViSP software.
+ * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
+ *
+ * This software is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * ("GPL") version 2 as published by the Free Software Foundation.
+ * See the file LICENSE.txt at the root directory of this source
+ * distribution for additional information about the GNU GPL.
+ *
+ * For using ViSP with software that can not be combined with the GNU
+ * GPL, please contact INRIA about acquiring a ViSP Professional
+ * Edition License.
+ *
+ * See http://www.irisa.fr/lagadic/visp/visp.html for more information.
  *
  * This software was developed at:
- * IRISA/INRIA Rennes
- * Projet Lagadic
+ * INRIA Rennes - Bretagne Atlantique
  * Campus Universitaire de Beaulieu
  * 35042 Rennes Cedex
+ * France
  * http://www.irisa.fr/lagadic
  *
- * This file is part of the ViSP toolkit
- *
- * This file may be distributed under the terms of the Q Public License
- * as defined by Trolltech AS of Norway and appearing in the file
- * LICENSE included in the packaging of this file.
- *
- * Licensees holding valid ViSP Professional Edition licenses may
- * use this file in accordance with the ViSP Commercial License
- * Agreement provided with the Software.
+ * If you have questions regarding the use of this file, please contact
+ * INRIA at visp@inria.fr
  *
  * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * Contact visp@irisa.fr if any conditions of this licensing are
- * not clear to you.
  *
  * Description:
  * Hybrid tracker based on edges (vpMbt) and points of interests (KLT)
@@ -65,7 +68,7 @@ vpMbEdgeKltTracker::~vpMbEdgeKltTracker()
 }
 
 /*!
-  Initialisation of the tracker using a known initial pose.
+  Initialization of the tracker using a known initial pose.
   The 3D model must first have been loaded.
 
   \param I : Input image.
@@ -88,7 +91,7 @@ vpMbEdgeKltTracker::init(const vpImage<unsigned char>& I)
   }
   vpMbEdgeTracker::nbvisiblepolygone = n;
   
-  unsigned int i=scales.size();
+  unsigned int i = (unsigned int)scales.size();
   do {
     i--;
     if(scales[i]){
@@ -105,7 +108,7 @@ vpMbEdgeKltTracker::init(const vpImage<unsigned char>& I)
   Set the pose to be used in entry of the next call to the track() function.
   This pose will be just used once.
   
-  \warning This function has to be called after the initialisation of the tracker.
+  \warning This function has to be called after the initialization of the tracker.
   
   \param I : image corresponding to the desired pose.
   \param cdMo : Pose to affect.
@@ -139,7 +142,7 @@ vpMbEdgeKltTracker::setPose( const vpImage<unsigned char> &I, const vpHomogeneou
     }
     vpMbEdgeTracker::nbvisiblepolygone = n;
     
-    unsigned int i=scales.size();
+    unsigned int i = (unsigned int)scales.size();
     do {
       i--;
       if(scales[i]){
@@ -252,6 +255,9 @@ vpMbEdgeKltTracker::loadConfigFile(const std::string& configFile)
   <face>
     <angle_appear>65</angle_appear>
     <angle_disappear>85</angle_disappear>
+    <near_clipping>0.01</near_clipping>
+    <far_clipping>0.90</far_clipping>
+    <fov_clipping>1</fov_clipping>
   </face>
   <klt>
     <mask_border>10</mask_border>
@@ -296,7 +302,7 @@ vpMbEdgeKltTracker::loadModel(const std::string& modelFile)
 }
 
 /*!
-  Realise the post tracking operations. Mostly visibility tests
+  Realize the post tracking operations. Mostly visibility tests
 */
 bool
 vpMbEdgeKltTracker::postTracking(const vpImage<unsigned char>& I, vpColVector &w_mbt, vpColVector &w_klt,
@@ -325,10 +331,10 @@ vpMbEdgeKltTracker::postTracking(const vpImage<unsigned char>& I, vpColVector &w
     }
   }
   
-  vpMbEdgeTracker::updateMovingEdge(I);
+  if(reInit)
+    return true;
   
-//   bool useless = false ;
-//   vpMbEdgeTracker::visibleFace(_I, cMo, useless) ;
+  vpMbEdgeTracker::updateMovingEdge(I);
   unsigned int n = 0;
   for(unsigned int i = 0; i < vpMbKltTracker::faces.size() ; i++){
       if(vpMbKltTracker::faces[i]->isVisible()){
@@ -343,17 +349,17 @@ vpMbEdgeKltTracker::postTracking(const vpImage<unsigned char>& I, vpColVector &w
   vpMbEdgeTracker::initMovingEdge(I, cMo) ;
   vpMbEdgeTracker::reinitMovingEdge(I, cMo);
   
-  return reInit;
+  return false;
 }
 
 /*!
   post tracking computation. Compute the mean weight of a line and, check the
   weight associated to a site (to eventually remove an outlier) and eventually
-  set a flag to re-initialise the line.
+  set a flag to re-initialize the line.
 
   \warning level parameter not yet implemented.
 
-  \param w : Vector of weight associated to the residu.
+  \param w : Vector of weight associated to the residual.
   \param lvl : Optional parameter to specify the level to track.
 */
 void
@@ -462,7 +468,7 @@ vpMbEdgeKltTracker::postTrackingMbt(vpColVector &w, const unsigned int lvl)
 }
 
 /*!
-  Realise the VVS loop for the tracking
+  Realize the VVS loop for the tracking
 
   \param I : current image.
   \param nbInfos : Size of the features.
@@ -641,7 +647,7 @@ vpMbEdgeKltTracker::computeVVS(const vpImage<unsigned char>& I, const unsigned i
 }
 
 /*!
-  Realise the tracking of the object in the image.
+  Realize the tracking of the object in the image.
 
   \throw vpException : if the tracking is supposed to have failed.
 
@@ -660,7 +666,7 @@ vpMbEdgeKltTracker::track(const vpImage<unsigned char>& I)
     vpMbKltTracker::computeVVS(nbInfos, w_klt);
   else{
     nbInfos = 0;
-    std::cout << "[ERROR] Unable to init with KLT" << std::endl;
+    // std::cout << "[Warning] Unable to init with KLT" << std::endl;
   }
   
   vpMbEdgeTracker::trackMovingEdge(I);
@@ -669,8 +675,32 @@ vpMbEdgeKltTracker::track(const vpImage<unsigned char>& I)
   computeVVS(I, nbInfos, w_mbt, w_klt);
   
   if(postTracking(I, w_mbt, w_klt)){
-    vpMbEdgeTracker::init(I);
     vpMbKltTracker::reinit(I);
+    
+    initPyramid(I, Ipyramid);
+  
+    unsigned int n = 0;
+    for(unsigned int i = 0; i < vpMbKltTracker::faces.size() ; i++){
+        if(vpMbKltTracker::faces[i]->isVisible()){
+          vpMbEdgeTracker::faces[i]->isvisible = true;
+          n++;
+        }
+        else
+          vpMbEdgeTracker::faces[i]->isvisible = false;
+    }
+    vpMbEdgeTracker::nbvisiblepolygone = n;
+    
+    unsigned int i = (unsigned int)scales.size();
+    do {
+      i--;
+      if(scales[i]){
+        downScale(i);
+        initMovingEdge(*Ipyramid[i], cMo);
+        upScale(i);
+      }
+    } while(i != 0);
+    
+    cleanPyramid(Ipyramid);
   }
 }
 
@@ -810,7 +840,7 @@ vpMbEdgeKltTracker::setCameraParameters(const vpCameraParameters& cam)
   Initialise a new face from the coordinates given in parameter.
 
   \param corners : Coordinates of the corners of the face in the object frame.
-  \param indexFace : index of the face (depends on the vrml file organisation).
+  \param indexFace : index of the face (depends on the vrml file organization).
 */
 void
 vpMbEdgeKltTracker::initFaceFromCorners(const std::vector<vpPoint>& corners, const unsigned int indexFace)
@@ -847,17 +877,34 @@ vpMbEdgeKltTracker::initCylinder(const vpPoint& _p1, const vpPoint _p2, const do
 void
 vpMbEdgeKltTracker::display(const vpImage<unsigned char>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters & cam,
                             const vpColor& col , const unsigned int thickness, const bool displayFullModel)
-{
-  vpMbKltTracker::display(I, cMo, cam, col, thickness, displayFullModel);
+{  
+  vpMbtDistanceLine *l ;
   
   for (unsigned int i = 0; i < scales.size(); i += 1){
     if(scales[i]){
+      for(std::list<vpMbtDistanceLine*>::const_iterator it=lines[scaleLevel].begin(); it!=lines[scaleLevel].end(); ++it){
+        l = *it;
+        l->display(I,cMo, cam, col, thickness, displayFullModel);
+      }
+
       for(std::list<vpMbtDistanceCylinder*>::const_iterator it=cylinders[scaleLevel].begin(); it!=cylinders[scaleLevel].end(); ++it){
         (*it)->display(I, cMo, cam, col, thickness);
       }
+
       break ; //displaying model on one scale only
     }
   }
+  
+  for (unsigned int i = 0; i < vpMbKltTracker::faces.size(); i += 1){
+    if(displayFeatures && vpMbKltTracker::faces[i]->hasEnoughPoints() && vpMbKltTracker::faces[i]->isVisible()) {
+        vpMbKltTracker::faces[i]->displayPrimitive(I);
+    }
+  }
+  
+#ifdef VISP_HAVE_OGRE
+  if(vpMbKltTracker::useOgre)
+    vpMbKltTracker::faces.displayOgre(cMo);
+#endif
 }
 
 /*!
@@ -873,17 +920,34 @@ vpMbEdgeKltTracker::display(const vpImage<unsigned char>& I, const vpHomogeneous
 void
 vpMbEdgeKltTracker::display(const vpImage<vpRGBa>& I, const vpHomogeneousMatrix &cMo, const vpCameraParameters & cam,
                             const vpColor& col , const unsigned int thickness, const bool displayFullModel)
-{
-  vpMbKltTracker::display(I, cMo, cam, col, thickness, displayFullModel);
+{ 
+  vpMbtDistanceLine *l ;
   
   for (unsigned int i = 0; i < scales.size(); i += 1){
     if(scales[i]){
+      for(std::list<vpMbtDistanceLine*>::const_iterator it=lines[scaleLevel].begin(); it!=lines[scaleLevel].end(); ++it){
+        l = *it;
+        l->display(I,cMo, cam, col, thickness, displayFullModel);
+      }
+
       for(std::list<vpMbtDistanceCylinder*>::const_iterator it=cylinders[scaleLevel].begin(); it!=cylinders[scaleLevel].end(); ++it){
         (*it)->display(I, cMo, cam, col, thickness);
       }
+
       break ; //displaying model on one scale only
     }
   }
+  
+  for (unsigned int i = 0; i < vpMbKltTracker::faces.size(); i += 1){
+    if(displayFeatures && vpMbKltTracker::faces[i]->hasEnoughPoints() && vpMbKltTracker::faces[i]->isVisible()) {
+        vpMbKltTracker::faces[i]->displayPrimitive(I);
+    }
+  }
+  
+#ifdef VISP_HAVE_OGRE
+  if(vpMbKltTracker::useOgre)
+    vpMbKltTracker::faces.displayOgre(cMo);
+#endif
 }
 
 #endif //VISP_HAVE_OPENCV

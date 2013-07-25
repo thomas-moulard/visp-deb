@@ -56,9 +56,9 @@
 
 extern "C"
 {
-//#include <avcodec.h>
-#include <avformat.h>
-#include <swscale.h>
+//#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libswscale/swscale.h>
 }
 
 /*!
@@ -69,6 +69,8 @@ vpFFMPEG::vpFFMPEG()
   frameNumber = 0;
   width = -1;
   height = -1;
+  framerate_stream = -1;
+  framerate_encoder = 25;
   buffer = NULL;
   streamWasOpen = false;
   streamWasInitialized = false;
@@ -93,6 +95,8 @@ vpFFMPEG::~vpFFMPEG()
 
 /*!
   Allocates and initializes the parameters depending on the video and the desired color type.
+  One the stream is opened, it is possible to get the video encoding framerate getFramerate(),
+  and the dimension of the images using getWidth() and getHeight().
   
   \param filename : Path to the video which has to be read.
   \param color_type : Desired color map used to open the video.
@@ -137,6 +141,9 @@ bool vpFFMPEG::openStream(const char *filename, vpFFMPEGColorType color_type)
 #endif
     {
       videoStream = i;
+      std::cout << "rate: " << pFormatCtx->streams[i]->r_frame_rate.num << " " << pFormatCtx->streams[i]->r_frame_rate.den << std::endl;
+      framerate_stream =  pFormatCtx->streams[i]->r_frame_rate.num;
+      framerate_stream /= pFormatCtx->streams[i]->r_frame_rate.den;
       found_codec= true;
       break;
     }
@@ -235,6 +242,7 @@ bool vpFFMPEG::initStream()
   int frame_no = 0 ;
   int frameFinished ;
 
+  av_init_packet(packet);
   while (av_read_frame (pFormatCtx, packet) >= 0)
   {
     if (packet->stream_index == (int)videoStream)
@@ -292,31 +300,32 @@ bool vpFFMPEG::getFrame(vpImage<vpRGBa> &I, unsigned int frame)
 
   int frameFinished ;
 
+  av_init_packet(packet);
   while (av_read_frame (pFormatCtx, packet) >= 0)
   {
     if (packet->stream_index == (int)videoStream)
     {
 #if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(52,72,2)
       avcodec_decode_video(pCodecCtx, pFrame,
-         &frameFinished, packet->data, packet->size);
+                           &frameFinished, packet->data, packet->size);
 #else
       avcodec_decode_video2(pCodecCtx, pFrame, &frameFinished, packet); // libavcodec >= 52.72.2 (0.6)
 #endif
-     if (frameFinished)
+      if (frameFinished)
       {
-	if (color_type == vpFFMPEG::COLORED)
+        if (color_type == vpFFMPEG::COLORED)
           sws_scale(img_convert_ctx, pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameRGB->data, pFrameRGB->linesize);
-	else if (color_type == vpFFMPEG::GRAY_SCALED)
+        else if (color_type == vpFFMPEG::GRAY_SCALED)
           sws_scale(img_convert_ctx, pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameGRAY->data, pFrameGRAY->linesize);
 
-          copyBitmap(I);
-          break;
-        }
+        copyBitmap(I);
+        break;
       }
     }
+  }
 
-    av_free_packet(packet);
-    return true;
+  av_free_packet(packet);
+  return true;
 }
 
 
@@ -337,6 +346,7 @@ bool vpFFMPEG::acquire(vpImage<vpRGBa> &I)
     return false;
   }
 
+  av_init_packet(packet);
   while (av_read_frame (pFormatCtx, packet) >= 0)
   {
     if (packet->stream_index == (int)videoStream)
@@ -389,6 +399,7 @@ bool vpFFMPEG::getFrame(vpImage<unsigned char> &I, unsigned int frame)
 
   int frameFinished ;
 
+  av_init_packet(packet);
   while (av_read_frame (pFormatCtx, packet) >= 0)
   {
     if (packet->stream_index == (int)videoStream)
@@ -434,6 +445,7 @@ bool vpFFMPEG::acquire(vpImage<unsigned char> &I)
     return false;
   }
 
+  av_init_packet(packet);
   while (av_read_frame (pFormatCtx, packet) >= 0)
   {
     if (packet->stream_index == (int)videoStream)
@@ -593,7 +605,7 @@ void vpFFMPEG::closeStream()
     av_free(pFrame);
 
     // Close the codec
-    avcodec_close(pCodecCtx);
+    if (pCodecCtx) avcodec_close(pCodecCtx);
 
     // Close the video file
 #if LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(53,17,0) // libavformat 53.17.0
@@ -616,12 +628,12 @@ void vpFFMPEG::closeStream()
     
     av_free(pFrameRGB);
     av_free(pFrame);
-    avcodec_close(pCodecCtx);
+    if (pCodecCtx) avcodec_close(pCodecCtx);
   }
   
   encoderWasOpened = false;
 
-  if(streamWasInitialized){
+  if(streamWasInitialized || encoderWasOpened){
     sws_freeContext (img_convert_ctx);
   }
   streamWasInitialized = false;
@@ -635,13 +647,19 @@ void vpFFMPEG::closeStream()
   \param height : Height of the image which will be saved.
   \param codec : Type of codec used to encode the video.
   
-  By default codec is set to CODEC_ID_MPEG1VIDEO. But you can use one of the CodecID proposed by ffmpeg such as : CODEC_ID_MPEG2VIDEO, CODEC_ID_MPEG2VIDEO_XVMC, CODEC_ID_MPEG4, CODEC_ID_H264, ... (More CodecID can be found in the ffmpeg documentation).
+  By default codec is set to AV_CODEC_ID_MPEG1VIDEO. But if installed, you can use one of the
+  AVCodecID proposed by ffmpeg such as : AV_CODEC_ID_MPEG2VIDEO, AV_CODEC_ID_MPEG2VIDEO_XVMC,
+  AV_CODEC_ID_MPEG4, AV_CODEC_ID_H264, ... (More AVCodecID can be found in the ffmpeg documentation).
   
   Of course to use the codec it must be installed on your computer.
   
   \return It returns true if the paramters could be initialized. Else it returns false.
 */
+#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(54,51,110) // libavcodec 54.51.100
 bool vpFFMPEG::openEncoder(const char *filename, unsigned int width, unsigned int height, CodecID codec)
+#else
+bool vpFFMPEG::openEncoder(const char *filename, unsigned int width, unsigned int height, AVCodecID codec)
+#endif
 {
   av_register_all();
 
@@ -652,7 +670,7 @@ bool vpFFMPEG::openEncoder(const char *filename, unsigned int width, unsigned in
     return false;
   }
 
-#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(53,5,0) // libavcodev 53.5.0
+#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(53,5,0) // libavcodec 53.5.0
   pCodecCtx = avcodec_alloc_context();
 #else
   pCodecCtx = avcodec_alloc_context3(NULL);
@@ -668,19 +686,19 @@ bool vpFFMPEG::openEncoder(const char *filename, unsigned int width, unsigned in
   this->width = (int)width;
   this->height = (int)height;
   /* frames per second */
-  pCodecCtx->time_base= (AVRational){1,25};
+  pCodecCtx->time_base= (AVRational){1,framerate_encoder};
   pCodecCtx->gop_size = 10; /* emit one intra frame every ten frames */
   pCodecCtx->max_b_frames=1;
   pCodecCtx->pix_fmt = PIX_FMT_YUV420P;
 
   /* open it */
-#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(53,35,0) // libavcodev 53.35.0
+#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(53,35,0) // libavcodec 53.35.0
   if (avcodec_open (pCodecCtx, pCodec) < 0) {
 #else
   if (avcodec_open2 (pCodecCtx, pCodec, NULL) < 0) {
 #endif
     fprintf(stderr, "could not open codec\n");
-    exit(1);
+    return false;
   }
 
   /* the codec gives us the frame size, in samples */
@@ -727,8 +745,26 @@ bool vpFFMPEG::saveFrame(vpImage<vpRGBa> &I)
   
   writeBitmap(I);
   sws_scale(img_convert_ctx, pFrameRGB->data, pFrameRGB->linesize, 0, pCodecCtx->height, pFrame->data, pFrame->linesize);
+#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(54,2,100) // libavcodec 54.2.100
   out_size = avcodec_encode_video(pCodecCtx, outbuf, outbuf_size, pFrame);
   fwrite(outbuf, 1, (size_t)out_size, f);
+#else
+  AVPacket pkt;
+  av_init_packet(&pkt);
+  pkt.data = NULL;    // packet data will be allocated by the encoder
+  pkt.size = 0;
+
+  int got_output;
+  int ret = avcodec_encode_video2(pCodecCtx, &pkt, pFrame, &got_output);
+  if (ret < 0) {
+    std::cerr << "Error encoding frame in " << __FILE__ << " " << __LINE__ << " " << __FUNCTION__ << std::endl;
+    return false;
+  }
+  if (got_output) {
+    fwrite(pkt.data, 1, pkt.size, f);
+    av_free_packet(&pkt);
+  }
+#endif
   fflush(stdout);
   return true;
 }
@@ -750,9 +786,28 @@ bool vpFFMPEG::saveFrame(vpImage<unsigned char> &I)
   }
   
   writeBitmap(I);
-  sws_scale(img_convert_ctx, pFrameRGB->data, pFrameRGB->linesize, 0, pCodecCtx->height, pFrame->data, pFrame->linesize);
+  sws_scale(img_convert_ctx, pFrameRGB->data, pFrameRGB->linesize, 0, pCodecCtx->height, pFrame->data, pFrame->linesize);  
+#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(54,2,100) // libavcodec 54.2.100
   out_size = avcodec_encode_video(pCodecCtx, outbuf, outbuf_size, pFrame);
   fwrite(outbuf, 1, (size_t)out_size, f);
+#else
+  AVPacket pkt;
+  av_init_packet(&pkt);
+  pkt.data = NULL;    // packet data will be allocated by the encoder
+  pkt.size = 0;
+
+  int got_output;
+  int ret = avcodec_encode_video2(pCodecCtx, &pkt, pFrame, &got_output);
+  if (ret < 0) {
+    std::cerr << "Error encoding frame in " << __FILE__ << " " << __LINE__ << " " << __FUNCTION__ << std::endl;
+    return false;
+  }
+  if (got_output) {
+    fwrite(pkt.data, 1, pkt.size, f);
+    av_free_packet(&pkt);
+  }
+#endif
+
   fflush(stdout);
   return true;
 }
@@ -770,10 +825,29 @@ bool vpFFMPEG::endWrite()
     return false;
   }
   
-  while (out_size != 0)
+  int ret = 1;
+  while (ret != 0)
   {
-    out_size = avcodec_encode_video(pCodecCtx, outbuf, outbuf_size, NULL);
+
+#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(54,2,100) // libavcodec 54.2.100
+    ret = avcodec_encode_video(pCodecCtx, outbuf, outbuf_size, NULL);
     fwrite(outbuf, 1, (size_t)out_size, f);
+#else
+    AVPacket pkt;
+    av_init_packet(&pkt);
+    pkt.data = NULL;    // packet data will be allocated by the encoder
+    pkt.size = 0;
+    int got_output;
+    ret = avcodec_encode_video2(pCodecCtx, &pkt, NULL, &got_output);
+    if (ret < 0) {
+      std::cerr << "Error encoding frame in " << __FILE__ << " " << __LINE__ << " " << __FUNCTION__ << std::endl;
+      return false;
+    }
+    if (got_output) {
+      fwrite(pkt.data, 1, pkt.size, f);
+      av_free_packet(&pkt);
+    }
+#endif
   }
 
   /*The end of a mpeg file*/

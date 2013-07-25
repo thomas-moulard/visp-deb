@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpBSpline.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpBSpline.cpp 4303 2013-07-04 14:14:00Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -88,7 +88,7 @@ vpBSpline::~vpBSpline()
 unsigned int 
 vpBSpline::findSpan(double l_u, unsigned int l_p, std::vector<double> &l_knots)
 {
-  unsigned int m = l_knots.size()-1;
+  unsigned int m = (unsigned int)l_knots.size()-1;
 
   if(l_u > l_knots.back()) 
   {

@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpPlot.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpPlot.cpp 4151 2013-03-11 06:52:18Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -505,6 +505,31 @@ void
 vpPlot::setThickness (const unsigned int graphNum, const unsigned int curveNum, const unsigned int thickness)
 {
   (graphList+graphNum)->setCurveThickness(curveNum, thickness);
+}
+
+/*!
+This function enables you to choose the thickness used to draw all the curves belonging to a given graphic.
+
+  \param graphNum : The index of the graph in the window. As the number of graphic in a window is less or equal to 4, this parameter is between 0 and 3.
+  \param thickness : The thickness you want to use
+*/
+void
+vpPlot::setGraphThickness (const unsigned int graphNum, const unsigned int thickness)
+{
+  for (unsigned int curveNum=0; curveNum < (graphList+graphNum)->curveNbr; curveNum++)
+    (graphList+graphNum)->setCurveThickness(curveNum, thickness);
+}
+
+/*!
+  This function enables you to choose the thickness used to draw the grid and the axis of a given graphic.
+
+  \param graphNum : The index of the graph in the window. As the number of graphic in a window is less or equal to 4, this parameter is between 0 and 3.
+  \param thickness : The thickness you want to use
+*/
+void
+vpPlot::setGridThickness (const unsigned int graphNum, const unsigned int thickness)
+{
+  (graphList+graphNum)->setGridThickness(thickness);
 }
 
 /*!

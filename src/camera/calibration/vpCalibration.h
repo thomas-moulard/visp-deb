@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpCalibration.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpCalibration.h 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -82,10 +82,10 @@ public:
     Minimization algorithm use to estimate the camera parameters.
   */
   typedef enum{
-    CALIB_LAGRANGE,   /*!< Lagrange approach without estimation of the distorsion. */
-    CALIB_VIRTUAL_VS, /*!< Virtual visual servoing approach without estimation of the distorsion (results are similar to Lowe approach). */
+    CALIB_LAGRANGE,   /*!< Lagrange approach without estimation of the distortion. */
+    CALIB_VIRTUAL_VS, /*!< Virtual visual servoing approach without estimation of the distortion (results are similar to Lowe approach). */
     CALIB_VIRTUAL_VS_DIST, /*!< Virtual visual servoing approach with estimation of the distortion. */
-    CALIB_LAGRANGE_VIRTUAL_VS, /*!< Lagrange approach first, than virtual visual servoing approach,  without estimation of the distorsion. */
+    CALIB_LAGRANGE_VIRTUAL_VS, /*!< Lagrange approach first, than virtual visual servoing approach,  without estimation of the distortion. */
     CALIB_LAGRANGE_VIRTUAL_VS_DIST, /*!< Lagrange approach first, than virtual visual servoing approach, with estimation of the distortion. */
   } vpCalibrationMethodType ;
 
@@ -127,11 +127,8 @@ public:
   //!get the number of points
   unsigned int get_npt() const {return npt;}
 
-  static void calibrationTsai(unsigned int nbPose, vpHomogeneousMatrix cMo[],
-                              vpHomogeneousMatrix rMe[],
-                              vpHomogeneousMatrix &eMc);
   static void calibrationTsai(std::vector<vpHomogeneousMatrix> &cMo,
-                              std::vector<vpHomogeneousMatrix> & rMe,
+                              std::vector<vpHomogeneousMatrix> &rMe,
                               vpHomogeneousMatrix &eMc);
 
   void computeStdDeviation(double &deviation, double &deviation_dist);
@@ -139,13 +136,13 @@ public:
                          vpHomogeneousMatrix &cMo,
                          vpCameraParameters &cam,
                          bool verbose = false) ;
-  static int computeCalibrationMulti(vpCalibrationMethodType method,unsigned int nbPose,
-                                     vpCalibration table_cal[],
+  static int computeCalibrationMulti(vpCalibrationMethodType method,
+                                     std::vector<vpCalibration> &table_cal,
                                      vpCameraParameters &cam,
+                                     double &globalReprojectionError,
                                      bool verbose = false) ;
 
-  static int computeCalibrationTsai(unsigned int nbPose,
-                                    vpCalibration table_cal[],
+  static int computeCalibrationTsai(std::vector<vpCalibration> &table_cal,
                                     vpHomogeneousMatrix &eMc,
                                     vpHomogeneousMatrix &eMc_dist);
   double computeStdDeviation(vpHomogeneousMatrix &cMo,
@@ -172,6 +169,17 @@ public:
   /*!
     @name Deprecated functions
   */
+  static void calibrationTsai(unsigned int nbPose, vpHomogeneousMatrix cMo[],
+                              vpHomogeneousMatrix rMe[],
+                              vpHomogeneousMatrix &eMc);
+  static int computeCalibrationMulti(vpCalibrationMethodType method,unsigned int nbPose,
+                                     vpCalibration table_cal[],
+                                     vpCameraParameters &cam,
+                                     bool verbose = false) ;
+  vp_deprecated static int computeCalibrationTsai(unsigned int nbPose,
+                                                  vpCalibration table_cal[],
+                                                  vpHomogeneousMatrix &eMc,
+                                                  vpHomogeneousMatrix &eMc_dist);
   vp_deprecated static int readGrid(const char *filename,unsigned int &n,
                                     vpList<double> &oX,vpList<double> &oY,vpList<double> &oZ,
                                     bool verbose = false);
@@ -184,8 +192,12 @@ private:
   //! Compute the calibration using virtual visual servoing approach
   void calibVVS( vpCameraParameters &cam , vpHomogeneousMatrix &cMo,
                  bool verbose = false) ;
-  static void calibVVSMulti(unsigned int nbPose, vpCalibration table_cal[] ,
-                            vpCameraParameters &cam, bool verbose = false) ;
+
+  static void calibVVSMulti(unsigned int nbPose, vpCalibration table_cal[],
+                            vpCameraParameters &cam, bool verbose = false);
+  static void calibVVSMulti(std::vector<vpCalibration> &table_cal,
+                            vpCameraParameters &cam,
+                            double &globalReprojectionError, bool verbose = false) ;
   void calibVVSWithDistortion( vpCameraParameters &cam,
                                vpHomogeneousMatrix &cMo,
                                bool verbose = false) ;
@@ -193,6 +205,10 @@ private:
                                            vpCalibration table_cal[],
                                            vpCameraParameters &cam,
                                            bool verbose = false );
+  static void calibVVSWithDistortionMulti( std::vector<vpCalibration> &table_cal,
+                                           vpCameraParameters &cam,
+                                           double &globalReprojectionError,
+                                           bool verbose = false);
 
 private:
   unsigned int npt ;       //!< number of points used in calibration computation

@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMeNurbs.cpp 4137 2013-02-14 06:56:53Z fspindle $
+ * $Id: vpMeNurbs.cpp 4135 2013-02-13 16:48:19Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.

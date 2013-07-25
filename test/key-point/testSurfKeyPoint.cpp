@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: testSurfKeyPoint.cpp 4137 2013-02-14 06:56:53Z fspindle $
+ * $Id: testSurfKeyPoint.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -235,11 +235,11 @@ main(int argc, const char ** argv)
   try{
     vpCTRACE << "Load: " << filenameRef << std::endl;
 
-    vpImageIo::readPGM(Iref, filenameRef) ;
+    vpImageIo::read(Iref, filenameRef) ;
 
     vpCTRACE << "Load: " << filenameCur << std::endl;
 
-    vpImageIo::readPGM(Icur, filenameCur) ;
+    vpImageIo::read(Icur, filenameCur) ;
   }
   catch(...)
   {

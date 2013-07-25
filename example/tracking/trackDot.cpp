@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: trackDot.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: trackDot.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -309,7 +309,7 @@ main(int argc, const char ** argv)
   try{
     vpCTRACE << "Load: " << filename << std::endl;
 
-    vpImageIo::readPGM(I, filename) ;
+    vpImageIo::read(I, filename) ;
   }
   catch(...)
   {
@@ -409,7 +409,7 @@ main(int argc, const char ** argv)
       }
       // read the image
       std::cout << "read : " << filename << std::endl;
-      vpImageIo::readPGM(I, filename);
+      vpImageIo::read(I, filename);
 
       if (opt_display) {
         // Display the image
@@ -428,14 +428,18 @@ main(int argc, const char ** argv)
                 << " - "
                 << d.m10 / d.m00 << " " << d.m01 / d.m00 << std::endl;
       std::cout << "Size:" << std::endl;
-      std::cout << "w: " << d.getWidth() << " h: " << d.getHeight() << std::endl;
-      std::cout << "Moments: " << std::endl;
-      std::cout << "m00: " << d.m00 << std::endl;
-      std::cout << "m11: " << d.m11 << std::endl;
-      std::cout << "m02: " << d.m02 << std::endl;
-      std::cout << "m20: " << d.m20 << std::endl;
-      std::cout << "m10: " << d.m10 << std::endl;
-      std::cout << "m01: " << d.m01 << std::endl << std::endl;
+      std::cout << "  w: " << d.getWidth() << " h: " << d.getHeight() << std::endl;
+      std::cout << "Moments:" << std::endl;
+      std::cout << "  m00: " << d.m00 << std::endl;
+      std::cout << "  m10: " << d.m10 << std::endl;
+      std::cout << "  m01: " << d.m01 << std::endl;
+      std::cout << "  m11: " << d.m11 << std::endl;
+      std::cout << "  m02: " << d.m02 << std::endl;
+      std::cout << "  m20: " << d.m20 << std::endl;
+      std::cout << "Centered moments:" << std::endl;
+      std::cout << "  mu11: " << d.mu11 << std::endl;
+      std::cout << "  mu02: " << d.mu02 << std::endl;
+      std::cout << "  mu20: " << d.mu20 << std::endl;
 
       if (0) {
         std::list<vpImagePoint> edges = d.getEdges();

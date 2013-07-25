@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: testVideoDevice.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: testVideoDevice.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -317,12 +317,12 @@ main(int argc, const char ** argv)
     // Load a grey image from the disk
     filename = ipath +  vpIoTools::path("/ViSP-images/Klimt/Klimt.pgm");
     vpCTRACE << "Load " <<  filename << std::endl;
-    vpImageIo::readPGM(I, filename) ;
+    vpImageIo::read(I, filename) ;
 
     // Load a color image from the disk
     filename = ipath +  vpIoTools::path("/ViSP-images/Klimt/Klimt.ppm");
     vpCTRACE << "Load " <<  filename << std::endl;
-    vpImageIo::readPPM(Irgba, filename) ;
+    vpImageIo::read(Irgba, filename) ;
 
 
     // Create a display for the image

@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpDisplayD3D.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpDisplayD3D.cpp 4174 2013-03-22 10:28:41Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -54,6 +54,24 @@
   \brief Basic constructor.
 */
 vpDisplayD3D::vpDisplayD3D(): vpDisplayWin32(new vpD3DRenderer()){}
+
+/*!
+
+  \brief Constructor : Initialize a display.
+
+  \param winx, winy The window is set at position x,y (column index, row index).
+  \param _title  Window's title.
+
+*/
+vpDisplayD3D::vpDisplayD3D(int winx, int winy, const char *_title)
+  : vpDisplayWin32(new vpD3DRenderer())
+{
+  windowXPosition = winx;
+  windowYPosition = winy;
+
+  if (_title != NULL)
+    strcpy(this->title, _title);
+}
 
 /*!
 

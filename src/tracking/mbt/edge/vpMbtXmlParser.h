@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpMbtXmlParser.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpMbtXmlParser.h 4320 2013-07-17 15:37:27Z ayol $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -80,6 +80,16 @@ protected:
   double angleAppear;
   //! Angle to determine if a face disappeared
   double angleDisappear;
+  //! Is near clipping distance specified?
+  bool hasNearClipping;
+  //! Near clipping distance
+  double nearClipping;
+  //! Is far clipping distance specified?
+  bool hasFarClipping;
+  //! Near clipping distance
+  double farClipping;
+  //! Fov Clipping
+  bool fovClipping;
     
   typedef enum{
     conf,
@@ -99,6 +109,9 @@ protected:
     face,
     angle_appear,
     angle_disappear,
+    near_clipping,
+    far_clipping,
+    fov_clipping,
     camera,
     height,
     width,
@@ -129,7 +142,43 @@ public:
   inline double getAngleDisappear() const {return angleDisappear;}
   
   void getCameraParameters(vpCameraParameters& _cam) const { _cam = this->cam;}
+  
+  /*!
+    Get the far clipping distance.
+
+    \return farClipping
+  */
+  inline double getFarClippingDistance() const {return farClipping;}
+  
+  /*!
+    Use FOV clipping
+
+    \return True if yes, False otherwise.
+  */
+  inline bool getFovClipping() const {return fovClipping;}
+  
   void getMe(vpMe& _ecm) const { _ecm = this->m_ecm;}
+  
+  /*!
+    Get the near clipping distance.
+
+    \return nearClipping
+  */
+  inline double getNearClippingDistance() const {return nearClipping;}
+  
+  /*!
+    Has Far clipping been specified?
+
+    \return True if yes, False otherwise.
+  */
+  inline bool hasFarClippingDistance() const {return hasFarClipping;}
+  
+  /*!
+    Has Near clipping been specified?
+
+    \return True if yes, False otherwise.
+  */
+  inline bool hasNearClippingDistance() const {return hasNearClipping;}
   
 	void parse(const char * filename);
 
@@ -157,7 +206,22 @@ public:
   inline void setAngleDisappear(const double &adisappear) {angleDisappear = adisappear;}
   
   void setCameraParameters(const vpCameraParameters &_cam){ cam = _cam; }
+  
+  /*!
+    Set the far clipping distance.
+
+    \param fclip : New farClipping
+  */
+  inline void setFarClippingDistance(const double &fclip) {farClipping = fclip;}
+  
   void setMovingEdge(const vpMe &_ecm){ m_ecm = _ecm; }
+  
+  /*!
+    Set the near clipping distance.
+
+    \param nclip : New nearClipping
+  */
+  inline void setNearClippingDistance(const double &nclip) {nearClipping = nclip;}
 	
   void writeMainClass(xmlNodePtr node);
 	

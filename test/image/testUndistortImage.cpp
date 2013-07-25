@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: testUndistortImage.cpp 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: testUndistortImage.cpp 4323 2013-07-18 09:24:01Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -236,7 +236,6 @@ int main(int argc, const char ** argv)
     exit(-1);
   }
 
-
   //
   // Here starts really the test
   //
@@ -252,14 +251,11 @@ int main(int argc, const char ** argv)
   // Read the input grey image from the disk
 #if defined BW
   filename = ipath +  vpIoTools::path("/ViSP-images/Klimt/Klimt.pgm");
-  std::cout << "Read image: " << filename << std::endl;
-  vpImageIo::readPGM(I, filename) ;
 #elif defined COLOR
   filename = ipath +  vpIoTools::path("/ViSP-images/Klimt/Klimt.ppm");
-  std::cout << "Read image: " << filename << std::endl;
-  vpImageIo::readPPM(I, filename) ;
 #endif
-
+  std::cout << "Read image: " << filename << std::endl;
+  vpImageIo::read(I, filename) ;
 
   std::cout << "Undistortion in process... " << std::endl;
   vpImageTools::undistort(I, cam, U);
@@ -280,12 +276,9 @@ int main(int argc, const char ** argv)
   // Write the undistorted image on the disk
 #if defined BW
   filename = opath +  vpIoTools::path("/Klimt_undistorted.pgm");
-  std::cout << "Write undistorted image: " << filename << std::endl;
-  vpImageIo::writePGM(U, filename) ;
 #elif defined COLOR
   filename = opath +  vpIoTools::path("/Klimt_undistorted.ppm");
-  std::cout << "Write undistorted image: " << filename << std::endl;
-  vpImageIo::writePPM(U, filename) ;
 #endif
-
+  std::cout << "Write undistorted image: " << filename << std::endl;
+  vpImageIo::write(U, filename) ;
 }

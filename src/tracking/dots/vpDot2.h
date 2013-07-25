@@ -83,7 +83,7 @@
   be rejected if the shape is not ellipsoid. To determine if the shape
   is ellipsoid the algorithm consider an inner and outside ellipse.
   Sampled points on these two ellipses should have the right gray levels.
-  Along the inner ellipse the sampled points shoud have gray levels
+  Along the inner ellipse the sampled points should have gray levels
   that are in the gray level minimum and maximum bounds, while
   on the outside ellipse, the gray levels should be out of the gray level
   bounds. To set the percentage of the sample points which should have the right
@@ -97,7 +97,7 @@
   the blob could be rejected. To set the admissible distance you can
   use setSizePrecision().
 
-  track() and searchDotsInArea() are the most important features
+  Note that track() and searchDotsInArea() are the most important features
   of this class.
 
   - track() estimate the current position of the dot using its previous
@@ -109,41 +109,22 @@
     is used when there was a problem performing basic tracking of the dot, but
     can also be used to find a certain type of dots in the full image.
 
-  The following sample code shows how to grab images from a firewire camera,
-  track a blob and display the tracking results.
+  The following sample code available in tutorial-blob-tracker.cpp shows how to
+  grab images from a firewire camera, track a blob and display the tracking
+  results.
 
-  \code
-#include <visp/vpConfig.h>
-#include <visp/vp1394TwoGrabber.h>
-#include <visp/vpDisplayX.h>
-#include <visp/vpDot2.h>
-#include <visp/vpImage.h>
+  \include tutorial-blob-tracker.cpp
+  A line by line explanation of the previous example is provided in
+  \ref tutorial-tracking-blob.
 
-int main()
-{
-#if defined(VISP_HAVE_DC1394_2) && defined(VISP_HAVE_X11)
-  vpImage<unsigned char> I; // Create a gray level image container
-  vp1394TwoGrabber g(false); // Create a grabber based on libdc1394-2.x third party lib
-  g.acquire(I); // Acquire an image
+  This other example available in tutorial-blob-auto-tracker.cpp shows firstly
+  how to detect in the first image all the blobs that match some characteristics
+  in terms of size, area, gray level. Secondly, it shows how to track all the
+  dots that are detected.
 
-  vpDisplayX d(I, 0, 0, "Camera view");
-  vpDisplay::display(I);
-  vpDisplay::flush(I);
-
-  vpDot2 blob;
-  blob.initTracking(I);
-  blob.setGraphics(true);
-
-  while(1) {
-    g.acquire(I); // Acquire an image
-    vpDisplay::display(I);
-    blob.track(I);
-
-    vpDisplay::flush(I);
-  }
-#endif
-}
-  \endcode
+  \include tutorial-blob-auto-tracker.cpp
+  A line by line explanation of this last example is also provided in
+  \ref tutorial-tracking-blob, section \ref tracking_blob_tracking.
 
   \sa vpDot
 */
@@ -160,6 +141,7 @@ public:
   void display(const vpImage<unsigned char>& I, vpColor color = vpColor::red,
                unsigned int thickness=1);
 
+  double getArea() const;
   /*!
 
     Return the dot bounding box.
@@ -268,6 +250,7 @@ public:
 
   void searchDotsInArea(const vpImage<unsigned char>& I, std::list<vpDot2> &niceDots );
 
+  void setArea( const double & area );
   /*!
     Initialize the dot coordinates with \e cog. 
   */
@@ -335,12 +318,12 @@ public:
   void setGraphicsThickness(unsigned int thickness) {this->thickness = thickness;};
   /*!
 
-  Set the color level of the dot to search a dot in an area. This level will be
+  Set the color level of the dot to search a dot in a region of interest. This level will be
   used to know if a pixel in the image belongs to the dot or not. Only pixels
   with higher level can belong to the dot.  If the level is lower than the
   minimum level for a dot, set the level to MIN_IN_LEVEL.
 
-  \param min : Color level of a dot to search in an area.
+  \param min : Color level of a dot to search in a region of interest.
 
   \sa setGrayLevelMax(), setGrayLevelPrecision()
 
@@ -355,9 +338,9 @@ public:
   /*!
 
   Set the color level of pixels surrounding the dot. This is meant to be used
-  to search a dot in an area.
+  to search a dot in a region of interest.
 
-  \param max : Intensity level of a dot to search in an area.
+  \param max : Intensity level of a dot to search in a region of interest.
 
   \sa  setGrayLevelMin(), setGrayLevelPrecision()
   */
@@ -452,7 +435,7 @@ public:
   */
   /*!
 
-    \deprecated This method is deprecated. You shoud use
+    \deprecated This method is deprecated. You should use
     getEdges(std::list<vpImagePoint> &) instead.\n \n
     Return the list of all the image points on the dot
     border.

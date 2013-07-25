@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- * $Id: vpSubRowVector.h 4056 2013-01-05 13:04:42Z fspindle $
+ * $Id: vpSubRowVector.h 4317 2013-07-17 09:40:17Z fspindle $
  *
  * This file is part of the ViSP software.
  * Copyright (C) 2005 - 2013 by INRIA. All rights reserved.
@@ -79,9 +79,9 @@ class VISP_EXPORT vpSubRowVector : public vpRowVector {
       
   public:
 
-    //!Default contructor
+    //!Default constructor
     vpSubRowVector();
-    //!Contructor
+    //!Constructor
     vpSubRowVector(vpRowVector &v, const unsigned int & offset,const unsigned int & ncols);
     //!Destructor
     ~vpSubRowVector();
