@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 2.8.0 amd64 kfreebsd-amd64 kfreebsd-i386
+# SymbolsHelper-Confirmed: 2.8.0 amd64 i386 kfreebsd-amd64 kfreebsd-i386
 libvisp.so.2.8 libvisp2.8 #MINVER#
  Matrix_to_Position@Base 2.7.0
  Matrix_to_Rotate@Base 2.7.0
@@ -9,10 +9,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  Scale_to_Matrix@Base 2.7.0
  Translate_to_Matrix@Base 2.7.0
  View_to_Matrix@Base 2.7.0
- (optional=templinst|arch=i386)_Z5GEMM1ILj0EEvRKjS1_S1_RK8vpMatrixS4_RKdRS2_@Base 2.7.0
- (optional=templinst|arch=i386)_Z5GEMM1ILj1EEvRKjS1_S1_RK8vpMatrixS4_RKdRS2_@Base 2.7.0
- (optional=templinst|arch=i386)_Z5GEMM1ILj2EEvRKjS1_S1_RK8vpMatrixS4_RKdRS2_@Base 2.7.0
- (optional=templinst|arch=i386)_Z5GEMM1ILj3EEvRKjS1_S1_RK8vpMatrixS4_RKdRS2_@Base 2.7.0
  _Z5enormPKdi@Base 2.7.0
  _Z5lmderPFviiPdS_S_iiEiiS_S_S_idddjS_idiPiPjS2_S2_S_S_S_S_S_@Base 2.7.0
  _Z5lmpariPdiPiS_S_S_S_S_S_S_S_@Base 2.7.0
@@ -324,14 +320,14 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN11vpParseArgv12defaultTableE@Base 2.7.0
  _ZN11vpParseArgv5parseEPiPPKcPNS_10vpArgvInfoEi@Base 2.7.0
  _ZN11vpParseArgv5parseEiPPKcS1_S2_@Base 2.7.0
- (arch=amd64)_ZN11vpRingLight2onEv@Base 2.8.0
- (arch=amd64)_ZN11vpRingLight3offEv@Base 2.8.0
- (arch=amd64)_ZN11vpRingLight5pulseEd@Base 2.8.0
- (arch=amd64)_ZN11vpRingLight5pulseEv@Base 2.8.0
- (arch=amd64)_ZN11vpRingLightC1Ev@Base 2.8.0
- (arch=amd64)_ZN11vpRingLightC2Ev@Base 2.8.0
- (arch=amd64)_ZN11vpRingLightD1Ev@Base 2.8.0
- (arch=amd64)_ZN11vpRingLightD2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN11vpRingLight2onEv@Base 2.8.0
+ (arch=amd64 i386)_ZN11vpRingLight3offEv@Base 2.8.0
+ (arch=amd64 i386)_ZN11vpRingLight5pulseEd@Base 2.8.0
+ (arch=amd64 i386)_ZN11vpRingLight5pulseEv@Base 2.8.0
+ (arch=amd64 i386)_ZN11vpRingLightC1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN11vpRingLightC2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN11vpRingLightD1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN11vpRingLightD2Ev@Base 2.8.0
  _ZN11vpRowVector7reshapeER8vpMatrixRKjS3_@Base 2.7.0
  _ZN11vpRowVector7reshapeERKjS1_@Base 2.7.0
  _ZN11vpRowVector9normalizeEv@Base 2.7.0
@@ -677,8 +673,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN13vpImageFilter5cannyERK7vpImageIhERS1_jdj@Base 2.7.0
  _ZN13vpImageFilter6filterERK7vpImageIdERS1_S4_RK8vpMatrix@Base 2.7.0
  _ZN13vpImageFilter6filterERK7vpImageIhERS0_IdERK8vpMatrix@Base 2.7.0
- (arch=i386)_ZN13vpIoExceptionC1EiPKc@Base 2.7.0
- (arch=i386)_ZN13vpIoExceptionC2EiPKc@Base 2.7.0
  _ZN13vpIoExceptionD0Ev@Base 2.7.0
  _ZN13vpIoExceptionD1Ev@Base 2.7.0
  _ZN13vpIoExceptionD2Ev@Base 2.7.0
@@ -714,51 +708,50 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN13vpRobotCameraD0Ev@Base 2.7.0
  _ZN13vpRobotCameraD1Ev@Base 2.7.0
  _ZN13vpRobotCameraD2Ev@Base 2.7.0
- (arch=i386)_ZN13vpTraceOutput7displayEPKcPc@Base 2.7.0
  (arch=ia64 mips mipsel)_ZN13vpTraceOutput7displayEPKcPv@Base 2.7.0
  (arch=armhf)_ZN13vpTraceOutput7displayEPKcSt9__va_list@Base 2.7.0
- (arch=amd64)_ZN13vpV4l2Grabber10FRAME_SIZEE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber10MAX_FORMATE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber10MAX_INPUTSE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber11MAX_BUFFERSE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber11queueBufferEv@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber12getFramerateEv@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber12printBufInfoE11v4l2_buffer@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber12setFramerateENS_19vpV4l2FramerateTypeE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber13DEFAULT_INPUTE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber13DEFAULT_SCALEE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber13stopStreamingEv@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber14startStreamingEv@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber15getCapabilitiesEv@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber4openER7vpImageI6vpRGBaE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber4openER7vpImageIhE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber4openEv@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber5closeEv@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber6waitonERjR7timeval@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber7acquireER7vpImageI6vpRGBaE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber7acquireER7vpImageI6vpRGBaER7timeval@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber7acquireER7vpImageIhE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber7acquireER7vpImageIhER7timeval@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber8MAX_CTRLE@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber8MAX_NORME@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber8getFieldEv@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber8queueAllEv@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber8setInputEj@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber8setScaleEj@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2Grabber9setFormatEv@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberC1ER7vpImageI6vpRGBaEjj@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberC1ER7vpImageIhEjj@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberC1Eb@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberC1Ejj@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberC1Ev@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberC2ER7vpImageI6vpRGBaEjj@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberC2ER7vpImageIhEjj@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberC2Eb@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberC2Ejj@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberC2Ev@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberD0Ev@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberD1Ev@Base 2.8.0
- (arch=amd64)_ZN13vpV4l2GrabberD2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber10FRAME_SIZEE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber10MAX_FORMATE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber10MAX_INPUTSE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber11MAX_BUFFERSE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber11queueBufferEv@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber12getFramerateEv@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber12printBufInfoE11v4l2_buffer@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber12setFramerateENS_19vpV4l2FramerateTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber13DEFAULT_INPUTE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber13DEFAULT_SCALEE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber13stopStreamingEv@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber14startStreamingEv@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber15getCapabilitiesEv@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber4openER7vpImageI6vpRGBaE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber4openER7vpImageIhE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber4openEv@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber5closeEv@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber6waitonERjR7timeval@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber7acquireER7vpImageI6vpRGBaE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber7acquireER7vpImageI6vpRGBaER7timeval@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber7acquireER7vpImageIhE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber7acquireER7vpImageIhER7timeval@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber8MAX_CTRLE@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber8MAX_NORME@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber8getFieldEv@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber8queueAllEv@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber8setInputEj@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber8setScaleEj@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2Grabber9setFormatEv@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberC1ER7vpImageI6vpRGBaEjj@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberC1ER7vpImageIhEjj@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberC1Eb@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberC1Ejj@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberC1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberC2ER7vpImageI6vpRGBaEjj@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberC2ER7vpImageIhEjj@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberC2Eb@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberC2Ejj@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberC2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberD0Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberD1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN13vpV4l2GrabberD2Ev@Base 2.8.0
  _ZN13vpVideoReader11setFileNameEPKc@Base 2.7.0
  _ZN13vpVideoReader11setFileNameERKSs@Base 2.7.0
  _ZN13vpVideoReader12getExtensionERKSs@Base 2.7.0
@@ -972,14 +965,14 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN14vpMomentObject9fromImageERK7vpImageIhEhRK18vpCameraParameters@Base 2.7.0
  _ZN14vpMomentObjectC1Ej@Base 2.7.0
  _ZN14vpMomentObjectC2Ej@Base 2.7.0
- (arch=amd64)_ZN14vpParallelPort4openEv@Base 2.8.0
- (arch=amd64)_ZN14vpParallelPort5closeEv@Base 2.8.0
- (arch=amd64)_ZN14vpParallelPort7getDataEv@Base 2.8.0
- (arch=amd64)_ZN14vpParallelPort8sendDataERh@Base 2.8.0
- (arch=amd64)_ZN14vpParallelPortC1Ev@Base 2.8.0
- (arch=amd64)_ZN14vpParallelPortC2Ev@Base 2.8.0
- (arch=amd64)_ZN14vpParallelPortD1Ev@Base 2.8.0
- (arch=amd64)_ZN14vpParallelPortD2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN14vpParallelPort4openEv@Base 2.8.0
+ (arch=amd64 i386)_ZN14vpParallelPort5closeEv@Base 2.8.0
+ (arch=amd64 i386)_ZN14vpParallelPort7getDataEv@Base 2.8.0
+ (arch=amd64 i386)_ZN14vpParallelPort8sendDataERh@Base 2.8.0
+ (arch=amd64 i386)_ZN14vpParallelPortC1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN14vpParallelPortC2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN14vpParallelPortD1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN14vpParallelPortD2Ev@Base 2.8.0
  _ZN14vpPoseFeatures11computePoseER19vpHomogeneousMatrixRKNS_24vpPoseFeaturesMethodTypeE@Base 2.7.0
  _ZN14vpPoseFeatures14addFeatureLineERK10vpCylinderRKi@Base 2.7.0
  _ZN14vpPoseFeatures14addFeatureLineERK6vpLine@Base 2.7.0
@@ -994,14 +987,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN14vpPoseFeatures24addFeatureVanishingPointERK6vpLineS2_@Base 2.7.0
  _ZN14vpPoseFeatures24addFeatureVanishingPointERK7vpPoint@Base 2.7.0
  _ZN14vpPoseFeatures5clearEv@Base 2.7.0
- (optional=templinst|arch=i386)_ZN14vpPoseFeatures5vpDuoI13vpFeatureLine6vpLineED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZN14vpPoseFeatures5vpDuoI13vpFeatureLine6vpLineED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZN14vpPoseFeatures5vpDuoI14vpFeaturePoint7vpPointED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZN14vpPoseFeatures5vpDuoI14vpFeaturePoint7vpPointED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZN14vpPoseFeatures5vpDuoI16vpFeaturePoint3D7vpPointED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZN14vpPoseFeatures5vpDuoI16vpFeaturePoint3D7vpPointED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZN14vpPoseFeatures5vpDuoI23vpFeatureVanishingPoint7vpPointED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZN14vpPoseFeatures5vpDuoI23vpFeatureVanishingPoint7vpPointED2Ev@Base 2.7.0
  (optional=templinst)_ZN14vpPoseFeatures6vpTrioI16vpFeatureSegment7vpPointS2_ED1Ev@Base 2.7.0
  (optional=templinst)_ZN14vpPoseFeatures6vpTrioI16vpFeatureSegment7vpPointS2_ED2Ev@Base 2.7.0
  (optional=templinst)_ZN14vpPoseFeatures6vpTrioI23vpFeatureVanishingPoint6vpLineS2_ED1Ev@Base 2.7.0
@@ -1194,8 +1179,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN15vpMbEdgeTrackerD0Ev@Base 2.7.0
  _ZN15vpMbEdgeTrackerD1Ev@Base 2.7.0
  _ZN15vpMbEdgeTrackerD2Ev@Base 2.7.0
- (optional=templinst|arch=armhf i386)_ZN15vpMbHiddenFacesI12vpMbtPolygonE14setVisibleOgreERK19vpHomogeneousMatrixRKdS6_Rb@Base 2.7.0
- (optional=templinst|arch=i386)_ZN15vpMbHiddenFacesI15vpMbtKltPolygonE5resetEv@Base 2.7.0
  _ZN15vpMbtKltPolygon10updateMaskEP9_IplImagejj@Base 2.7.0
  _ZN15vpMbtKltPolygon14removeOutliersERK11vpColVectorRKd@Base 2.7.0
  _ZN15vpMbtKltPolygon16compute_1_over_ZEdd@Base 2.7.0
@@ -1232,8 +1215,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN15vpOpenCVGrabberD0Ev@Base 2.7.0
  _ZN15vpOpenCVGrabberD1Ev@Base 2.7.0
  _ZN15vpOpenCVGrabberD2Ev@Base 2.7.0
- (arch=i386)_ZN15vpPoseExceptionC1EiPKc@Base 2.7.0
- (arch=i386)_ZN15vpPoseExceptionC2EiPKc@Base 2.7.0
  _ZN15vpPoseExceptionD0Ev@Base 2.7.0
  _ZN15vpPoseExceptionD1Ev@Base 2.7.0
  _ZN15vpPoseExceptionD2Ev@Base 2.7.0
@@ -1253,80 +1234,80 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN15vpRobotTemplateD0Ev@Base 2.7.0
  _ZN15vpRobotTemplateD1Ev@Base 2.7.0
  _ZN15vpRobotTemplateD2Ev@Base 2.7.0
- (arch=amd64)_ZN16vp1394TwoGrabber10initializeEb@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber10setCaptureE14dc1394switch_t@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber11getAutoGainERjS0_@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber11setAutoGainEjj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber11setAutoGainEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber12getFramerateERNS_22vp1394TwoFramerateTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber12getVideoModeERNS_22vp1394TwoVideoModeTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber12setFramerateENS_22vp1394TwoFramerateTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber12setVideoModeENS_22vp1394TwoVideoModeTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber12strFramerateE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber12strVideoModeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber13getNumCamerasERj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber13getNumCamerasEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber13setFormat7ROIEjjjj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber13setPanControlEj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber14getAutoShutterERjS0_@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber14getColorCodingERNS_24vp1394TwoColorCodingTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber14setAutoShutterEjj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber14setAutoShutterEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber14setColorCodingENS_24vp1394TwoColorCodingTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber14strColorCodingE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber15printCameraInfoEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber15setTransmissionE14dc1394switch_t@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber16framerate2stringENS_22vp1394TwoFramerateTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber16string2framerateESs@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber16string2videoModeESs@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber16videoMode2stringENS_22vp1394TwoVideoModeTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber17getParameterValueENS_23vp1394TwoParametersTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber17getRingBufferSizeEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber17setParameterValueENS_23vp1394TwoParametersTypeEj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber17setRingBufferSizeEj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber18colorCoding2stringENS_24vp1394TwoColorCodingTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber18isVideoModeFormat7ENS_22vp1394TwoVideoModeTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber18string2colorCodingESs@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber20isFramerateSupportedENS_22vp1394TwoVideoModeTypeENS_22vp1394TwoFramerateTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber20isVideoModeSupportedENS_22vp1394TwoVideoModeTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber21getFramerateSupportedENS_22vp1394TwoVideoModeTypeER6vpListINS_22vp1394TwoFramerateTypeEE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber21getFramerateSupportedENS_22vp1394TwoVideoModeTypeERSt4listINS_22vp1394TwoFramerateTypeESaIS2_EE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber21getVideoModeSupportedER6vpListINS_22vp1394TwoVideoModeTypeEE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber21getVideoModeSupportedERSt4listINS_22vp1394TwoVideoModeTypeESaIS1_EE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber22isColorCodingSupportedENS_22vp1394TwoVideoModeTypeENS_24vp1394TwoColorCodingTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber23getColorCodingSupportedENS_22vp1394TwoVideoModeTypeER6vpListINS_24vp1394TwoColorCodingTypeEE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber23getColorCodingSupportedENS_22vp1394TwoVideoModeTypeERSt4listINS_24vp1394TwoColorCodingTypeESaIS2_EE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber23setIsoTransmissionSpeedENS_21vp1394TwoIsoSpeedTypeE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber4openER7vpImageI6vpRGBaE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber4openER7vpImageIhE@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber4openEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber5closeEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber7acquireER7vpImageI6vpRGBaE@Base 2.8.0
- (subst|arch=amd64)_ZN16vp1394TwoGrabber7acquireER7vpImageI6vpRGBaER{uint64_t}Rj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber7acquireER7vpImageIhE@Base 2.8.0
- (subst|arch=amd64)_ZN16vp1394TwoGrabber7acquireER7vpImageIhER{uint64_t}Rj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber7dequeueER7vpImageI6vpRGBaE@Base 2.8.0
- (subst|arch=amd64)_ZN16vp1394TwoGrabber7dequeueER7vpImageI6vpRGBaER{uint64_t}Rj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber7dequeueER7vpImageIhE@Base 2.8.0
- (subst|arch=amd64)_ZN16vp1394TwoGrabber7dequeueER7vpImageIhER{uint64_t}Rj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber7dequeueEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber7enqueueEP20__dc1394_video_frame@Base 2.8.0
- (subst|arch=amd64)_ZN16vp1394TwoGrabber7getGuidER{uint64_t}@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber7getGuidEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber7isColorEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber8getWidthERj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber8getWidthEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber8resetBusEv@Base 2.8.0
- (subst|arch=amd64)_ZN16vp1394TwoGrabber9getCameraER{uint64_t}@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber9getCameraEv@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber9getHeightERj@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabber9getHeightEv@Base 2.8.0
- (subst|arch=amd64)_ZN16vp1394TwoGrabber9setCameraE{uint64_t}@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabberC1Eb@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabberC2Eb@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabberD0Ev@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabberD1Ev@Base 2.8.0
- (arch=amd64)_ZN16vp1394TwoGrabberD2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber10initializeEb@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber10setCaptureE14dc1394switch_t@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber11getAutoGainERjS0_@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber11setAutoGainEjj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber11setAutoGainEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber12getFramerateERNS_22vp1394TwoFramerateTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber12getVideoModeERNS_22vp1394TwoVideoModeTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber12setFramerateENS_22vp1394TwoFramerateTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber12setVideoModeENS_22vp1394TwoVideoModeTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber12strFramerateE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber12strVideoModeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber13getNumCamerasERj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber13getNumCamerasEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber13setFormat7ROIEjjjj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber13setPanControlEj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber14getAutoShutterERjS0_@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber14getColorCodingERNS_24vp1394TwoColorCodingTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber14setAutoShutterEjj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber14setAutoShutterEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber14setColorCodingENS_24vp1394TwoColorCodingTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber14strColorCodingE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber15printCameraInfoEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber15setTransmissionE14dc1394switch_t@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber16framerate2stringENS_22vp1394TwoFramerateTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber16string2framerateESs@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber16string2videoModeESs@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber16videoMode2stringENS_22vp1394TwoVideoModeTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber17getParameterValueENS_23vp1394TwoParametersTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber17getRingBufferSizeEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber17setParameterValueENS_23vp1394TwoParametersTypeEj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber17setRingBufferSizeEj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber18colorCoding2stringENS_24vp1394TwoColorCodingTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber18isVideoModeFormat7ENS_22vp1394TwoVideoModeTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber18string2colorCodingESs@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber20isFramerateSupportedENS_22vp1394TwoVideoModeTypeENS_22vp1394TwoFramerateTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber20isVideoModeSupportedENS_22vp1394TwoVideoModeTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber21getFramerateSupportedENS_22vp1394TwoVideoModeTypeER6vpListINS_22vp1394TwoFramerateTypeEE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber21getFramerateSupportedENS_22vp1394TwoVideoModeTypeERSt4listINS_22vp1394TwoFramerateTypeESaIS2_EE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber21getVideoModeSupportedER6vpListINS_22vp1394TwoVideoModeTypeEE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber21getVideoModeSupportedERSt4listINS_22vp1394TwoVideoModeTypeESaIS1_EE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber22isColorCodingSupportedENS_22vp1394TwoVideoModeTypeENS_24vp1394TwoColorCodingTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber23getColorCodingSupportedENS_22vp1394TwoVideoModeTypeER6vpListINS_24vp1394TwoColorCodingTypeEE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber23getColorCodingSupportedENS_22vp1394TwoVideoModeTypeERSt4listINS_24vp1394TwoColorCodingTypeESaIS2_EE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber23setIsoTransmissionSpeedENS_21vp1394TwoIsoSpeedTypeE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber4openER7vpImageI6vpRGBaE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber4openER7vpImageIhE@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber4openEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber5closeEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber7acquireER7vpImageI6vpRGBaE@Base 2.8.0
+ (subst|arch=amd64 i386)_ZN16vp1394TwoGrabber7acquireER7vpImageI6vpRGBaER{uint64_t}Rj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber7acquireER7vpImageIhE@Base 2.8.0
+ (subst|arch=amd64 i386)_ZN16vp1394TwoGrabber7acquireER7vpImageIhER{uint64_t}Rj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber7dequeueER7vpImageI6vpRGBaE@Base 2.8.0
+ (subst|arch=amd64 i386)_ZN16vp1394TwoGrabber7dequeueER7vpImageI6vpRGBaER{uint64_t}Rj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber7dequeueER7vpImageIhE@Base 2.8.0
+ (subst|arch=amd64 i386)_ZN16vp1394TwoGrabber7dequeueER7vpImageIhER{uint64_t}Rj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber7dequeueEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber7enqueueEP20__dc1394_video_frame@Base 2.8.0
+ (subst|arch=amd64 i386)_ZN16vp1394TwoGrabber7getGuidER{uint64_t}@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber7getGuidEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber7isColorEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber8getWidthERj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber8getWidthEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber8resetBusEv@Base 2.8.0
+ (subst|arch=amd64 i386)_ZN16vp1394TwoGrabber9getCameraER{uint64_t}@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber9getCameraEv@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber9getHeightERj@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabber9getHeightEv@Base 2.8.0
+ (subst|arch=amd64 i386)_ZN16vp1394TwoGrabber9setCameraE{uint64_t}@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabberC1Eb@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabberC2Eb@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabberD0Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabberD1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN16vp1394TwoGrabberD2Ev@Base 2.8.0
  _ZN16vpAdaptativeGain11setConstantEv@Base 2.7.0
  _ZN16vpAdaptativeGain12initFromVoidEv@Base 2.7.0
  _ZN16vpAdaptativeGain12initStandardEddd@Base 2.7.0
@@ -1503,8 +1484,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN16vpMomentDatabaseD0Ev@Base 2.7.0
  _ZN16vpMomentDatabaseD1Ev@Base 2.7.0
  _ZN16vpMomentDatabaseD2Ev@Base 2.7.0
- (arch=i386)_ZN16vpRobotExceptionC1EiPKc@Base 2.7.0
- (arch=i386)_ZN16vpRobotExceptionC2EiPKc@Base 2.7.0
  _ZN16vpRobotExceptionD0Ev@Base 2.7.0
  _ZN16vpRobotExceptionD1Ev@Base 2.7.0
  _ZN16vpRobotExceptionD2Ev@Base 2.7.0
@@ -1550,8 +1529,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN16vpRotationVector4initEj@Base 2.7.0
  _ZN16vpRotationVectorD1Ev@Base 2.7.0
  _ZN16vpRotationVectorD2Ev@Base 2.7.0
- (arch=i386)_ZN16vpServoExceptionC1EiPKc@Base 2.7.0
- (arch=i386)_ZN16vpServoExceptionC2EiPKc@Base 2.7.0
  _ZN16vpServoExceptionD0Ev@Base 2.7.0
  _ZN16vpServoExceptionD1Ev@Base 2.7.0
  _ZN16vpServoExceptionD2Ev@Base 2.7.0
@@ -1603,10 +1580,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN16vpSimulatorAfma6D0Ev@Base 2.7.0
  _ZN16vpSimulatorAfma6D1Ev@Base 2.7.0
  _ZN16vpSimulatorAfma6D2Ev@Base 2.7.0
- (arch=i386)_ZN17vpMatrixExceptionC1ERKS_@Base 2.7.0
- (arch=i386)_ZN17vpMatrixExceptionC1Ei@Base 2.7.0
- (arch=i386)_ZN17vpMatrixExceptionC2ERKS_@Base 2.7.0
- (arch=i386)_ZN17vpMatrixExceptionC2Ei@Base 2.7.0
  _ZN17vpMatrixExceptionD0Ev@Base 2.7.0
  _ZN17vpMatrixExceptionD1Ev@Base 2.7.0
  _ZN17vpMatrixExceptionD2Ev@Base 2.7.0
@@ -1923,8 +1896,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN19vpSimulatorViper850D0Ev@Base 2.7.0
  _ZN19vpSimulatorViper850D1Ev@Base 2.7.0
  _ZN19vpSimulatorViper850D2Ev@Base 2.7.0
- (arch=i386)_ZN19vpTrackingExceptionC1EiPKc@Base 2.7.0
- (arch=i386)_ZN19vpTrackingExceptionC2EiPKc@Base 2.7.0
  _ZN19vpTrackingExceptionD0Ev@Base 2.7.0
  _ZN19vpTrackingExceptionD1Ev@Base 2.7.0
  _ZN19vpTrackingExceptionD2Ev@Base 2.7.0
@@ -1935,10 +1906,10 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN19vpTranslationVector5crossERKS_S1_@Base 2.7.0
  _ZN19vpTranslationVectorC1ERKS_@Base 2.7.0
  _ZN19vpTranslationVectorC1Eddd@Base 2.7.0
- (arch=amd64)_ZN19vpTranslationVectorC1Ev@Base 2.7.0
+ (arch=amd64 i386)_ZN19vpTranslationVectorC1Ev@Base 2.8.0
  _ZN19vpTranslationVectorC2ERKS_@Base 2.7.0
  _ZN19vpTranslationVectorC2Eddd@Base 2.7.0
- (arch=amd64)_ZN19vpTranslationVectorC2Ev@Base 2.7.0
+ (arch=amd64 i386)_ZN19vpTranslationVectorC2Ev@Base 2.8.0
  _ZN19vpTranslationVectorD0Ev@Base 2.7.0
  _ZN19vpTranslationVectorD1Ev@Base 2.7.0
  _ZN19vpTranslationVectorD2Ev@Base 2.7.0
@@ -2079,7 +2050,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN22vpCalibrationExceptionD2Ev@Base 2.7.0
  _ZN22vpMeterPixelConversion11convertLineERK18vpCameraParametersRKdS4_RdS5_@Base 2.7.0
  (arch=!armhf !ia64 !kfreebsd-amd64 !kfreebsd-i386 !mips !mipsel)_ZN22vpMeterPixelConversion12convertPointERK18vpCameraParametersRKdS4_R12vpImagePoint@Base 2.7.0
- (arch=i386)_ZN22vpMeterPixelConversion26convertPointWithDistortionERK18vpCameraParametersRKdS4_R12vpImagePoint@Base 2.7.0
  _ZN22vpMomentAreaNormalized4nameEv@Base 2.7.0
  _ZN22vpMomentAreaNormalized7computeEv@Base 2.7.0
  _ZN22vpMomentAreaNormalizedC1Edd@Base 2.7.0
@@ -2093,7 +2063,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN22vpMomentGenericFeatureD1Ev@Base 2.7.0
  _ZN22vpMomentGenericFeatureD2Ev@Base 2.7.0
  _ZN22vpPixelMeterConversion11convertLineERK18vpCameraParametersRKdS4_RdS5_@Base 2.7.0
- (arch=amd64)_ZN22vpPixelMeterConversion12convertPointERK18vpCameraParametersRK12vpImagePointRdS6_@Base 2.7.0
+ (arch=amd64 i386)_ZN22vpPixelMeterConversion12convertPointERK18vpCameraParametersRK12vpImagePointRdS6_@Base 2.8.0
  _ZN22vpPixelMeterConversion13convertMomentERK18vpCameraParametersjRK8vpMatrixRS3_@Base 2.7.0
  _ZN22vpPlanarObjectDetector10computeRoiEP12vpImagePointj@Base 2.7.0
  _ZN22vpPlanarObjectDetector10matchPointERK7vpImageIhE6vpRect@Base 2.7.0
@@ -2148,9 +2118,9 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN23vpFrameGrabberExceptionD0Ev@Base 2.7.0
  _ZN23vpFrameGrabberExceptionD1Ev@Base 2.7.0
  _ZN23vpFrameGrabberExceptionD2Ev@Base 2.7.0
- (arch=amd64)_ZN23vpParallelPortExceptionD0Ev@Base 2.8.0
- (arch=amd64)_ZN23vpParallelPortExceptionD1Ev@Base 2.8.0
- (arch=amd64)_ZN23vpParallelPortExceptionD2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN23vpParallelPortExceptionD0Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN23vpParallelPortExceptionD1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN23vpParallelPortExceptionD2Ev@Base 2.8.0
  _ZN25vpFeatureMomentCInvariant10momentNameEv@Base 2.7.0
  _ZN25vpFeatureMomentCInvariant19compute_interactionEv@Base 2.7.0
  _ZN25vpFeatureMomentCInvariant4nameEv@Base 2.7.0
@@ -2204,10 +2174,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN38vpFeatureMomentGravityCenterNormalizedD0Ev@Base 2.7.0
  _ZN38vpFeatureMomentGravityCenterNormalizedD1Ev@Base 2.7.0
  _ZN38vpFeatureMomentGravityCenterNormalizedD2Ev@Base 2.7.0
- (arch=i386)_ZN4Ogre13_ConfigOptionC1ERKS0_@Base 2.7.0
- (arch=i386)_ZN4Ogre13_ConfigOptionC2ERKS0_@Base 2.7.0
- (optional=templinst|arch=i386)_ZN4Ogre9SharedPtrINS_19HardwarePixelBufferEEC1ERKS2_@Base 2.7.0
- (optional=templinst|arch=i386)_ZN4Ogre9SharedPtrINS_19HardwarePixelBufferEEC2ERKS2_@Base 2.7.0
  _ZN4vpMe11setMaskSizeERKj@Base 2.7.0
  _ZN4vpMe13setMaskNumberERKj@Base 2.7.0
  _ZN4vpMe5printEv@Base 2.7.0
@@ -2220,16 +2186,15 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN4vpMeD1Ev@Base 2.7.0
  _ZN4vpMeD2Ev@Base 2.7.0
  _ZN4vpMeaSERKS_@Base 2.7.0
- (arch=amd64)_ZN5boost10lock_errorD0Ev@Base 2.8.0
- (arch=amd64)_ZN5boost10lock_errorD1Ev@Base 2.8.0
- (arch=amd64)_ZN5boost10lock_errorD2Ev@Base 2.8.0
- (arch=armhf i386)_ZN5boost16exception_detail20copy_boost_exceptionEPNS_9exceptionEPKS1_@Base 2.7.0
- (arch=amd64)_ZN5boost16thread_exceptionD0Ev@Base 2.8.0
- (arch=amd64)_ZN5boost16thread_exceptionD1Ev@Base 2.8.0
- (arch=amd64)_ZN5boost16thread_exceptionD2Ev@Base 2.8.0
- (arch=amd64)_ZN5boost9exceptionD0Ev@Base 2.8.0
- (arch=amd64)_ZN5boost9exceptionD1Ev@Base 2.8.0
- (arch=amd64)_ZN5boost9exceptionD2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN5boost10lock_errorD0Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN5boost10lock_errorD1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN5boost10lock_errorD2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN5boost16thread_exceptionD0Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN5boost16thread_exceptionD1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN5boost16thread_exceptionD2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN5boost9exceptionD0Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN5boost9exceptionD1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN5boost9exceptionD2Ev@Base 2.8.0
  _ZN5vpDot12initTrackingERK7vpImageIhE@Base 2.7.0
  _ZN5vpDot12initTrackingERK7vpImageIhERK12vpImagePoint@Base 2.7.0
  _ZN5vpDot12initTrackingERK7vpImageIhERK12vpImagePointjj@Base 2.7.0
@@ -2320,8 +2285,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN6vpLineD0Ev@Base 2.7.0
  _ZN6vpLineD1Ev@Base 2.7.0
  _ZN6vpLineD2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZN6vpListI15vpHistogramPeakE4initEv@Base 2.7.0
- (optional=templinst|arch=i386)_ZN6vpListI15vpHistogramPeakEaSERKS1_@Base 2.7.0
  _ZN6vpMath10ang_min_mcE@Base 2.7.0
  _ZN6vpMath12ang_min_sincE@Base 2.7.0
  _ZN6vpPlot11displayGridEv@Base 2.7.0
@@ -2628,48 +2591,48 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN7vpViperD0Ev@Base 2.7.0
  _ZN7vpViperD1Ev@Base 2.7.0
  _ZN7vpViperD2Ev@Base 2.7.0
- (arch=amd64)_ZN8vpAROgre10frameEndedERKN4Ogre10FrameEventE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre10keyPressedERKN3OIS8KeyEventE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre11addRotationERKSsRK16vpRotationMatrix@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre11createSceneEv@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre11keyReleasedERKN3OIS8KeyEventE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre11setPositionERKSsRK19vpHomogeneousMatrix@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre11setPositionERKSsRK19vpTranslationVector@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre11setRotationERKSsRK16vpRotationMatrix@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre11updateSceneERKN4Ogre10FrameEventE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre12createCameraEv@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre12destroySceneEv@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre12frameStartedERKN4Ogre10FrameEventE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre12windowClosedEPN4Ogre12RenderWindowE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre13setVisibilityERKSsb@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre14renderOneFrameERK7vpImageI6vpRGBaERK19vpHomogeneousMatrix@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre14renderOneFrameERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre16createBackgroundER7vpImageI6vpRGBaE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre16createBackgroundER7vpImageIhE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre16customframeEndedERKN4Ogre10FrameEventE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre17continueRenderingEv@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre17processInputEventERKN4Ogre10FrameEventE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre18customframeStartedERKN4Ogre10FrameEventE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre18getRenderingOutputER7vpImageI6vpRGBaERK19vpHomogeneousMatrix@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre19setCameraParametersERK18vpCameraParameters@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre22updateCameraParametersERK19vpHomogeneousMatrix@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre22updateCameraProjectionEv@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre23updateBackgroundTextureERK7vpImageI6vpRGBaE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre23updateBackgroundTextureERK7vpImageIhE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre4initER7vpImageI6vpRGBaEbb@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre4initER7vpImageIhEbb@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre4initEbb@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre4loadERKSsS1_@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre7displayERK7vpImageI6vpRGBaERK19vpHomogeneousMatrix@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre7displayERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre8closeOISEv@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre8setScaleERKSsfff@Base 2.8.0
- (arch=amd64)_ZN8vpAROgre8stopTestERKN4Ogre10FrameEventE@Base 2.8.0
- (arch=amd64)_ZN8vpAROgreC1ERK18vpCameraParametersjjPKcS4_@Base 2.8.0
- (arch=amd64)_ZN8vpAROgreC2ERK18vpCameraParametersjjPKcS4_@Base 2.8.0
- (arch=amd64)_ZN8vpAROgreD0Ev@Base 2.8.0
- (arch=amd64)_ZN8vpAROgreD1Ev@Base 2.8.0
- (arch=amd64)_ZN8vpAROgreD2Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre10frameEndedERKN4Ogre10FrameEventE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre10keyPressedERKN3OIS8KeyEventE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre11addRotationERKSsRK16vpRotationMatrix@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre11createSceneEv@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre11keyReleasedERKN3OIS8KeyEventE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre11setPositionERKSsRK19vpHomogeneousMatrix@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre11setPositionERKSsRK19vpTranslationVector@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre11setRotationERKSsRK16vpRotationMatrix@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre11updateSceneERKN4Ogre10FrameEventE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre12createCameraEv@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre12destroySceneEv@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre12frameStartedERKN4Ogre10FrameEventE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre12windowClosedEPN4Ogre12RenderWindowE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre13setVisibilityERKSsb@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre14renderOneFrameERK7vpImageI6vpRGBaERK19vpHomogeneousMatrix@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre14renderOneFrameERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre16createBackgroundER7vpImageI6vpRGBaE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre16createBackgroundER7vpImageIhE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre16customframeEndedERKN4Ogre10FrameEventE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre17continueRenderingEv@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre17processInputEventERKN4Ogre10FrameEventE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre18customframeStartedERKN4Ogre10FrameEventE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre18getRenderingOutputER7vpImageI6vpRGBaERK19vpHomogeneousMatrix@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre19setCameraParametersERK18vpCameraParameters@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre22updateCameraParametersERK19vpHomogeneousMatrix@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre22updateCameraProjectionEv@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre23updateBackgroundTextureERK7vpImageI6vpRGBaE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre23updateBackgroundTextureERK7vpImageIhE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre4initER7vpImageI6vpRGBaEbb@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre4initER7vpImageIhEbb@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre4initEbb@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre4loadERKSsS1_@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre7displayERK7vpImageI6vpRGBaERK19vpHomogeneousMatrix@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre7displayERK7vpImageIhERK19vpHomogeneousMatrix@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre8closeOISEv@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre8setScaleERKSsfff@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgre8stopTestERKN4Ogre10FrameEventE@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgreC1ERK18vpCameraParametersjjPKcS4_@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgreC2ERK18vpCameraParametersjjPKcS4_@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgreD0Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgreD1Ev@Base 2.8.0
+ (arch=amd64 i386)_ZN8vpAROgreD2Ev@Base 2.8.0
  _ZN8vpCircle10projectionERK11vpColVectorRS0_@Base 2.7.0
  _ZN8vpCircle10projectionEv@Base 2.7.0
  _ZN8vpCircle11changeFrameERK19vpHomogeneousMatrix@Base 2.7.0
@@ -3157,8 +3120,6 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZN9vpMeNurbsD0Ev@Base 2.7.0
  _ZN9vpMeNurbsD1Ev@Base 2.7.0
  _ZN9vpMeNurbsD2Ev@Base 2.7.0
- (arch=i386)_ZN9vpNetwork10vpReceptorD1Ev@Base 2.7.0
- (arch=i386)_ZN9vpNetwork10vpReceptorD2Ev@Base 2.7.0
  _ZN9vpNetwork11sendRequestER9vpRequest@Base 2.7.0
  _ZN9vpNetwork13sendRequestToER9vpRequestRKj@Base 2.7.0
  _ZN9vpNetwork14receiveRequestEv@Base 2.7.0
@@ -3421,7 +3382,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZNK23vpFeatureVanishingPoint7displayERK18vpCameraParametersRK7vpImageI6vpRGBaERK7vpColorj@Base 2.7.0
  _ZNK23vpFeatureVanishingPoint7displayERK18vpCameraParametersRK7vpImageIhERK7vpColorj@Base 2.7.0
  _ZNK23vpFeatureVanishingPoint9duplicateEv@Base 2.7.0
- (arch=amd64)_ZNK5boost10lock_error4whatEv@Base 2.8.0
+ (arch=amd64 i386)_ZNK5boost10lock_error4whatEv@Base 2.8.0
  _ZNK6vpDot210getSurfaceEv@Base 2.7.0
  _ZNK6vpDot211getDistanceERKS_@Base 2.7.0
  _ZNK6vpDot212hasGoodLevelERK7vpImageIhERKjS5_@Base 2.7.0
@@ -3454,7 +3415,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZNK7vpPoint9duplicateEv@Base 2.7.0
  _ZNK7vpRobot22getMaxRotationVelocityEv@Base 2.7.0
  _ZNK7vpRobot25getMaxTranslationVelocityEv@Base 2.7.0
- (arch=amd64)_ZNK8vpAROgre11getPositionERKSs@Base 2.8.0
+ (arch=amd64 i386)_ZNK8vpAROgre11getPositionERKSs@Base 2.8.0
  _ZNK8vpCircle9duplicateEv@Base 2.7.0
  _ZNK8vpMatrix10solveBySVDERK11vpColVector@Base 2.7.0
  _ZNK8vpMatrix10solveBySVDERK11vpColVectorRS0_@Base 2.7.0
@@ -3495,58 +3456,21 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZNK8vpSphere9duplicateEv@Base 2.7.0
  _ZNK9vpMeNurbs12hasGoodLevelERK7vpImageIhERK12vpImagePoint@Base 2.7.0
  _ZNK9vpMeNurbs9isInImageERK7vpImageIhERK12vpImagePoint@Base 2.7.0
- (optional=templinst|arch=i386|subst)_ZNKSt6vectorI12vpImagePointSaIS0_EE12_M_check_lenE{size_t}PKc@Base 2.7.0
- (optional=templinst|subst|arch=amd64)_ZNKSt6vectorI7vpPointSaIS0_EE12_M_check_lenE{size_t}PKc@Base 2.7.0
- (optional=templinst|arch=i386|subst)_ZNKSt6vectorIP12vpMbtPolygonSaIS1_EE12_M_check_lenE{size_t}PKc@Base 2.7.0
- (optional=templinst|arch=i386|subst)_ZNKSt6vectorIP15vpMbtKltPolygonSaIS1_EE12_M_check_lenE{size_t}PKc@Base 2.7.0
- (optional=templinst|arch=i386|subst)_ZNKSt6vectorIPK7vpImageIhESaIS3_EE12_M_check_lenE{size_t}PKc@Base 2.7.0
- (optional=templinst|arch=i386|subst)_ZNKSt6vectorIPN4Ogre12ManualObjectESaIS2_EE12_M_check_lenE{size_t}PKc@Base 2.7.0
- (optional=templinst|arch=i386|subst)_ZNKSt6vectorIbSaIbEE12_M_check_lenE{size_t}PKc@Base 2.7.0
+ (optional=templinst|subst|arch=amd64 i386)_ZNKSt6vectorI7vpPointSaIS0_EE12_M_check_lenE{size_t}PKc@Base 2.7.0
  (optional=templinst)_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag@Base 2.7.0
  (optional=templinst)_ZNSt10_List_baseI12vpImagePointSaIS0_EE8_M_clearEv@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt10_List_baseI15vpHistogramPeakSaIS0_EE8_M_clearEv@Base 2.7.0
  (optional=templinst)_ZNSt10_List_baseI16vpImageSimulatorSaIS0_EE8_M_clearEv@Base 2.7.0
  (optional=templinst)_ZNSt10_List_baseI19vpHomogeneousMatrixSaIS0_EE8_M_clearEv@Base 2.7.0
  (optional=templinst)_ZNSt10_List_baseI6vpDot2SaIS0_EE8_M_clearEv@Base 2.7.0
  (optional=templinst)_ZNSt10_List_baseI7vpPointSaIS0_EE8_M_clearEv@Base 2.7.0
  (optional=templinst)_ZNSt10_List_baseI8vpMeSiteSaIS0_EE8_M_clearEv@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt10_List_baseIP12indexFaceSetSaIS1_EE8_M_clearEv@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt10_List_baseIP17vpMbtDistanceLineSaIS1_EE8_M_clearEv@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt10_List_baseIP21vpMbtDistanceCylinderSaIS1_EE8_M_clearEv@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt10_List_baseISsSaISsEE8_M_clearEv@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt10_List_baseIdSaIdEE8_M_clearEv@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt10_List_baseIiSaIiEE8_M_clearEv@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt10_List_baseIjSaIjEE8_M_clearEv@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIP12vpMbtPolygonEEPT_PKS5_S8_S6_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIPK7vpImageIhEEEPT_PKS7_SA_S8_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIPN4Ogre12ManualObjectEEEPT_PKS6_S9_S7_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Destroy_auxILb0EE9__destroyIPN14vpPoseFeatures5vpDuoI13vpFeatureLine6vpLineEEEEvT_S8_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Destroy_auxILb0EE9__destroyIPN14vpPoseFeatures5vpDuoI14vpFeaturePoint7vpPointEEEEvT_S8_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Destroy_auxILb0EE9__destroyIPN14vpPoseFeatures5vpDuoI16vpFeaturePoint3D7vpPointEEEEvT_S8_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Destroy_auxILb0EE9__destroyIPN14vpPoseFeatures5vpDuoI23vpFeatureVanishingPoint7vpPointEEEEvT_S8_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Destroy_auxILb0EE9__destroyIPN14vpPoseFeatures6vpTrioI16vpFeatureSegment7vpPointS5_EEEEvT_S8_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Destroy_auxILb0EE9__destroyIPN14vpPoseFeatures6vpTrioI23vpFeatureVanishingPoint6vpLineS5_EEEEvT_S8_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Destroy_auxILb0EE9__destroyIPN9vpNetwork10vpReceptorEEEvT_S5_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Destroy_auxILb0EE9__destroyIPSsEEvT_S3_@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt10_List_baseISsSaISsEE8_M_clearEv@Base 2.7.0
  (optional=templinst)_ZNSt12_Destroy_auxILb0EE9__destroyIPSt4listIP17vpMbtDistanceLineSaIS4_EEEEvT_S8_@Base 2.7.0
  (optional=templinst)_ZNSt12_Destroy_auxILb0EE9__destroyIPSt4listIP21vpMbtDistanceCylinderSaIS4_EEEEvT_S8_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Vector_baseI12vpImagePointSaIS0_EED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Vector_baseI12vpImagePointSaIS0_EED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Vector_baseI7vpPointSaIS0_EED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Vector_baseI7vpPointSaIS0_EED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Vector_baseI8vpMatrixSaIS0_EED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Vector_baseI8vpMatrixSaIS0_EED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Vector_baseIN2cv3MatESaIS1_EED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt12_Vector_baseIN2cv3MatESaIS1_EED2Ev@Base 2.7.0
  (optional=templinst|arch=armhf ia64 mips mipsel)_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv@Base 2.7.0
- (arch=i386)_ZNSt14_Bit_referenceaSEb@Base 2.7.0
  (optional=templinst)_ZNSt15basic_stringbufIcSt11char_traitsIcESaIcEED0Ev@Base 2.7.0
  (optional=templinst)_ZNSt15basic_stringbufIcSt11char_traitsIcESaIcEED1Ev@Base 2.7.0
  (optional=templinst)_ZNSt15basic_stringbufIcSt11char_traitsIcESaIcEED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt20__copy_move_backwardILb0ELb0ESt26random_access_iterator_tagE13__copy_move_bIP7vpPointS4_EET0_T_S6_S5_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt20__copy_move_backwardILb0ELb0ESt26random_access_iterator_tagE13__copy_move_bIPSt4listIP17vpMbtDistanceLineSaIS5_EES8_EET0_T_SA_S9_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt20__copy_move_backwardILb0ELb0ESt26random_access_iterator_tagE13__copy_move_bIPSt4listIP21vpMbtDistanceCylinderSaIS5_EES8_EET0_T_SA_S9_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt20__copy_move_backwardILb0ELb0ESt26random_access_iterator_tagE13__copy_move_bISt13_Bit_iteratorS3_EET0_T_S5_S4_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIP7vpPointS3_EET0_T_S5_S4_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPSt4listIP17vpMbtDistanceLineSaIS4_EES7_EET0_T_S9_S8_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPSt4listIP21vpMbtDistanceCylinderSaIS4_EES7_EET0_T_S9_S8_@Base 2.7.0
@@ -3562,24 +3486,22 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  (optional=templinst)_ZNSt4listI8vpMeSiteSaIS0_EE4sortIPFbRKS0_S5_EEEvT_@Base 2.7.0
  (optional=templinst)_ZNSt4listI8vpMeSiteSaIS0_EE5mergeIPFbRKS0_S5_EEEvRS2_T_@Base 2.7.0
  (optional=templinst)_ZNSt4listI8vpMeSiteSaIS0_EEaSERKS2_@Base 2.7.0
- (optional=templinst|arch=!i386 !kfreebsd-amd64 !kfreebsd-i386)_ZNSt4listIP17vpMbtDistanceLineSaIS1_EEC1ERKS3_@Base 2.7.0
- (optional=templinst|arch=!i386 !kfreebsd-amd64 !kfreebsd-i386)_ZNSt4listIP17vpMbtDistanceLineSaIS1_EEC2ERKS3_@Base 2.7.0
+ (optional=templinst|arch=!kfreebsd-amd64 !kfreebsd-i386)_ZNSt4listIP17vpMbtDistanceLineSaIS1_EEC1ERKS3_@Base 2.7.0
+ (optional=templinst|arch=!kfreebsd-amd64 !kfreebsd-i386)_ZNSt4listIP17vpMbtDistanceLineSaIS1_EEC2ERKS3_@Base 2.7.0
  (optional=templinst)_ZNSt4listIP17vpMbtDistanceLineSaIS1_EEaSERKS3_@Base 2.7.0
- (optional=templinst|arch=!i386 !kfreebsd-amd64 !kfreebsd-i386)_ZNSt4listIP21vpMbtDistanceCylinderSaIS1_EEC1ERKS3_@Base 2.7.0
- (optional=templinst|arch=!i386 !kfreebsd-amd64 !kfreebsd-i386)_ZNSt4listIP21vpMbtDistanceCylinderSaIS1_EEC2ERKS3_@Base 2.7.0
+ (optional=templinst|arch=!kfreebsd-amd64 !kfreebsd-i386)_ZNSt4listIP21vpMbtDistanceCylinderSaIS1_EEC1ERKS3_@Base 2.7.0
+ (optional=templinst|arch=!kfreebsd-amd64 !kfreebsd-i386)_ZNSt4listIP21vpMbtDistanceCylinderSaIS1_EEC2ERKS3_@Base 2.7.0
  (optional=templinst)_ZNSt4listIP21vpMbtDistanceCylinderSaIS1_EEaSERKS3_@Base 2.7.0
  (optional=templinst)_ZNSt4listIdSaIdEEaSERKS1_@Base 2.7.0
  (optional=templinst)_ZNSt4listIjSaIjEEaSERKS1_@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt4pairIKSsSsEC1ISsSsEERKS_IT_T0_E@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt4pairIKSsSsEC2ISsSsEERKS_IT_T0_E@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt4pairIKSsSsED1Ev@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt4pairIKSsSsED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt4pairIKSsiED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt4pairIKSsiED2Ev@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt4pairISsSsEC1ERKSsS2_@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt4pairISsSsEC2ERKSsS2_@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt4pairISsSsED1Ev@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt4pairISsSsED2Ev@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt4pairIKSsSsEC1ISsSsEERKS_IT_T0_E@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt4pairIKSsSsEC2ISsSsEERKS_IT_T0_E@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt4pairIKSsSsED1Ev@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt4pairIKSsSsED2Ev@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt4pairISsSsEC1ERKSsS2_@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt4pairISsSsEC2ERKSsS2_@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt4pairISsSsED1Ev@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt4pairISsSsED2Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorI11vpColVectorSaIS0_EED1Ev@Base 2.8.0
  (optional=templinst)_ZNSt6vectorI11vpColVectorSaIS0_EED2Ev@Base 2.8.0
  (optional=templinst)_ZNSt6vectorI11vpColVectorSaIS0_EEaSERKS2_@Base 2.8.0
@@ -3593,7 +3515,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  (optional=templinst)_ZNSt6vectorI7vpPointSaIS0_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS0_S2_EERKS0_@Base 2.7.0
  (optional=templinst|subst)_ZNSt6vectorI7vpPointSaIS0_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS0_S2_EE{size_t}RKS0_@Base 2.7.0
  (optional=templinst|arch=amd64 i386|subst)_ZNSt6vectorI7vpPointSaIS0_EE6resizeE{size_t}S0_@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt6vectorI7vpPointSaIS0_EE9push_backERKS0_@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt6vectorI7vpPointSaIS0_EE9push_backERKS0_@Base 2.7.0
  (optional=templinst)_ZNSt6vectorI7vpPointSaIS0_EED1Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorI7vpPointSaIS0_EED2Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorI7vpPointSaIS0_EEaSERKS2_@Base 2.7.0
@@ -3617,39 +3539,29 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  (optional=templinst)_ZNSt6vectorIN14vpPoseFeatures5vpDuoI23vpFeatureVanishingPoint7vpPointEESaIS4_EED2Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI13vpFeatureLine10vpCylinderiEESaIS4_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS4_S6_EERKS4_@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI16vpFeatureSegment7vpPointS3_EESaIS4_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS4_S6_EERKS4_@Base 2.7.0
- (optional=templinst|arch=!i386)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI16vpFeatureSegment7vpPointS3_EESaIS4_EED1Ev@Base 2.7.0
- (optional=templinst|arch=!i386)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI16vpFeatureSegment7vpPointS3_EESaIS4_EED2Ev@Base 2.7.0
+ (optional=templinst)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI16vpFeatureSegment7vpPointS3_EESaIS4_EED1Ev@Base 2.7.0
+ (optional=templinst)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI16vpFeatureSegment7vpPointS3_EESaIS4_EED2Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI23vpFeatureVanishingPoint6vpLineS3_EESaIS4_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS4_S6_EERKS4_@Base 2.7.0
- (optional=templinst|arch=!i386)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI23vpFeatureVanishingPoint6vpLineS3_EESaIS4_EED1Ev@Base 2.7.0
- (optional=templinst|arch=!i386)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI23vpFeatureVanishingPoint6vpLineS3_EESaIS4_EED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIN2cv6Point_IfEESaIS2_EED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIN2cv6Point_IfEESaIS2_EED2Ev@Base 2.7.0
+ (optional=templinst)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI23vpFeatureVanishingPoint6vpLineS3_EESaIS4_EED1Ev@Base 2.7.0
+ (optional=templinst)_ZNSt6vectorIN14vpPoseFeatures6vpTrioI23vpFeatureVanishingPoint6vpLineS3_EESaIS4_EED2Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIN9vpNetwork10vpReceptorESaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIN9vpNetwork10vpReceptorESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIP12vpMbtPolygonSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_@Base 2.7.0
  (optional=templinst|subst)_ZNSt6vectorIP12vpMbtPolygonSaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE{size_t}RKS1_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIP12vpMbtPolygonSaIS1_EED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIP12vpMbtPolygonSaIS1_EED2Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIP15vpFeatureMomentSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIP15vpMbtKltPolygonSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_@Base 2.7.0
  (optional=templinst|subst)_ZNSt6vectorIP15vpMbtKltPolygonSaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE{size_t}RKS1_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIP15vpMbtKltPolygonSaIS1_EED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIP15vpMbtKltPolygonSaIS1_EED2Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIP9vpRequestSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIPN4Ogre12ManualObjectESaIS2_EED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIPN4Ogre12ManualObjectESaIS2_EED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEEC1ERKS6_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorISsN4Ogre12STLAllocatorISsNS0_22CategorisedAllocPolicyILNS0_14MemoryCategoryE0EEEEEEC2ERKS6_@Base 2.7.0
  (optional=templinst)_ZNSt6vectorISsSaISsEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPSsS1_EERKSs@Base 2.7.0
  (optional=templinst)_ZNSt6vectorISsSaISsEED1Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorISsSaISsEED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorISt20_List_const_iteratorIdESaIS1_EED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorISt20_List_const_iteratorIdESaIS1_EED2Ev@Base 2.7.0
  (optional=templinst|subst)_ZNSt6vectorISt4listIP17vpMbtDistanceLineSaIS2_EESaIS4_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS4_S6_EE{size_t}RKS4_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt6vectorISt4listIP17vpMbtDistanceLineSaIS2_EESaIS4_EE6resizeEjS4_@Base 2.8.0
  (optional=templinst|arch=amd64)_ZNSt6vectorISt4listIP17vpMbtDistanceLineSaIS2_EESaIS4_EE6resizeEmS4_@Base 2.7.0
  (optional=templinst)_ZNSt6vectorISt4listIP17vpMbtDistanceLineSaIS2_EESaIS4_EED1Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorISt4listIP17vpMbtDistanceLineSaIS2_EESaIS4_EED2Ev@Base 2.7.0
  (optional=templinst|subst)_ZNSt6vectorISt4listIP21vpMbtDistanceCylinderSaIS2_EESaIS4_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS4_S6_EE{size_t}RKS4_@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt6vectorISt4listIP21vpMbtDistanceCylinderSaIS2_EESaIS4_EE6resizeEjS4_@Base 2.8.0
  (optional=templinst|arch=amd64)_ZNSt6vectorISt4listIP21vpMbtDistanceCylinderSaIS2_EESaIS4_EE6resizeEmS4_@Base 2.7.0
  (optional=templinst)_ZNSt6vectorISt4listIP21vpMbtDistanceCylinderSaIS2_EESaIS4_EED1Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorISt4listIP21vpMbtDistanceCylinderSaIS2_EESaIS4_EED2Ev@Base 2.7.0
@@ -3660,68 +3572,48 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  (optional=templinst)_ZNSt6vectorISt4pairI7vpPointjESaIS2_EED1Ev@Base 2.8.0
  (optional=templinst)_ZNSt6vectorISt4pairI7vpPointjESaIS2_EED2Ev@Base 2.8.0
  (optional=templinst)_ZNSt6vectorISt4pairI7vpPointjESaIS2_EEaSERKS4_@Base 2.8.0
- (optional=templinst|arch=i386|subst)_ZNSt6vectorIbSaIbEE13_M_initializeE{size_t}@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb@Base 2.7.0
  (optional=templinst|subst)_ZNSt6vectorIbSaIbEE14_M_fill_insertESt13_Bit_iterator{size_t}b@Base 2.7.0
+ (optional=templinst|arch=i386)_ZNSt6vectorIbSaIbEE6resizeEjb@Base 2.8.0
  (optional=templinst|arch=amd64)_ZNSt6vectorIbSaIbEE6resizeEmb@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIbSaIbEE9push_backEb@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIbSaIbEED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIbSaIbEED2Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIbSaIbEEaSERKS1_@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIdSaIdEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPdS1_EERKd@Base 2.7.0
  (optional=templinst|subst)_ZNSt6vectorIdSaIdEE14_M_fill_assignE{size_t}RKd@Base 2.7.0
  (optional=templinst|subst)_ZNSt6vectorIdSaIdEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPdS1_EE{size_t}RKd@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIdSaIdEEaSERKS1_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIfSaIfEED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIfSaIfEED2Ev@Base 2.7.0
- (optional=templinst|arch=!i386)_ZNSt6vectorIiSaIiEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPiS1_EERKi@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIiSaIiEED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIiSaIiEED2Ev@Base 2.7.0
+ (optional=templinst)_ZNSt6vectorIiSaIiEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPiS1_EERKi@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIjSaIjEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPjS1_EERKj@Base 2.7.0
  (optional=templinst|subst)_ZNSt6vectorIjSaIjEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPjS1_EE{size_t}RKj@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIjSaIjEED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIjSaIjEED2Ev@Base 2.7.0
  (optional=templinst)_ZNSt6vectorIjSaIjEEaSERKS1_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIxSaIxEED1Ev@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt6vectorIxSaIxEED2Ev@Base 2.7.0
  (optional=templinst|subst)_ZNSt6vectorI{int64_t}SaI{int64_t}EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIP{int64_t}S1_EERK{int64_t}@Base 2.8.0
- (optional=templinst|arch=i386)_ZNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEEC1ERKSE_@Base 2.7.0
- (optional=templinst|arch=i386)_ZNSt8_Rb_treeISsSt4pairIKSsN4Ogre13_ConfigOptionEESt10_Select1stIS4_ESt4lessISsENS2_12STLAllocatorIS4_NS2_22CategorisedAllocPolicyILNS2_14MemoryCategoryE0EEEEEEC2ERKSE_@Base 2.7.0
  (optional=templinst|arch=amd64)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE10_M_insert_EPSt18_Rb_tree_node_baseSA_RKS2_@Base 2.7.0
  (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE15_M_insert_equalERKS2_@Base 2.7.0
- (optional=templinst|arch=amd64)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.7.0
+ (optional=templinst|arch=amd64 i386)_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS2_ERKS2_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE24_M_get_insert_unique_posERS1_@Base 2.7.0
- (optional=templinst|arch=!kfreebsd-i386)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_@Base 2.7.0
+ (optional=templinst|arch=!i386 !kfreebsd-i386)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE4findERS1_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE7_M_copyEPKSt13_Rb_tree_nodeIS2_EPSA_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIddSt9_IdentityIdESt4lessIdESaIdEE16_M_insert_uniqueERKd@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIddSt9_IdentityIdESt4lessIdESaIdEE8_M_eraseEPSt13_Rb_tree_nodeIdE@Base 2.7.0
- (optional=templinst|arch=kfreebsd-i386)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS3_ERKS3_@Base 2.8.0
+ (optional=templinst|arch=i386 kfreebsd-i386)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS3_ERKS3_@Base 2.8.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE24_M_get_insert_unique_posERS1_@Base 2.7.0
- (optional=templinst|arch=!kfreebsd-i386)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS3_ERS1_@Base 2.7.0
+ (optional=templinst|arch=!i386 !kfreebsd-i386)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS3_ERS1_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE7_M_copyEPKSt13_Rb_tree_nodeIS3_EPSB_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EE8_M_eraseEPSt13_Rb_tree_nodeIS3_E@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKi12vpImagePointESt10_Select1stIS3_ESt4lessIiESaIS3_EEaSERKS9_@Base 2.7.0
- (optional=templinst|arch=kfreebsd-i386)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS2_ERKS2_@Base 2.8.0
+ (optional=templinst|arch=i386 kfreebsd-i386)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS2_ERKS2_@Base 2.8.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE24_M_get_insert_unique_posERS1_@Base 2.7.0
- (optional=templinst|arch=!kfreebsd-i386)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_@Base 2.7.0
+ (optional=templinst|arch=!i386 !kfreebsd-i386)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE7_M_copyEPKSt13_Rb_tree_nodeIS2_EPSA_@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E@Base 2.7.0
  (optional=templinst)_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EEaSERKS8_@Base 2.7.0
  (arch=amd64 i386)_ZNSt8ios_base7failureC1ERKS0_@Base 2.7.0
  (arch=amd64 i386)_ZNSt8ios_base7failureC2ERKS0_@Base 2.7.0
- (optional=templinst|arch=i386)_ZSt13copy_backwardIPP12vpMbtPolygonS2_ET0_T_S4_S3_@Base 2.7.0
- (optional=templinst|arch=i386)_ZSt13copy_backwardIPP15vpMbtKltPolygonS2_ET0_T_S4_S3_@Base 2.7.0
- (optional=templinst|arch=i386)_ZSt13copy_backwardIPPK7vpImageIhES4_ET0_T_S6_S5_@Base 2.7.0
  (optional=templinst|arch=ia64)_ZSt14__copy_move_a2ILb0ESt13_Bit_iteratorS0_ET1_T0_S2_S1_@Base 2.7.0
  (optional=templinst|arch=ia64)_ZSt23__copy_move_backward_a2ILb0ESt13_Bit_iteratorS0_ET1_T0_S2_S1_@Base 2.7.0
  (optional=templinst|arch=ia64)_ZSt4copyISt19_Bit_const_iteratorSt13_Bit_iteratorET0_T_S3_S2_@Base 2.7.0
- (arch=amd64)_ZSt4fillSt13_Bit_iteratorS_RKb@Base 2.8.0
- (arch=i386)_ZSt8__fill_aIP7vpPointS0_EN9__gnu_cxx11__enable_ifIXntsrSt11__is_scalarIT0_E7__valueEvE6__typeET_S9_RKS5_@Base 2.7.0
- (arch=i386)_ZSt8__fill_aIPSt4listIP17vpMbtDistanceLineSaIS2_EES4_EN9__gnu_cxx11__enable_ifIXntsrSt11__is_scalarIT0_E7__valueEvE6__typeET_SD_RKS9_@Base 2.7.0
- (arch=i386)_ZSt8__fill_aIPSt4listIP21vpMbtDistanceCylinderSaIS2_EES4_EN9__gnu_cxx11__enable_ifIXntsrSt11__is_scalarIT0_E7__valueEvE6__typeET_SD_RKS9_@Base 2.7.0
+ (arch=amd64 i386)_ZSt4fillSt13_Bit_iteratorS_RKb@Base 2.8.0
  (optional=templinst)_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_@Base 2.7.0
  (optional=templinst)_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3_@Base 2.7.0
  (optional=templinst)_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_S8_@Base 2.7.0
@@ -3757,7 +3649,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTI13vpMomentAlpha@Base 2.7.0
  _ZTI13vpMomentBasic@Base 2.7.0
  _ZTI13vpRobotCamera@Base 2.7.0
- (arch=amd64)_ZTI13vpV4l2Grabber@Base 2.8.0
+ (arch=amd64 i386)_ZTI13vpV4l2Grabber@Base 2.8.0
  _ZTI13vpVideoReader@Base 2.7.0
  _ZTI14vpBasicFeature@Base 2.7.0
  _ZTI14vpFeatureDepth@Base 2.7.0
@@ -3779,7 +3671,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTI15vpOpenCVGrabber@Base 2.7.0
  _ZTI15vpPoseException@Base 2.7.0
  _ZTI15vpRobotTemplate@Base 2.7.0
- (arch=amd64)_ZTI16vp1394TwoGrabber@Base 2.8.0
+ (arch=amd64 i386)_ZTI16vp1394TwoGrabber@Base 2.8.0
  _ZTI16vpFeatureEllipse@Base 2.7.0
  _ZTI16vpFeaturePoint3D@Base 2.7.0
  _ZTI16vpFeatureSegment@Base 2.7.0
@@ -3829,7 +3721,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTI23vpFeatureMomentDatabase@Base 2.7.0
  _ZTI23vpFeatureVanishingPoint@Base 2.7.0
  _ZTI23vpFrameGrabberException@Base 2.7.0
- (arch=amd64)_ZTI23vpParallelPortException@Base 2.8.0
+ (arch=amd64 i386)_ZTI23vpParallelPortException@Base 2.8.0
  _ZTI25vpFeatureMomentCInvariant@Base 2.7.0
  _ZTI25vpRobotWireFrameSimulator@Base 2.7.0
  _ZTI28vpFeatureMomentGravityCenter@Base 2.7.0
@@ -3848,7 +3740,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTI7vpScale@Base 2.7.0
  _ZTI7vpServo@Base 2.7.0
  _ZTI7vpViper@Base 2.7.0
- (arch=amd64)_ZTI8vpAROgre@Base 2.8.0
+ (arch=amd64 i386)_ZTI8vpAROgre@Base 2.8.0
  _ZTI8vpCircle@Base 2.7.0
  _ZTI8vpClient@Base 2.7.0
  _ZTI8vpMatrix@Base 2.7.0
@@ -3868,9 +3760,9 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTI9vpTracker@Base 2.7.0
  _ZTIN11vpException20generalExceptionEnumE@Base 2.7.0
  _ZTIN17vpMatrixException13errorCodeEnumE@Base 2.7.0
- (arch=amd64)_ZTIN5boost10lock_errorE@Base 2.8.0
- (arch=amd64)_ZTIN5boost16thread_exceptionE@Base 2.8.0
- (arch=amd64)_ZTIN5boost9exceptionE@Base 2.8.0
+ (arch=amd64 i386)_ZTIN5boost10lock_errorE@Base 2.8.0
+ (arch=amd64 i386)_ZTIN5boost16thread_exceptionE@Base 2.8.0
+ (arch=amd64 i386)_ZTIN5boost9exceptionE@Base 2.8.0
  _ZTS10vpCylinder@Base 2.7.0
  _ZTS10vpDisplayX@Base 2.7.0
  _ZTS10vpTriangle@Base 2.7.0
@@ -3903,7 +3795,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTS13vpMomentAlpha@Base 2.7.0
  _ZTS13vpMomentBasic@Base 2.7.0
  _ZTS13vpRobotCamera@Base 2.7.0
- (arch=amd64)_ZTS13vpV4l2Grabber@Base 2.8.0
+ (arch=amd64 i386)_ZTS13vpV4l2Grabber@Base 2.8.0
  _ZTS13vpVideoReader@Base 2.7.0
  _ZTS14vpBasicFeature@Base 2.7.0
  _ZTS14vpFeatureDepth@Base 2.7.0
@@ -3925,7 +3817,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTS15vpOpenCVGrabber@Base 2.7.0
  _ZTS15vpPoseException@Base 2.7.0
  _ZTS15vpRobotTemplate@Base 2.7.0
- (arch=amd64)_ZTS16vp1394TwoGrabber@Base 2.8.0
+ (arch=amd64 i386)_ZTS16vp1394TwoGrabber@Base 2.8.0
  _ZTS16vpFeatureEllipse@Base 2.7.0
  _ZTS16vpFeaturePoint3D@Base 2.7.0
  _ZTS16vpFeatureSegment@Base 2.7.0
@@ -3975,7 +3867,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTS23vpFeatureMomentDatabase@Base 2.7.0
  _ZTS23vpFeatureVanishingPoint@Base 2.7.0
  _ZTS23vpFrameGrabberException@Base 2.7.0
- (arch=amd64)_ZTS23vpParallelPortException@Base 2.8.0
+ (arch=amd64 i386)_ZTS23vpParallelPortException@Base 2.8.0
  _ZTS25vpFeatureMomentCInvariant@Base 2.7.0
  _ZTS25vpRobotWireFrameSimulator@Base 2.7.0
  _ZTS28vpFeatureMomentGravityCenter@Base 2.7.0
@@ -3994,7 +3886,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTS7vpScale@Base 2.7.0
  _ZTS7vpServo@Base 2.7.0
  _ZTS7vpViper@Base 2.7.0
- (arch=amd64)_ZTS8vpAROgre@Base 2.8.0
+ (arch=amd64 i386)_ZTS8vpAROgre@Base 2.8.0
  _ZTS8vpCircle@Base 2.7.0
  _ZTS8vpClient@Base 2.7.0
  _ZTS8vpMatrix@Base 2.7.0
@@ -4014,9 +3906,9 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTS9vpTracker@Base 2.7.0
  _ZTSN11vpException20generalExceptionEnumE@Base 2.7.0
  _ZTSN17vpMatrixException13errorCodeEnumE@Base 2.7.0
- (arch=amd64)_ZTSN5boost10lock_errorE@Base 2.8.0
- (arch=amd64)_ZTSN5boost16thread_exceptionE@Base 2.8.0
- (arch=amd64)_ZTSN5boost9exceptionE@Base 2.8.0
+ (arch=amd64 i386)_ZTSN5boost10lock_errorE@Base 2.8.0
+ (arch=amd64 i386)_ZTSN5boost16thread_exceptionE@Base 2.8.0
+ (arch=amd64 i386)_ZTSN5boost9exceptionE@Base 2.8.0
  _ZTT14vpMbKltTracker@Base 2.7.0
  _ZTT15vpMbEdgeTracker@Base 2.7.0
  _ZTT18vpMbEdgeKltTracker@Base 2.7.0
@@ -4052,7 +3944,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTV13vpMomentAlpha@Base 2.7.0
  _ZTV13vpMomentBasic@Base 2.7.0
  _ZTV13vpRobotCamera@Base 2.7.0
- (arch=amd64)_ZTV13vpV4l2Grabber@Base 2.8.0
+ (arch=amd64 i386)_ZTV13vpV4l2Grabber@Base 2.8.0
  _ZTV13vpVideoReader@Base 2.7.0
  _ZTV14vpBasicFeature@Base 2.7.0
  _ZTV14vpFeatureDepth@Base 2.7.0
@@ -4074,7 +3966,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTV15vpOpenCVGrabber@Base 2.7.0
  _ZTV15vpPoseException@Base 2.7.0
  _ZTV15vpRobotTemplate@Base 2.7.0
- (arch=amd64)_ZTV16vp1394TwoGrabber@Base 2.8.0
+ (arch=amd64 i386)_ZTV16vp1394TwoGrabber@Base 2.8.0
  _ZTV16vpFeatureEllipse@Base 2.7.0
  _ZTV16vpFeaturePoint3D@Base 2.7.0
  _ZTV16vpFeatureSegment@Base 2.7.0
@@ -4124,7 +4016,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTV23vpFeatureMomentDatabase@Base 2.7.0
  _ZTV23vpFeatureVanishingPoint@Base 2.7.0
  _ZTV23vpFrameGrabberException@Base 2.7.0
- (arch=amd64)_ZTV23vpParallelPortException@Base 2.8.0
+ (arch=amd64 i386)_ZTV23vpParallelPortException@Base 2.8.0
  _ZTV25vpFeatureMomentCInvariant@Base 2.7.0
  _ZTV25vpRobotWireFrameSimulator@Base 2.7.0
  _ZTV28vpFeatureMomentGravityCenter@Base 2.7.0
@@ -4142,7 +4034,7 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTV7vpScale@Base 2.7.0
  _ZTV7vpServo@Base 2.7.0
  _ZTV7vpViper@Base 2.7.0
- (arch=amd64)_ZTV8vpAROgre@Base 2.8.0
+ (arch=amd64 i386)_ZTV8vpAROgre@Base 2.8.0
  _ZTV8vpCircle@Base 2.7.0
  _ZTV8vpClient@Base 2.7.0
  _ZTV8vpMatrix@Base 2.7.0
@@ -4160,9 +4052,9 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  _ZTV9vpPolygon@Base 2.7.0
  _ZTV9vpRequest@Base 2.7.0
  _ZTV9vpTracker@Base 2.7.0
- (arch=amd64)_ZTVN5boost10lock_errorE@Base 2.8.0
- (arch=amd64)_ZTVN5boost16thread_exceptionE@Base 2.8.0
- (arch=amd64)_ZTVN5boost9exceptionE@Base 2.8.0
+ (arch=amd64 i386)_ZTVN5boost10lock_errorE@Base 2.8.0
+ (arch=amd64 i386)_ZTVN5boost16thread_exceptionE@Base 2.8.0
+ (arch=amd64 i386)_ZTVN5boost9exceptionE@Base 2.8.0
  _ZlsRSoR16vpMomentCentered@Base 2.7.0
  _ZlsRSoR7vpPoint@Base 2.7.0
  _ZlsRSoR8vpMeSite@Base 2.7.0
@@ -4246,10 +4138,10 @@ libvisp.so.2.8 libvisp2.8 #MINVER#
  mylength@Base 2.7.0
  mylineno@Base 2.7.0
  mytext@Base 2.7.0
- (c++|arch=amd64)"non-virtual thunk to vpAROgre::keyPressed(OIS::KeyEvent const&)@Base" 2.8.0
- (c++|arch=amd64)"non-virtual thunk to vpAROgre::keyReleased(OIS::KeyEvent const&)@Base" 2.8.0
- (c++|arch=amd64)"non-virtual thunk to vpAROgre::windowClosed(Ogre::RenderWindow*)@Base" 2.8.0
- (c++|arch=amd64)"non-virtual thunk to vpAROgre::~vpAROgre()@Base" 2.8.0
+ (c++|arch=amd64 i386)"non-virtual thunk to vpAROgre::keyPressed(OIS::KeyEvent const&)@Base" 2.8.0
+ (c++|arch=amd64 i386)"non-virtual thunk to vpAROgre::keyReleased(OIS::KeyEvent const&)@Base" 2.8.0
+ (c++|arch=amd64 i386)"non-virtual thunk to vpAROgre::windowClosed(Ogre::RenderWindow*)@Base" 2.8.0
+ (c++|arch=amd64 i386)"non-virtual thunk to vpAROgre::~vpAROgre()@Base" 2.8.0
  (c++)"non-virtual thunk to vpMbEdgeKltTracker::display(vpImage<unsigned char> const&, vpHomogeneousMatrix const&, vpCameraParameters const&, vpColor const&, unsigned int, bool)@Base" 2.7.0
  (c++)"non-virtual thunk to vpMbEdgeKltTracker::display(vpImage<vpRGBa> const&, vpHomogeneousMatrix const&, vpCameraParameters const&, vpColor const&, unsigned int, bool)@Base" 2.7.0
  (c++)"non-virtual thunk to vpMbEdgeKltTracker::getAngleAppear() const@Base" 2.8.0
