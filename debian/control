@@ -78,6 +78,8 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
+Replaces: libvisp2
+Breaks: libvisp2
 Description: visual servoing library
  ViSP, standing for Visual Servoing Platform, is unique. This software
  is a complete cross-platform solution that allows prototyping and
