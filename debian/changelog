@@ -1,3 +1,10 @@
+visp (2.8.0-2) unstable; urgency=low
+
+  * debian/control: libvisp2.8 breaks+replaces libvisp2 (Closes: #722647).
+  * debian/rules: disable parallelism in tests (Closes: #722565).
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Fri, 13 Sep 2013 11:22:16 +0900
+
 visp (2.8.0-1) unstable; urgency=low
 
   * Import new upstream release 2.8.0.
