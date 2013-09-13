@@ -79,5 +79,8 @@ override_dh_auto_build-indep:
 override_dh_strip:
 	dh_strip -a --dbg-package=libvisp2.8-dbg
 
+# Parallelism is disabled in tests as some cannot run at the same
+# time
 override_dh_auto_test:
-	export VISP_INPUT_IMAGE_PATH=/usr/share/visp-images-data/ && dh_auto_test
+	export VISP_INPUT_IMAGE_PATH=/usr/share/visp-images-data/ \
+	 && dh_auto_test -- -j1
