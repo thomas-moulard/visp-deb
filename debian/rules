@@ -51,9 +51,9 @@ endif
 
 # freenect is not available on hurd.
 ifeq ($(DEB_HOST_ARCH_OS),hurd)
-  CONFIGURE_ARGS += -DLIBFEENECT=OFF
+  CONFIGURE_ARGS += -DUSE_LIBFEENECT=OFF
 else
-  CONFIGURE_ARGS += -DLIBFEENECT=ON
+  CONFIGURE_ARGS += -DUSE_LIBFEENECT=ON
 endif
 
 
