@@ -1,3 +1,10 @@
+visp (2.8.0-3) UNRELEASED; urgency=low
+
+  * Disable libfreenect on Hurd (again)
+  * Disable parallelism when running the tests suite (again)
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Tue, 17 Sep 2013 15:14:16 +0900
+
 visp (2.8.0-2) unstable; urgency=low
 
   * debian/control: libvisp2.8 breaks+replaces libvisp2 (Closes: #722647).
