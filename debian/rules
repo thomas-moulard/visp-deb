@@ -83,4 +83,4 @@ override_dh_strip:
 # time
 override_dh_auto_test:
 	export VISP_INPUT_IMAGE_PATH=/usr/share/visp-images-data/ \
-	 && dh_auto_test -- -j1
+	 && dh_auto_test --max-parallel=1
