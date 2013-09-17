@@ -55,7 +55,7 @@ Depends: libopencv-dev [!any-sparc64 !x32],
          libx11-dev,
          libv4l-dev [!hurd-any],
          libusb-dev,
-         libfreenect-dev,
+         libfreenect-dev [!hurd-any],
          libois-dev [linux-any],
          libvisp2.8 (= ${binary:Version}),
          ${misc:Depends}
