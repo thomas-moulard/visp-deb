@@ -1,2 +1,3 @@
 0001-Install-vpConfig.h-in-include-architecture-triplet.patch
 0002-Fix-vpLex.c-portability-issue.patch
+0003-Fix-compilation-issue-with-Ogre-1.9.patch
