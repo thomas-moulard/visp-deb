@@ -87,11 +87,12 @@ override_dh_strip:
 # This is not a critical issue so we let the testing fail on this
 # architecture for now.
 # See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=723803
-override_dh_auto_test:
 ifeq ($(DEB_HOST_ARCH),ia64)
-	export VISP_INPUT_IMAGE_PATH=/usr/share/visp-images-data/ \
-	 && dh_auto_test --max-parallel=1 || true
+DH_AUTOTEST_CAN_FAIL=true
 else
+DH_AUTOTEST_CAN_FAIL=false
+endif
+
+override_dh_auto_test:
 	export VISP_INPUT_IMAGE_PATH=/usr/share/visp-images-data/ \
-	 && dh_auto_test --max-parallel=1
-fi
+	 && dh_auto_test --max-parallel=1 || ${DH_AUTOTEST_CAN_FAIL}
