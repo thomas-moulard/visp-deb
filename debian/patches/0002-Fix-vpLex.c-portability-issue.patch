@@ -1,0 +1,27 @@
+From: Thomas Moulard <thomas.moulard@gmail.com>
+Date: Thu, 26 Sep 2013 12:26:42 +0900
+Subject: Fix vpLex.c portability issue.
+
+Author: Rebecca N. Palmer <r.palmer@bham.ac.uk>
+Forwarded: yes
+---
+ src/simulator/wireframe-simulator/core/vpLex.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/simulator/wireframe-simulator/core/vpLex.c b/src/simulator/wireframe-simulator/core/vpLex.c
+index 366dfc3..e56a097 100755
+--- a/src/simulator/wireframe-simulator/core/vpLex.c
++++ b/src/simulator/wireframe-simulator/core/vpLex.c
+@@ -239,9 +239,9 @@ void close_lex (void)
+ 
+ 
+ #define	ECHO	printf ("%c", *(mysptr))
+-#define	CURC	(*mysptr)	/* caractere courant	*/
+-#define	NEXTC	(*(mysptr+1))	/* caractere suivant	*/
+-#define	PREVC	(*(mysptr-1))	/* caractere precedent	*/
++#define	CURC	(*((signed char *)mysptr))	/* caractere courant	*/
++#define	NEXTC	(*((signed char *)mysptr+1))	/* caractere suivant	*/
++#define	PREVC	(*((signed char *)mysptr-1))	/* caractere precedent	*/
+ 
+ 
+ /*

@@ -1,1 +1,2 @@
 0001-Install-vpConfig.h-in-include-architecture-triplet.patch
+0002-Fix-vpLex.c-portability-issue.patch
