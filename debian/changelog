@@ -2,6 +2,10 @@ visp (2.8.0-3) UNRELEASED; urgency=low
 
   * Disable libfreenect on Hurd (again)
   * Disable parallelism when running the tests suite (again)
+  * Fix minor bugs remaining in 2.8.0-2
+  * Relax build-dependency on libcoin to allow easy backporting
+  * Add patch to fix portability issue in vpLex.c (see #723803)
+  * Allow the test suite to fail on ia64 for now (close: #723803)
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Tue, 17 Sep 2013 15:14:16 +0900
 
