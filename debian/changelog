@@ -5,7 +5,7 @@ visp (2.8.0-3) unstable; urgency=low
   * Fix minor bugs remaining in 2.8.0-2
   * Relax build-dependency on libcoin to allow easy backporting
   * Add patch to fix portability issue in vpLex.c (see #723803)
-  * Allow the test suite to fail on ia64 for now (close: #723803)
+  * Allow the test suite to fail on ia64 for now (Closes: #723803)
   * Build against libogre-1.9-dev while allowing 1.8 or later versions to ease backporting.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Tue, 17 Sep 2013 15:14:16 +0900
