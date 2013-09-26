@@ -1,4 +1,4 @@
-visp (2.8.0-3) UNRELEASED; urgency=low
+visp (2.8.0-3) unstable; urgency=low
 
   * Disable libfreenect on Hurd (again)
   * Disable parallelism when running the tests suite (again)
