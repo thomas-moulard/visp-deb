@@ -22,5 +22,7 @@ EOF
 g++ -o visptest visptest.cpp `pkg-config --cflags --libs visp`
 echo "build: OK"
 [ -x visptest ]
-./visptest
+# often prints "libdc1394 error: Failed to initialize libdc1394" to stderr,
+# avoid test failure due to that
+./visptest 2>&1
 echo "run: OK"
