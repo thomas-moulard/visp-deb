@@ -1,3 +1,12 @@
+visp (2.8.0-4) unstable; urgency=medium
+
+  * debian/tests/build: Route stderr from test to stdout (Closes: #726983).
+  * Make visp-config arch-independent (Closes: #728783)
+  * Update Debian policy to 3.9.5
+  * Do not use pkg-kde-tools anymore.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Fri, 17 Jan 2014 15:25:16 +0900
+
 visp (2.8.0-3) unstable; urgency=low
 
   * Disable libfreenect on Hurd (again)
