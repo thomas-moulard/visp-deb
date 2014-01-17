@@ -64,7 +64,7 @@ endif
 	override_dh_auto_test
 
 %:
-	dh  $@ --parallel --with pkgkde-symbolshelper
+	dh  $@ --parallel
 
 override_dh_auto_clean:
 	dh_auto_clean
