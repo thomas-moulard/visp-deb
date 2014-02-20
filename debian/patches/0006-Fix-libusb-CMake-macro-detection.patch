@@ -1,0 +1,73 @@
+From: Thomas Moulard <thomas.moulard@gmail.com>
+Date: Thu, 20 Feb 2014 11:03:01 +0900
+Subject: Fix libusb CMake macro detection
+
+Author: Fabien Spindler <fabien.spindler@inria.fr>
+Forwarded: yes
+---
+ CMakeLists.txt                  |  3 ++-
+ CMakeModules/FindLIBUSB-1.cmake | 12 +++++++++++-
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 18764c4..ab7409c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1073,6 +1073,7 @@ IF(USE_LIBUSB_1)
+  
+     MESSAGE(STATUS "libusb-1.0 found")
+  
++    LIST(APPEND VISP_EXTERN_INCLUDE_DIRS ${LIBUSB_1_INCLUDE_DIRS})
+     LIST(APPEND VISP_EXTERN_LIBRARIES ${LIBUSB_1_LIBRARIES})
+   ELSE()
+     MESSAGE(STATUS "libusb-1.0 not found")
+@@ -1089,7 +1090,7 @@ IF(USE_LIBFREENECT AND USE_LIBUSB_1 AND USE_PTHREAD)
+     # The material is found. Check if libfreenect is an old version
+     include(CheckCXXSourceCompiles)
+     SET(CMAKE_REQUIRED_LIBRARIES ${LIBFREENECT_LIBRARIES} ${PTHREAD_LIBRARIES} ${LIBUSB_1_LIBRARIES})
+-    SET(CMAKE_REQUIRED_INCLUDES ${LIBFREENECT_INCLUDE_DIRS} ${PTHREAD_INCLUDE_DIRS})
++    SET(CMAKE_REQUIRED_INCLUDES ${LIBFREENECT_INCLUDE_DIRS} ${PTHREAD_INCLUDE_DIRS} ${LIBUSB_1_INCLUDE_DIRS})
+     CHECK_CXX_SOURCE_COMPILES("
+       #include <libfreenect.hpp>
+ 
+diff --git a/CMakeModules/FindLIBUSB-1.cmake b/CMakeModules/FindLIBUSB-1.cmake
+index 79d57a4..9e1108e 100644
+--- a/CMakeModules/FindLIBUSB-1.cmake
++++ b/CMakeModules/FindLIBUSB-1.cmake
+@@ -35,6 +35,7 @@
+ #
+ # LIBUSB_1_FOUND
+ # LIBUSB_1_LIBRARIES
++# LIBUSB_1_INCLUDE_DIRS
+ #
+ # Authors:
+ # Celine Teuliere
+@@ -55,11 +56,18 @@ ELSE(WIN32)
+     /usr/lib
+     /usr/local/lib
+     )
++  FIND_PATH(LIBUSB_1_INCLUDE_DIR libusb.h
++    $ENV{LIBUSB_1_HOME}/include/libusb-1.0
++    $ENV{LIBUSB_1_HOME}/build/include/libusb-1.0
++    /usr/include/libusb-1.0
++    /usr/local/include/libusb-1.0
++    )
+ ENDIF(WIN32)
+ 
+ ## --------------------------------
+ 
+-IF(LIBUSB_1_LIBRARY)
++IF(LIBUSB_1_LIBRARY AND LIBUSB_1_INCLUDE_DIR)
++  SET(LIBUSB_1_INCLUDE_DIRS ${LIBUSB_1_INCLUDE_DIR})
+   SET(LIBUSB_1_LIBRARIES ${LIBUSB_1_LIBRARY})
+   SET(LIBUSB_1_FOUND TRUE)
+ ELSE()
+@@ -67,6 +75,8 @@ ELSE()
+ ENDIF()
+ 
+ MARK_AS_ADVANCED(
++  LIBUSB_1_INCLUDE_DIRS
++  LIBUSB_1_INCLUDE_DIR
+   LIBUSB_1_LIBRARIES
+   LIBUSB_1_LIBRARY
+   )
