@@ -1,3 +1,9 @@
+visp (2.8.0-5) unstable; urgency=medium
+
+  * Add patches to fix CMake issues with GTK and libusb (Closes: #738391).
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Thu, 20 Feb 2014 11:29:50 +0900
+
 visp (2.8.0-4) unstable; urgency=medium
 
   * debian/tests/build: Route stderr from test to stdout (Closes: #726983).
